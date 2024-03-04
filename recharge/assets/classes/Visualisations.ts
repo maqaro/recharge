@@ -1,0 +1,2 @@
+class Visualisations extends GuidedSession {
+}

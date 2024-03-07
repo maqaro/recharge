@@ -1,0 +1,2 @@
+class Meditation extends GuidedSession {
+}

@@ -1,0 +1,2 @@
+class Unapproved extends ResourcesType {
+}

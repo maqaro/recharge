@@ -1,0 +1,2 @@
+class BreathingTechniques extends GuidedSession {
+}

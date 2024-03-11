@@ -17,7 +17,7 @@ const Login = () => {
         <Input
           placeholder="Username"
           leftIcon={{ type: 'font-awesome', name: 'user', color: 'white' }}
-          inputContainerStyle={styles.inputContainer}
+          inputContainerStyle={styles.username}
           placeholderTextColor='white'
         />
         <Input
@@ -33,7 +33,7 @@ const Login = () => {
           buttonStyle={styles.button} 
           titleStyle={{color: '#b7410e'}}
           />
-        <Text style={styles.or}> ------------------------------------- OR -----------------------------------</Text>
+        <Text style={styles.or}> ----------------------------------- OR -----------------------------------</Text>
         <Button 
           title="Sign up" 
           buttonStyle={styles.button}
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     textAlign: 'center',
     color: 'white',
+    marginTop: 30,
   },
   backText: {
     fontSize: 50,
@@ -82,11 +83,15 @@ const styles = StyleSheet.create({
     marginTop: 35,
     color:'white',
   },
+  username:{
+    borderBottomColor: 'white',
+    marginBottom: 40,
+  },
 
   inputContainer: {
-
     borderBottomColor: 'white',
   },
+
   forgot: {
     textAlign: 'right',
     color:'#b7410e',

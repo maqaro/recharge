@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { supabase } from '../lib/supabase';
+import { useRouter } from 'expo-router';
 
 export default function EmailForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   async function signInWithEmail() {
     setLoading(true);
@@ -16,7 +18,11 @@ export default function EmailForm() {
       password: password,
     });
 
-    if (error) Alert.alert(error.message);
+    if (error) {
+      Alert.alert(error.message);
+    } else {
+      router.navigate('/Home')
+    }
     setLoading(false);
   }
 

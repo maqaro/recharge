@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import EmailForm from './components/EmailForm';
+import EmailForm from './app';
 
 export default function App() {
   return (

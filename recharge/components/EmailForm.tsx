@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View, Image, Text } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { supabase } from '../lib/supabase';
 
@@ -34,40 +34,76 @@ export default function EmailForm() {
 
   return (
     <View style={styles.container}>
-      <Input
-        label="Email"
-        leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-        onChangeText={setEmail}
-        value={email}
-        placeholder="email@address.com"
-        autoCapitalize="none"
-      />
-      <Input
-        label="Password"
-        leftIcon={{ type: 'font-awesome', name: 'lock' }}
-        onChangeText={setPassword}
-        value={password}
-        secureTextEntry
-        placeholder="Password"
-        autoCapitalize="none"
-      />
-      <Button title="Sign in" loading={loading} onPress={signInWithEmail} />
-      <Button title="Sign up" loading={loading} onPress={signUpWithEmail} />
+
+      <View style={styles.imageContainer}>
+              <Image source={require('./Logo.jpg')} style={styles.logo} />
+              <Text style={styles.rechargeText}>RECHARGE</Text>
+      </View>
+
+      <View style={styles.background}>
+
+        <Input
+          label="Email"
+          leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+          onChangeText={setEmail}
+          value={email}
+          placeholder="email@address.com"
+          autoCapitalize="none"
+         
+        style={styles.input}/>
+        <Input
+          label="Password"
+          leftIcon={{ type: 'font-awesome', name: 'lock' }}
+          onChangeText={setPassword}
+          value={password}
+          secureTextEntry
+          placeholder="Password"
+          autoCapitalize="none"
+          
+        style={styles.input}/>
+        <Button title="Sign in" loading={loading} onPress={signInWithEmail} buttonStyle={styles.button} containerStyle={styles.buttonContainer}/>
+        <Button title="Sign up" loading={loading} onPress={signUpWithEmail} buttonStyle={styles.button} containerStyle={styles.buttonContainer} />
     </View>
+  </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    padding: 12,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: 'stretch',
+  background: {
+    width: '80%',
   },
-  mt20: {
-    marginTop: 20,
+  gradient: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
   },
+  imageContainer: {
+    marginBottom: 20,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+  },
+  input: {
+    width: '100%',
+  },
+  button: {
+    width: '50%',
+    marginBottom: 20,
+    alignItems: 'center', 
+  },
+  buttonContainer:{
+    alignItems: 'center',
+  },
+  rechargeText:{
+    fontSize: 24,
+    textAlign: 'center',
+    fontStyle: 'italic',
+  }
 });

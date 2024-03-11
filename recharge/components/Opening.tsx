@@ -1,17 +1,23 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 
 const Opening = () => {
   return (
-    <View style={styles.container}>
+    <View>
+    <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%'}}>
+
         <View style={styles.logoContainer}>
-            <Image source={require('./Logo.jpg')} style={styles.logo} />
+            <Image source={require('./Logo.jpg')} style={styles.logo}/>
         </View>
+
         <View>
             <Text style={styles.rechargeText}>RECHARGE</Text>
-            <Text style={styles.subtitle}>Your overall guide to physical and mental well-being</Text>
+            <Text style={styles.subtitle}>Recharging your well-being</Text>
         </View>
+
+
       
         <View style={styles.buttonContainer}>
             <Button
@@ -27,41 +33,47 @@ const Opening = () => {
             titleStyle={styles.buttonText} 
             />
         </View>
+    </LinearGradient>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 20,
-    backgroundColor: '#007373',
   },
   logoContainer: {
     alignItems: 'center',
   },
   logo: {
-    width: 400,
-    height: 400,
+    width: 200,
+    height: 200,
+    marginTop: 50,
     resizeMode: 'contain',
   },
   rechargeText: {
-    fontSize: 30,
-    fontWeight: 'bold',
+    fontSize: 40,
+    fontWeight: 'normal',
+    fontStyle: 'italic',
     marginTop: 10,
     color: 'white',
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 20,
     textAlign: 'center',
-    marginTop: 10,
+    marginTop: 65,
+    marginBottom: 80,
     color: 'white',
   },
   buttonContainer: {
-    width: '100%',
+    width: '90%',
+    marginLeft: 15,
+    alignContent: 'center',
   },
   buttonWrapper: {
     marginBottom: 20,
@@ -72,9 +84,12 @@ const styles = StyleSheet.create({
     borderRadius: 20, 
     backgroundColor: 'white',
     color: 'blue',
+    marginBottom: 30,
   },
   buttonText:{
     color:'#b7410e',
+    marginTop: 5,
+    marginBottom: 5,
   },
 });
 

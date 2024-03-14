@@ -1,21 +1,14 @@
-import { User } from "../classes/User";
-import { ChatRoom } from "../classes/ChatRoom";
-import { Employee } from "../classes/Employee";
-import { Approved } from "../classes/Approved";
-import { Unapproved } from "../classes/Unapproved";
+import { User } from "./User.ts";
+import { ChatRoom } from "./ChatRoom.ts";
+import { Employee } from "./Employee.ts";
+import { Approved } from "./Approved.ts";
+import { Unapproved } from "./Unapproved.ts";
 
 export class Mentor extends User {
 
 	private speciality: string;
 	private chatRooms: ChatRoom[];
 	private employees: Employee[];
-
-	constructor(){
-		super()
-		this.speciality="";
-		this.chatRooms = [];
-		this.employees = [];
-	}
 
 	public recommend(): Approved {
 		// TODO - implement Mentor.recommend
@@ -53,7 +46,7 @@ export class Mentor extends User {
 
 	public accessChatroom(): ChatRoom {
 		// TODO - implement Mentor.accessChatroom
-		return new ChatRoom(new Mentor())
+		return new ChatRoom()
 	}
 
 }

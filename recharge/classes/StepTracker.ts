@@ -1,15 +1,17 @@
-class StepTracker extends Tracker {
+import { Tracker } from "../classes/Tracker";
+
+export class StepTracker extends Tracker {
 
 	private totalSteps: number;
 
-	public StepTracker() {
-		// TODO - implement StepTracker.StepTracker
-		return;
+	constructor() {
+		super();
+		this.totalSteps=0;
 	}
 
-	public storeData(totalSteps: number) {
+	public storeData(totalSteps: number): null {
 		// TODO - implement StepTracker.storeData
-		return;
+		return null;
 	}
 
 }

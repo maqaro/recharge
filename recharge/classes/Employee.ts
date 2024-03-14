@@ -1,4 +1,9 @@
-class Employee extends User {
+import { ChatRoom } from "../classes/ChatRoom";
+import { Mentor } from "../classes/Mentor";
+import { Challenge } from "../classes/Challenge";
+import { User } from "../classes/User"
+
+export class Employee extends User {
 
 	private friends: Employee[];
 	private requests: Employee[];
@@ -6,6 +11,17 @@ class Employee extends User {
 	private chatRooms: ChatRoom[];
 	private challenges: Challenge[];
 	private mentors: Mentor[];
+
+
+	constructor(){
+		super();
+		this.points = 0;
+		this.friends = [];
+		this.requests = [];
+		this.chatRooms = [];
+		this.challenges = [];
+		this.mentors = [];
+	}
 
 	public matchWithMentor(): Mentor {
 		// TODO - implement Employee.matchWithMentor
@@ -34,7 +50,7 @@ class Employee extends User {
 
 	public viewFriends(): Employee[] {
 		// TODO - implement Employee.viewFriends
-		return [new Employee(), new Employee()];
+		return  this.friends;
 	}
 
 	public sendChallenge(): Challenge {
@@ -49,12 +65,12 @@ class Employee extends User {
 
 	public accessChatroom(): ChatRoom {
 		// TODO - implement Employee.accessChatroom
-		return new ChatRoom();
+		return new ChatRoom(new Mentor());
 	}
 
 	public viewChallenges(): Challenge[] {
 		// TODO - implement Employee.viewChallenges
-		return [new Challenge(), new Challenge()];
+		return this.challenges;
 	}
 
 	public pushNotification(): string {
@@ -64,17 +80,17 @@ class Employee extends User {
 
 	public viewFriendRequests(): Employee[] {
 		// TODO - implement Employee.viewFriendRequests
-		return [new Employee(), new Employee()];
+		return this.requests;
 	}
 
 	public viewChatrooms(): ChatRoom[] {
 		// TODO - implement Employee.viewChatrooms
-		return [new ChatRoom(), new ChatRoom()];
+		return this.chatRooms;
 	}
 
 	public viewMentors(): Mentor[] {
 		// TODO - implement Employee.viewMentors
-		return [new Mentor(), new Mentor()];
+		return this.mentors;
 	}
 
 }

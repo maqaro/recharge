@@ -3,9 +3,9 @@ export class Notifications {
 	private name: string;
 	private message: string;
 
-	constructor() {
-		this.name="";
-		this.message="";
+	public Notifications() {
+		// TODO - implement Notification.Notification
+		return;
 	}
 
 	public sendNotifications(): boolean {

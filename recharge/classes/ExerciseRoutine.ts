@@ -1,10 +1,19 @@
-class ExerciseRoutine {
+import { Mentor } from "../classes/Mentor";
+
+export class ExerciseRoutine {
 
 	private duration: number;
 	private muscleGroup: string;
 	private intensity: number;
 	private ID: string;
 	private recommendedBy?: Mentor;
+
+	constructor(){
+		this.duration=0;
+		this.muscleGroup="";
+		this.intensity=0;
+		this.ID="";
+	}
 
 	public UpdateTracker(exercise: ExerciseRoutine) {
 		// TODO - implement ExerciseRoutine.UpdateTracker

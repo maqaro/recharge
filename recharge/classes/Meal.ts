@@ -1,11 +1,11 @@
-class Meal {
+export class Meal {
 
 	private name: string;
 	private calories: number;
 
-	public Meal(name: string, calories: number) {
-		// TODO - implement Meal.Meal
-		return;
+	constructor(name: string, calories: number) {
+		this.name=name;
+		this.calories=calories;
 	}
 
 }

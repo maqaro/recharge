@@ -5,7 +5,7 @@ export abstract class Tracker {
 		return;
 	}
 
-	public abstract storeData(value: Object): null;
+	public abstract storeData(value: Object);
 
 	public viewHistory() {
 		// TODO - implement Tracker.viewHistory

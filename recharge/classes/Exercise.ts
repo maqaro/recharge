@@ -1,13 +1,15 @@
-class Exercise {
+export class Exercise {
 
 	private name: string;
 	private intensity: number;
 	private muscleGroup: string;
 	private duration: number;
 
-	public Exercise() {
-		// TODO - implement Exercise.Exercise
-		return;
+	constructor() {
+		this.name = "";
+		this.intensity = 0;
+		this.muscleGroup = "";
+		this.duration = 0;
 	}
 
 	public setName(name: string) {

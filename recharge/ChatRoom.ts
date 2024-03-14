@@ -1,17 +1,12 @@
-import { Mentor } from "../classes/Mentor";
-import { User } from "../classes/User";
+import { Mentor } from "./Mentor.ts";
+import { Employee } from "./Employee.ts";
+import { User } from "./User.ts";
 
 export class ChatRoom {
 
 	private chatHistory: string;
 	private members: User[];
 	private owner: Mentor;
-
-	constructor(owner: Mentor){
-		this.owner = owner;
-		this.members = [];
-		this.chatHistory = "";
-	}
 
 	public saveChat() {
 		// TODO - implement ChatRoom.saveChat
@@ -36,4 +31,10 @@ export class ChatRoom {
 		// TODO - implement ChatRoom.removeMessage
 		return;
 	}
+
+	public ChatRoom(owner: Mentor, employee: Employee) {
+		// TODO - implement ChatRoom.ChatRoom
+		return;
+	}
+
 }

@@ -4,12 +4,6 @@ export class Resources {
 	private type: string;
 	private ID: string;
 
-	constructor(){
-		this.name="";
-		this.type="";
-		this.ID="";
-	}
-
 	public getName(): string {
 		return this.name;
 	}

@@ -2,7 +2,7 @@ export class Inventory {
 
 	private static instance: Inventory;
 
-	constructor() {
+	private Inventory() {
 		// TODO - implement Inventory.Inventory
 		return;
 	}

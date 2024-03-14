@@ -1,17 +1,17 @@
-import { Tracker } from "../classes/Tracker";
+import { Tracker } from "./Tracker.ts";
 
 export class DailyJournal extends Tracker {
 
 	private journalEntry: string;
 
-	constructor() {
-		super();
-		this.journalEntry = "";
+	public DailyJournal() {
+		// TODO - implement DailyJournal.DailyJournal
+		return;
 	}
 
-	public storeData(journalEntry: string): null {
+	public storeData(journalEntry: string) {
 		// TODO - implement DailyJournal.storeData
-		return null;
+		return "";
 	}
 
 	public write() {

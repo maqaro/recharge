@@ -1,4 +1,4 @@
-import { Employee } from "../classes/Employee";
+import { Employee } from "./Employee.ts";
 
 export class Leaderboard {
 

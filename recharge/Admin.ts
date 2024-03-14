@@ -1,8 +1,8 @@
-import { Mentor } from "../classes/Mentor";
-import { Resources } from "../classes/Resources";
-import { Unapproved } from "../classes/Unapproved";
-import { Meal } from "../classes/Meal";
-import { User } from "../classes/User";
+import { Mentor } from "./Mentor.ts";
+import { Resources } from "./Resources.ts";
+import { Unapproved } from "./Unapproved.ts";
+import { Meal } from "./Meal.ts";
+import { User } from "./User.ts";
 
 export class Admin extends User {
 

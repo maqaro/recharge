@@ -1,5 +1,5 @@
-import { Mentor } from "../classes/Mentor";
-import { Employee } from "../classes/Employee";
+import { Mentor } from "./Mentor.ts";
+import { Employee } from "./Employee.ts";
 
 export class MentorForm {
 
@@ -10,14 +10,9 @@ export class MentorForm {
 	private topic: string;
 	private mentalHeathScore: number;
 
-	constructor(employee: Employee) {
+	public MentorForm(employee: Employee) {
 		// TODO - implement MentorForm.MentorForm
-		this.employee = employee
-		this.description = ""
-		this.desiredSpeciality=""
-		this.preferences="";
-		this.topic="";
-		this.mentalHeathScore=0;
+		return new Employee();
 	}
 
 	public filterMentors(): Mentor[] {

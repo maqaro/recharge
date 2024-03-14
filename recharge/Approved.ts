@@ -1,9 +1,9 @@
-import { Mentor } from "../classes/Mentor";
-import { ResourcesType } from "../classes/ResourcesType"
+import { Mentor } from "./Mentor.ts";
+import { ResourcesType } from "./ResourcesType.ts"
 
-export class Approved extends ResourcesType{
+export class Approved extends ResourcesType {
 
-	private recommended = false;
+	private recommended: boolean;
 	private recommendedBy?: Mentor;
 
 	public getRecommended(): Mentor|undefined{

@@ -1,4 +1,4 @@
-import { Mentor } from "../classes/Mentor";
+import { Mentor } from "./Mentor.ts";
 
 export class GuidedSession {
 
@@ -6,12 +6,6 @@ export class GuidedSession {
 	private name: string;
 	private duration: number;
 	private recommendedBy?: Mentor;
-
-	constructor(){
-		this.ID = "";
-		this.name="";
-		this.duration=0;
-	}
 
 	public getID(): string {
 		// TODO - implement GuidedSession.getID

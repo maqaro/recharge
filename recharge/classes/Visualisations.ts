@@ -1,2 +1,5 @@
-class Visualisations extends GuidedSession {
+import { GuidedSession } from "../classes/GuidedSession";
+
+
+export class Visualisations extends GuidedSession {
 }

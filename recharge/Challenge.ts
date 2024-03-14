@@ -4,11 +4,8 @@ export class Challenge {
 	private goal: string;
 	private type: string;
 
-	constructor() {
+	public Challenge() {
 		// TODO - implement Challenge.Challenge
-		this.duration = 0;
-		this.goal = "";
-		this.type = "";
 		return;
 	}
 

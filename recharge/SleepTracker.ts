@@ -1,12 +1,12 @@
-import { Tracker } from "../classes/Tracker";
+import { Tracker } from "./Tracker.ts";
 
 export class SleepTracker extends Tracker {
 
 	private totalSleep: number;
 
-	constructor() {
-		super();
-		this.totalSleep=0;
+	public sleepTracker() {
+		// TODO - implement SleepTracker.sleepTracker
+		return;
 	}
 
 	public addStartTime(start: Date) {
@@ -19,9 +19,9 @@ export class SleepTracker extends Tracker {
 		return;
 	}
 
-	public storeData(totalSleep: number): null {
+	public storeData(totalSleep: number) {
 		// TODO - implement SleepTracker.storeData
-		return null;
+		return;
 	}
 
 }

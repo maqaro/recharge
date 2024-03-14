@@ -1,12 +1,12 @@
-import { Tracker } from "../classes/Tracker";
+import { Tracker } from "./Tracker.ts";
 
 export class WaterTracker extends Tracker {
 
 	private totalWaterIntake: number;
 
-	constructor() {
-		super();
-		this.totalWaterIntake=0;
+	public WaterTracker() {
+		// TODO - implement WaterTracker.WaterTracker
+		return;
 	}
 
 	public addWaterIntake(intake: number) {
@@ -14,9 +14,9 @@ export class WaterTracker extends Tracker {
 		return;
 	}
 
-	public storeData(totalWaterIntake: number): null {
+	public storeData(totalWaterIntake: number) {
 		// TODO - implement WaterTracker.storeData
-		return null;
+		return;
 	}
 
 	public pushNotification(): string {

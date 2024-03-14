@@ -1,12 +1,12 @@
-import { Tracker } from "../classes/Tracker";
+import { Tracker } from "./Tracker.ts";
 
 export class EmotionTracker extends Tracker {
 
 	private colourEmotion: string;
 
-	constructor() {
-		super();
-		this.colourEmotion = "";
+	public EmotionTracker() {
+		// TODO - implement EmotionTracker.EmotionTracker
+		return;
 	}
 
 	public storeData(colour: String) {

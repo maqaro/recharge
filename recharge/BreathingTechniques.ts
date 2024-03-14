@@ -1,4 +1,4 @@
-import { GuidedSession } from "../classes/GuidedSession";
+import { GuidedSession } from "./GuidedSession";
 
 export class BreathingTechniques extends GuidedSession {
 }

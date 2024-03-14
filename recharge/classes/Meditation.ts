@@ -1,2 +1,4 @@
-class Meditation extends GuidedSession {
+import { GuidedSession } from "../classes/GuidedSession";
+
+export class Meditation extends GuidedSession {
 }

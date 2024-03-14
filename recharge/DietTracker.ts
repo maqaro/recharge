@@ -1,38 +1,38 @@
-import { Tracker } from "../classes/Tracker";
-import { Meal } from "../classes/Meal";
+import { Tracker } from "./Tracker.ts";
+import { Meal } from "./Meal.ts";
 
 export class DietTracker extends Tracker {
 
 	private totalCalorieIntake: number;
 
-	constructor() {
-		super();
-		this.totalCalorieIntake=0;
+	public DietTracker() {
+		// TODO - implement DietTracker.DietTracker
+		return;
 	}
 
 	public addMeal(name: string, calories: number): Meal {
 		// TODO - implement DietTracker.addMeal
-		return new Meal("meal", 0);
+		return new Meal();
 	}
 
-	public storeData(meal: Meal): null {
+	public storeData(meal: Meal) {
 		// TODO - implement DietTracker.storeData
-		return null;
+		return;
 	}
 
 	public searchMeal(mealName: string): Meal[] {
 		// TODO - implement DietTracker.searchMeal
-		return [new Meal("meal", 0), new Meal("meal", 0)];
+		return [new Meal(), new Meal()];
 	}
 
 	public selectMeal(options: Meal[]): Meal {
 		// TODO - implement DietTracker.selectMeal
-		return new Meal("meal", 0);
+		return new Meal();
 	}
 
 	public EditMeal(meal: Meal): Meal {
 		// TODO - implement DietTracker.EditMeal
-		return new Meal("meal", 0);
+		return new Meal();
 	}
 
 	public RemoveMeal(meal: Meal) {

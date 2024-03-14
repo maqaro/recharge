@@ -1,2 +1,2 @@
-abstract class ResourcesType {
+export abstract class ResourcesType {
 }

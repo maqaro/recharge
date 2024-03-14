@@ -1,4 +1,8 @@
-class InventorySearchResult {
+import { ExerciseRoutine } from "../classes/ExerciseRoutine";
+import { GuidedSession } from "../classes/GuidedSession";
+import { Approved } from "../classes/Approved";
+
+export class InventorySearchResult {
 
 	public searchExercisebyDuration(duration: number): ExerciseRoutine[] {
 		// TODO - implement InventorySearchResult.searchExercisebyDuration

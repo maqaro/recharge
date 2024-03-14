@@ -34,6 +34,7 @@
     "expo-linking": "~6.2.2",
     "expo-constants": "~15.4.5"
 
+
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

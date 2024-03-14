@@ -15,9 +15,7 @@ import EmailForm from './app';
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <StackNavigator />
-    </NavigationContainer>
+    <Opening/>
 
   );
 }

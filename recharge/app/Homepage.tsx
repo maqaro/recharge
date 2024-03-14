@@ -2,15 +2,17 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
 
 
 export default function Homepage() {
+    const router = useRouter();
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
           <TouchableOpacity
             style={styles.square}
-            onPress={() => navigation.navigate("Trackers")}
+            onPress={() => router.navigate('/Trackers')}
           >
             <Text style={styles.text}>Trackers</Text>
           </TouchableOpacity>

@@ -21,7 +21,7 @@ export default function EmailForm() {
     if (error) {
       Alert.alert(error.message);
     } else {
-      router.navigate('/Home')
+      router.navigate('/Homepage')
     }
     setLoading(false);
   }

@@ -4,7 +4,7 @@ import { Input, Button } from 'react-native-elements';
 import { color } from 'react-native-elements/dist/helpers';
 import { LinearGradient } from 'expo-linear-gradient';
 
- 
+ //jh
 
 const Login = () => {
   return (

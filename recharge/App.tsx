@@ -3,10 +3,18 @@ import EmailForm from './components/EmailForm';
 import Opening from './components/Opening';
 import Login from './components/LogIn';
 import SignUp from './components/SignUp';
+import HomePage from './components/Homepage';
+import StackNavigator from './components/StackNavigator';
+import { NavigationContainer } from '@react-navigation/native';
+import Trackers from './components/Trackers';
+
 
 export default function App() {
   return (
-    <Login/>
+    <NavigationContainer>
+      <StackNavigator />
+    </NavigationContainer>
+
   );
 }
 

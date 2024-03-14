@@ -33,7 +33,7 @@ const Login = () => {
           buttonStyle={styles.button} 
           titleStyle={{color: '#b7410e'}}
           />
-        <Text style={styles.or}> ----------------------------------- OR -----------------------------------</Text>
+        <Text style={styles.or}> ------------------------------- OR ------------------------------</Text>
         <Button 
           title="Sign up" 
           buttonStyle={styles.button}

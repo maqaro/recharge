@@ -9,9 +9,9 @@ export class EmotionTracker extends Tracker {
 		this.colourEmotion = "";
 	}
 
-	public storeData(colour: String) {
+	public storeData(colour: String): null {
 		// TODO - implement EmotionTracker.storeData
-		return;
+		return null;
 	}
 
 	public selectEmotion() {

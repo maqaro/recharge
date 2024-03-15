@@ -9,7 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 const Login = () => {
   return (
     <View style={styles.container}>
-      <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%'}}>
+      <LinearGradient colors={['#1A7373', '#E37B60']} style={{height:'100%'}}>
         <View style={styles.textContainer}>
         <Text style={styles.welcomeText}>Welcome</Text>
         <Text style={styles.backText}>Back!</Text>

@@ -1,69 +1,170 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, ScrollView, TouchableOpacity, Text, Image } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Trackers = () => (
-  <ScrollView contentContainerStyle={styles.scrollContainer}>
-    <TouchableOpacity style={[styles.rectangle, styles.rectangle1]} onPress={() => console.log('Rectangle 1 clicked')}>
-      <Text style={styles.text}>Rectangle 1</Text>
+  
+  
+  <View style={styles.container}>
+  <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+   
+
+  {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
+
+    <TouchableOpacity style={[styles.Step]} onPress={() => console.log('Rectangle 1 clicked')}>
+      <Text style={styles.text}>Step Tracker</Text>
+      <Image source={require('./Step.png')} style={styles.StepPic}/>
     </TouchableOpacity>
-    <TouchableOpacity style={[styles.rectangle, styles.rectangle2]} onPress={() => console.log('Rectangle 2 clicked')}>
-      <Text style={styles.text}>Rectangle 2</Text>
+    <TouchableOpacity style={[styles.Exercise]} onPress={() => console.log('Rectangle 2 clicked')}>
+      <Text style={styles.text}>Exercise Tracker</Text>
+      <Image source={require('./ExerciseTracker.png')} style={styles.ExerciseTPic}/>
     </TouchableOpacity>
-    <TouchableOpacity style={[styles.rectangle, styles.rectangle3]} onPress={() => console.log('Rectangle 3 clicked')}>
-      <Text style={styles.text}>Rectangle 3</Text>
+    <TouchableOpacity style={[styles.Water]} onPress={() => console.log('Rectangle 3 clicked')}>
+      <Text style={styles.text}>Water Tracker</Text>
+      <Image source={require('./Water.png')} style={styles.WaterPic}/>
     </TouchableOpacity>
-    <TouchableOpacity style={[styles.rectangle, styles.rectangle4]} onPress={() => console.log('Rectangle 4 clicked')}>
-      <Text style={styles.text}>Rectangle 4</Text>
+    <TouchableOpacity style={[styles.Sleep]} onPress={() => console.log('Rectangle 4 clicked')}>
+      <Text style={styles.text}>Sleep Tracker</Text>
+      <Image source={require('./Sleep.png')} style={styles.SleepPic}/>
     </TouchableOpacity>
-    <TouchableOpacity style={[styles.rectangle, styles.rectangle5]} onPress={() => console.log('Rectangle 5 clicked')}>
-      <Text style={styles.text}>Rectangle 5</Text>
+    <TouchableOpacity style={[styles.Emotion]} onPress={() => console.log('Rectangle 5 clicked')}>
+      <Text style={styles.text}>Emotion Tracker</Text>
+      <Image source={require('./Emotion.jpg')} style={styles.EmotionPic}/>
     </TouchableOpacity>
-    <TouchableOpacity style={[styles.rectangle, styles.rectangle6]} onPress={() => console.log('Rectangle 6 clicked')}>
-      <Text style={styles.text}>Rectangle 6</Text>
+    <TouchableOpacity style={[styles.Diet]} onPress={() => console.log('Rectangle 6 clicked')}>
+      <Text style={styles.text}>Diet Tracker</Text>
+      <Image source={require('./Diet.png')} style={styles.DietPic}/>
     </TouchableOpacity>
-  </ScrollView>
+  {/* </ScrollView> */}
+  </LinearGradient>
+  </View>
+  
 );
 
 const styles = StyleSheet.create({
-  scrollContainer: {
+  container: {
     flexGrow: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    //backgroundColor: 
-    paddingVertical: 8,
-    width:'100%',
-    height: '100%',
   },
-  rectangle: {
-    width: '100%',
-    height: '20%',
-    marginBottom: 10,
+
+
+  Step: {
+    marginTop: '25%',
+    width: '45%',
+    aspectRatio: 1,
+    margin: '2.5%', 
+    backgroundColor: 'white',
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
   },
+
+  StepPic: {
+    width: 200,
+    height: 80,
+    marginTop: 20,
+    resizeMode: 'contain',
+  },
+
+  Exercise: {
+    width: '45%',
+    aspectRatio: 1, // Square aspect ratio
+    margin: '2.5%', // Adjust as needed
+    backgroundColor: 'white',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: '52%',
+    marginTop: '-48%',
+  },
+
+  ExerciseTPic: {
+    width: 160,
+    height: 90,
+    marginTop: 5,
+    resizeMode: 'contain',
+  },
+
+  Water: {
+    width: '45%',
+    aspectRatio: 1, // Square aspect ratio
+    margin: '2.5%', // Adjust as needed
+    backgroundColor: 'white',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  WaterPic: {
+    width: 200,
+    height: 70,
+    marginTop: 20,
+    resizeMode: 'contain',
+  },
+
+  Sleep: {
+    width: '45%',
+    aspectRatio: 1, // Square aspect ratio
+    margin: '2.5%', // Adjust as needed
+    backgroundColor: 'white',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: '52%',
+    marginTop: '-48%',
+  },
+
+  SleepPic: {
+    width: 200,
+    height: 70,
+    marginTop: 17,
+    resizeMode: 'contain',
+  },
+
+  Emotion: {
+    width: '45%',
+    aspectRatio: 1, // Square aspect ratio
+    margin: '2.5%', // Adjust as needed
+    backgroundColor: 'white',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  EmotionPic: {
+    width: 200,
+    height: 90,
+    marginTop: 15,
+    resizeMode: 'contain',
+  },
+
+  Diet: {
+    width: '45%',
+    aspectRatio: 1, // Square aspect ratio
+    margin: '2.5%', // Adjust as needed
+    backgroundColor: 'white',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: '52%',
+    marginTop: '-48%',
+  },
+
+  DietPic: {
+    width: 200,
+    height: 100,
+    marginTop: 0,
+    resizeMode: 'contain',
+  },
+
   text: {
-    color: 'white',
     fontWeight: 'bold',
+    color: '#e37b60',
   },
-  rectangle1: {
-    backgroundColor: 'gray',
-  },
-  rectangle2: {
-    backgroundColor: 'gray',
-  },
-  rectangle3: {
-    backgroundColor: 'gray',
-  },
-  rectangle4: {
-    backgroundColor: 'gray',
-  },
-  rectangle5: {
-    backgroundColor: 'gray',
-  },
-  rectangle6: {
-    backgroundColor: 'gray',
-  },
+
 });
 
 export default Trackers;

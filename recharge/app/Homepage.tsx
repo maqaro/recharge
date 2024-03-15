@@ -11,6 +11,7 @@ export default function Homepage() {
     return (
         <View style={styles.container}>
           <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+
           <TouchableOpacity
             style={styles.square1}
             onPress={() => router.navigate('/Trackers')}
@@ -19,13 +20,15 @@ export default function Homepage() {
             <Image source={require('./Tracker.png')} style={styles.TrackerPic}/>
           </TouchableOpacity>
           <TouchableOpacity
+
             style={styles.square2}
-            //onPress={() => ........
+            //onPress={() => 
           >
             <Text style={styles.text}>Daily Journal</Text>
             <Image source={require('./Journal.png')} style={styles.JournalPic}/>
           </TouchableOpacity>
           <TouchableOpacity
+
             style={styles.square3}
             //onPress={() => .........
           >
@@ -33,6 +36,7 @@ export default function Homepage() {
             <Image source={require('./Match.png')} style={styles.MatchPic}/>
           </TouchableOpacity>
           <TouchableOpacity
+
             style={styles.square4}
             //onPress={() => ........
           >
@@ -40,6 +44,7 @@ export default function Homepage() {
             <Image source={require('./MentalCare.jpg')} style={styles.MentalCarePic}/>
           </TouchableOpacity>
           <TouchableOpacity
+
             style={styles.square5}
             //onPress={() => h........
           >
@@ -47,6 +52,7 @@ export default function Homepage() {
             <Image source={require('./Exercise.png')} style={styles.ExercisePic}/>
           </TouchableOpacity>
           <TouchableOpacity
+
             style={styles.square6}
             //onPress={() => ..........
           >

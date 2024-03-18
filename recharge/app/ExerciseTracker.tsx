@@ -4,10 +4,13 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet,TextInput, ScrollView} from 'react-native';
 import { useRouter } from 'expo-router';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { supabase } from '../lib/supabase';
-import { Picker } from '@react-native-picker/picker';
 import { LinearGradient } from 'expo-linear-gradient';
-
+type DropdownItem = {
+    label: string;
+    value: string;
+};
 
 const ExerciseTracker: React.FC = () => {
     const router = useRouter();
@@ -15,13 +18,43 @@ const ExerciseTracker: React.FC = () => {
     const handleStartExercise = () => {
         // Logic for starting exercise
     };
-    const [selectedExercise, setSelectedExercise] = React.useState<string | null>(null);
+
     const [searchQuery, setSearchQuery] = React.useState('');
     const [exerciseData, setExerciseData] = React.useState<string[]>([]);
+    const [selectedSet, setSelectedSet] = React.useState('1'); // Default to 1 set
+    const [reps, setReps] = React.useState(''); // Reps input by the user
+    const [weight, setWeight] = React.useState(''); // Weight input by the user
+
+    const [open, setOpen] = React.useState(false);
+    const [value, setValue] = React.useState(null);
+    const [items, setItems] = React.useState<DropdownItem[]>([]);
+
+
+    
     
     const filteredExercises = exerciseData.filter(exercise =>
         exercise.toLowerCase().includes(searchQuery.toLowerCase())
     );
+    React.useEffect(() => {
+        const fetchExerciseData = async () => {
+            let { data: exercise, error } = await supabase
+                .from('exercise')
+                .select('Exercise_Name');
+            if (error) {
+                console.error('Error fetching exercise data:', error);
+            } else {
+                if (exercise) {
+                    const formattedItems: DropdownItem[] = exercise.map((item: any) => ({
+                        label: item.Exercise_Name,
+                        value: item.Exercise_Name,
+                    }));
+                    setItems(formattedItems);
+                }
+            }
+        };
+
+        fetchExerciseData();
+    }, []);
     
 
     React.useEffect(() => {
@@ -49,20 +82,34 @@ const ExerciseTracker: React.FC = () => {
                 style={styles.background}
             >
                 <Text style={styles.title}>Exercise Tracker</Text>
-                <Text style={styles.title}>Exercise Tracker</Text>
-                <TextInput
-                    style={styles.searchInput}
-                    placeholder="Search for an exercise"
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
+
+                <DropDownPicker
+                    open={open}
+                    onOpen={() => setOpen(true)}
+                    onClose={() => setOpen(false)}
+                    value={value}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setValue}
+                    setItems={setItems}
+                    searchable={true}
+                    searchPlaceholder="Search exercises..."
+                    placeholder="Select an exercise"
+                    zIndex={1000} // Ensure dropdown appears above other content; adjust as needed
+                    zIndexInverse={1000} // Adjust as needed based on your layout
+                    //onChangeValue={(value:string) => {
+                    //    console.log("Selected exercise:", value);
+                        // Additional logic for when an item is selected
+                    //}}
                 />
-                <ScrollView style={styles.exerciseList}>
-                    {filteredExercises.map((exercise, index) => (
-                        <TouchableOpacity key={index} style={styles.exerciseItem}>
-                            <Text style={styles.exerciseText}>{exercise}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>
+                <TextInput style={styles.textInputStyle} placeholder="Reps" onChangeText={setReps} value={reps} />
+
+                
+                
+
+                <TextInput style={styles.textInputStyle} placeholder="Weight" onChangeText={setWeight} value={weight} />
+
+
 
  
 
@@ -109,16 +156,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#4c669f',
     },
-    dropdown: {
-        width: '80%', // Example width
-        height: 50, // Set a fixed height for the picker
-        backgroundColor: 'white', // Assuming you want a white background
-        borderColor: '#ccc', // Light grey border
-        borderWidth: 1, // One pixel border width
-        borderRadius: 5, // Rounded corners
-        marginBottom: 20, 
-        
-    },
     // Existing styles...
     searchInput: {
         height: 40,
@@ -140,6 +177,23 @@ const styles = StyleSheet.create({
     },
     exerciseText: {
         color: 'black',
+    },
+        pickerStyle: {
+        height: 50,
+        width: 150,
+        backgroundColor: '#ffffff',
+        marginBottom: 20,
+    },
+    textInputStyle: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        width: '100%',
+        textAlign: 'center',
+        backgroundColor: 'white',
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 10,
     },
 });
 

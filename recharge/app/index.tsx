@@ -5,7 +5,7 @@ import { Alert, StyleSheet, View, Image, Text } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { supabase } from '../lib/supabase';
 import { useRouter } from 'expo-router';
-
+        
 export default function EmailForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,12 +18,12 @@ export default function EmailForm() {
       email: email,
       password: password,
     });
-
-    if (error) {
-      Alert.alert(error.message);
-    } else {
-      router.navigate('/Homepage')
-    }
+    router.navigate('/Homepage')
+    //if (error) {
+    //  Alert.alert(error.message);
+    //} else {
+    //  router.navigate('/Homepage')
+    //}
     setLoading(false);
   }
 

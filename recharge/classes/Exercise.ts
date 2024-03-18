@@ -1,15 +1,41 @@
 export class Exercise {
 
 	private name: string;
-	private intensity: number;
+	private intensity: number; //rating from 1-10
 	private muscleGroup: string;
-	private duration: number;
+	private equipment: string;
+	private sets: number;
+	private reps: number;
+	private weight: number;
+
 
 	constructor() {
 		this.name = "";
 		this.intensity = 0;
 		this.muscleGroup = "";
-		this.duration = 0;
+		this.equipment = "";
+		this.sets = 0;
+		this.reps = 0;
+		this.weight = 0;
+	}
+	public setSets(sets: number) {
+		this.sets = sets;
+	}
+
+	public setReps(reps: number) {
+		this.reps = reps;
+	}
+	public setWeight(weight: number) {
+		this.weight = weight;
+	}
+	public getSets(): number {
+		return this.sets;
+	}
+	public getReps(): number {
+		return this.reps;
+	}
+	public getWeight(): number {
+		return this.weight;
 	}
 
 	public setName(name: string) {
@@ -24,8 +50,8 @@ export class Exercise {
 		this.muscleGroup = muscleGroup;
 	}
 
-	public setDuration(duration: number) {
-		this.duration = duration;
+	public setEquipment(equipment: string) {
+		this.equipment = equipment;
 	}
 
 	public getName(): string {
@@ -40,8 +66,8 @@ export class Exercise {
 		return this.muscleGroup;
 	}
 
-	public getDuration(): number {
-		return this.duration;
+	public getEquipment(): string {
+		return this.equipment;
 	}
 
 }

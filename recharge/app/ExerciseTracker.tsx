@@ -102,11 +102,9 @@ const ExerciseTracker: React.FC = () => {
                         // Additional logic for when an item is selected
                     //}}
                 />
+
                 <TextInput style={styles.textInputStyle} placeholder="Reps" onChangeText={setReps} value={reps} />
-
-                
-                
-
+                <TextInput style={styles.textInputStyle} placeholder="Sets" onChangeText={setSelectedSet} value={weight} />
                 <TextInput style={styles.textInputStyle} placeholder="Weight" onChangeText={setWeight} value={weight} />
 
 

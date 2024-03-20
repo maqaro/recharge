@@ -1,171 +1,81 @@
-
-// ExerciseTracker.tsx
-
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet,TextInput, ScrollView} from 'react-native';
-import { useRouter } from 'expo-router';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { supabase } from '../lib/supabase';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Alert } from 'react-native';
+import { router } from 'expo-router';
+import { supabase } from '../lib/supabase';
 
-type DropdownItem = {
-    label: string;
-    value: string;
-};
-let globalUser = null;
+const ExerciseTracker = () => {
+    const [userid, setUserid] = React.useState<string | undefined>();
+    const [exercises, setExercises] = React.useState<any[]>([]);
 
-
-
-const ExerciseTracker: React.FC = () => {
-    const router = useRouter();
-
-    
-
-    const [searchQuery, setSearchQuery] = React.useState('');
-    const [exerciseData, setExerciseData] = React.useState<string[]>([]);
-    const [set, setSet] = React.useState(""); // Default to 1 set
-    const [reps, setReps] = React.useState("1"); // Reps input by the user
-    const [weight, setWeight] = React.useState(''); // Weight input by the user
-    const [userid, setUserid] = React.useState<string | undefined>(); // Change initial value to undefined
-    const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState(null);
-    const [items, setItems] = React.useState<DropdownItem[]>([]);
-    const [exercise, setExercise] = React.useState('');
-
-    const handleLogExercise = async () => {
-        console.log(`Logging exercise: ${exercise}, Reps: ${reps}, Sets: ${set}, Weight: ${weight}, User: ${userid}`);
-        const date = new Date().toISOString(); // Current date-time in ISO format
-    
-        try {
-            const { data, error } = await supabase
-                .from('exercisetracker')
-                .insert([
-                    { exercise_id: exercise, user_id: userid, sets: set, reps: reps, weights: weight, date: date },
-                ]);
-    
-            if (error) throw error;
-    
-            console.log('Added exercise log:', data);
-            Alert.alert("Success", "Exercise logged successfully!");
-            // Handle successful insertion, e.g., updating UI or state to reflect the new exercise log
-        } catch (error) {
-            console.error('Error logging exercise:', error);
-            // Handle any errors, e.g., displaying an error message to the user
-        }
-    }
-
-    const filteredExercises = exerciseData.filter(exercise =>
-        exercise.toLowerCase().includes(searchQuery.toLowerCase())
-    );
     React.useEffect(() => {
+        const fetchUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            console.log("User:", user?.id);
+            setUserid(user?.id);
+            return user?.id;
+        };
+
+        
         const fetchExerciseData = async () => {
-            let { data: exercise, error } = await supabase
-                .from('exercise')
-                .select('id,Exercise_Name');
+            let { data: exercisetracker, error } = await supabase
+            .from('exercisetracker')
+            .select(`
+                *, 
+                exercise:exercise_id (id, Exercise_Name)
+            `)
+            .eq('user_id', userid);
+
+        
             if (error) {
                 console.error('Error fetching exercise data:', error);
             } else {
-                if (exercise) {
-                    const formattedItems: DropdownItem[] = exercise.map((item: any) => ({
-                        label: item.Exercise_Name, // This is what the user sees
-                        value: item.id,
-                    }));
-                    setItems(formattedItems);
+                if (exercisetracker) {
+                    setExercises(exercisetracker);
+                    console.log(exercisetracker);
+                    console.log(exercises);
+
                 }
             }
         };
 
-    
-        fetchExerciseData();
         fetchUser();
+        fetchExerciseData();
     }, []);
-    
-    
-    
-    const fetchUser = async () => {
-        const { data: { user } } = await supabase.auth.getUser();
-        console.log("User:", user?.id);
-        setUserid(user?.id);
-        return user?.id;
-    };
+
 
 
 
     return (
         <View style={styles.container}>
-            <LinearGradient
-                colors={['#4c669f', '#3b5998', '#192f6a']}
-                style={styles.background}
-            >
-                <Text style={styles.title}>Exercise Tracker for {userid}</Text>
 
-                <DropDownPicker
-                    open={open}
-                    onOpen={() => setOpen(true)}
-                    onClose={() => setOpen(false)}
-                    value={value}
-                    items={items}
-                    setOpen={setOpen}
-                    setValue={setValue}
-                    setItems={setItems}
-                    searchable={true}
-                    searchPlaceholder="Search exercises..."
-                    placeholder="Select an exercise"
-                    zIndex={1000} // Ensure dropdown appears above other content; adjust as needed
-                    zIndexInverse={1000} // Adjust as needed based on your layout
-                    onChangeValue={(selectedId) => {
-                        console.log("Selected exercise ID:", selectedId);
-                        setExercise(selectedId || '');
-
-                        const selectedExerciseName = items.find(item => item.value === selectedId)?.label;
-                        console.log("Selected exercise name:", selectedExerciseName);
-                    }}
-                />
-
-
-                <TextInput style={styles.textInputStyle} placeholder="Reps" onChangeText={setReps} value={reps} />
-                <TextInput style={styles.textInputStyle} placeholder="Sets or time" onChangeText={setSet} value={set} />
-                <TextInput style={styles.textInputStyle} placeholder="Weight" onChangeText={setWeight} value={weight} />
-
-
-
- 
-
-                <TouchableOpacity
+            <Text style={styles.title}>Exercise Tracker</Text>
+            <TouchableOpacity
                     style={styles.button}
-                    onPress={handleLogExercise}
+                    onPress={() => router.navigate('/ExerciseLogger')}
                 >
-                    <Text style={styles.buttonText}>Log Exercise</Text>
-                </TouchableOpacity>
-
-
-            </LinearGradient>
+                    <Text style={styles.buttonText}>Log new Exercise</Text>
+            </TouchableOpacity>
+            
+            {/* Add your components and logic here */}
         </View>
     );
 };
 
-
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
-        justifyContent: 'center',
+        padding: 20,
         alignItems: 'center',
-    },
-    background: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: 'white',
-        marginBottom: 20,
+        marginBottom: 16,
     },
     button: {
-        backgroundColor: 'white',
+        backgroundColor: 'black',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
@@ -174,45 +84,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#4c669f',
-    },
-    // Existing styles...
-    searchInput: {
-        height: 40,
-        width: '80%',
-        backgroundColor: 'white',
-        borderRadius: 5,
-        padding: 10,
-        color: 'black',
-        marginBottom: 20,
-    },
-    exerciseList: {
-        width: '80%',
-    },
-    exerciseItem: {
-        backgroundColor: 'white',
-        padding: 10,
-        borderRadius: 5,
-        marginBottom: 10,
-    },
-    exerciseText: {
-        color: 'black',
-    },
-        pickerStyle: {
-        height: 50,
-        width: 150,
-        backgroundColor: '#ffffff',
-        marginBottom: 20,
-    },
-    textInputStyle: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        width: '100%',
-        textAlign: 'center',
-        backgroundColor: 'white',
-        padding: 10,
-        borderRadius: 5,
-        marginBottom: 10,
     },
 });
 

@@ -7,31 +7,54 @@ import { useRouter } from 'expo-router';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { supabase } from '../lib/supabase';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Alert } from 'react-native';
+
 type DropdownItem = {
     label: string;
     value: string;
 };
+let globalUser = null;
+
+
 
 const ExerciseTracker: React.FC = () => {
     const router = useRouter();
 
-    const handleStartExercise = () => {
-        // Logic for starting exercise
-    };
+    
 
     const [searchQuery, setSearchQuery] = React.useState('');
     const [exerciseData, setExerciseData] = React.useState<string[]>([]);
-    const [selectedSet, setSelectedSet] = React.useState('1'); // Default to 1 set
-    const [reps, setReps] = React.useState(''); // Reps input by the user
+    const [set, setSet] = React.useState(""); // Default to 1 set
+    const [reps, setReps] = React.useState("1"); // Reps input by the user
     const [weight, setWeight] = React.useState(''); // Weight input by the user
-
+    const [userid, setUserid] = React.useState<string | undefined>(); // Change initial value to undefined
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(null);
     const [items, setItems] = React.useState<DropdownItem[]>([]);
+    const [exercise, setExercise] = React.useState('');
 
+    const handleLogExercise = async () => {
+        console.log(`Logging exercise: ${exercise}, Reps: ${reps}, Sets: ${set}, Weight: ${weight}, User: ${userid}`);
+        const date = new Date().toISOString(); // Current date-time in ISO format
+    
+        try {
+            const { data, error } = await supabase
+                .from('exercisetracker')
+                .insert([
+                    { exercise_id: exercise, user_id: userid, sets: set, reps: reps, weights: weight, date: date },
+                ]);
+    
+            if (error) throw error;
+    
+            console.log('Added exercise log:', data);
+            Alert.alert("Success", "Exercise logged successfully!");
+            // Handle successful insertion, e.g., updating UI or state to reflect the new exercise log
+        } catch (error) {
+            console.error('Error logging exercise:', error);
+            // Handle any errors, e.g., displaying an error message to the user
+        }
+    }
 
-    
-    
     const filteredExercises = exerciseData.filter(exercise =>
         exercise.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -39,41 +62,35 @@ const ExerciseTracker: React.FC = () => {
         const fetchExerciseData = async () => {
             let { data: exercise, error } = await supabase
                 .from('exercise')
-                .select('Exercise_Name');
+                .select('id,Exercise_Name');
             if (error) {
                 console.error('Error fetching exercise data:', error);
             } else {
                 if (exercise) {
                     const formattedItems: DropdownItem[] = exercise.map((item: any) => ({
-                        label: item.Exercise_Name,
-                        value: item.Exercise_Name,
+                        label: item.Exercise_Name, // This is what the user sees
+                        value: item.id,
                     }));
                     setItems(formattedItems);
                 }
             }
         };
 
+    
         fetchExerciseData();
+        fetchUser();
     }, []);
     
+    
+    
+    const fetchUser = async () => {
+        const { data: { user } } = await supabase.auth.getUser();
+        console.log("User:", user?.id);
+        setUserid(user?.id);
+        return user?.id;
+    };
 
-    React.useEffect(() => {
-        const fetchExerciseData = async () => {
-            let { data: exercise, error } = await supabase
-                .from('exercise')
-                .select('Exercise_Name');
-            console.log(exercise);
-            if (error) {
-                console.error('Error fetching exercise data:', error);
-            } else {
-                if (exercise) {
-                    setExerciseData(exercise.map((item: any) => item.Exercise_Name));
-                }
-            }
-        };
 
-        fetchExerciseData();
-    }, []);
 
     return (
         <View style={styles.container}>
@@ -81,7 +98,7 @@ const ExerciseTracker: React.FC = () => {
                 colors={['#4c669f', '#3b5998', '#192f6a']}
                 style={styles.background}
             >
-                <Text style={styles.title}>Exercise Tracker</Text>
+                <Text style={styles.title}>Exercise Tracker for {userid}</Text>
 
                 <DropDownPicker
                     open={open}
@@ -97,14 +114,18 @@ const ExerciseTracker: React.FC = () => {
                     placeholder="Select an exercise"
                     zIndex={1000} // Ensure dropdown appears above other content; adjust as needed
                     zIndexInverse={1000} // Adjust as needed based on your layout
-                    //onChangeValue={(value:string) => {
-                    //    console.log("Selected exercise:", value);
-                        // Additional logic for when an item is selected
-                    //}}
+                    onChangeValue={(selectedId) => {
+                        console.log("Selected exercise ID:", selectedId);
+                        setExercise(selectedId || '');
+
+                        const selectedExerciseName = items.find(item => item.value === selectedId)?.label;
+                        console.log("Selected exercise name:", selectedExerciseName);
+                    }}
                 />
 
+
                 <TextInput style={styles.textInputStyle} placeholder="Reps" onChangeText={setReps} value={reps} />
-                <TextInput style={styles.textInputStyle} placeholder="Sets" onChangeText={setSelectedSet} value={weight} />
+                <TextInput style={styles.textInputStyle} placeholder="Sets or time" onChangeText={setSet} value={set} />
                 <TextInput style={styles.textInputStyle} placeholder="Weight" onChangeText={setWeight} value={weight} />
 
 
@@ -113,9 +134,9 @@ const ExerciseTracker: React.FC = () => {
 
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={handleStartExercise}
+                    onPress={handleLogExercise}
                 >
-                    <Text style={styles.buttonText}>Start Exercise</Text>
+                    <Text style={styles.buttonText}>Log Exercise</Text>
                 </TouchableOpacity>
 
 

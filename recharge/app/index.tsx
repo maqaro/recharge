@@ -19,11 +19,11 @@ export default function EmailForm() {
       password: password,
     });
     router.navigate('/Homepage')
-    //if (error) {
-    //  Alert.alert(error.message);
-    //} else {
-    //  router.navigate('/Homepage')
-    //}
+    if (error) {
+     Alert.alert(error.message);
+    } else {
+     router.navigate('/Homepage')
+    }
     setLoading(false);
   }
 

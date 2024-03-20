@@ -1,13 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { router, useRouter } from 'expo-router';
 
 const Trackers = () => (
   <ScrollView contentContainerStyle={styles.scrollContainer}>
     <TouchableOpacity style={[styles.rectangle, styles.rectangle1]} onPress={() => console.log('Rectangle 1 clicked')}>
       <Text style={styles.text}>Rectangle 1</Text>
     </TouchableOpacity>
-    <TouchableOpacity style={[styles.rectangle, styles.rectangle2]} onPress={() => console.log('Rectangle 2 clicked')}>
-      <Text style={styles.text}>Rectangle 2</Text>
+    <TouchableOpacity style={[styles.rectangle, styles.rectangle2]} onPress={() => router.navigate('/StepTracker')}>
+      <Text style={styles.text}>Step Tracker</Text>
     </TouchableOpacity>
     <TouchableOpacity style={[styles.rectangle, styles.rectangle3]} onPress={() => console.log('Rectangle 3 clicked')}>
       <Text style={styles.text}>Rectangle 3</Text>

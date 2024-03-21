@@ -33,26 +33,36 @@ const EmotionTracker: React.FC = () => {
                 <TouchableOpacity style={[styles.imageContainer]} onPress={() => handleEmotionSelect('Terrible')}>
                     <Image source={require('./Mood1.png')} style={styles.image}/>
                     <Text style={styles.terrible}>Terrible</Text>
+                <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
+                    <Image source={require('./images/Mood1.png')} style={styles.image}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.imageContainer]} onPress={() => handleEmotionSelect('Sad')}>
                     <Image source={require('./Mood2.png')} style={styles.image}/>
                     <Text style={styles.sad}>Sad</Text>
+                <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
+                    <Image source={require('./images/Mood2.png')} style={styles.image}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.imageContainer]} onPress={() => handleEmotionSelect('Okay')}>
                     <Image source={require('./Mood3.png')} style={styles.image}/>
                     <Text style={styles.okay}>Okay</Text>
+                <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
+                    <Image source={require('./images/Mood3.png')} style={styles.image}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.imageContainer]} onPress={() => handleEmotionSelect('Happy')}>
                     <Image source={require('./Mood4.png')} style={styles.image}/>
                     <Text style={styles.happy}>Happy</Text>
+                <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
+                    <Image source={require('./images/Mood4.png')} style={styles.image}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.imageContainer]} onPress={() => handleEmotionSelect('Great')}>
                     <Image source={require('./Mood5.png')} style={styles.image}/>
                     <Text style={styles.great}>Great</Text>
+                <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
+                    <Image source={require('./images/Mood5.png')} style={styles.image}/>
                 </TouchableOpacity>
 
             </ScrollView>

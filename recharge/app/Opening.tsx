@@ -2,14 +2,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
 import { Button } from 'react-native-elements';
+import { useRouter } from 'expo-router';
 
 const Opening = () => {
+  const router = useRouter();
   return (
     <View>
     <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%'}}>
 
         <View style={styles.logoContainer}>
-            <Image source={require('./Logo.jpg')} style={styles.logo}/>
+            <Image source={require('./images/Logo.jpg')} style={styles.logo}/>
         </View>
 
         <View>
@@ -20,18 +22,21 @@ const Opening = () => {
 
       
         <View style={styles.buttonContainer}>
-            <Button
+          <Button
             title="Sign in"
             buttonStyle={styles.button}
             containerStyle={styles.buttonWrapper}
             titleStyle={styles.buttonText} 
-            />
-            <Button
+            onPress={() => router.navigate('/LogIn')}
+          />
+          <Button
             title="Sign up"
             buttonStyle={styles.button}
             containerStyle={styles.buttonWrapper}
             titleStyle={styles.buttonText} 
-            />
+            onPress={() => router.navigate('/SignUp')}   
+          />
+          
         </View>
     </LinearGradient>
     </View>

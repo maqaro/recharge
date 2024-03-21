@@ -1,13 +1,35 @@
 // SignUp.tsx
-import React from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import React, { useState } from 'react';
+import { Alert,View, StyleSheet, Image, Text, ScrollView } from 'react-native';
 import { Input, Button } from 'react-native-elements';
+import { supabase } from '../lib/supabase';
+import { useRouter } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const SignUp = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  async function signUpWithEmail() {
+    setLoading(true);
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    });
+
+    if (error) Alert.alert(error.message);
+    if (!data.session) Alert.alert('Please check your inbox for email verification!');
+    setLoading(false);
+  }
   return (
+    <ScrollView contentContainerStyle={styles.scrollView}>
+      <LinearGradient colors={['#1A7373', '#E37B60']} style={{height:'100%'}}>
     <View style={styles.container}>
+    
       <View style={styles.logoContainer}>
-        <Image source={require('./Logo.jpg')} style={styles.logo} />
+        <Image source={require('./images/Logo.jpg')} style={styles.logo} />
       </View>
       <Text style={styles.title}>RECHARGE</Text>
       <View style={styles.textContainer}>
@@ -16,51 +38,67 @@ const SignUp = () => {
       </View>
       <View style={styles.formContainer}>
 
-      <Input
-          placeholder="Username"
-          leftIcon={{ type: 'font-awesome', name: 'user', color: 'white' }}
-          inputStyle={styles.inputText}
-          inputContainerStyle={styles.inputContainer}
-          placeholderTextColor="white"
-        />
         <Input
-          placeholder="Email"
-          leftIcon={{ type: 'font-awesome', name: 'envelope', color: 'white' }}
-          inputStyle={styles.inputText}
-          inputContainerStyle={styles.inputContainer}
-          placeholderTextColor="white"
-        />
-        <Input
-          placeholder="Password"
-          secureTextEntry
-          leftIcon={{ type: 'font-awesome', name: 'lock', color: 'white' }}
-          inputStyle={styles.inputText}
-          inputContainerStyle={styles.inputContainer}
-          placeholderTextColor="white"
-        />
-        <Button
-          title="Sign Up"
-          buttonStyle={[styles.button1, { backgroundColor: 'white' }]}
-          titleStyle={{ color: '#b7410e' }}
-        />
-        
-        <Text style={styles.oldaccount}>Already have an account?</Text>
-        
-        <Button
-          title="Login"
-          buttonStyle={[styles.button, { backgroundColor: 'white' }]}
-          titleStyle={{ color: '#b7410e' }}
-        />
+            placeholder="Username"
+            leftIcon={{ type: 'font-awesome', name: 'user', color: 'white' }}
+            inputStyle={styles.inputText}
+            inputContainerStyle={styles.inputContainer}
+            placeholderTextColor="white"
+          />
+          <Input
+            label='Email'
+            placeholder="email@address.com"
+            leftIcon={{ type: 'font-awesome', name: 'envelope', color: 'white' }}
+            onChangeText={setEmail}
+            value={email}
+            inputStyle={styles.inputText}
+            inputContainerStyle={styles.inputContainer}
+            placeholderTextColor="white"
+            autoCapitalize='none'
+          />
+          <Input
+            label="Password"
+            placeholder="Password"
+            onChangeText={setPassword}
+            value={password}
+            secureTextEntry
+            leftIcon={{ type: 'font-awesome', name: 'lock', color: 'white' }}
+            inputStyle={styles.inputText}
+            inputContainerStyle={styles.inputContainer}
+            placeholderTextColor="white"
+            autoCapitalize='none'
+          />
+          <Button
+            title="Sign Up"
+            loading={loading}
+            onPress={signUpWithEmail}
+            buttonStyle={[styles.button1, { backgroundColor: 'white' }]}
+            titleStyle={{ color: '#b7410e' }}
+          />
+
+          <Text style={styles.oldaccount}>Already have an account?</Text>
+          
+          <Button
+            title="Login"
+            onPress={() => router.navigate('/LogIn')}
+            buttonStyle={[styles.button, { backgroundColor: 'white' }]}
+            titleStyle={{ color: '#b7410e' }}
+          />
       </View>
+      
     </View>
+    </LinearGradient>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#007373',
   },
   logoContainer: {
     alignItems: 'center',

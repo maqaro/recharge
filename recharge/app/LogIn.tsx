@@ -1,59 +1,94 @@
-import React from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Image, Text,Alert, ScrollView } from 'react-native';
 import { Input, Button } from 'react-native-elements';
-import { color } from 'react-native-elements/dist/helpers';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
+import { supabase } from '../lib/supabase';
 
  //jh
 
 const Login = () => {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  async function signInWithEmail() {
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+
+    if (error) {
+      Alert.alert(error.message);
+    } else {
+      router.navigate('/Homepage')
+    }
+    setLoading(false);
+  }
   return (
-    <View style={styles.container}>
-      <LinearGradient colors={['#1A7373', '#E37B60']} style={{height:'100%'}}>
-        <View style={styles.textContainer}>
-        <Text style={styles.welcomeText}>Welcome</Text>
-        <Text style={styles.backText}>Back!</Text>
-        </View>
-      <View style={styles.formContainer}>
-        <Input
-          placeholder="   Username"
-          leftIcon={{ type: 'font-awesome', name: 'user', color: 'white' }}
-          inputContainerStyle={styles.username}
-          placeholderTextColor='white'
-        />
+    <ScrollView contentContainerStyle={styles.scrollView}>
+      <View style={styles.container}>
+        <LinearGradient colors={['#1A7373', '#E37B60']} style={{height:'100%'}}>
+          <View style={styles.textContainer}>
+            <Text style={styles.welcomeText}>Welcome</Text>
+            <Text style={styles.backText}>Back!</Text>
+          </View>
+          <View style={styles.formContainer}>
+            <Input
+              label='Email'
+              placeholder="   Email"
+              leftIcon={{ type: 'font-awesome', name: 'envelope', color: 'white' }}
+              onChangeText={setEmail}
+              value={email}
+              inputContainerStyle={styles.username}
+              placeholderTextColor='white'
+            />
 
-        <Input
-          placeholder="   Password"
-          secureTextEntry
-          leftIcon={{ type: 'font-awesome', name: 'lock', color:'white' }}
-          inputContainerStyle={styles.inputContainer}
-          placeholderTextColor='white'
-        />
+            <Input
+              label="Password"
+              onChangeText={setPassword}
+              value={password}
+              placeholder="   Password"
+              secureTextEntry
+              leftIcon={{ type: 'font-awesome', name: 'lock', color:'white' }}
+              inputContainerStyle={styles.inputContainer}
+              placeholderTextColor='white'
+              autoCapitalize='none'
+            />
 
-        <Text style={styles.forgot}>Forgot Password?</Text>
-        <Button
-          title="Login"
-          buttonStyle={styles.LoginButton}
-          titleStyle={{color: '#b7410e'}}
-        />
+            <Text style={styles.forgot}>Forgot Password?</Text>
+            <Button
+              title="Login"
+              buttonStyle={styles.LoginButton}
+              titleStyle={{color: '#b7410e'}}
+              onPress={signInWithEmail}
+            />
 
-        <Text style={styles.or}> ------------------------------- OR ------------------------------</Text>
+            <Text style={styles.or}> ------------------------------- OR ------------------------------</Text>
 
-        <Button
-          title="Sign up"
-          buttonStyle={styles.SignupButton}
-          titleStyle={{color: '#b7410e'}}
-         />
-
+            <Button
+              title="Sign up"
+              onPress={() => router.navigate('/SignUp')}
+              buttonStyle={styles.SignupButton}
+              titleStyle={{color: '#b7410e'}}
+            />
+          </View>
+        </LinearGradient>
       </View>
-    </LinearGradient>
-    </View>
+    </ScrollView>
   );
 };
 
  
 
 const styles = StyleSheet.create({
+
+  scrollView: {
+    flexGrow: 1,
+  },
 
   container: {
     flex: 1,

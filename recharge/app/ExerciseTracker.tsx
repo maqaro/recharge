@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { supabase } from '../lib/supabase';
@@ -19,7 +19,7 @@ const ExerciseTracker = () => {
             .from('exercisetracker')
             .select(` 
                 *, 
-                exercise:exercise_id (id, Exercise_Name)
+                exercise:exercise_id (id, Exercise_Name,muscle_gp,Exercise_Image)
             `)
             .eq('user_id', user?.id);
             console.log("User ID:", user?.id);
@@ -28,6 +28,7 @@ const ExerciseTracker = () => {
                 console.error('Error fetching exercise data:', error);
             } else {
                 if (exercisetracker) {
+                    console.log(exercisetracker);
                     const groupedByDate = exercisetracker.reduce((acc, cur) => {
                         // Assuming 'cur.date' exists and is a string representing the date
                         const date = cur.date;
@@ -62,22 +63,27 @@ const ExerciseTracker = () => {
                     <Text style={styles.buttonText}>Log new Exercise</Text>
             </TouchableOpacity>
             <ScrollView style={styles.scrollView}>
-                {Object.entries(exercises).map(([date, exercisesForDate]) => (
-                    <View key={date} style={styles.dateContainer}>
-                        <Text style={styles.dateText}>{date}</Text>
-                        {exercisesForDate.map((exercise:any) => (
-                            <View key={exercise.id} style={styles.exerciseContainer}>
-                                <Text style={styles.exerciseName}>{exercise.exercise.Exercise_Name}</Text>
-                                <View style={styles.detailsRow}>
-                                    <Text style={styles.detail}>Sets: {exercise.sets}</Text>
-                                    <Text style={styles.detail}>Reps: {exercise.reps}</Text>
-                                    <Text style={styles.detail}>Weight: {exercise.weights}kg</Text>
-                                </View>
+            {Object.entries(exercises).sort(([date1], [date2]) => date2.localeCompare(date1)).map(([date, exercisesForDate]) => (
+                <View key={date} style={styles.dateContainer}>
+                    <Text style={styles.dateText}>{date}</Text>
+                    {exercisesForDate.map((exercise:any) => (
+                        <View key={exercise.id} style={styles.exerciseContainer}>
+                            <Text style={styles.exerciseName}>{exercise.exercise.Exercise_Name}</Text>
+                            <View style={styles.detailsRow}>
+                                <Text style={styles.detail1}>Muscle Group: {exercise.exercise.muscle_gp}</Text>
+                                <Text style={styles.detail}>Sets: {exercise.sets}</Text>
+                                <Text style={styles.detail}>Reps: {exercise.reps}</Text>
+                                <Text style={styles.detail}>Weight: {exercise.weights}kg</Text>
+                                <Image
+                                    source={{ uri: exercise.exercise.Exercise_Image }}
+                                    style={styles.image}
+                                />
                             </View>
-                        ))}
-                    </View>
-                ))}
-            </ScrollView>           
+                        </View>
+                    ))}
+                </View>
+            ))}
+        </ScrollView>          
             {/* Add your components and logic here */}
         </View>
         
@@ -85,13 +91,18 @@ const ExerciseTracker = () => {
 };
 
 const styles = StyleSheet.create({
+    image: {
+        width: 300, // Adjust the width as needed
+        height: 200, // Adjust the height as needed
+        resizeMode: 'contain', // This ensures the image scales correctly within the given dimensions
+    },
     scrollView: {
         flex: 1,
         backgroundColor: '#F5FCFF',
     },
     dateContainer: {
         marginVertical: 8,
-        paddingHorizontal: 16,
+        paddingHorizontal: 32,
     },
     dateText: {
         fontSize: 18,
@@ -120,12 +131,17 @@ const styles = StyleSheet.create({
         marginBottom: 4,
     },
     detailsRow: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
         marginTop: 4,
     },
     detail: {
         fontSize: 14,
+        color: '#666',
+    },
+    detail1: {
+        fontSize: 16,
+        fontWeight: 'bold',
         color: '#666',
     },
     container: {

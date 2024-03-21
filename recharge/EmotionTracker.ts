@@ -1,4 +1,4 @@
-// import { Tracker } from "./Tracker.ts";
+import { Tracker } from "./Tracker.ts";
 import { supabase } from './lib/supabase';
 
 export class EmotionTracker extends Tracker {
@@ -20,25 +20,4 @@ export class EmotionTracker extends Tracker {
 		return;
 	}
 
-// export const storeEmotion = async (userId: string, emotion: string) => {
-// 	try {
-// 		const { data, error } = await supabase.from('emotiontracker').insert([
-// 			{
-				
-// 				user_id: userId,
-// 				emotion_colour: emotion,
-// 				tracked_date: new Date().toISOString(),
-// 			},
-// 		]);
-	
-// 		if (error) {
-// 			throw new Error(error.message);
-// 		}
-	
-// 		return data;
-// 	} catch (error: any) {
-// 		throw new Error('Error storing emotion: ' + error.message);
-// 	}
-};
-
-// }
+}

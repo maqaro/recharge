@@ -8,24 +8,21 @@ const ExerciseTracker = () => {
     const [userid, setUserid] = React.useState<string | undefined>();
     const [exercises, setExercises] = React.useState<any[]>([]);
 
-    React.useEffect(() => {
-        const fetchUser = async () => {
+    React.useEffect(() => {        
+        const fetchExerciseData = async () => {
+
             const { data: { user } } = await supabase.auth.getUser();
             console.log("User:", user?.id);
             setUserid(user?.id);
-            return user?.id;
-        };
 
-        
-        const fetchExerciseData = async () => {
             let { data: exercisetracker, error } = await supabase
             .from('exercisetracker')
-            .select(`
+            .select(` 
                 *, 
                 exercise:exercise_id (id, Exercise_Name)
             `)
-            .eq('user_id', userid);
-
+            .eq('user_id', user?.id);
+            console.log("User ID:", user?.id);
         
             if (error) {
                 console.error('Error fetching exercise data:', error);
@@ -33,13 +30,12 @@ const ExerciseTracker = () => {
                 if (exercisetracker) {
                     setExercises(exercisetracker);
                     console.log(exercisetracker);
-                    console.log(exercises);
+                    console.log("exercise", exercises);
 
                 }
             }
         };
 
-        fetchUser();
         fetchExerciseData();
     }, []);
 

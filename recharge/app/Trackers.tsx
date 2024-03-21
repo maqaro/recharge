@@ -9,50 +9,101 @@ const Trackers = () => {
   const router = useRouter();
   return(
   
-    <View style={styles.container}>
     <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
-    
-    {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
+      <ScrollView contentContainerStyle={styles.scrollView}>
+      
+      <View style={styles.container}>
+      
+      
+      {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
 
-      <TouchableOpacity style={[styles.Step]} onPress={() => console.log('Rectangle 1 clicked')}>
-        <Text style={styles.text}>Step Tracker</Text>
-        <Image source={require('./images/Step.png')} style={styles.StepPic}/>
-      </TouchableOpacity>
-      <TouchableOpacity style={[styles.Exercise]} onPress={() => console.log('Rectangle 2 clicked')}>
-        <Text style={styles.text}>Exercise Tracker</Text>
-        <Image source={require('./images/ExerciseTracker.png')} style={styles.ExerciseTPic}/>
-      </TouchableOpacity>
-      <TouchableOpacity style={[styles.Water]} onPress={() => console.log('Rectangle 3 clicked')}>
-        <Text style={styles.text}>Water Tracker</Text>
-        <Image source={require('./images/Water.png')} style={styles.WaterPic}/>
-      </TouchableOpacity>
-      <TouchableOpacity style={[styles.Sleep]} onPress={() => console.log('Rectangle 4 clicked')}>
-        <Text style={styles.text}>Sleep Tracker</Text>
-        <Image source={require('./images/Sleep.png')} style={styles.SleepPic}/>
-      </TouchableOpacity>
-      <TouchableOpacity style={[styles.Emotion]} onPress={() => router.navigate('/EmotionTracker')}>
-        <Text style={styles.text}>Emotion Tracker</Text>
-        <Image source={require('./images/Emotion.jpg')} style={styles.EmotionPic}/>
-      </TouchableOpacity>
-      <TouchableOpacity style={[styles.Diet]} onPress={() => console.log('Rectangle 6 clicked')}>
-        <Text style={styles.text}>Diet Tracker</Text>
-        <Image source={require('./images/Diet.png')} style={styles.DietPic}/>
-      </TouchableOpacity>
-    {/* </ScrollView> */}
+        <TouchableOpacity style={[styles.Step1]} onPress={() => console.log('Rectangle 1 clicked')}>
+          <Text style={styles.text}>Step Tracker</Text>
+          <Image source={require('./images/Step.png')} style={styles.StepPic}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.Exercise1]} onPress={() => console.log('Rectangle 2 clicked')}>
+          <Text style={styles.text}>Exercise Tracker</Text>
+          <Image source={require('./images/ExerciseTracker.png')} style={styles.ExerciseTPic}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.Water1]} onPress={() => console.log('Rectangle 3 clicked')}>
+          <Text style={styles.text}>Water Tracker</Text>
+          <Image source={require('./images/Water.png')} style={styles.WaterPic}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.Sleep1]} onPress={() => console.log('Rectangle 4 clicked')}>
+          <Text style={styles.text}>Sleep Tracker</Text>
+          <Image source={require('./images/Sleep.png')} style={styles.SleepPic}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.Emotion1]} onPress={() => router.navigate('/EmotionTracker')}>
+          <Text style={styles.text}>Emotion Tracker</Text>
+          <Image source={require('./images/Emotion.jpg')} style={styles.EmotionPic}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.Diet1]} onPress={() => console.log('Rectangle 6 clicked')}>
+          <Text style={styles.text}>Diet Tracker</Text>
+          <Image source={require('./images/Diet.png')} style={styles.DietPic}/>
+        </TouchableOpacity>
+      {/* </ScrollView> */}
+      
+      </View>
+    
+      </ScrollView>
     </LinearGradient>
-    </View>
   )
   
 };
 
 const styles = StyleSheet.create({
-  container: {
+  scrollView: {
     flexGrow: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
+
+  container: {
+    flex: 1,
+  
+  },
+
+  Step1:{
+    backgroundColor: 'white',
+    borderRadius: 20,
+    marginTop: '10%',
+    marginLeft: '2.5%',
+    marginRight:'2.5%'
+  },
+  Exercise1:{
+    backgroundColor: 'white',
+    borderRadius: 20,
+    marginTop: '10%',
+    marginLeft: '2.5%',
+    marginRight:'2.5%'
+  },
+  Water1:{
+    backgroundColor: 'white',
+    borderRadius: 20,
+    marginTop: '10%',
+    marginLeft: '2.5%',
+    marginRight:'2.5%'
+  },
+  Sleep1:{
+    backgroundColor: 'white',
+    borderRadius: 20,
+    marginTop: '10%',
+    marginLeft: '2.5%',
+    marginRight:'2.5%'
+  },
+  Emotion1:{
+    backgroundColor: 'white',
+    borderRadius: 20,
+    marginTop: '10%',
+    marginLeft: '2.5%',
+    marginRight:'2.5%'
+  },
+  Diet1:{
+    backgroundColor: 'white',
+    borderRadius: 20,
+    marginTop: '10%',
+    marginLeft: '2.5%',
+    marginRight:'2.5%'
+  },
+
 
 
   Step: {

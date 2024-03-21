@@ -27,7 +27,7 @@ const Opening = () => {
             buttonStyle={styles.button}
             containerStyle={styles.buttonWrapper}
             titleStyle={styles.buttonText} 
-            onPress={() => router.navigate('/LogIn')}
+            onPress={() => router.navigate('/LogIn')} //NEED TO CHANGE TO LogIn!!!!!!!!!!!!!!!!!!!!!!!!
           />
           <Button
             title="Sign up"

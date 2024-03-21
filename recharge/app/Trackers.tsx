@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, TouchableOpacity, Text, Image } from 'react-native';
+import { StyleSheet, View, ScrollView, TouchableOpacity, Text, Image, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -18,8 +18,10 @@ const Trackers = () => {
       {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
 
         <TouchableOpacity style={[styles.Step1]} onPress={() => console.log('Rectangle 1 clicked')}>
+        <ImageBackground style={[styles.imagebackground]} source={require('./images/sleep.jpg')}>
           <Text style={styles.text}>Step Tracker</Text>
           <Image source={require('./images/Step.png')} style={styles.StepPic}/>
+        </ImageBackground>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.Exercise1]} onPress={() => console.log('Rectangle 2 clicked')}>
           <Text style={styles.text}>Exercise Tracker</Text>
@@ -59,6 +61,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   
+  },
+
+  imagebackground: {
+    borderRadius:20,
   },
 
   Step1:{

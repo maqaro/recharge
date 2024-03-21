@@ -9,57 +9,80 @@ const Trackers = () => {
   const router = useRouter();
   return(
   
-    <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
-      <ScrollView contentContainerStyle={styles.scrollView}>
-      
-      <View style={styles.container}>
-      
-      
-      {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
+    <View style={styles.container}>
+      <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+        <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={true}>
+        
+        
+        
+        
+        {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
 
-        <TouchableOpacity style={[styles.Step1]} onPress={() => console.log('Rectangle 1 clicked')}>
-        <ImageBackground style={[styles.imagebackground]} source={require('./images/sleep.jpg')}>
-          <Text style={styles.text}>Step Tracker</Text>
-          <Image source={require('./images/Step.png')} style={styles.StepPic}/>
-        </ImageBackground>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.Exercise1]} onPress={() => console.log('Rectangle 2 clicked')}>
-          <Text style={styles.text}>Exercise Tracker</Text>
-          <Image source={require('./images/ExerciseTracker.png')} style={styles.ExerciseTPic}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.Water1]} onPress={() => console.log('Rectangle 3 clicked')}>
-          <Text style={styles.text}>Water Tracker</Text>
-          <Image source={require('./images/Water.png')} style={styles.WaterPic}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.Sleep1]} onPress={() => console.log('Rectangle 4 clicked')}>
-          <Text style={styles.text}>Sleep Tracker</Text>
-          <Image source={require('./images/Sleep.png')} style={styles.SleepPic}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.Emotion1]} onPress={() => router.navigate('/EmotionTracker')}>
-          <Text style={styles.text}>Emotion Tracker</Text>
-          <Image source={require('./images/Emotion.jpg')} style={styles.EmotionPic}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.Diet1]} onPress={() => console.log('Rectangle 6 clicked')}>
-          <Text style={styles.text}>Diet Tracker</Text>
-          <Image source={require('./images/Diet.png')} style={styles.DietPic}/>
-        </TouchableOpacity>
-      {/* </ScrollView> */}
+          <TouchableOpacity style={[styles.Step1]} onPress={() => console.log('Rectangle 1 clicked')}>
+          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/water_bg.jpg')}>
+            <Text style={styles.text}>Step Tracker</Text>
+            <Image source={require('./images/Step.png')} style={styles.StepPic}/>
+          </ImageBackground>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.Exercise1]} onPress={() => console.log('Rectangle 2 clicked')}>
+          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/exercise_bg.jpg')}>
+            <Text style={styles.text}>Exercise Tracker</Text>
+            <Image source={require('./images/ExerciseTracker.png')} style={styles.ExerciseTPic}/>
+            </ImageBackground>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.Water1]} onPress={() => console.log('Rectangle 3 clicked')}>
+          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/water_bg.jpg')}>
+            <Text style={styles.text}>Water Tracker</Text>
+            <Image source={require('./images/Water.png')} style={styles.WaterPic}/>
+            </ImageBackground>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.Sleep1]} onPress={() => console.log('Rectangle 4 clicked')}>
+          <ImageBackground imageStyle={{borderRadius: 20, }} source={require('./images/sleep_bg.jpg')}>
+            <Text style={styles.text}>Sleep Tracker</Text>
+            <Image source={require('./images/Sleep.png')} style={styles.SleepPic}/>
+            </ImageBackground>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.Emotion1]} onPress={() => router.navigate('/EmotionTracker')}>
+          <ImageBackground imageStyle={{borderRadius: 20, }} source={require('./images/water_bg.jpg')}>
+            <Text style={styles.text}>Emotion Tracker</Text>
+            <Image source={require('./images/Emotion.jpg')} style={styles.EmotionPic}/>
+            </ImageBackground>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.Diet1]} onPress={() => console.log('Rectangle 6 clicked')}>
+          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/meal_bg.jpg')}>
+            <Text style={styles.text}>Diet Tracker</Text>
+            <Image source={require('./images/Diet.png')} style={styles.DietPic}/>
+            </ImageBackground>
+          </TouchableOpacity>
+
+        {/* </ScrollView> */}
+        
+        
       
-      </View>
-    
-      </ScrollView>
-    </LinearGradient>
+        </ScrollView>
+        <Text>Hello</Text>
+      </LinearGradient>
+    </View>
   )
   
 };
 
 const styles = StyleSheet.create({
   scrollView: {
-    flexGrow: 1,
+    flexGrow: 2
+    
   },
 
   container: {
-    flex: 1,
+    flex: 0,
+    height: '100%',
+    justifyContent:'center',
+    alignItems:'center'
   
   },
 

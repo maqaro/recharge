@@ -15,23 +15,23 @@ const EmotionTracker = () => {
 
             <ScrollView contentContainerStyle={styles.scrollContainer} showsHorizontalScrollIndicator={true} horizontal> 
                 <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
-                    <Image source={require('./Mood1.png')} style={styles.image}/>
+                    <Image source={require('./images/Mood1.png')} style={styles.image}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
-                    <Image source={require('./Mood2.png')} style={styles.image}/>
+                    <Image source={require('./images/Mood2.png')} style={styles.image}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
-                    <Image source={require('./Mood3.png')} style={styles.image}/>
+                    <Image source={require('./images/Mood3.png')} style={styles.image}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
-                    <Image source={require('./Mood4.png')} style={styles.image}/>
+                    <Image source={require('./images/Mood4.png')} style={styles.image}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
-                    <Image source={require('./Mood5.png')} style={styles.image}/>
+                    <Image source={require('./images/Mood5.png')} style={styles.image}/>
                 </TouchableOpacity>
 
             </ScrollView>

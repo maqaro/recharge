@@ -17,7 +17,7 @@ export default function Homepage() {
             onPress={() => router.navigate('/Trackers')}
           >
             <Text style={styles.text}>Trackers</Text>
-            <Image source={require('./Tracker.png')} style={styles.TrackerPic}/>
+            <Image source={require('./images/Tracker.png')} style={styles.TrackerPic}/>
           </TouchableOpacity>
           <TouchableOpacity
 
@@ -25,7 +25,7 @@ export default function Homepage() {
             //onPress={() => 
           >
             <Text style={styles.text}>Daily Journal</Text>
-            <Image source={require('./Journal.png')} style={styles.JournalPic}/>
+            <Image source={require('./images/Journal.png')} style={styles.JournalPic}/>
           </TouchableOpacity>
           <TouchableOpacity
 
@@ -33,7 +33,7 @@ export default function Homepage() {
             //onPress={() => .........
           >
             <Text style={styles.text}>Mentor Match</Text>
-            <Image source={require('./Match.png')} style={styles.MatchPic}/>
+            <Image source={require('./images/Match.png')} style={styles.MatchPic}/>
           </TouchableOpacity>
           <TouchableOpacity
 
@@ -41,7 +41,7 @@ export default function Homepage() {
             //onPress={() => ........
           >
             <Text style={styles.text}>Mental Health Care</Text>
-            <Image source={require('./MentalCare.jpg')} style={styles.MentalCarePic}/>
+            <Image source={require('./images/MentalCare.jpg')} style={styles.MentalCarePic}/>
           </TouchableOpacity>
           <TouchableOpacity
 
@@ -49,7 +49,7 @@ export default function Homepage() {
             //onPress={() => h........
           >
             <Text style={styles.text}>Exercise Routines</Text>
-            <Image source={require('./Exercise.png')} style={styles.ExercisePic}/>
+            <Image source={require('./images/Exercise.png')} style={styles.ExercisePic}/>
           </TouchableOpacity>
           <TouchableOpacity
 
@@ -57,7 +57,7 @@ export default function Homepage() {
             //onPress={() => ..........
           >
             <Text style={styles.text}>Other Resources</Text>
-            <Image source={require('./Resources.png')} style={styles.ResourcesPic}/>
+            <Image source={require('./images/Resources.png')} style={styles.ResourcesPic}/>
           </TouchableOpacity>
         </LinearGradient>
         </View>

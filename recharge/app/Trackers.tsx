@@ -16,27 +16,27 @@ const Trackers = () => {
 
       <TouchableOpacity style={[styles.Step]} onPress={() => console.log('Rectangle 1 clicked')}>
         <Text style={styles.text}>Step Tracker</Text>
-        <Image source={require('./Step.png')} style={styles.StepPic}/>
+        <Image source={require('./images/Step.png')} style={styles.StepPic}/>
       </TouchableOpacity>
       <TouchableOpacity style={[styles.Exercise]} onPress={() => console.log('Rectangle 2 clicked')}>
         <Text style={styles.text}>Exercise Tracker</Text>
-        <Image source={require('./ExerciseTracker.png')} style={styles.ExerciseTPic}/>
+        <Image source={require('./images/ExerciseTracker.png')} style={styles.ExerciseTPic}/>
       </TouchableOpacity>
       <TouchableOpacity style={[styles.Water]} onPress={() => console.log('Rectangle 3 clicked')}>
         <Text style={styles.text}>Water Tracker</Text>
-        <Image source={require('./Water.png')} style={styles.WaterPic}/>
+        <Image source={require('./images/Water.png')} style={styles.WaterPic}/>
       </TouchableOpacity>
       <TouchableOpacity style={[styles.Sleep]} onPress={() => console.log('Rectangle 4 clicked')}>
         <Text style={styles.text}>Sleep Tracker</Text>
-        <Image source={require('./Sleep.png')} style={styles.SleepPic}/>
+        <Image source={require('./images/Sleep.png')} style={styles.SleepPic}/>
       </TouchableOpacity>
       <TouchableOpacity style={[styles.Emotion]} onPress={() => router.navigate('/EmotionTracker')}>
         <Text style={styles.text}>Emotion Tracker</Text>
-        <Image source={require('./Emotion.jpg')} style={styles.EmotionPic}/>
+        <Image source={require('./images/Emotion.jpg')} style={styles.EmotionPic}/>
       </TouchableOpacity>
       <TouchableOpacity style={[styles.Diet]} onPress={() => console.log('Rectangle 6 clicked')}>
         <Text style={styles.text}>Diet Tracker</Text>
-        <Image source={require('./Diet.png')} style={styles.DietPic}/>
+        <Image source={require('./images/Diet.png')} style={styles.DietPic}/>
       </TouchableOpacity>
     {/* </ScrollView> */}
     </LinearGradient>

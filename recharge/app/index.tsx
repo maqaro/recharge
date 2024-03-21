@@ -1,117 +1,101 @@
-
-import React, { useState } from 'react';
-
-import { Alert, StyleSheet, View, Image, Text } from 'react-native';
-import { Button, Input } from 'react-native-elements';
-import { supabase } from '../lib/supabase';
+import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { View, StyleSheet, Image, Text } from 'react-native';
+import { Button } from 'react-native-elements';
 import { useRouter } from 'expo-router';
 
-export default function EmailForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+const Opening = () => {
   const router = useRouter();
-
-  async function signInWithEmail() {
-    setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
-
-    if (error) {
-      Alert.alert(error.message);
-    } else {
-      router.navigate('/Homepage')
-    }
-    setLoading(false);
-  }
-
-  async function signUpWithEmail() {
-    setLoading(true);
-    const { data, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-
-    if (error) Alert.alert(error.message);
-    if (!data.session) Alert.alert('Please check your inbox for email verification!');
-    setLoading(false);
-  }
-
   return (
-    <View style={styles.container}>
+    <View>
+    <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%'}}>
 
-      <View style={styles.imageContainer}>
-              <Image source={require('./Logo.jpg')} style={styles.logo} />
-              <Text style={styles.rechargeText}>RECHARGE</Text>
-      </View>
+        <View style={styles.logoContainer}>
+            <Image source={require('./images/Logo.jpg')} style={styles.logo}/>
+        </View>
 
-      <View style={styles.background}>
+        <View>
+            <Text style={styles.rechargeText}>RECHARGE</Text>
+            <Text style={styles.subtitle}>Recharging your well-being</Text>
+        </View>
 
-        <Input
-          label="Email"
-          leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-          onChangeText={setEmail}
-          value={email}
-          placeholder="email@address.com"
-          autoCapitalize="none"
-         
-        style={styles.input}/>
-        <Input
-          label="Password"
-          leftIcon={{ type: 'font-awesome', name: 'lock' }}
-          onChangeText={setPassword}
-          value={password}
-          secureTextEntry
-          placeholder="Password"
-          autoCapitalize="none"
+
+      
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Sign in"
+            buttonStyle={styles.button}
+            containerStyle={styles.buttonWrapper}
+            titleStyle={styles.buttonText} 
+            onPress={() => router.navigate('/LogIn')}
+          />
+          <Button
+            title="Sign up"
+            buttonStyle={styles.button}
+            containerStyle={styles.buttonWrapper}
+            titleStyle={styles.buttonText} 
+            onPress={() => router.navigate('/SignUp')}   
+          />
           
-        style={styles.input}/>
-        <Button title="Sign in" loading={loading} onPress={signInWithEmail} buttonStyle={styles.button} containerStyle={styles.buttonContainer}/>
-        <Button title="Sign up" loading={loading} onPress={signUpWithEmail} buttonStyle={styles.button} containerStyle={styles.buttonContainer} />
+        </View>
+    </LinearGradient>
     </View>
-  </View>
-
   );
-}
+};
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    padding: 20,
   },
-  background: {
-    width: '80%',
-  },
-  gradient: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-  },
-  imageContainer: {
-    marginBottom: 20,
-  },
-  logo: {
-    width: 150,
-    height: 150,
-    resizeMode: 'contain',
-  },
-  input: {
-    width: '100%',
-  },
-  button: {
-    width: '50%',
-    marginBottom: 20,
-    alignItems: 'center', 
-  },
-  buttonContainer:{
+  logoContainer: {
     alignItems: 'center',
   },
-  rechargeText:{
-    fontSize: 24,
-    textAlign: 'center',
+  logo: {
+    width: 200,
+    height: 200,
+    marginTop: 50,
+    resizeMode: 'contain',
+  },
+  rechargeText: {
+    fontSize: 40,
+    fontWeight: 'normal',
     fontStyle: 'italic',
-  }
+    marginTop: 10,
+    color: 'white',
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginTop: 65,
+    marginBottom: 80,
+    color: 'white',
+  },
+  buttonContainer: {
+    width: '90%',
+    marginLeft: 15,
+    alignContent: 'center',
+  },
+  buttonWrapper: {
+    marginBottom: 20,
+    borderRadius: 20, 
+    overflow: 'hidden', 
+  },
+  button: {
+    borderRadius: 20, 
+    backgroundColor: 'white',
+    color: 'blue',
+    marginBottom: 30,
+  },
+  buttonText:{
+    color:'#b7410e',
+    marginTop: 5,
+    marginBottom: 5,
+  },
 });
+
+export default Opening;

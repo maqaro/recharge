@@ -19,7 +19,7 @@ const Trackers = () => {
         {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
 
           <TouchableOpacity style={[styles.Step1]} onPress={() => console.log('Rectangle 1 clicked')}>
-          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/step_bg.jpg')}>
+          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/StepCounter.png')}>
             <Text style={styles.text}>Step Tracker</Text>
             <Image source={require('./images/Step.png')} style={styles.StepPic}/>
           </ImageBackground>

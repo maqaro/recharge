@@ -2,12 +2,13 @@
 // ExerciseTracker.tsx
 
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet,TextInput, ScrollView} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet,TextInput, Image} from 'react-native';
 import { useRouter } from 'expo-router';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { supabase } from '../lib/supabase';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Alert } from 'react-native';
+import { useState } from 'react';
 
 type DropdownItem = {
     label: string;
@@ -22,16 +23,17 @@ const ExerciseLogger: React.FC = () => {
 
     
 
-    const [searchQuery, setSearchQuery] = React.useState('');
-    const [exerciseData, setExerciseData] = React.useState<string[]>([]);
-    const [set, setSet] = React.useState(""); // Default to 1 set
-    const [reps, setReps] = React.useState("1"); // Reps input by the user
-    const [weight, setWeight] = React.useState(''); // Weight input by the user
-    const [userid, setUserid] = React.useState<string | undefined>(); // Change initial value to undefined
-    const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState(null);
-    const [items, setItems] = React.useState<DropdownItem[]>([]);
-    const [exercise, setExercise] = React.useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [exerciseData, setExerciseData] = useState<string[]>([]);
+    const [set, setSet] = useState(""); // Default to 1 set
+    const [reps, setReps] = useState("1"); // Reps input by the user
+    const [weight, setWeight] = useState(''); // Weight input by the user
+    const [userid, setUserid] = useState<string | undefined>(); // Change initial value to undefined
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState<DropdownItem[]>([]);
+    const [exercise, setExercise] = useState('');
+    const [selectedExerciseImage, setSelectedExerciseImage] = useState('');
 
     const handleLogExercise = async () => {
         console.log(`Logging exercise: ${exercise}, Reps: ${reps}, Sets: ${set}, Weight: ${weight}, User: ${userid}`);
@@ -62,14 +64,15 @@ const ExerciseLogger: React.FC = () => {
         const fetchExerciseData = async () => {
             let { data: exercise, error } = await supabase
                 .from('exercise')
-                .select('id,Exercise_Name');
+                .select('id, Exercise_Name, Exercise_Image'); 
             if (error) {
                 console.error('Error fetching exercise data:', error);
             } else {
                 if (exercise) {
-                    const formattedItems: DropdownItem[] = exercise.map((item: any) => ({
-                        label: item.Exercise_Name, // This is what the user sees
+                    const formattedItems = exercise.map(item => ({
+                        label: item.Exercise_Name, 
                         value: item.id,
+                        image: item.Exercise_Image, 
                     }));
                     setItems(formattedItems);
                 }
@@ -99,6 +102,19 @@ const ExerciseLogger: React.FC = () => {
                 style={styles.background}
             >
                 <Text style={styles.title}>Exercise Logger</Text>
+                <View style={{ height: 15 }} />
+                <View>
+
+                    {selectedExerciseImage ? (
+                        <Image
+                            source={{ uri: selectedExerciseImage }}
+                            style={styles.exerciseImage}
+                        />
+                    ) : (
+                        <Text>Select an exercise to see the image.</Text>
+                    )}
+                </View>
+                <View style={{ height: 15 }} />
 
                 <DropDownPicker
                     open={open}
@@ -112,17 +128,26 @@ const ExerciseLogger: React.FC = () => {
                     searchable={true}
                     searchPlaceholder="Search exercises..."
                     placeholder="Select an exercise"
-                    zIndex={1000} // Ensure dropdown appears above other content; adjust as needed
-                    zIndexInverse={1000} // Adjust as needed based on your layout
+                    zIndex={1000} 
+                    zIndexInverse={1000} 
                     onChangeValue={(selectedId) => {
                         console.log("Selected exercise ID:", selectedId);
                         setExercise(selectedId || '');
-
-                        const selectedExerciseName = items.find(item => item.value === selectedId)?.label;
+                
+                        // Find the selected item based on the ID
+                        const selectedItem = items.find(item => item.value === selectedId);
+                        const selectedExerciseName = selectedItem?.label;
                         console.log("Selected exercise name:", selectedExerciseName);
+                
+                        // Find and set the selected exercise's image URL
+                        const selectedImage = selectedItem?.image; // Assuming your items include an 'image' property
+                        setSelectedExerciseImage(selectedImage || '');
                     }}
                 />
                 <View style={{ height: 15 }} />
+
+
+
 
                 <TextInput style={styles.textInputStyle} placeholder="Reps" onChangeText={setReps} value={reps} />
                 <TextInput style={styles.textInputStyle} placeholder="Sets or time" onChangeText={setSet} value={set} />
@@ -160,6 +185,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    exerciseImage: {
+        width: 300, 
+        height: 200,
+        resizeMode: 'contain',
+        borderRadius: 5,
     },
     background: {
         flex: 1,

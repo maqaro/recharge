@@ -29,7 +29,7 @@ const Login = () => {
     setLoading(false);
   }
   return (
-    <ScrollView contentContainerStyle={styles.scrollView}>
+   
       <View style={styles.container}>
         <LinearGradient colors={['#1A7373', '#E37B60']} style={{height:'100%'}}>
           <View style={styles.textContainer}>
@@ -38,23 +38,25 @@ const Login = () => {
           </View>
           <View style={styles.formContainer}>
             <Input
-              label='Email'
+              // label='Email'
+              // labelStyle={styles.labelStyle}
               placeholder="   Email"
               leftIcon={{ type: 'font-awesome', name: 'envelope', color: 'white' }}
               onChangeText={setEmail}
               value={email}
-              inputContainerStyle={styles.username}
+              inputContainerStyle={styles.email}
               placeholderTextColor='white'
             />
 
             <Input
-              label="Password"
+              // label="Password"
+              // labelStyle={styles.labelStyle}
               onChangeText={setPassword}
               value={password}
-              placeholder="   Password"
+              placeholder="    Password"
               secureTextEntry
-              leftIcon={{ type: 'font-awesome', name: 'lock', color:'white' }}
-              inputContainerStyle={styles.inputContainer}
+              leftIcon={{ type: 'font-awesome', name: 'lock', color:'white'}}
+              inputContainerStyle={styles.password}
               placeholderTextColor='white'
               autoCapitalize='none'
             />
@@ -63,22 +65,23 @@ const Login = () => {
             <Button
               title="Login"
               buttonStyle={styles.LoginButton}
-              titleStyle={{color: '#b7410e'}}
+              titleStyle={{color: '#b7410e', marginTop: 5, marginBottom: 5}}
               onPress={signInWithEmail}
             />
 
-            <Text style={styles.or}> ------------------------------- OR ------------------------------</Text>
+            <Text style={styles.or}> or </Text>
 
             <Button
               title="Sign up"
               onPress={() => router.navigate('/SignUp')}
               buttonStyle={styles.SignupButton}
-              titleStyle={{color: '#b7410e'}}
+              titleStyle={{color: '#b7410e', marginTop: 5, marginBottom: 5}}
+           
             />
           </View>
         </LinearGradient>
       </View>
-    </ScrollView>
+    
   );
 };
 
@@ -94,21 +97,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  logoContainer: {
-    alignItems: 'center',
-    marginTop: 50,
-  },
-
-  logo: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
-  },
-
   textContainer: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginTop: 40,
+    marginTop: 20,
     marginLeft: 10,
     marginBottom: 80,
   },
@@ -127,56 +119,65 @@ const styles = StyleSheet.create({
   },
 
   formContainer: {
-    marginTop: 35,
+    marginTop: 25,
     color:'white',
+    // marginLeft: 20,
+    // marginRight: 20,
   },
 
-  username:{
+  // labelStyle: {
+  //   color: 'black',
+  // },
+
+  email:{
     borderBottomColor: 'white',
-    marginBottom: 40,
+    marginBottom: 20,
+    borderBottomWidth: 1,
+    marginLeft: 20,
+    marginRight: 20,
   },
 
- 
-
-  inputContainer: {
+  password: {
     borderBottomColor: 'white',
+    borderBottomWidth: 1,
+    marginLeft: 20,
+    marginRight: 20,
   },
 
- 
 
   forgot: {
     textAlign: 'right',
-    marginRight: 10,
-    color:'#195353',
+    marginRight: 28,
+    color:'#303030',
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: 1,
     fontSize: 15,
+    marginBottom: 20,
   },
 
   or: {
     color:'white',
     marginTop: 10,
-    textAlign: 'center',
+    alignSelf: 'center',
+    fontSize: 15,
+
   },
 
   LoginButton: {
-    width: '30%',
+    width: '82%',
     marginTop: 80,
     borderRadius: 20,
     backgroundColor: 'white',
-    height: 50,
-    marginLeft: 143,
+    alignSelf: 'center',
   },
 
- 
 
   SignupButton: {
-    width: '30%',
+    width: '82%',
     marginTop: 10,
     borderRadius: 20,
     backgroundColor: 'white',
-    height: 50,
-    marginLeft: 143,
+    alignSelf: 'center',
   },
 
 });

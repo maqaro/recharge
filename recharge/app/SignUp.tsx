@@ -24,7 +24,7 @@ const SignUp = () => {
     setLoading(false);
   }
   return (
-    <ScrollView contentContainerStyle={styles.scrollView}>
+ 
       <LinearGradient colors={['#1A7373', '#E37B60']} style={{height:'100%'}}>
     <View style={styles.container}>
     
@@ -32,23 +32,26 @@ const SignUp = () => {
         <Image source={require('./images/Logo.jpg')} style={styles.logo} />
       </View>
       <Text style={styles.title}>RECHARGE</Text>
-      <View style={styles.textContainer}>
-        <Text style={styles.createText}>Create</Text>
-        <Text style={styles.accountText}>Account</Text>
-      </View>
+    
+      <Text style={styles.createAccountText}>Create Account</Text>
+      
       <View style={styles.formContainer}>
 
         <Input
-            placeholder="Username"
+            // label='Username'
+            // labelStyle={styles.labelStyle}
+            placeholder="   Username"
             leftIcon={{ type: 'font-awesome', name: 'user', color: 'white' }}
             inputStyle={styles.inputText}
             inputContainerStyle={styles.inputContainer}
             placeholderTextColor="white"
+            
           />
           <Input
-            label='Email'
-            placeholder="email@address.com"
-            leftIcon={{ type: 'font-awesome', name: 'envelope', color: 'white' }}
+            // label='Email'
+            // labelStyle={styles.labelStyle}
+            placeholder="  email@address.com"
+            leftIcon={{ type: 'font-awesome', name: 'envelope', color: 'white'}}
             onChangeText={setEmail}
             value={email}
             inputStyle={styles.inputText}
@@ -57,12 +60,13 @@ const SignUp = () => {
             autoCapitalize='none'
           />
           <Input
-            label="Password"
-            placeholder="Password"
+            // label="Password"
+            // labelStyle={styles.labelStyle}
+            placeholder="   Password"
             onChangeText={setPassword}
             value={password}
             secureTextEntry
-            leftIcon={{ type: 'font-awesome', name: 'lock', color: 'white' }}
+            leftIcon={{ type: 'font-awesome', name: 'lock', color: 'white'}}
             inputStyle={styles.inputText}
             inputContainerStyle={styles.inputContainer}
             placeholderTextColor="white"
@@ -73,7 +77,7 @@ const SignUp = () => {
             loading={loading}
             onPress={signUpWithEmail}
             buttonStyle={[styles.button1, { backgroundColor: 'white' }]}
-            titleStyle={{ color: '#b7410e' }}
+            titleStyle={{ color: '#b7410e', marginTop: 5, marginBottom: 5}}
           />
 
           <Text style={styles.oldaccount}>Already have an account?</Text>
@@ -82,78 +86,88 @@ const SignUp = () => {
             title="Login"
             onPress={() => router.navigate('/LogIn')}
             buttonStyle={[styles.button, { backgroundColor: 'white' }]}
-            titleStyle={{ color: '#b7410e' }}
+            titleStyle={{ color: '#b7410e', marginTop: 5, marginBottom: 5} }
           />
       </View>
       
     </View>
     </LinearGradient>
-    </ScrollView>
+
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    flexGrow: 1,
-  },
+
   container: {
     flex: 1,
     padding: 20,
   },
   logoContainer: {
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 20,
   },
   logo: {
-    width: 200,
-    height: 100,
+    width: 120,
+    height: 120,
     resizeMode: 'contain',
+    borderRadius: 20,
   },
   title: {
     color: 'white',
-    fontSize: 30,
+    fontSize: 25,
     textAlign: 'center',
-    fontStyle: 'italic',
     marginBottom: 10,
-  },
-  textContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginLeft: 20,
     marginTop: 10,
   },
-  createText: {
-    fontSize: 24,
-    color: 'white',
-  },
-  accountText: {
-    fontSize: 24,
+ 
+  createAccountText: {
+    fontSize: 18,
+    color: '#303030',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginTop: 40,
     marginLeft: 10,
-    color: 'white',
   },
+
   formContainer: {
-    marginTop: 30,
+    marginTop: 55,
   },
+
+  labelStyle: {
+    color: 'black',
+  },
+
   inputText: {
     color: 'white',
   },
   inputContainer: {
     marginBottom: 20,
     borderBottomColor: 'white',
+   
   },
   button1: {
-    width: '100%',
+    width: '90%',
     borderRadius: 20,
+    alignSelf: 'center',
+    marginTop: 15,
   },
   button: {
-    width: '100%',
+    width: '90%',
     borderRadius: 20,
+    alignSelf: 'center',
+    
   },
 
   oldaccount: {
-    marginTop: 30,
-    color: 'white',
+    marginTop: 15,
+    color: '#303030',
+    fontWeight: 'bold',
+    marginBottom: 15,
+    alignSelf: 'center',
   }
+
+
+
 });
 
 export default SignUp;

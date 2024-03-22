@@ -16,11 +16,10 @@ const Opening = () => {
 
         <View>
             <Text style={styles.rechargeText}>RECHARGE</Text>
-            <Text style={styles.subtitle}>Recharging your well-being</Text>
+            <Text style={styles.subtitle}>Recharging Your Well-Being</Text>
         </View>
 
 
-      
         <View style={styles.buttonContainer}>
           <Button
             title="Sign in"
@@ -57,13 +56,13 @@ const styles = StyleSheet.create({
   logo: {
     width: 200,
     height: 200,
-    marginTop: 50,
+    marginTop: 90,
     resizeMode: 'contain',
+    borderRadius: 20,
   },
   rechargeText: {
     fontSize: 40,
     fontWeight: 'normal',
-    fontStyle: 'italic',
     marginTop: 10,
     color: 'white',
     textAlign: 'center',
@@ -71,13 +70,13 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 20,
     textAlign: 'center',
-    marginTop: 65,
-    marginBottom: 80,
+    marginTop: 80,
+    marginBottom: 120,
     color: 'white',
   },
   buttonContainer: {
     width: '90%',
-    marginLeft: 15,
+    alignSelf: 'center',
     alignContent: 'center',
   },
   buttonWrapper: {

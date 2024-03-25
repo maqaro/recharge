@@ -1,51 +1,82 @@
-import React from 'react';
+import React, { useEffect, useState, useRef }  from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import storeEmotion from './EmotionTracker';
+import { supabase } from '../lib/supabase';
 
 
 
 const EmotionTracker = () => {
+    const [userid, setUserid] = useState<string | undefined>();
+    const [emotion, setEmotion] = useState('sad');
+    const [isdataStored, setisDataStored] = useState(false);
 
-    const router = useRouter();
+
+const handlePressSubmit = async () => {
+  try {
+    const { data: {user}, error } = await supabase.auth.getUser(); // Get the authenticated user
+
+    if (error) {
+      console.error('Error fetching user data:', error.message);
+      return;
+    }
+    let today = new Date().toISOString().split('T')[0]; 
+
+    const { data, error: insertError } = await supabase.from('emotiontracker').upsert([
+      { emotion: emotion, user_id: user?.id, date: today },
+    ], { onConflict: 'date' });
+    setisDataStored(true)
+
+    if (insertError) {
+      console.error('Error inserting emotion data:', insertError.message);
+    } 
+  } catch (error) {
+    console.error('Error inserting emotion data:', error);
+  }
+};
+
+useEffect(() => {
+    handlePressSubmit();
+  }, [emotion]);
+
     return (
         <View style={styles.container}>
+            <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
             <Text style={styles.hello}>Hello User,</Text>
             <Text style={styles.question}>How are you feeling today?</Text>
 
             <Text style={styles.selectText}>Select your Emotion</Text>
-
-            <ScrollView contentContainerStyle={styles.scrollContainer} showsHorizontalScrollIndicator={true} horizontal> 
-                <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
+ 
+            <ScrollView contentContainerStyle={styles.scrollContainer} showsHorizontalScrollIndicator={true} horizontal>
+                <TouchableOpacity style={[styles.imageContainer]} onPress={() => setEmotion('Terrible')}>
                 <Image source={require('./images/Mood1.png')} style={styles.image}/>
                     <Text style={styles.terrible}>Terrible</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
+                <TouchableOpacity style={[styles.imageContainer]} onPress={() => setEmotion('Sad')}>
                     <Image source={require('./images/Mood2.png')} style={styles.image}/>
                     <Text style={styles.sad}>Sad</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
+            </ScrollView>
+            <ScrollView contentContainerStyle={styles.scrollContainer} showsHorizontalScrollIndicator={true} horizontal>
+                <TouchableOpacity style={[styles.imageContainer]} onPress={() => setEmotion('Okay')}>
                     <Image source={require('./images/Mood3.png')} style={styles.image}/>
                     <Text style={styles.okay}>Okay</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
+                <TouchableOpacity style={[styles.imageContainer]} onPress={() => setEmotion('Happy')}>
                     <Image source={require('./images/Mood4.png')} style={styles.image}/>
                     <Text style={styles.happy}>Happy</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity style={[styles.imageContainer]} onPress={() => console.log('Rectangle 1 clicked')}>
+            </ScrollView>
+            <ScrollView contentContainerStyle={styles.scrollContainer} showsHorizontalScrollIndicator={true} horizontal>
+                <TouchableOpacity style={[styles.imageContainer]} onPress={() => setEmotion('Great')}>
                     <Image source={require('./images/Mood5.png')} style={styles.image}/>
                     <Text style={styles.great}>Great</Text>
                 </TouchableOpacity>
-
             </ScrollView>
-
-            <Text style={styles.selectText}>Select your Emotion</Text>
-
+  </LinearGradient>
         </View>
     )
 };
@@ -57,18 +88,20 @@ const styles = StyleSheet.create({
         flex: 0,
         justifyContent: 'center',
         alignItems: 'center',
-        height: '50%',
+        height: '100%',
     },
 
     scrollContainer: {
         flexGrow: 1,
+        width: '100%',
+        justifyContent: 'space-around',
     },
 
     hello: {
         fontSize: 25,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: 'black',
+        color: 'white',
         marginTop: 30,
     },
 
@@ -76,7 +109,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: 'black',
+        color: 'white',
         marginBottom: 50,
         marginTop: 20,
     },
@@ -86,7 +119,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         right: 90,
-        color: 'black',
+        color: 'white',
         marginTop: 0,
     },
 

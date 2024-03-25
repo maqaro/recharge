@@ -1,229 +1,201 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet, Button, ScrollView } from 'react-native';
+import React, { useEffect, useState, useRef }  from 'react';
+import { StyleSheet, View, SafeAreaView, TouchableOpacity, Text, Animated } from 'react-native';
+import { useRouter } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from "@expo/vector-icons";
+import { AddRemoveButton } from "./AddRemoveButton";
 import { supabase } from '../lib/supabase';
-import AddSleep from './Sleep/AddSleep'; 
-import Filter from './Sleep/Filter';
-import SleepChart from './Sleep/SleepChart';
-import {format} from 'date-fns';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+const amounts = [250, 500, 1000, 1500];
 
 const SleepTracker = () => {
-    const [userid, setUserid] = useState<string | undefined>();
-    const [sleepData, setSleepData] = useState<any[]>([]);
-    const [showAddSleepModal, setShowAddSleepModal] = useState(false); // State to control the visibility of the AddSleep modal
 
+    const [chosenTime1, setChosenTime1] = useState(new Date());
+    const [chosenTime2, setChosenTime2] = useState(new Date());
+  
+    const [showTimePicker1, setShowTimePicker1] = useState(false);
+    const [showTimePicker2, setShowTimePicker2] = useState(false);
+  
+    const [timeDifference, setTimeDifference] = useState('0:00');
+  
 
-    const [startDate, setStartDate] = useState<Date>(new Date());
-    const [endDate, setEndDate] = useState<Date>(new Date());
-
-    const handleDateChange = (start: Date, end: Date) => {
-        setStartDate(start);
-        setEndDate(end);
+  
+    const onTimeChange1 = (event: any, selectedTime: Date | undefined) => {
+      setShowTimePicker1(false);
+      if (selectedTime !== undefined) {
+        setChosenTime1(selectedTime);
+      }
     };
-
-    const fetchSleepData = async () => {
-        try {
-           const { data: { user }, } = await supabase.auth.getUser();
-            console.log("User:", user?.id);
-            setUserid(user?.id);
-
-            let { data: sleeptracker, error } = await supabase
-                .from('sleeptracker')
-                .select('*')
-                .eq('user_id', user?.id);
-
-            if (error) {
-                console.error('Error fetching sleep data:', error);
-            } else {
-                if (sleeptracker) {
-                    setSleepData(sleeptracker); // Update state with the fetched sleep data
-                }
-            }
-        } catch (error) {
-            console.error('Error fetching sleep data:', error);
-        }
+  
+    const onTimeChange2 = (event: any, selectedTime: Date | undefined) => {
+      setShowTimePicker2(false);
+      if (selectedTime !== undefined) {
+        setChosenTime2(selectedTime);
+        const dateTime1 = chosenTime1;
+        const dateTime2 = selectedTime;
+        const difference = calculateDifference(dateTime1, dateTime2);
+        setTimeDifference(difference);
+      }
     };
-
-    useEffect(() => {   
-        fetchSleepData();
-    }, [showAddSleepModal]); // Refetch sleep data when showAddSleepModal changes
-
-    const handleAddSleep = () => {
-        setShowAddSleepModal(true);
+  
+    const showTimePickerComponent1 = () => {
+      setShowTimePicker1(true);
     };
-
-    const handleCloseModal = () => {
-        setShowAddSleepModal(false);
+  
+    const showTimePickerComponent2 = () => {
+      setShowTimePicker2(true);
     };
+  
+    const calculateDifference = (dateTime1: Date, dateTime2: Date) => {
+      const difference = dateTime2.getTime() - dateTime1.getTime();
+      if (difference < 0) {
+          return "ERROR, please check your entries";
+      } else {
+          const hours = Math.floor(difference / (1000 * 60 * 60));
+          const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+          return `${hours}:${minutes.toString().padStart(2, '0')}`;
+      }
+  };
 
-    const deleteSleepEntry = async (entryId: any) => {
-        try {
-            const { error } = await supabase.from('sleeptracker').delete().eq('id', entryId);
-
-            if (error) {
-                console.error('Error deleting sleep entry:', error.message);
-            } else {
-                console.log('Sleep entry deleted successfully.');
-                // Fetch sleep data again after deletion
-                fetchSleepData();
-            }
-        } catch (error) {
-            console.error('Error deleting sleep entry:', error);
-        }
-    };
-
-    const formatDate = (date: Date) => {
-        return format(date, 'MM/dd/yyyy');
-    };
-
-    const formatTime = (time: Date) => {
-        return format(time, 'HH:mm');
-    };
-
-    const calculateTotalSleep = (start: Date, end: Date) => {
-        const startTime = start.getTime();
-        const endTime = end.getTime();
-        const totalSleepMinutes = (endTime - startTime) / (1000 * 60); // Convert milliseconds to minutes
-    
-        const hours = Math.floor(totalSleepMinutes / 60);
-        const minutes = Math.round(totalSleepMinutes % 60);
-    
-        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`; // Format as HH:MM
-    };
-
-    const sortedSleepData = sleepData.slice().sort((a, b) => {
-        const dateA = new Date(a.sleep_start);
-        const dateB = new Date(b.sleep_start);
-        return dateB.getTime() - dateA.getTime(); 
-    });
-
-    return (
-        <View style={styles.container}>
-            <Text>Recent Entries</Text>
-            {sleepData.length > 0 ? (
-            <ScrollView style={styles.sleepEntries}>
-                {sortedSleepData.map(sleepEntry => (
-                    <View key={sleepEntry.id} style={styles.rowContainer}>
-                        <View style={styles.rowItem}>
-                            <Text>Start: {formatDate(new Date(sleepEntry.sleep_start))} {formatTime(new Date(sleepEntry.sleep_start))}</Text>
-                        </View>
-                        <View style={styles.rowItem}>
-                            <Text>End: {formatDate(new Date(sleepEntry.sleep_end))} {formatTime(new Date(sleepEntry.sleep_end))}</Text>
-                        </View>
-                        <View style={styles.rowItem}>
-                            <Text>Total: {calculateTotalSleep(new Date(sleepEntry.sleep_start), new Date(sleepEntry.sleep_end))}</Text>
-                        </View>
-                        <View style={styles.rowItem}>
-                            <TouchableOpacity onPress={() => deleteSleepEntry(sleepEntry.id)}>
-                                <Text style={styles.deleteButton}>Delete</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                ))}
-            </ScrollView>
-            ) : (
-            <Text>No sleep data found.</Text>
-            )}
-
-            <Filter onDateChange={handleDateChange}/>
-            <SleepChart filterStartDate={startDate} filterEndDate={endDate} sleepData={sleepData} />
-
-            {/* Button to add sleep */}
-            <TouchableOpacity style={styles.addButton} onPress={handleAddSleep}>
-                <Text style={styles.addButtonText}>+</Text>
-            </TouchableOpacity>
-
-            {/* Modal for AddSleep */}
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={showAddSleepModal}
-                onRequestClose={handleCloseModal}
-            >
-                <View style={styles.modalContainer}>
-                    <TouchableOpacity style={styles.closeButton} onPress={handleCloseModal}>
-                        <Text style={styles.closeButtonText}>x</Text>
-                    </TouchableOpacity>
-                    <AddSleep />
-                </View>
-            </Modal>
-
-        </View>
-    );
+const formatTime = (time: Date) => {
+  const hours = String(time.getHours()).padStart(2, '0');
+  const minutes = String(time.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
 };
 
+const handlePressSubmit = async () => {
+  try {
+    const { data: {user}, error } = await supabase.auth.getUser(); // Get the authenticated user
 
+    if (error) {
+      console.error('Error fetching user data:', error.message);
+      return;
+    }
+    let today = new Date().toISOString().split('T')[0]; 
+
+    const { data, error: insertError } = await supabase.from('sleeptracker').upsert([
+      { sleep_start: chosenTime1, sleep_end: chosenTime2, user_id: user?.id, date: today },
+    ], { onConflict: 'date' });
+
+    if (insertError) {
+      console.error('Error inserting sleep data:', insertError.message);
+    } 
+  } catch (error) {
+    console.error('Error inserting sleep data:', error);
+  }
+};
+  // End of Progress Bar Animation
+
+  useEffect(() => {
+    handlePressSubmit();
+  }, [chosenTime1, chosenTime2]);
+
+  const calculateTotalSleep = (start: Date, end: Date) => {
+    const startTime = start.getTime();
+    const endTime = end.getTime();
+    const totalSleepMinutes = (endTime - startTime) / (1000 * 60); // Convert milliseconds to minutes
+
+    const hours = Math.floor(totalSleepMinutes / 60);
+    const minutes = Math.round(totalSleepMinutes % 60);
+
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`; // Format as HH:MM
+};
+let today = new Date().toISOString().split('T')[0]; 
+
+  return (
+    <SafeAreaView style={styles.container}>
+        <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
+      {/* Water Goal */}
+      <View style={styles.totalSleepContainer}>
+        <Text style={[styles.blueText, { fontSize: 22 }]}>Total Hours Sleep:</Text>
+
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={[styles.grayText, { fontSize: 26 }]}>
+            {timeDifference}  Hours{" "}
+          </Text>
+        
+        </View>
+        <Text> Today's Date: {today}</Text>
+      </View>
+      <View style={styles.container}>
+      <View style={styles.dateTimeContainer}>
+        <TouchableOpacity onPress={showTimePickerComponent1}>
+          <Text style={styles.dateText}>
+            Start Time: {formatTime(chosenTime1)}
+          </Text>
+        </TouchableOpacity>
+        {showTimePicker1 && (
+          <DateTimePicker
+            value={chosenTime1}
+            mode="time"
+            is24Hour={true}
+            display="default"
+            onChange={onTimeChange1}
+          />
+        )}
+      </View>
+      <View style={styles.dateTimeContainer}>
+        <TouchableOpacity onPress={showTimePickerComponent2}>
+          <Text style={styles.dateText}>
+            End Time: {formatTime(chosenTime2)}
+          </Text>
+        </TouchableOpacity>
+        {showTimePicker2 && (
+          <DateTimePicker
+            value={chosenTime2}
+            mode="time"
+            is24Hour={true}
+            display="default"
+            onChange={onTimeChange2}
+          />
+        )}
+      </View>
+    </View>
+
+      </LinearGradient>
+    </SafeAreaView>
+  );
+};
+    
+
+  export default SleepTracker;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'stretch',
-        justifyContent: 'flex-start',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+  },
+  progressBarContainer: {
+    borderRadius: 40,
+    borderWidth: 1,
+    width: 40,
+    height: 300,
+    justifyContent: "flex-end",
+  },
 
-    sleepEntries:{
-        flex:3,
-        width:'100%',
-        overflow:'hidden',
-    },
+  totalSleepContainer: {
+    padding: 50,
+    alignItems: "center",
+  },
+  blueText: {
+    color: "#1ca3ec",
+    fontWeight: "600",
+  },
+  grayText: { color: "#323033", fontWeight: "600" },
 
-    rowContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        borderBottomWidth: 1,
-        borderColor: 'lightgray',
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-    },
-
-    rowItem: {
-        flex: 1,
-    },
-
-    deleteButton: {
-        color: 'red',
-    },
-
-    addButton: {
-        position: 'absolute',
-        bottom: 20,
-        right: 20,
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: 'blue',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    addButtonText: {
-        color: 'white',
-        fontSize: 30,
-        fontWeight: 'bold',
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-    },
-    closeButton: {
-        position: 'absolute',
-        top: 20,
-        right: 20,
-        width: 30,
-        height: 30,
-        borderRadius: 15,
-        backgroundColor: 'red',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    closeButtonText: {
-        color: 'white',
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
+  dateTimeContainer: {
+    marginBottom: 20,
+  },
+  dateText: {
+    fontSize: 20,
+    padding: 10,
+    color: 'blue',
+  },
+  submitButton: {
+    fontSize: 20,
+    padding: 10,
+    color: 'green',
+  },
 });
-
-export default SleepTracker;
-

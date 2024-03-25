@@ -1,11 +1,44 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { Alert, View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
+import {useState} from 'react';
 import { Button } from 'react-native-elements';
 import { useRouter } from 'expo-router';
+import { supabase } from '../lib/supabase';
 
-const Opening = () => {
+export default function EmailForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  async function signInWithEmail() {
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+
+    if (error) {
+      Alert.alert(error.message);
+    } else {
+      router.navigate('/Homepage')
+    }
+    setLoading(false);
+  }
+
+  async function signUpWithEmail() {
+    setLoading(true);
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    });
+
+    if (error) Alert.alert(error.message);
+    if (!data.session) Alert.alert('Please check your inbox for email verification!');
+    setLoading(false);
+  }
+
   return (
     <View>
     <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%'}}>
@@ -97,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Opening;
+

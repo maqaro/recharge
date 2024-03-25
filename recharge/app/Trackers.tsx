@@ -18,21 +18,21 @@ const Trackers = () => {
         
         {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
 
-          <TouchableOpacity style={[styles.Step1]} onPress={() => console.log('Rectangle 1 clicked')}>
+          <TouchableOpacity style={[styles.Step1]} onPress={() => router.navigate('/StepTracker')}>
           {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/StepCounter.png')}> */}
             <Text style={styles.text}>Step Tracker</Text>
             <Image source={require('./images/StepWhite.png')} style={styles.StepPic}/>
           {/* </ImageBackground> */}
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.Exercise1]} onPress={() => console.log('Rectangle 2 clicked')}>
+          <TouchableOpacity style={[styles.Exercise1]} onPress={() => router.navigate('/ExerciseTracker')}>
           {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/exercise_bg.jpg')}> */}
             <Text style={styles.text}>Exercise Tracker</Text>
             <Image source={require('./images/ExerciseTrackerWhite.png')} style={styles.ExerciseTPic}/>
             {/* </ImageBackground> */}
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.Water1]} onPress={() => console.log('Rectangle 3 clicked')}>
+          <TouchableOpacity style={[styles.Water1]} onPress={() => router.navigate('/WaterTracker')}>
           <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/water_bg1.jpg')}>
             <Text style={styles.text}>Water Tracker</Text>
             <Image source={require('./images/WaterWhite.png')} style={styles.WaterPic}/>
@@ -53,11 +53,11 @@ const Trackers = () => {
             {/* </ImageBackground> */}
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.Diet1]} onPress={() => console.log('Rectangle 6 clicked')}>
-          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/meal_bg.jpg')}>
+          <TouchableOpacity style={[styles.Diet1]} onPress={() => router.navigate('/DietTracker')}>
+          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/meal_bg.jpg')}> */}
             <Text style={styles.text}>Diet Tracker</Text>
             <Image source={require('./images/DietWhite.png')} style={styles.DietPic}/>
-            </ImageBackground>
+            {/* </ImageBackground> */}
           </TouchableOpacity>
 
         {/* </ScrollView> */}

@@ -11,7 +11,7 @@ const WeekFilter: React.FC<FilterProps> = ({ onDateChange }) => {
 
     const currentDate: Date = new Date();
     const currentDayOfWeek: number = currentDate.getDay()
-    let daysSinceMonday: number = currentDayOfWeek - 1; 
+    let daysSinceMonday: number = currentDayOfWeek - 1; // (assuming Monday is the first day of the week)
 
     if (currentDayOfWeek === 0) {
         daysSinceMonday = 6;
@@ -40,6 +40,7 @@ const WeekFilter: React.FC<FilterProps> = ({ onDateChange }) => {
 
     // Calculate the end date of the week based on the start date
     useEffect(() => {
+        // Calculate the end date of the week based on the start date
         const newEndDate: Date = new Date(startDate.getTime() + (6 * 24 * 60 * 60 * 1000));
         setEndDate(newEndDate);
         onDateChange(startDate, newEndDate);

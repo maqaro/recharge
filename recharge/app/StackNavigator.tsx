@@ -1,7 +1,7 @@
 // StackNavigator.tsx
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import NavBar from './NavBar';
+import TrackerFooter from './TrackerFooter';
 
 const Stack = createStackNavigator();
 
@@ -10,7 +10,7 @@ const StackNavigator = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Main"
-        component={NavBar}
+        component={TrackerFooter}
         options={{ headerShown: false }} // Optionally hide the header
       />
     </Stack.Navigator>

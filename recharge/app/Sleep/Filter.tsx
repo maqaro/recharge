@@ -11,7 +11,7 @@ interface FilterProps {
 }
 
 const Filter: React.FC<FilterProps> = ({ onDateChange }) => {
-    const [activeFilter, setActiveFilter] = useState<string>(''); // State to track active filter
+    const [activeFilter, setActiveFilter] = useState<string>('week'); // State to track active filter
 
     // Function to handle the click on filter buttons
     const handleFilterClick = (filter: string) => {

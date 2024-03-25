@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, ScrollView, TouchableOpacity, Text, Image, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import NavBar from './NavBar';
 
 
 
@@ -12,11 +13,6 @@ const Trackers = () => {
     <View style={styles.container}>
       <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
         <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={true}>
-        
-        
-        
-        
-        {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
 
           <TouchableOpacity style={[styles.Step1]} onPress={() => router.navigate('/StepTracker')}>
           <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/step_bg.png')}>
@@ -59,14 +55,21 @@ const Trackers = () => {
             <Image source={require('./images/DietWhite.png')} style={styles.DietPic}/>
             {/* </ImageBackground> */}
           </TouchableOpacity>
+          
 
-        {/* </ScrollView> */}
-        
-        
-      
         </ScrollView>
         <Text></Text>
+        
+        <NavBar/>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        {/* <NavBar/> */}
+        
       </LinearGradient>
+     
     </View>
   )
   

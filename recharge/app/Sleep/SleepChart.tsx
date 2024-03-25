@@ -58,12 +58,12 @@ const SleepChart: React.FC<SleepChartProps> = ({ filterStartDate, filterEndDate,
                 height={220}
                 yAxisSuffix=" hrs"
                 yAxisLabel="Sleep Duration"
-                yAxisInterval={3}
+                yAxisInterval={1}
                 fromZero
                 chartConfig={{
                     backgroundGradientFrom: '#fff',
                     backgroundGradientTo: '#fff',
-                    decimalPlaces: 2,
+                    decimalPlaces: 1,
                     color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
                     labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
                     style: {

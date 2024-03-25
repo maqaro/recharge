@@ -50,10 +50,10 @@ const Trackers = () => {
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Diet1]} onPress={() => router.navigate('/DietTracker')}>
-          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/meal_bg.jpg')}> */}
+          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/meal_bg.jpg')}>
             <Text style={styles.text}>Diet Tracker</Text>
             <Image source={require('./images/DietWhite.png')} style={styles.DietPic}/>
-            {/* </ImageBackground> */}
+            </ImageBackground>
           </TouchableOpacity>
           
 

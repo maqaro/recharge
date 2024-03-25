@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { supabase } from '../../lib/supabase'; // Import your Supabase client instance
+import { supabase } from '../../lib/supabase'; 
 
 const AddSleep = () => {
   const [chosenDate1, setChosenDate1] = useState(new Date());
@@ -86,7 +86,7 @@ const AddSleep = () => {
         console.error('Error inserting sleep data:', insertError.message);
       } else {
         setIsDataAdded(true);
-        // Perform any additional actions after successful insertion
+        //return ('Data Successfully added');
       }
     } catch (error) {
       console.error('Error inserting sleep data:', error);
@@ -223,7 +223,8 @@ const styles = StyleSheet.create({
     color: 'green',
   },
   disabledButton: {
-    backgroundColor: 'grey', // Change color when disabled
+    backgroundColor: 'white',
+    color: 'white', // Change color when disabled
   },
 });
 

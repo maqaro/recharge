@@ -42,7 +42,7 @@ const Trackers = () => {
           <TouchableOpacity style={[styles.Sleep1]} onPress={() => router.navigate('/SleepTracker')}>
           <ImageBackground imageStyle={{borderRadius: 20, }} source={require('./images/sleep_bg.jpg')}>
             <Text style={styles.text}>Sleep Tracker</Text>
-            <Image source={require('./images/Sleep.png')} style={styles.SleepPic}/>
+            <Image source={require('./images/SleepWhite.png')} style={styles.SleepPic}/>
             </ImageBackground>
           </TouchableOpacity>
 
@@ -54,10 +54,10 @@ const Trackers = () => {
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Diet1]} onPress={() => console.log('Rectangle 6 clicked')}>
-          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/meal_bg.jpg')}> */}
+          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/meal_bg.jpg')}>
             <Text style={styles.text}>Diet Tracker</Text>
             <Image source={require('./images/DietWhite.png')} style={styles.DietPic}/>
-            {/* </ImageBackground> */}
+            </ImageBackground>
           </TouchableOpacity>
 
         {/* </ScrollView> */}

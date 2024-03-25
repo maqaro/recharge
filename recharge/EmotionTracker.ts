@@ -1,4 +1,5 @@
 import { Tracker } from "./Tracker.ts";
+import { supabase } from './lib/supabase';
 
 export class EmotionTracker extends Tracker {
 

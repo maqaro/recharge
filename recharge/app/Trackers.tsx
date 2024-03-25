@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, TouchableOpacity, Text, Image, ImageBackground, Alert } from 'react-native';
+import { StyleSheet, View, ScrollView, TouchableOpacity, Text, Image, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-//import StepTracker from './StepTracker';
 
 
 
@@ -14,48 +13,51 @@ const Trackers = () => {
       <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
         <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={true}>
         
+        
+        
+        
         {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
 
-          <TouchableOpacity style={[styles.Step1]} onPress={() => router.navigate("/StepTracker")}>
-          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/StepCounter.png')}>
+          <TouchableOpacity style={[styles.Step1]} onPress={() => router.navigate('/StepTracker')}>
+          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/StepCounter.png')}> */}
             <Text style={styles.text}>Step Tracker</Text>
-            <Image source={require('./images/Step.png')} style={styles.StepPic}/>
-          </ImageBackground>
+            <Image source={require('./images/StepWhite.png')} style={styles.StepPic}/>
+          {/* </ImageBackground> */}
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.Exercise1]} onPress={() => router.navigate("/ExerciseTracker")}>
-          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/exercise_bg.jpg')}>
+          <TouchableOpacity style={[styles.Exercise1]} onPress={() => router.navigate('/ExerciseTracker')}>
+          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/exercise_bg.jpg')}> */}
             <Text style={styles.text}>Exercise Tracker</Text>
-            <Image source={require('./images/ExerciseTracker.png')} style={styles.ExerciseTPic}/>
-            </ImageBackground>
+            <Image source={require('./images/ExerciseTrackerWhite.png')} style={styles.ExerciseTPic}/>
+            {/* </ImageBackground> */}
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.Water1]} onPress={() => router.navigate("/WaterTracker")}>
-          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/water_bg.jpg')}>
+          <TouchableOpacity style={[styles.Water1]} onPress={() => router.navigate('/WaterTracker')}>
+          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/water_bg1.jpg')}>
             <Text style={styles.text}>Water Tracker</Text>
-            <Image source={require('./images/Water.png')} style={styles.WaterPic}/>
+            <Image source={require('./images/WaterWhite.png')} style={styles.WaterPic}/>
             </ImageBackground>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.Sleep1]} onPress={() => router.navigate("/SleepTracker")}>
+          <TouchableOpacity style={[styles.Sleep1]} onPress={() => router.navigate('/SleepTracker')}>
           <ImageBackground imageStyle={{borderRadius: 20, }} source={require('./images/sleep_bg.jpg')}>
             <Text style={styles.text}>Sleep Tracker</Text>
-            <Image source={require('./images/Sleep.png')} style={styles.SleepPic}/>
+            <Image source={require('./images/SleepWhite.png')} style={styles.SleepPic}/>
             </ImageBackground>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Emotion1]} onPress={() => router.navigate('/EmotionTracker')}>
-          <ImageBackground imageStyle={{borderRadius: 20, }} source={require('./images/emotion_bg_copy.jpg')}>
+          {/* <ImageBackground imageStyle={{borderRadius: 20, }} source={require('./images/emotion_bg_copy.jpg')}> */}
             <Text style={styles.text}>Emotion Tracker</Text>
-            <Image source={require('./images/Emotion.png')} style={styles.EmotionPic}/>
-            </ImageBackground>
+            <Image source={require('./images/EmotionWhite.png')} style={styles.EmotionPic}/>
+            {/* </ImageBackground> */}
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.Diet1]} onPress={() => router.navigate("/DietTracker")}>
-          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/meal_bg.jpg')}>
+          <TouchableOpacity style={[styles.Diet1]} onPress={() => router.navigate('/DietTracker')}>
+          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/meal_bg.jpg')}> */}
             <Text style={styles.text}>Diet Tracker</Text>
-            <Image source={require('./images/Diet.png')} style={styles.DietPic}/>
-            </ImageBackground>
+            <Image source={require('./images/DietWhite.png')} style={styles.DietPic}/>
+            {/* </ImageBackground> */}
           </TouchableOpacity>
 
         {/* </ScrollView> */}
@@ -63,13 +65,12 @@ const Trackers = () => {
         
       
         </ScrollView>
-        <Text>Hello</Text>
+        <Text></Text>
       </LinearGradient>
     </View>
   )
   
 };
-
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -146,10 +147,15 @@ const styles = StyleSheet.create({
   },
 
   StepPic: {
-    width: 200,
-    height: 80,
-    marginTop: 20,
+    width: 100,
+    height: 100,
+    marginTop: -25,
+    marginLeft: 0,
+    marginBottom: 0,
     resizeMode: 'contain',
+    backgroundColor: 'black',
+    opacity: 0.75,
+    borderRadius: 20,
   },
 
   Exercise: {
@@ -165,10 +171,14 @@ const styles = StyleSheet.create({
   },
 
   ExerciseTPic: {
-    width: 160,
-    height: 90,
-    marginTop: 5,
+    width: 100,
+    height: 100,
+    marginTop: -25,
+    marginBottom: 0,
     resizeMode: 'contain',
+    backgroundColor: 'black',
+    opacity: 0.75,
+    borderRadius: 20,
   },
 
   Water: {
@@ -182,10 +192,14 @@ const styles = StyleSheet.create({
   },
 
   WaterPic: {
-    width: 200,
-    height: 70,
-    marginTop: 20,
+    width: 100,
+    height: 100,
+    marginTop: -25,
+    marginBottom: 0,
     resizeMode: 'contain',
+    backgroundColor: 'black',
+    opacity: 0.75,
+    borderRadius: 20,
   },
 
   Sleep: {
@@ -201,10 +215,14 @@ const styles = StyleSheet.create({
   },
 
   SleepPic: {
-    width: 200,
-    height: 70,
-    marginTop: 17,
+    width: 100,
+    height: 100,
+    marginTop: -25,
+    marginBottom: 0,
     resizeMode: 'contain',
+    backgroundColor: 'black',
+    opacity: 0.75,
+    borderRadius: 20,
   },
 
   Emotion: {
@@ -218,10 +236,14 @@ const styles = StyleSheet.create({
   },
 
   EmotionPic: {
-    width: 200,
-    height: 90,
-    marginTop: 15,
+    width: 100,
+    height: 100,
+    marginTop: -25,
+    marginBottom: 0,
     resizeMode: 'contain',
+    backgroundColor: 'black',
+    opacity: 0.75,
+    borderRadius: 20,
   },
 
   Diet: {
@@ -237,15 +259,25 @@ const styles = StyleSheet.create({
   },
 
   DietPic: {
-    width: 200,
+    width: 100,
     height: 100,
-    marginTop: 0,
+    marginTop: -25,
+    marginBottom: 0,
     resizeMode: 'contain',
+    backgroundColor: 'black',
+    opacity: 0.75,
+    borderRadius: 20,
   },
 
   text: {
     fontWeight: 'bold',
-    color: '#e37b60',
+    // color: '#e37b60',
+    color: 'black',
+    textAlign: 'right',
+    marginRight: 20,
+  
+    fontSize: 20,
+    top: 40,
   },
 
 });

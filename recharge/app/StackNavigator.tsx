@@ -13,6 +13,7 @@ const StackNavigator = () => {
         component={TrackerFooter}
         options={{ headerShown: false }} // Optionally hide the header
       />
+      
     </Stack.Navigator>
   );
 };

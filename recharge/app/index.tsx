@@ -41,10 +41,6 @@ export default function EmailForm() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => router.navigate('/Trackers')}>
-        <Text>Trackers</Text>
-      </TouchableOpacity>
-{/*
       <View style={styles.imageContainer}>
               <Image source={require('./Logo.jpg')} style={styles.logo} />
               <Text style={styles.rechargeText}>RECHARGE</Text>
@@ -73,7 +69,7 @@ export default function EmailForm() {
         style={styles.input}/>
         <Button title="Sign in" loading={loading} onPress={signInWithEmail} buttonStyle={styles.button} containerStyle={styles.buttonContainer}/>
         <Button title="Sign up" loading={loading} onPress={signUpWithEmail} buttonStyle={styles.button} containerStyle={styles.buttonContainer} />
-    </View>*/}
+    </View>
   </View>
 
   );

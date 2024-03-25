@@ -33,7 +33,7 @@ const Trackers = () => {
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Water1]} onPress={() => console.log('Rectangle 3 clicked')}>
-          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/water_bg.jpg')}>
+          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/water_bg1.jpg')}>
             <Text style={styles.text}>Water Tracker</Text>
             <Image source={require('./images/WaterWhite.png')} style={styles.WaterPic}/>
             </ImageBackground>
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     resizeMode: 'contain',
     backgroundColor: 'black',
-    opacity: 0.6,
+    opacity: 0.75,
     borderRadius: 20,
   },
 
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     resizeMode: 'contain',
     backgroundColor: 'black',
-    opacity: 0.6,
+    opacity: 0.75,
     borderRadius: 20,
   },
 
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     resizeMode: 'contain',
     backgroundColor: 'black',
-    opacity: 0.6,
+    opacity: 0.75,
     borderRadius: 20,
   },
 
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     resizeMode: 'contain',
     backgroundColor: 'black',
-    opacity: 0.6,
+    opacity: 0.75,
     borderRadius: 20,
   },
 
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     resizeMode: 'contain',
     backgroundColor: 'black',
-    opacity: 0.6,
+    opacity: 0.75,
     borderRadius: 20,
   },
 
@@ -265,16 +265,17 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     resizeMode: 'contain',
     backgroundColor: 'black',
-    opacity: 0.6,
+    opacity: 0.75,
     borderRadius: 20,
   },
 
   text: {
     fontWeight: 'bold',
     // color: '#e37b60',
-    color: '#c41532',
+    color: 'white',
     textAlign: 'right',
     marginRight: 20,
+  
     fontSize: 20,
     top: 40,
   },

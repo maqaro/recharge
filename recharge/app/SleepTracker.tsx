@@ -17,25 +17,15 @@ const SleepTracker = () => {
     const [sleepEnd, setSleepEnd] = useState(new Date());
     const [isdataStored, setisDataStored] = useState(false);
 
-    const [chosenDate1, setChosenDate1] = useState(new Date());
     const [chosenTime1, setChosenTime1] = useState(new Date());
-    const [chosenDate2, setChosenDate2] = useState(new Date());
     const [chosenTime2, setChosenTime2] = useState(new Date());
   
-    const [showDatePicker1, setShowDatePicker1] = useState(false);
     const [showTimePicker1, setShowTimePicker1] = useState(false);
-    const [showDatePicker2, setShowDatePicker2] = useState(false);
     const [showTimePicker2, setShowTimePicker2] = useState(false);
   
-    const [timeDifference, setTimeDifference] = useState('');
+    const [timeDifference, setTimeDifference] = useState('0:00');
     const [isDataAdded, setIsDataAdded] = useState(false);
-  
-    const onDateChange1 = (event: any, selectedDate: React.SetStateAction<Date> | undefined) => {
-      setShowDatePicker1(false);
-      if (selectedDate !== undefined) {
-        setChosenDate1(selectedDate);
-      }
-    };
+
   
     const onTimeChange1 = (event: any, selectedTime: Date | undefined) => {
       setShowTimePicker1(false);
@@ -44,50 +34,23 @@ const SleepTracker = () => {
       }
     };
   
-    const onDateChange2 = (event: any, selectedDate: React.SetStateAction<Date> | undefined) => {
-      setShowDatePicker2(false);
-      if (selectedDate !== undefined) {
-        setChosenDate2(selectedDate);
-      }
-    };
-  
     const onTimeChange2 = (event: any, selectedTime: Date | undefined) => {
       setShowTimePicker2(false);
       if (selectedTime !== undefined) {
         setChosenTime2(selectedTime);
-        const dateTime1 = combineDateTime(chosenDate1, chosenTime1);
-        const dateTime2 = combineDateTime(chosenDate2, selectedTime);
+        const dateTime1 = chosenTime1;
+        const dateTime2 = selectedTime;
         const difference = calculateDifference(dateTime1, dateTime2);
         setTimeDifference(difference);
       }
-    };
-  
-    const showDatePickerComponent1 = () => {
-      setShowDatePicker1(true);
     };
   
     const showTimePickerComponent1 = () => {
       setShowTimePicker1(true);
     };
   
-    const showDatePickerComponent2 = () => {
-      setShowDatePicker2(true);
-    };
-  
     const showTimePickerComponent2 = () => {
       setShowTimePicker2(true);
-    };
-  
-    const combineDateTime = (date: Date, time: Date) => {
-      const combinedDateTime = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate(),
-        time.getHours(),
-        time.getMinutes(),
-        time.getSeconds()
-      );
-      return combinedDateTime;
     };
   
     const calculateDifference = (dateTime1: Date, dateTime2: Date) => {
@@ -100,14 +63,6 @@ const SleepTracker = () => {
           return `${hours}:${minutes.toString().padStart(2, '0')}`;
       }
   };
-
-  
-const formatDate = (date: Date) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}/${month}/${day}`;
-};
 
 const formatTime = (time: Date) => {
   const hours = String(time.getHours()).padStart(2, '0');
@@ -153,39 +108,28 @@ const handlePressSubmit = async () => {
 
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`; // Format as HH:MM
 };
+let today = new Date().toISOString().split('T')[0]; 
 
   return (
     <SafeAreaView style={styles.container}>
         <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
       {/* Water Goal */}
-      <View style={styles.waterGoalContainer}>
-        <Text style={[styles.blueText, { fontSize: 22 }]}>You are going to sleep for</Text>
+      <View style={styles.totalSleepContainer}>
+        <Text style={[styles.blueText, { fontSize: 22 }]}>Total Hours Sleep:</Text>
 
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text style={[styles.grayText, { fontSize: 26 }]}>
-            {calculateTotalSleep(sleepStart, sleepEnd)}  Hours{" "}
+            {timeDifference}  Hours{" "}
           </Text>
+        
         </View>
+        <Text> Today's Date: {today}</Text>
       </View>
       <View style={styles.container}>
       <View style={styles.dateTimeContainer}>
-        <TouchableOpacity onPress={showDatePickerComponent1}>
-          <Text style={styles.dateText}>
-            First Date: {formatDate(chosenDate1)}
-          </Text>
-        </TouchableOpacity>
-        {showDatePicker1 && (
-          <DateTimePicker
-            value={chosenDate1}
-            mode="date"
-            is24Hour={true}
-            display="default"
-            onChange={onDateChange1}
-          />
-        )}
         <TouchableOpacity onPress={showTimePickerComponent1}>
           <Text style={styles.dateText}>
-            First Time: {formatTime(chosenTime1)}
+            Start Time: {formatTime(chosenTime1)}
           </Text>
         </TouchableOpacity>
         {showTimePicker1 && (
@@ -199,23 +143,9 @@ const handlePressSubmit = async () => {
         )}
       </View>
       <View style={styles.dateTimeContainer}>
-        <TouchableOpacity onPress={showDatePickerComponent2}>
-          <Text style={styles.dateText}>
-            Second Date: {formatDate(chosenDate2)}
-          </Text>
-        </TouchableOpacity>
-        {showDatePicker2 && (
-          <DateTimePicker
-            value={chosenDate2}
-            mode="date"
-            is24Hour={true}
-            display="default"
-            onChange={onDateChange2}
-          />
-        )}
         <TouchableOpacity onPress={showTimePickerComponent2}>
           <Text style={styles.dateText}>
-            Second Time: {formatTime(chosenTime2)}
+            End Time: {formatTime(chosenTime2)}
           </Text>
         </TouchableOpacity>
         {showTimePicker2 && (
@@ -228,14 +158,6 @@ const handlePressSubmit = async () => {
           />
         )}
       </View>
-      {timeDifference !== '' && (
-        <Text style={styles.dateText}>
-          Time Difference: {timeDifference}
-        </Text>
-      )}
-      <TouchableOpacity onPress={handlePressSubmit} disabled={isDataAdded}>
-            <Text style={[styles.submitButton, isDataAdded && styles.disabledButton]}>Submit</Text>
-        </TouchableOpacity>
     </View>
 
       </LinearGradient>
@@ -259,13 +181,8 @@ const styles = StyleSheet.create({
     height: 300,
     justifyContent: "flex-end",
   },
-  waterButtonsContainer: {
-    flexDirection: "row",
-    paddingVertical: 30,
-    width: "100%",
-    justifyContent: "space-around",
-  },
-  waterGoalContainer: {
+
+  totalSleepContainer: {
     padding: 50,
     alignItems: "center",
   },
@@ -287,8 +204,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 10,
     color: 'green',
-  },
-  disabledButton: {
-    backgroundColor: 'grey', // Change color when disabled
   },
 });

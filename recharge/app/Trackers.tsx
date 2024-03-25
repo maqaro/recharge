@@ -39,11 +39,11 @@ const Trackers = () => {
             </ImageBackground>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.Sleep1]} onPress={() => console.log('Rectangle 4 clicked')}>
-          {/* <ImageBackground imageStyle={{borderRadius: 20, }} source={require('./images/sleep_bg.jpg')}> */}
+          <TouchableOpacity style={[styles.Sleep1]} onPress={() => router.navigate('/SleepTracker')}>
+          <ImageBackground imageStyle={{borderRadius: 20, }} source={require('./images/sleep_bg.jpg')}>
             <Text style={styles.text}>Sleep Tracker</Text>
-            <Image source={require('./images/SleepWhite.png')} style={styles.SleepPic}/>
-            {/* </ImageBackground> */}
+            <Image source={require('./images/Sleep.png')} style={styles.SleepPic}/>
+            </ImageBackground>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Emotion1]} onPress={() => router.navigate('/EmotionTracker')}>

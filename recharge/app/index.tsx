@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 
-import { Alert, StyleSheet, View, Image, Text } from 'react-native';
+import { Alert, StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { supabase } from '../lib/supabase';
 import { useRouter } from 'expo-router';
@@ -41,7 +41,6 @@ export default function EmailForm() {
 
   return (
     <View style={styles.container}>
-
       <View style={styles.imageContainer}>
               <Image source={require('./Logo.jpg')} style={styles.logo} />
               <Text style={styles.rechargeText}>RECHARGE</Text>

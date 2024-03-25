@@ -10,12 +10,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 const amounts = [250, 500, 1000, 1500];
 
 const SleepTracker = () => {
-    const [userid, setUserid] = useState<string | undefined>();
-
-    const [fillingPercentage, setFillingPercentage] = useState(0);
-    const [sleepStart, setSleepStart] = useState(new Date());
-    const [sleepEnd, setSleepEnd] = useState(new Date());
-    const [isdataStored, setisDataStored] = useState(false);
 
     const [chosenTime1, setChosenTime1] = useState(new Date());
     const [chosenTime2, setChosenTime2] = useState(new Date());
@@ -24,7 +18,7 @@ const SleepTracker = () => {
     const [showTimePicker2, setShowTimePicker2] = useState(false);
   
     const [timeDifference, setTimeDifference] = useState('0:00');
-    const [isDataAdded, setIsDataAdded] = useState(false);
+  
 
   
     const onTimeChange1 = (event: any, selectedTime: Date | undefined) => {
@@ -81,9 +75,8 @@ const handlePressSubmit = async () => {
     let today = new Date().toISOString().split('T')[0]; 
 
     const { data, error: insertError } = await supabase.from('sleeptracker').upsert([
-      { sleep_start: sleepStart, sleep_end: sleepEnd, user_id: user?.id, date: today },
+      { sleep_start: chosenTime1, sleep_end: chosenTime2, user_id: user?.id, date: today },
     ], { onConflict: 'date' });
-    setisDataStored(true)
 
     if (insertError) {
       console.error('Error inserting sleep data:', insertError.message);
@@ -96,7 +89,7 @@ const handlePressSubmit = async () => {
 
   useEffect(() => {
     handlePressSubmit();
-  }, [sleepStart, sleepEnd]);
+  }, [chosenTime1, chosenTime2]);
 
   const calculateTotalSleep = (start: Date, end: Date) => {
     const startTime = start.getTime();

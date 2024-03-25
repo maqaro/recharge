@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet, Button, ScrollView } from 'react-native';
 import { supabase } from '../lib/supabase';
-import AddSleep from './Sleep/AddSleep'; // Import the AddSleep component
+import AddSleep from './Sleep/AddSleep'; 
 import Filter from './Sleep/Filter';
 import SleepChart from './Sleep/SleepChart';
 import {format} from 'date-fns';
@@ -93,7 +93,7 @@ const SleepTracker = () => {
     const sortedSleepData = sleepData.slice().sort((a, b) => {
         const dateA = new Date(a.sleep_start);
         const dateB = new Date(b.sleep_start);
-        return dateB.getTime() - dateA.getTime(); // Swapping dateB and dateA
+        return dateB.getTime() - dateA.getTime(); 
     });
 
     return (

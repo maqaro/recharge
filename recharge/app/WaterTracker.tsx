@@ -1,26 +1,76 @@
 import React, { useEffect, useState, useRef }  from 'react';
-import { StyleSheet, View, SafeAreaView, TouchableOpacity, Text, Animated } from 'react-native';
+import { StyleSheet, View, SafeAreaView, TouchableOpacity, Text, Animated, Modal } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from "@expo/vector-icons";
-import { AddRemoveButton } from "./AddRemoveButton";
+import { AddRemoveButton } from "./Water/AddRemoveButton";
 import { supabase } from '../lib/supabase';
+import WaterHistory from './Water/WaterHistory';
 
 const amounts = [250, 500, 1000, 1500];
 
 const WaterTracker = () => {
     const [userid, setUserid] = useState<string | undefined>();
-
     const [fillingPercentage, setFillingPercentage] = useState(0);
     const [waterGoal, setWaterGoal] = useState(3000);
     const [waterDrank, setWaterDrank] = useState(0);
     const [isdataStored, setisDataStored] = useState(false);
 
+    const [fetchComplete, setFetchComplete] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
+const fetchCurrentData = async () => {
+    try {
+        const { data: {user}, error } = await supabase.auth.getUser();
+        if (error) {
+            console.error('Error fetching user data:', error.message);
+            return;
+        }
+
+        let today = new Date().toISOString().split('T')[0]; 
+        setUserid(user?.id);
+        // Fetch data for today's date
+        const { data: waterData, error: fetchError } = await supabase
+            .from('watertracker')
+            .select('*')
+            .eq('date', today)
+            .eq('user_id', user?.id)
+            .single();
+      
+        if (fetchError) {
+            console.error('Error fetching water data:', fetchError.message);
+             return;
+        }
+        // If data for today exists, set waterDrank and waterGoal to the fetched values
+        if (waterData) {
+            setWaterDrank(waterData.water_intake_ml);
+            setWaterGoal(waterData.water_intake_goal);
+            setisDataStored(true);
+            
+        }
+
+        setFetchComplete(true);
+
+    } catch (error) {
+        console.error('Error fetching water data:', error);
+    }
+};
+
+useEffect(() => {
+    fetchCurrentData();
+}, []);
+
+
 
 const handlePressSubmit = async () => {
   try {
+
+    if (!fetchComplete) {
+        return;
+    }
     const { data: {user}, error } = await supabase.auth.getUser(); // Get the authenticated user
 
+    console.log('Handling submit first');
     if (error) {
       console.error('Error fetching user data:', error.message);
       return;
@@ -69,6 +119,11 @@ const handlePressSubmit = async () => {
     setFillingPercentage(fillingP > 300 ? 300 : fillingP);
   }, [waterGoal, setFillingPercentage, waterDrank]);
 
+
+  const handleViewHistory = () => {
+    setShowModal(true);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
         <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
@@ -77,9 +132,18 @@ const handlePressSubmit = async () => {
         <Text style={[styles.blueText, { fontSize: 22 }]}>Your Goal</Text>
 
         <View style={{ flexDirection: "row", alignItems: "center" }}>
+
+          <TouchableOpacity
+            style={{ padding: 5 }}
+            onPress={() => setWaterGoal(waterGoal - 250)}
+          >
+            <Ionicons name="remove-circle" size={26} color="#2389da" />
+          </TouchableOpacity>
+
           <Text style={[styles.grayText, { fontSize: 26 }]}>
             {waterGoal} mL{" "}
           </Text>
+
           {/* Add Goal */}
           <TouchableOpacity
             style={{ padding: 5 }}
@@ -87,12 +151,7 @@ const handlePressSubmit = async () => {
           >
             <Ionicons name="add-circle" size={26} color="#2389da" />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{ padding: 5 }}
-            onPress={() => setWaterGoal(waterGoal - 250)}
-          >
-            <Ionicons name="remove-circle" size={26} color="#2389da" />
-          </TouchableOpacity>
+
         </View>
       </View>
 
@@ -155,6 +214,25 @@ const handlePressSubmit = async () => {
           );
         })}
       </View>
+
+       {/* Button to view history */}
+       <TouchableOpacity style={styles.viewHistoryButton} onPress={handleViewHistory}>
+            <Text style={styles.viewHistoryButtonText}>View History</Text>
+        </TouchableOpacity>
+
+        {/* Modal */}
+        <Modal visible={showModal} transparent={true} animationType="slide">
+            <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                {/* Your UI components for modal content */}
+                    <TouchableOpacity style={styles.closeModalButton} onPress={() => setShowModal(false)}>
+                        <Ionicons name="close-circle" size={24} color="black" />
+                    </TouchableOpacity>
+                    <WaterHistory/>
+                </View>
+            </View>
+        </Modal>
+
       </LinearGradient>
     </SafeAreaView>
   );
@@ -164,6 +242,37 @@ const handlePressSubmit = async () => {
   export default WaterTracker;
 
 const styles = StyleSheet.create({
+    viewHistoryButton: {
+        position: 'absolute',
+        top: 20,
+        right: 20,
+        backgroundColor: '#fff',
+        padding: 10,
+        borderRadius: 10,
+    },
+    viewHistoryButtonText: {
+        color: '#1a7373',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white', // semi-transparent black
+    },
+    modalContent: {
+        backgroundColor: '#fff',
+        padding: 20,
+        borderRadius: 10,
+        width: '100%',
+        height:'100%',
+    },
+    closeModalButton: {
+        position: 'absolute',
+        top: 2,
+        right: 10,
+    },
   container: {
     flex: 1,
     backgroundColor: "#fff",

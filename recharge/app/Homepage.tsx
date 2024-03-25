@@ -19,40 +19,40 @@ export default function Homepage() {
             <Text style={styles.text}>Trackers</Text>
             <Image source={require('./images/Tracker.png')} style={styles.TrackerPic}/>
           </TouchableOpacity>
-          <TouchableOpacity
 
+          <TouchableOpacity
             style={styles.square2}
-            //onPress={() => 
+            onPress={() => router.navigate('/DailyJournal')}
           >
             <Text style={styles.text}>Daily Journal</Text>
             <Image source={require('./images/Journal.png')} style={styles.JournalPic}/>
           </TouchableOpacity>
-          <TouchableOpacity
 
+          <TouchableOpacity
             style={styles.square3}
             //onPress={() => .........
           >
             <Text style={styles.text}>Mentor Match</Text>
             <Image source={require('./images/Match.png')} style={styles.MatchPic}/>
           </TouchableOpacity>
-          <TouchableOpacity
 
+          <TouchableOpacity
             style={styles.square4}
             //onPress={() => ........
           >
             <Text style={styles.text}>Guided Sessions</Text>
             <Image source={require('./images/MentalCare.jpg')} style={styles.MentalCarePic}/>
           </TouchableOpacity>
-          <TouchableOpacity
 
+          <TouchableOpacity
             style={styles.square5}
             //onPress={() => h........
           >
             <Text style={styles.text}>Exercise Routines</Text>
             <Image source={require('./images/Exercise.png')} style={styles.ExercisePic}/>
           </TouchableOpacity>
-          <TouchableOpacity
 
+          <TouchableOpacity
             style={styles.square6}
             //onPress={() => ..........
           >

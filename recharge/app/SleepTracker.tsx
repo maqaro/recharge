@@ -1,13 +1,9 @@
-import React, { useEffect, useState, useRef }  from 'react';
+import React, { useEffect, useState}  from 'react';
 import { StyleSheet, View, SafeAreaView, TouchableOpacity, Text, Animated } from 'react-native';
-import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from "@expo/vector-icons";
-import { AddRemoveButton } from "./AddRemoveButton";
 import { supabase } from '../lib/supabase';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const amounts = [250, 500, 1000, 1500];
 
 const SleepTracker = () => {
 
@@ -32,6 +28,7 @@ const SleepTracker = () => {
       setShowTimePicker2(false);
       if (selectedTime !== undefined) {
         setChosenTime2(selectedTime);
+        chosenTime1.setDate(chosenTime1.getDate() - 1);
         const dateTime1 = chosenTime1;
         const dateTime2 = selectedTime;
         const difference = calculateDifference(dateTime1, dateTime2);
@@ -58,6 +55,7 @@ const SleepTracker = () => {
       }
   };
 
+
 const formatTime = (time: Date) => {
   const hours = String(time.getHours()).padStart(2, '0');
   const minutes = String(time.getMinutes()).padStart(2, '0');
@@ -75,8 +73,8 @@ const handlePressSubmit = async () => {
     let today = new Date().toISOString().split('T')[0]; 
 
     const { data, error: insertError } = await supabase.from('sleeptracker').upsert([
-      { sleep_start: chosenTime1, sleep_end: chosenTime2, user_id: user?.id, date: today },
-    ], { onConflict: 'date' });
+      { sleep_start: chosenTime1, sleep_end: chosenTime2, user_id: user?.id},
+    ]);
 
     if (insertError) {
       console.error('Error inserting sleep data:', insertError.message);
@@ -85,22 +83,11 @@ const handlePressSubmit = async () => {
     console.error('Error inserting sleep data:', error);
   }
 };
-  // End of Progress Bar Animation
 
   useEffect(() => {
     handlePressSubmit();
   }, [chosenTime1, chosenTime2]);
 
-  const calculateTotalSleep = (start: Date, end: Date) => {
-    const startTime = start.getTime();
-    const endTime = end.getTime();
-    const totalSleepMinutes = (endTime - startTime) / (1000 * 60); // Convert milliseconds to minutes
-
-    const hours = Math.floor(totalSleepMinutes / 60);
-    const minutes = Math.round(totalSleepMinutes % 60);
-
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`; // Format as HH:MM
-};
 let today = new Date().toISOString().split('T')[0]; 
 
   return (

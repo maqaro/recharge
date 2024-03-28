@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { supabase } from '../lib/supabase';
+import { router } from 'expo-router';
+import TrackerButton from './trackerbutton';
 
 const ExerciseRoutine: React.FC = () => {
     const [routines, setRoutines] = useState<Record<string, any[]>>({});
@@ -47,6 +49,8 @@ const ExerciseRoutine: React.FC = () => {
 
     return (
         <View style={styles.container}>
+          <TrackerButton/>
+
             <FlatList 
                 horizontal
                 data={Object.keys(routines)}
@@ -87,7 +91,7 @@ const ExerciseRoutine: React.FC = () => {
 const styles = StyleSheet.create({
 
     flatListStyle: {
-      height: 5
+      height: 10
     },
     exerciseCard: {
         flexDirection: 'row',

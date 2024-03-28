@@ -46,7 +46,7 @@ export default function Homepage() {
           <TouchableOpacity
 
             style={styles.square5}
-            //onPress={() => h........
+            onPress={() => router.navigate('/ExerciseRoutine')}
           >
             <Text style={styles.text}>Exercise Routines</Text>
             <Image source={require('./images/Exercise.png')} style={styles.ExercisePic}/>
@@ -54,7 +54,6 @@ export default function Homepage() {
           <TouchableOpacity
 
             style={styles.square6}
-            //onPress={() => ..........
           >
             <Text style={styles.text}>Other Resources</Text>
             <Image source={require('./images/Resources.png')} style={styles.ResourcesPic}/>

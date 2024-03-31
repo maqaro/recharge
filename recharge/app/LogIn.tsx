@@ -73,7 +73,7 @@ const Login = () => {
 
             <Button
               title="Sign up"
-              onPress={() => router.navigate('/SignUp')}
+              onPress={() => router.navigate('/ExerciseRoutine')}
               buttonStyle={styles.SignupButton}
               titleStyle={{color: '#b7410e', marginTop: 5, marginBottom: 5}}
            

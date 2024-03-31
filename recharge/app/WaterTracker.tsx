@@ -1,23 +1,24 @@
 import React, { useEffect, useState, useRef }  from 'react';
-import { StyleSheet, View, SafeAreaView, TouchableOpacity, Text, Animated, Modal } from 'react-native';
+import { Pressable, StyleSheet, View, SafeAreaView, TouchableOpacity, Text, Animated, Modal } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from "@expo/vector-icons";
 import { AddRemoveButton } from "./Water/AddRemoveButton";
 import { supabase } from '../lib/supabase';
 import WaterHistory from './Water/WaterHistory';
+import Back from 'react-native-vector-icons/Ionicons';
 
 const amounts = [250, 500, 1000, 1500];
 
 const WaterTracker = () => {
     const [userid, setUserid] = useState<string | undefined>();
     const [fillingPercentage, setFillingPercentage] = useState(0);
-    const [waterGoal, setWaterGoal] = useState(3000);
-    const [waterDrank, setWaterDrank] = useState(0);
+    const [waterGoal, setWaterGoal] = useState<number | undefined>(undefined);
+    const [waterDrank, setWaterDrank] = useState<number | undefined>(undefined);
     const [isdataStored, setisDataStored] = useState(false);
-
     const [fetchComplete, setFetchComplete] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const router = useRouter();
 
 const fetchCurrentData = async () => {
     try {
@@ -39,6 +40,9 @@ const fetchCurrentData = async () => {
       
         if (fetchError) {
             console.error('Error fetching water data:', fetchError.message);
+            setWaterGoal(3000);
+            setWaterDrank(0);
+            setisDataStored(false);
              return;
         }
         // If data for today exists, set waterDrank and waterGoal to the fetched values
@@ -47,9 +51,8 @@ const fetchCurrentData = async () => {
             setWaterGoal(waterData.water_intake_goal);
             setisDataStored(true);
             
-        }
+          } 
 
-        setFetchComplete(true);
 
     } catch (error) {
         console.error('Error fetching water data:', error);
@@ -65,30 +68,61 @@ useEffect(() => {
 const handlePressSubmit = async () => {
   try {
 
-    if (!fetchComplete) {
-        return;
-    }
-    const { data: {user}, error } = await supabase.auth.getUser(); // Get the authenticated user
+    const { data: { user }, error: userError } = await supabase.auth.getUser(); // Get the authenticated user
 
-    console.log('Handling submit first');
-    if (error) {
-      console.error('Error fetching user data:', error.message);
+    if (userError) {
+      console.error('Error fetching user data:', userError.message);
       return;
     }
-    let today = new Date().toISOString().split('T')[0]; 
 
-    const { data, error: insertError } = await supabase.from('watertracker').upsert([
-      { water_intake_ml: waterDrank, water_intake_goal: waterGoal, user_id: user?.id, date: today },
-    ], { onConflict: 'date' });
-    setisDataStored(true)
+    let today = new Date().toISOString().split('T')[0];
 
-    if (insertError) {
-      console.error('Error inserting water data:', insertError.message);
-    } 
+    // Check if there is already a row for the current date
+    const { data: existingData, error: fetchError } = await supabase
+      .from('watertracker')
+      .select('*')
+      .eq('user_id', user?.id)
+      .eq('date', today);
+
+    if (fetchError) {
+      console.error('Error fetching existing data:', fetchError.message);
+      return;
+    }
+
+
+    if (existingData && existingData.length > 0) {
+      // Row exists for the current date, update it
+      const { error: updateError } = await supabase
+        .from('watertracker')
+        .update({
+          water_intake_ml: waterDrank,
+          water_intake_goal: waterGoal,
+        })
+        .eq('user_id', user?.id)
+        .eq('date', today);
+
+      if (updateError) {
+        console.error('Error updating water data:', updateError.message);
+        return;
+      }
+    } else {
+      // No row exists for the current date, insert a new row
+      const { error: insertError } = await supabase.from('watertracker').insert([
+        { water_intake_ml: waterDrank, water_intake_goal: waterGoal, user_id: user?.id, date: today },
+      ]);
+
+      if (insertError) {
+        console.error('Error inserting water data:', insertError.message);
+        return;
+      }
+    }
+
+    setisDataStored(true);
   } catch (error) {
-    console.error('Error inserting water data:', error);
+    console.error('Error handling submit:', error);
   }
 };
+
 
 
       // Progress Bar Animation
@@ -104,7 +138,7 @@ const handlePressSubmit = async () => {
       toValue: fillingPercentage / 3,
       useNativeDriver: false,
     }).start();
-  }, [fillingPercentage]);
+  }, [fillingPercentage,barHeight]);
 
   // End of Progress Bar Animation
 
@@ -113,10 +147,12 @@ const handlePressSubmit = async () => {
   }, [waterGoal, waterDrank]);
 
   useEffect(() => {
+    if (typeof waterDrank === 'number' && typeof waterGoal === 'number') {
     // percentage = waterDrank * 100 / waterGoal
     let percentage = (waterDrank * 100) / waterGoal;
     let fillingP = (percentage * 300) / 100;
     setFillingPercentage(fillingP > 300 ? 300 : fillingP);
+    }
   }, [waterGoal, setFillingPercentage, waterDrank]);
 
 
@@ -126,8 +162,11 @@ const handlePressSubmit = async () => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
+        <View style={{backgroundColor:'#89CFF0', height:'100%', width:'100%'}}>
       {/* Water Goal */}
+      <Pressable onPress={() => router.navigate('/Trackers')}>
+      <Back name="chevron-back-circle-outline" size={30} color="white"/>
+      </Pressable>
       <View style={styles.waterGoalContainer}>
         <Text style={[styles.blueText, { fontSize: 22 }]}>Your Goal</Text>
 
@@ -135,7 +174,9 @@ const handlePressSubmit = async () => {
 
           <TouchableOpacity
             style={{ padding: 5 }}
-            onPress={() => setWaterGoal(waterGoal - 250)}
+            onPress={() => {if (typeof waterGoal === 'number') {
+              setWaterGoal(waterGoal - 250);
+          }}}
           >
             <Ionicons name="remove-circle" size={26} color="#2389da" />
           </TouchableOpacity>
@@ -147,7 +188,9 @@ const handlePressSubmit = async () => {
           {/* Add Goal */}
           <TouchableOpacity
             style={{ padding: 5 }}
-            onPress={() => setWaterGoal(waterGoal + 250)}
+            onPress={() => {if (typeof waterGoal === 'number') {
+              setWaterGoal(waterGoal + 250);
+          }}}
           >
             <Ionicons name="add-circle" size={26} color="#2389da" />
           </TouchableOpacity>
@@ -165,7 +208,7 @@ const handlePressSubmit = async () => {
         }}
       >
         {/* Water You've Drunk Label */}
-        <View style={{ justifyContent: "center" }}>
+        <View style={{ justifyContent: "center", backgroundColor:'white', marginVertical:'20%', borderRadius:20, padding:10 }}>
           <Text style={[styles.grayText, { fontSize: 28 }]}>You've drunk</Text>
           <Text style={[styles.blueText, { fontSize: 42 }]}>
             {waterDrank} mL
@@ -221,19 +264,19 @@ const handlePressSubmit = async () => {
         </TouchableOpacity>
 
         {/* Modal */}
-        <Modal visible={showModal} transparent={true} animationType="slide">
+        <Modal visible={showModal} transparent={false} animationType="slide">
             <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
                 {/* Your UI components for modal content */}
                     <TouchableOpacity style={styles.closeModalButton} onPress={() => setShowModal(false)}>
-                        <Ionicons name="close-circle" size={24} color="black" />
+                        <Ionicons name="chevron-back-circle-outline" size={30} color="white" />
                     </TouchableOpacity>
                     <WaterHistory/>
                 </View>
             </View>
         </Modal>
 
-      </LinearGradient>
+      </View>
     </SafeAreaView>
   );
 };
@@ -244,11 +287,10 @@ const handlePressSubmit = async () => {
 const styles = StyleSheet.create({
     viewHistoryButton: {
         position: 'absolute',
-        top: 20,
-        right: 20,
+        top: 0,
+        right: 0,
         backgroundColor: '#fff',
         padding: 10,
-        borderRadius: 10,
     },
     viewHistoryButtonText: {
         color: '#1a7373',
@@ -259,10 +301,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white', // semi-transparent black
+        backgroundColor: '#89CFF0',
     },
     modalContent: {
-        backgroundColor: '#fff',
         padding: 20,
         borderRadius: 10,
         width: '100%',
@@ -271,7 +312,7 @@ const styles = StyleSheet.create({
     closeModalButton: {
         position: 'absolute',
         top: 2,
-        right: 10,
+        left: 10,
     },
   container: {
     flex: 1,
@@ -284,16 +325,26 @@ const styles = StyleSheet.create({
     width: 40,
     height: 300,
     justifyContent: "flex-end",
+    backgroundColor:'white',
+    
   },
   waterButtonsContainer: {
     flexDirection: "row",
-    paddingVertical: 30,
-    width: "100%",
+    paddingVertical: 25,
+    width: "95%",
+    marginHorizontal: 10,
+    marginTop:10,
+    borderRadius: 20,
     justifyContent: "space-around",
+    backgroundColor:'white',
   },
   waterGoalContainer: {
-    padding: 50,
     alignItems: "center",
+    backgroundColor:'white',
+    marginHorizontal: '20%',
+    borderRadius: 20,
+    marginTop: 20
+
   },
   blueText: {
     color: "#1ca3ec",

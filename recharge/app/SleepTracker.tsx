@@ -1,8 +1,15 @@
 import React, { useEffect, useState}  from 'react';
-import { StyleSheet, View, SafeAreaView, TouchableOpacity, Text, Animated } from 'react-native';
+import { StyleSheet, View, SafeAreaView, TouchableOpacity, Text, ScrollView, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { supabase } from '../lib/supabase';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import Icon from 'react-native-vector-icons/Entypo';
+import SunIcon from 'react-native-vector-icons/Octicons';
+import Back from 'react-native-vector-icons/Ionicons';
+import { useRouter } from 'expo-router';
+import SleepStats from './Sleep/SleepStats';
+import SmallChart from './Sleep/SmallChart';
+
 
 
 const SleepTracker = () => {
@@ -14,6 +21,7 @@ const SleepTracker = () => {
     const [showTimePicker2, setShowTimePicker2] = useState(false);
   
     const [timeDifference, setTimeDifference] = useState('0:00');
+    const [updateCounter, setUpdateCounter] = useState(0);
   
 
   
@@ -64,54 +72,88 @@ const formatTime = (time: Date) => {
 
 const handlePressSubmit = async () => {
   try {
-    const { data: {user}, error } = await supabase.auth.getUser(); // Get the authenticated user
+    const { data: { user }, error } = await supabase.auth.getUser(); // Get the authenticated user
 
     if (error) {
       console.error('Error fetching user data:', error.message);
       return;
     }
-    let today = new Date().toISOString().split('T')[0]; 
 
-    const { data, error: insertError } = await supabase.from('sleeptracker').upsert([
-      { sleep_start: chosenTime1, sleep_end: chosenTime2, user_id: user?.id},
-    ]);
+    const currentDate = new Date();
+    const insertDate = new Date(currentDate); // Copy the current date
+    insertDate.setDate(insertDate.getDate() - 1); // Subtract 1 day
+    const formattedInsertDate = insertDate.toISOString().split('T')[0];
 
-    if (insertError) {
-      console.error('Error inserting sleep data:', insertError.message);
-    } 
+    // Check if there's an existing row with the same date
+    const { data: existingData, error: fetchError } = await supabase
+      .from('sleeptracker')
+      .select('id')
+      .eq('user_id', user?.id)
+      .eq('Date', formattedInsertDate);
+
+    if (fetchError) {
+      console.error('Error fetching existing sleep data:', fetchError.message);
+      return;
+    }
+
+    if (existingData.length > 0) {
+      // If there's existing data, update it
+      const { error: updateError } = await supabase
+        .from('sleeptracker')
+        .update({ sleep_start: chosenTime1, sleep_end: chosenTime2 })
+        .eq('id', existingData[0].id);
+
+      if (updateError) {
+        console.error('Error updating sleep data:', updateError.message);
+      } else {
+        console.log('Sleep data updated successfully');
+        setUpdateCounter(prevCounter => prevCounter + 1);
+      }
+    } else {
+      // If there's no existing data, insert a new row
+      const { error: insertError } = await supabase.from('sleeptracker').insert([
+        { sleep_start: chosenTime1, sleep_end: chosenTime2, user_id: user?.id, Date: formattedInsertDate },
+      ]);
+
+      if (insertError) {
+        console.error('Error inserting sleep data:', insertError.message);
+      } else {
+        console.log('Sleep data inserted successfully');
+        setUpdateCounter(prevCounter => prevCounter + 1);
+      }
+    }
   } catch (error) {
-    console.error('Error inserting sleep data:', error);
+    console.error('Error inserting or updating sleep data:', error);
   }
 };
 
-  useEffect(() => {
-    handlePressSubmit();
-  }, [chosenTime1, chosenTime2]);
+
+
 
 let today = new Date().toISOString().split('T')[0]; 
+const router = useRouter();
 
-  return (
-    <SafeAreaView style={styles.container}>
-        <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
-      {/* Water Goal */}
-      <View style={styles.totalSleepContainer}>
-        <Text style={[styles.blueText, { fontSize: 22 }]}>Total Hours Sleep:</Text>
+return (
+  <ScrollView style={{backgroundColor: '#9678B4', height:'100%'}}>
+  <SafeAreaView style={styles.dailybackground}>
 
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={[styles.grayText, { fontSize: 26 }]}>
-            {timeDifference}  Hours{" "}
-          </Text>
-        
-        </View>
-        <Text> Today's Date: {today}</Text>
-      </View>
-      <View style={styles.container}>
-      <View style={styles.dateTimeContainer}>
+  <Pressable onPress={() => router.navigate('/Trackers')}>
+      <Back name="chevron-back-circle-outline" size={30} color="white"/>
+  </Pressable>
+
+    <View style={styles.entryContainer}>
+        <Text style={styles.entryTitle}>Today's Entry</Text>
+        <Text style={styles.entryDate}>{today}</Text>
+
+    <View style={styles.timesContainer}>
+      <Icon name="moon" size={30} color="white" style={styles.icon} />
+      <View style={styles.timeContainer}>
         <TouchableOpacity onPress={showTimePickerComponent1}>
-          <Text style={styles.dateText}>
-            Start Time: {formatTime(chosenTime1)}
+          <Text style={styles.timefont}>
+            {formatTime(chosenTime1)}
           </Text>
         </TouchableOpacity>
+
         {showTimePicker1 && (
           <DateTimePicker
             value={chosenTime1}
@@ -122,12 +164,16 @@ let today = new Date().toISOString().split('T')[0];
           />
         )}
       </View>
-      <View style={styles.dateTimeContainer}>
+
+      <Text style={styles.separator}>-</Text>
+
+      <View style={styles.timeContainer}>
         <TouchableOpacity onPress={showTimePickerComponent2}>
-          <Text style={styles.dateText}>
-            End Time: {formatTime(chosenTime2)}
+          <Text style={styles.timefont}>
+            {formatTime(chosenTime2)}
           </Text>
         </TouchableOpacity>
+          
         {showTimePicker2 && (
           <DateTimePicker
             value={chosenTime2}
@@ -138,51 +184,100 @@ let today = new Date().toISOString().split('T')[0];
           />
         )}
       </View>
+      <SunIcon name="sun" size={30} color="white" style={styles.icon} />
     </View>
 
-      </LinearGradient>
-    </SafeAreaView>
-  );
-};
-    
+      <View>
+      <Text style={{color:'white' }}>Total Sleep:</Text>
 
-  export default SleepTracker;
+      <View> 
+        <Text style={{ fontSize: 26, color:'white' }}>{timeDifference} Hours</Text>
+      </View>
+    </View>
+
+    <TouchableOpacity style={styles.update} onPress={handlePressSubmit}>
+      <Text style={{color:'#9678B4'}}>Update</Text>
+    </TouchableOpacity>
+
+    </View>
+  </SafeAreaView>
+  <SleepStats/>
+  <SmallChart key={updateCounter}/>
+  </ScrollView>
+);
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-  },
-  progressBarContainer: {
-    borderRadius: 40,
-    borderWidth: 1,
-    width: 40,
-    height: 300,
-    justifyContent: "flex-end",
+
+  backButton: {
+    position: 'absolute',
+    marginLeft: 10,
+    marginTop: 5,
+    width:20,
+    backgroundColor: '#9678B4',
+
   },
 
-  totalSleepContainer: {
-    padding: 50,
-    alignItems: "center",
+  dailybackground: {
+    backgroundColor: '#9678B4',
+    paddingBottom: 10,
   },
-  blueText: {
-    color: "#1ca3ec",
-    fontWeight: "600",
-  },
-  grayText: { color: "#323033", fontWeight: "600" },
 
-  dateTimeContainer: {
+  entryContainer: {
+    alignItems: 'center',
+    color:'white',
+  },
+  entryTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 2,
+    color:'white',
+  },
+  entryDate: {
+    fontSize: 14,
+    color:'white',
+  },
+
+  timesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
     marginBottom: 20,
+    color:'white',
   },
-  dateText: {
-    fontSize: 20,
+
+  timeContainer: {
+    borderWidth: 1,
+    borderColor: 'white',
+    padding: 5,
+    marginHorizontal: 5,
+    color:'white',
+  },
+
+  icon: {
+    marginRight: 5,
+  },
+
+  timefont:{
+    fontSize: 24,
+    color:'white',
+  },
+  separator: {
+    marginHorizontal: 5,
+    fontSize: 30,
+    color:'white',
+  },
+
+  update:{
+    borderWidth: 1,
+    backgroundColor: 'white',
     padding: 10,
-    color: 'blue',
-  },
-  submitButton: {
-    fontSize: 20,
-    padding: 10,
-    color: 'green',
-  },
+    marginTop: 10,
+    borderRadius: 20,
+
+  }
+
 });
+
+export default SleepTracker;

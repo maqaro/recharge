@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet, Button, ScrollView } from 'react-native';
-import { supabase } from '../lib/supabase';
-import AddSleep from './Sleep/AddSleep'; 
-import Filter from './Sleep/Filter';
-import SleepChart from './Sleep/SleepChart';
+import { supabase } from '../../lib/supabase';
+import Filter from './Filter';
 import {format} from 'date-fns';
 
-const SleepTracker = () => {
+const SleepHistory = () => {
     const [userid, setUserid] = useState<string | undefined>();
     const [sleepData, setSleepData] = useState<any[]>([]);
     const [showAddSleepModal, setShowAddSleepModal] = useState(false); // State to control the visibility of the AddSleep modal
@@ -98,7 +96,11 @@ const SleepTracker = () => {
 
     return (
         <View style={styles.container}>
-            <Text>Recent Entries</Text>
+            <Filter trackerData={sleepData} onDateChange={handleDateChange}/>
+            {/* <WeekChart filterStartDate={startDate} filterEndDate={endDate} sleepData={sleepData} /> */}
+
+            
+            <Text style={{color:'white', fontWeight:'bold', fontSize:16, marginLeft:10, marginBottom:10}}>Recent Records</Text>
             {sleepData.length > 0 ? (
             <ScrollView style={styles.sleepEntries}>
                 {sortedSleepData.map(sleepEntry => (
@@ -124,29 +126,6 @@ const SleepTracker = () => {
             <Text>No sleep data found.</Text>
             )}
 
-            <Filter onDateChange={handleDateChange}/>
-            <SleepChart filterStartDate={startDate} filterEndDate={endDate} sleepData={sleepData} />
-
-            {/* Button to add sleep */}
-            <TouchableOpacity style={styles.addButton} onPress={handleAddSleep}>
-                <Text style={styles.addButtonText}>+</Text>
-            </TouchableOpacity>
-
-            {/* Modal for AddSleep */}
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={showAddSleepModal}
-                onRequestClose={handleCloseModal}
-            >
-                <View style={styles.modalContainer}>
-                    <TouchableOpacity style={styles.closeButton} onPress={handleCloseModal}>
-                        <Text style={styles.closeButtonText}>x</Text>
-                    </TouchableOpacity>
-                    <AddSleep />
-                </View>
-            </Modal>
-
         </View>
     );
 };
@@ -157,14 +136,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: 'stretch',
         justifyContent: 'flex-start',
+        backgroundColor: '#9678B4',
     },
 
     sleepEntries:{
-        flex:3,
-        width:'100%',
-        overflow:'hidden',
+        width: '95%',
+        alignSelf: 'center',
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        backgroundColor: 'white',
+        marginBottom: 10,
+        
     },
 
     rowContainer: {
@@ -185,44 +170,6 @@ const styles = StyleSheet.create({
         color: 'red',
     },
 
-    addButton: {
-        position: 'absolute',
-        bottom: 20,
-        right: 20,
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: 'blue',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    addButtonText: {
-        color: 'white',
-        fontSize: 30,
-        fontWeight: 'bold',
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-    },
-    closeButton: {
-        position: 'absolute',
-        top: 20,
-        right: 20,
-        width: 30,
-        height: 30,
-        borderRadius: 15,
-        backgroundColor: 'red',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    closeButtonText: {
-        color: 'white',
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
 });
 
-export default SleepTracker;
+export default SleepHistory;

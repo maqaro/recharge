@@ -2,12 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import WeekChart from './WeekChart';
 
 interface FilterProps {
     onDateChange: (startDate: Date, endDate: Date) => void;
+    trackerdata: any;
 }
 
-const WeekFilter: React.FC<FilterProps> = ({ onDateChange }) => {
+const WeekFilter: React.FC<FilterProps> = ({ trackerdata, onDateChange }) => {
+
+    const isSleepData = trackerdata && trackerdata[0] && trackerdata[0].sleep_start !== undefined;
+    const isWaterData = trackerdata && trackerdata[0] && trackerdata[0].water_intake_ml !== undefined;
 
     const currentDate: Date = new Date();
     const currentDayOfWeek: number = currentDate.getDay()
@@ -51,19 +56,23 @@ const WeekFilter: React.FC<FilterProps> = ({ onDateChange }) => {
 
     return (
         <View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
+            <View style={{ flexDirection: 'row',alignSelf:'center', marginTop: 20 }}>
                 <TouchableOpacity onPress={handlePreviousWeek}>
-                    <Text style={{ marginRight: 10 }}>◄</Text>
+                    <Text style={{ marginRight: 10, fontSize:18, color:'white' }}>◄</Text>
                 </TouchableOpacity>
-                <Text>
-                    <Text>{startDate.toDateString()}</Text>
-                    <Text> - </Text>
-                    <Text>{endDate.toDateString()}</Text>
+                <Text >
+                    <Text style={{fontSize:16, color:'white' }}>{startDate.toDateString()}</Text>
+                    <Text style={{fontSize:20, color:'white', fontWeight:'bold' }}> - </Text>
+                    <Text style={{fontSize:16, color:'white' }}>{endDate.toDateString()}</Text>
                 </Text>
                 <TouchableOpacity onPress={handleNextWeek}>
-                    <Text style={{ marginLeft: 10 }}>►</Text>
+                    <Text style={{ marginLeft: 10, fontSize:18, color:'white' }}>►</Text>
                 </TouchableOpacity>
             </View>
+
+            {/* Render WeekChart based on the type of data */}
+            {isSleepData && <WeekChart filterStartDate={startDate} filterEndDate={endDate} sleepData={trackerdata} waterData={null} />}
+            {isWaterData && <WeekChart filterStartDate={startDate} filterEndDate={endDate} waterData={trackerdata} sleepData={null} />}
         </View>
     );
 };

@@ -3,6 +3,7 @@ import { StyleSheet, View, ScrollView, TouchableOpacity, Text, Image, ImageBackg
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import TrackerButton from './trackerbutton';
+import { Ionicons } from '@expo/vector-icons';
 
 
 
@@ -14,6 +15,10 @@ const Trackers = () => {
       <TrackerButton/>
       <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
         <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={true}>
+
+        <TouchableOpacity onPress={() => router.navigate('/Homepage')}>
+          <Ionicons name="chevron-back-circle-outline" size={40} color="white" />
+        </TouchableOpacity>
         
         
         

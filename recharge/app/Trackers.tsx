@@ -3,6 +3,7 @@ import { StyleSheet, View, ScrollView, TouchableOpacity, Text, Image, ImageBackg
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import NavBar from './NavBar';
 
 
 
@@ -69,8 +70,10 @@ const Trackers = () => {
         
         
       
+        
         </ScrollView>
         <Text></Text>
+        <NavBar/>
       </LinearGradient>
     </View>
   )
@@ -135,7 +138,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: '10%',
     marginLeft: '2.5%',
-    marginRight:'2.5%'
+    marginRight:'2.5%',
+    marginBottom:'30%',
   },
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Modal, TouchableOpacity } from 'react-native';
+import { Text, View, Modal, TouchableOpacity, SafeAreaView } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { supabase } from '../../lib/supabase';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -133,10 +133,11 @@ const SmallChart: React.FC = (key) => {
 
     // Render the chart with filtered sleep data
     return (
-        <View style={{width:'100%'}}>
-            <View style={{flexDirection: 'row',justifyContent: 'space-around', paddingTop:5}}>
+        <View style={{width:'100%', alignSelf:'center'}}>
+            <SafeAreaView style={{width:'100%', alignSelf:'center'}}>
+            <View style={{flexDirection: 'row',justifyContent: 'space-around', paddingTop:15}}>
                 <Text style={{fontSize: 20,fontWeight: 'bold',marginBottom: 10,color:'white',alignSelf: 'flex-start',}}>Sleep Graph</Text>
-                <TouchableOpacity onPress={() => setModalVisible(true)}>
+                <TouchableOpacity  onPress={() => setModalVisible(true)}>
                 <Icon name="rightcircleo" size={25} color="white" />
                 </TouchableOpacity>
             </View>
@@ -148,8 +149,8 @@ const SmallChart: React.FC = (key) => {
                     setModalVisible(false);
                 }}
             >
-                <TouchableOpacity style={{backgroundColor: '#9678B4'}} onPress={() => setModalVisible(false)}>
-                    <Ionicons name="chevron-back-circle-outline" size={25} color="white" />
+                <TouchableOpacity style={{backgroundColor: '#9678B4', paddingTop:25, paddingLeft:10}} onPress={() => setModalVisible(false)}>
+                    <Ionicons name="chevron-back-circle-outline" size={30} color="white" />
                 </TouchableOpacity>
 
                 <SleepHistory/>
@@ -164,7 +165,7 @@ const SmallChart: React.FC = (key) => {
                         },
                     ],
                 }}
-                width={350}
+                width={300}
                 height={180}
                 yAxisSuffix=" hrs"
                 yAxisLabel=""
@@ -178,6 +179,7 @@ const SmallChart: React.FC = (key) => {
                     labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
                     style: {
                         borderRadius: 16,
+                        
                     },
                     propsForDots: {
                         r: '6',
@@ -190,8 +192,10 @@ const SmallChart: React.FC = (key) => {
                 style={{
                     marginVertical: 8,
                     marginLeft: 5,
+                    alignSelf:'center'
                 }}
             />
+            </SafeAreaView>
         </View>
     );
 };

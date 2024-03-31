@@ -2,15 +2,21 @@ import React, { useEffect, useState}  from 'react';
 import { StyleSheet, View, SafeAreaView, TouchableOpacity, Text, ScrollView, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { supabase } from '../lib/supabase';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DatePicker from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/Entypo';
 import SunIcon from 'react-native-vector-icons/Octicons';
 import Back from 'react-native-vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
 import SleepStats from './Sleep/SleepStats';
 import SmallChart from './Sleep/SmallChart';
+import DateTimePicker from '@react-native-community/datetimepicker'; 
+import  DateTimePickerChangeEvent  from '@react-native-community/datetimepicker';
 
-
+type DateTimePickerChangeEvent = {
+  nativeEvent: {
+    timestamp: number; // or any other properties you expect
+  };
+};
 
 const SleepTracker = () => {
 
@@ -25,24 +31,32 @@ const SleepTracker = () => {
   
 
   
-    const onTimeChange1 = (event: any, selectedTime: Date | undefined) => {
+    const onTimeChange1 = (event: DateTimePickerChangeEvent, selectedTime?: Date) => {
       setShowTimePicker1(false);
-      if (selectedTime !== undefined) {
-        setChosenTime1(selectedTime);
+      if (selectedTime) {
+        // Set the time part of selectedTime to chosenTime1, while setting the date to yesterday
+        const today = new Date();
+        const yesterday = new Date(today);
+        yesterday.setDate(today.getDate() - 1); // Subtract 1 day
+        const chosenDateTime = new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
+        setChosenTime1(chosenDateTime);
       }
     };
   
-    const onTimeChange2 = (event: any, selectedTime: Date | undefined) => {
+    const onTimeChange2 = (event: DateTimePickerChangeEvent, selectedTime?: Date) => {
       setShowTimePicker2(false);
-      if (selectedTime !== undefined) {
-        setChosenTime2(selectedTime);
-        chosenTime1.setDate(chosenTime1.getDate() - 1);
-        const dateTime1 = chosenTime1;
-        const dateTime2 = selectedTime;
-        const difference = calculateDifference(dateTime1, dateTime2);
+      if (selectedTime) {
+        // Set the time part of selectedTime to chosenTime2, while keeping today's date
+        const today = new Date();
+        const chosenDateTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
+        setChosenTime2(chosenDateTime);
+        
+        // Calculate difference
+        const difference = calculateDifference(chosenTime1, chosenDateTime);
         setTimeDifference(difference);
       }
     };
+    
   
     const showTimePickerComponent1 = () => {
       setShowTimePicker1(true);
@@ -155,14 +169,14 @@ return (
         </TouchableOpacity>
 
         {showTimePicker1 && (
-          <DateTimePicker
-            value={chosenTime1}
-            mode="time"
-            is24Hour={true}
-            display="default"
-            onChange={onTimeChange1}
-          />
-        )}
+                <DateTimePicker
+                  value={chosenTime1}
+                  mode="time"
+                  is24Hour={true}
+                  display="clock"
+                  onChange={onTimeChange1}
+                />
+              )}
       </View>
 
       <Text style={styles.separator}>-</Text>
@@ -175,14 +189,14 @@ return (
         </TouchableOpacity>
           
         {showTimePicker2 && (
-          <DateTimePicker
-            value={chosenTime2}
-            mode="time"
-            is24Hour={true}
-            display="default"
-            onChange={onTimeChange2}
-          />
-        )}
+                <DateTimePicker
+                  value={chosenTime2}
+                  mode="time"
+                  is24Hour={true}
+                  display="clock"
+                  onChange={onTimeChange2}
+                />
+              )}
       </View>
       <SunIcon name="sun" size={30} color="white" style={styles.icon} />
     </View>
@@ -200,9 +214,9 @@ return (
     </TouchableOpacity>
 
     </View>
-  </SafeAreaView>
   <SleepStats/>
   <SmallChart key={updateCounter}/>
+  </SafeAreaView>
   </ScrollView>
 );
 };
@@ -276,7 +290,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 20,
 
-  }
+  },
+  datePicker: {
+    width: 100,
+  },
 
 });
 

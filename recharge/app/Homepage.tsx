@@ -4,6 +4,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import NavBar from './NavBar';
 
 
 export default function Homepage() {
@@ -59,6 +60,7 @@ export default function Homepage() {
             <Text style={styles.text}>Other Resources</Text>
             <Image source={require('./images/Resources.png')} style={styles.ResourcesPic}/>
           </TouchableOpacity>
+          <NavBar/>
         </LinearGradient>
         </View>
       );

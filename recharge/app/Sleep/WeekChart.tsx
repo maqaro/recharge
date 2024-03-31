@@ -13,8 +13,8 @@ interface SleepDataItem {
 interface WeekChartProps {
     filterStartDate: Date;
     filterEndDate: Date;
-    sleepData: SleepDataItem[] | null; // Union type for sleepData or null
-    waterData: WaterDataItem[] | null; // Union type for waterData or null
+    sleepData: SleepDataItem[] | null;
+    waterData: WaterDataItem[] | null;
 }
 
 interface WaterDataItem {
@@ -64,30 +64,6 @@ const WeekChart: React.FC<WeekChartProps> = ({ filterStartDate, filterEndDate, s
         });
     }
 
-    // Filter sleep data based on filterStartDate and filterEndDate
-    // const sortedSleepData = sleepData.sort((a, b) => {
-    //     const dateA = new Date(a.sleep_start);
-    //     const dateB = new Date(b.sleep_start);
-    //     return dateA.getTime() - dateB.getTime();
-    // });
-
-    // const sleepDurations = filteredSleepData.map((data) => {
-    //     const sleepStart = new Date(data.sleep_start);
-    //     const sleepEnd = new Date(data.sleep_end);
-    //     return (sleepEnd.getTime() - sleepStart.getTime()) / (1000 * 60 * 60); // Convert milliseconds to hours
-    // });
-
-    
-
-    // const formatXAxisLabel = (date: Date): string => {
-    //     return `${date.getDate()}/${date.getMonth() + 1}`; // Display day/month
-    // };
-
-    // const startDates = filteredSleepData.map((data) => {
-    //     const sleepStartDate = new Date(data.sleep_start);
-    //     return formatXAxisLabel(sleepStartDate);
-    // });
-    // Render the chart with filtered sleep data
 
     const chartData = sleepData ? sleepDurations : waterIntakeByDay;
 
@@ -102,7 +78,7 @@ const WeekChart: React.FC<WeekChartProps> = ({ filterStartDate, filterEndDate, s
                         },
                     ],
                 }}
-                width={350}
+                width={300}
                 height={280}
                 yAxisSuffix={sleepData ? ' hrs' : ' ml'}
                 yAxisLabel=""
@@ -122,6 +98,10 @@ const WeekChart: React.FC<WeekChartProps> = ({ filterStartDate, filterEndDate, s
                         strokeWidth: '2',
                         stroke: '#ffa726',
                     },
+                    propsForLabels: {
+                        fontSize: 10, // Adjust the font size here
+                    },
+                    barPercentage:0.8,
                     
                 }}
                 style={{

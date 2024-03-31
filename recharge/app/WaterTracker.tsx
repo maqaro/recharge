@@ -269,7 +269,7 @@ const handlePressSubmit = async () => {
                 <View style={styles.modalContent}>
                 {/* Your UI components for modal content */}
                     <TouchableOpacity style={styles.closeModalButton} onPress={() => setShowModal(false)}>
-                        <Ionicons name="chevron-back-circle-outline" size={30} color="white" />
+                        <Ionicons name="chevron-back-circle-outline" size={35} color="white" />
                     </TouchableOpacity>
                     <WaterHistory/>
                 </View>
@@ -302,6 +302,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#89CFF0',
+        paddingTop:20,
     },
     modalContent: {
         padding: 20,
@@ -311,7 +312,7 @@ const styles = StyleSheet.create({
     },
     closeModalButton: {
         position: 'absolute',
-        top: 2,
+        top: 10,
         left: 10,
     },
   container: {

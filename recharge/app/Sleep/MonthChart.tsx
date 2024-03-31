@@ -79,7 +79,7 @@ const MonthChart: React.FC<SleepChartProps> = ({ filterStartDate, filterEndDate,
                         },
                     ],
                 }}
-                width={390}
+                width={300}
                 height={280}
                 yAxisSuffix={sleepData ? ' hrs' : ' ml'}
                 yAxisLabel=""
@@ -100,7 +100,7 @@ const MonthChart: React.FC<SleepChartProps> = ({ filterStartDate, filterEndDate,
                         stroke: '#ffa726',
                     },
                     propsForLabels: {
-                        fontSize: 6, // Adjust the font size here
+                        fontSize: 5, // Adjust the font size here
                     },
                     barPercentage:0.1,
                     

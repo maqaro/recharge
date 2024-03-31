@@ -94,7 +94,7 @@ const YearChart: React.FC<SleepChartProps> = ({ filterStartDate, filterEndDate, 
                         },
                     ],
                 }}
-                width={355}
+                width={300}
                 height={280}
                 yAxisSuffix={sleepData ? ' hrs' : ' ml'}
                 yAxisLabel=""
@@ -115,9 +115,9 @@ const YearChart: React.FC<SleepChartProps> = ({ filterStartDate, filterEndDate, 
                         stroke: '#ffa726',
                     },
                     propsForLabels: {
-                        fontSize: 12, // Adjust the font size here
+                        fontSize: 8, // Adjust the font size here
                     },
-                    barPercentage:0.5,
+                    barPercentage:0.4,
                 }}
                 style={{
                     marginVertical: 8,

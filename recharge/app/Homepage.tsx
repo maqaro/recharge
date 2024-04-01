@@ -30,7 +30,7 @@ export default function Homepage() {
           <TouchableOpacity
 
             style={styles.square3}
-            //onPress={() => .........
+            onPress={() => router.navigate('/MatchWithMentor')}
           >
             <Text style={styles.text}>Mentor Match</Text>
             <Image source={require('./images/Match.png')} style={styles.MatchPic}/>

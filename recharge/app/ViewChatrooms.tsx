@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, FlatList } from 'react-native';
-import { useRouter } from 'expo-router';
+import { router, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '../lib/supabase';
@@ -22,7 +22,7 @@ const ViewChatRooms = () => {
         
             let { data: chatroom, error } = await supabase
                 .from('chats')
-                .select('mentor_id, issue_id, issues(name), mentors(name)')
+                .select('id ,mentor_id, issue_id, issues(name), mentors(name)')
                 .eq('employee_id', user?.id);
             if (error) {
                 console.error('Error fetching chat room data inner:', error);
@@ -41,8 +41,8 @@ const ViewChatRooms = () => {
         <View>
             <Text style={styles.details}>Below are your chat rooms: </Text>
         <View style={styles.item}>
-            {chatrooms?.map((item: {mentor_id: any, issue_id: any, issues: {key: any, value: any}, mentors: {key: any, value: any}}) => (
-                <TouchableOpacity>
+            {chatrooms?.map((item: {id: any, mentor_id: any, issue_id: any, issues: {key: any, value: any}, mentors: {key: any, value: any}}) => (
+                <TouchableOpacity onPress={() => router.push({ pathname: '/ChatRoom', params: { chatID: item.id } })}>
                     <Text style={styles.title}>{Object.values(item.mentors)}</Text>
                     <Text style={styles.details}>{Object.values(item.issues)}</Text>
             </TouchableOpacity>

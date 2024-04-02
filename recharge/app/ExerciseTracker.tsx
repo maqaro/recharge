@@ -54,11 +54,6 @@ const ExerciseTracker = () => {
     }
   }, []);
 
-  const handlePressExercise = (exercise) => {
-    // Navigate to the ExerciseDetail screen with parameters
-    router.navigate('/ExerciseDetail', { exerciseData: exercise.history });
-  };
-
   useEffect(() => {
     fetchExerciseData();
   }, [fetchExerciseData]);

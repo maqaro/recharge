@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { supabase } from '../lib/supabase';
 import TrackerButton from './trackerbutton';
+import TrackerNav from './TrackerNav';
 
 const ExerciseTracker = () => {
     const [userid, setUserid] = React.useState<string | undefined>();
@@ -55,8 +56,6 @@ const ExerciseTracker = () => {
 
     return (
         <View style={styles.container}>
-            <TrackerButton/>
-
 
             <Text style={styles.title}>Exercise Tracker</Text>
             <TouchableOpacity
@@ -88,6 +87,8 @@ const ExerciseTracker = () => {
             ))}
         </ScrollView>          
             {/* Add your components and logic here */}
+        <TrackerNav/>
+
         </View>
         
     );
@@ -149,8 +150,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        padding: 20,
-        alignItems: 'center',
+
     },
     title: {
         fontSize: 24,

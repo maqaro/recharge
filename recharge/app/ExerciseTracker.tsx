@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert } fr
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router'; // Keeping router as it was
 import { supabase } from '../lib/supabase';
-import TrackerButton from './trackerbutton';
 import TrackerNav from './TrackerNav';
 
 type Exercise = {

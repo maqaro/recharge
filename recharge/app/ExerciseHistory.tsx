@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import { Tracker } from './classes/Tracker';
 import TrackerNav from './TrackerNav';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { supabase } from '../lib/supabase';
 import { BarChart } from 'react-native-chart-kit';
 
@@ -45,7 +45,7 @@ const ExerciseHistory: React.FC = () => {
     const sortedAndFormattedRecords = [...exercisetracker].sort((a, b) => b.date.localeCompare(a.date)).map(record => ({
     ...record,
     formattedDate: new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(record.date))
-}));
+    }));
 
     const chartConfig = {
         backgroundGradientFrom: "#FFFFFF",
@@ -73,41 +73,52 @@ const ExerciseHistory: React.FC = () => {
         <View style={styles.container}>
             <Text style={styles.title}>Exercise History</Text>
             <ScrollView>
-            <View style={styles.main}>
-            <Text style={styles.exerciseTitle}>{exercisetracker[0]?.exercise?.Exercise_Name}</Text>
-            <Image source={{ uri: exercisetracker[0]?.exercise?.Exercise_Image }} style={styles.img} />
-            <Text style={styles.detail}>Muscle Group: {exercisetracker[0]?.exercise?.muscle_gp}</Text>
-            <Text style={styles.detail}>Equipments: {exercisetracker[0]?.exercise?.Equipment}</Text>
-            <View style={styles.chartContainer}>
-                <BarChart
-                    data={data}
-                    width={Dimensions.get("window").width - 16}
-                    height={400}
-                    yAxisSuffix = " kgs"
-                    chartConfig={chartConfig}
-                    verticalLabelRotation={30}
-                    fromZero={true}
-                    showBarTops={true}
-                    showValuesOnTopOfBars={true}
-                    withInnerLines={true}
-                />
-            </View>
-            <Text style={styles.historyTitle}>History</Text>
-                {sortedAndFormattedRecords.map((record, index) => (
-                    <View key={index} style={styles.historyRecord}>
-                        <Text style={styles.recordText}>Date: {record.formattedDate}</Text>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={styles.recordText}>Sets: {record.sets}</Text>
-                            <Text style={styles.recordText}>Reps: {record.reps}</Text>
-                            <Text style={styles.recordText}>Weight: {record.weights} kgs</Text>
-                        </View>
+            {exercisetracker.length > 0 ? (
+                <View style={styles.main}>
+                    <Text style={styles.exerciseTitle}>{exercisetracker[0]?.exercise?.Exercise_Name}</Text>
+                    <Image source={{ uri: exercisetracker[0]?.exercise?.Exercise_Image }} style={styles.img} />
+                    <Text style={styles.detail}>Muscle Group: {exercisetracker[0]?.exercise?.muscle_gp}</Text>
+                    <Text style={styles.detail}>Equipment: {exercisetracker[0]?.exercise?.Equipment}</Text>
+                    
+                    <View style={styles.chartContainer}>
+                        <BarChart
+                            data={data}
+                            width={Dimensions.get("window").width - 16}
+                            height={400}
+                            yAxisSuffix=" kgs"
+                            chartConfig={chartConfig}
+                            verticalLabelRotation={30}
+                            fromZero={true}
+                            showBarTops={true}
+                            showValuesOnTopOfBars={true}
+                            withInnerLines={true}
+                        />
                     </View>
-                ))}
-            </View>
-
+                    <Text style={styles.historyTitle}>History</Text>
+                    {sortedAndFormattedRecords.map((record, index) => (
+                        <View key={index} style={styles.historyRecord}>
+                            <Text style={styles.recordText}>Date: {record.formattedDate}</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={styles.recordText}>Sets: {record.sets}</Text>
+                                <Text style={styles.recordText}>Reps: {record.reps}</Text>
+                                <Text style={styles.recordText}>Weight: {record.weights} kgs</Text>
+                            </View>
+                        </View>
+                    ))}
+                </View>
+            ) : (
+                <View style={styles.noDataContainer}>
+                    <Text style={styles.noDataText}>No data logged for this exercise</Text>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => router.navigate('/ExerciseLogger')} // Using router as originally provided
+                    >
+                        <Text style={styles.buttonText}>Log Exercise</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
             </ScrollView>
         <TrackerNav />
-
         </View>
     );
 };
@@ -116,6 +127,32 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f0f0f0', // Light grey background for slight contrast
+    },
+    button: {
+        backgroundColor: '#4A90E2', // Use a more vibrant color for the button
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+        alignSelf: 'center', // Center button horizontally
+        marginBottom: 20, // Add some margin below the button
+    },
+    buttonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#FFFFFF', // White text for better contrast on the button
+        textAlign: 'center', // Ensure text is centered within the button
+    },
+    noDataContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20, // Adjust as needed
+    },
+    noDataText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#555',
+        marginBottom: 20,
     },
     detail:{
         fontSize: 16, // Slightly larger font size for emphasis

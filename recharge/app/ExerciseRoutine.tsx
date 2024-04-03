@@ -64,6 +64,7 @@ const ExerciseRoutine: React.FC = () => {
             />
             <ScrollView style={styles.scrollView}>
             {selectedRoutine && routines[selectedRoutine].map((exercise, index) => (
+              <TouchableOpacity onPress={() => router.push({ pathname: '/ExerciseHistory', params: { exerciseID: exercise.exercise_id } })}>
               <View key={index} style={styles.exerciseCard}>
                   <View style={styles.exerciseImage}>
                     <Image source={exercise.exercise.Exercise_Image ? { uri: exercise.exercise.Exercise_Image } : require('../assets/placeholder.jpg')} style={styles.exerciseImage}/>
@@ -79,6 +80,7 @@ const ExerciseRoutine: React.FC = () => {
                       </Text>
                   </View>
               </View>
+              </TouchableOpacity>
           ))}
             </ScrollView>
             <TrackerNav/>

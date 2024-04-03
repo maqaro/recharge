@@ -1,7 +1,7 @@
 // Homepage.tsx
 
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import TrackerNav from './TrackerNav';
@@ -19,13 +19,15 @@ export default function Homepage() {
           <ScrollView>
             <View style={styles.full}>
               <View style={styles.row}>
+                <LinearGradient colors={['#eccbaa', '#65AAB3']} style={styles.square1} >
                 <TouchableOpacity
-                  style={styles.square1}
+                  style={styles.square1}  
                   onPress={() => router.navigate('/Trackers')}
                 >
                   <Text style={styles.text}>Trackers</Text>
                   <Image source={require('./images/Tracker.png')} style={styles.TrackerPic} />
                 </TouchableOpacity>
+                </LinearGradient>
                 <TouchableOpacity
                   style={styles.square2}
                   onPress={() => router.navigate('/DailyJournal')}
@@ -103,7 +105,6 @@ const styles = StyleSheet.create({
     square1: {
       width: '45%',
       aspectRatio: 1,
-      backgroundColor: 'white',
       borderRadius: 10,
       justifyContent: 'center',
       alignItems: 'center',

@@ -52,7 +52,7 @@ const ExerciseRoutine: React.FC = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Exercise Tracker</Text>
+            <Text style={styles.title}>Exercise Routines</Text>
 
             <FlatList 
                 horizontal

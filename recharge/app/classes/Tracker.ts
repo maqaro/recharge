@@ -1,4 +1,7 @@
 export abstract class Tracker {
+    exercise: any;
+    date: any;
+    weights: any;
 
 	public Tracker() {
 		// TODO - implement Tracker.Tracker

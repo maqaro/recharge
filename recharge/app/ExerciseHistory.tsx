@@ -42,6 +42,10 @@ const ExerciseHistory: React.FC = () => {
 
         fetchData();
     }, []);
+    const sortedAndFormattedRecords = [...exercisetracker].sort((a, b) => b.date.localeCompare(a.date)).map(record => ({
+    ...record,
+    formattedDate: new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(record.date))
+}));
 
     const chartConfig = {
         backgroundGradientFrom: "#FFFFFF",
@@ -68,6 +72,7 @@ const ExerciseHistory: React.FC = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Exercise History</Text>
+            <ScrollView>
             <View style={styles.main}>
             <Text style={styles.exerciseTitle}>{exercisetracker[0]?.exercise?.Exercise_Name}</Text>
             <Image source={{ uri: exercisetracker[0]?.exercise?.Exercise_Image }} style={styles.img} />
@@ -87,7 +92,20 @@ const ExerciseHistory: React.FC = () => {
                     withInnerLines={true}
                 />
             </View>
+            <Text style={styles.historyTitle}>History</Text>
+                {sortedAndFormattedRecords.map((record, index) => (
+                    <View key={index} style={styles.historyRecord}>
+                        <Text style={styles.recordText}>Date: {record.formattedDate}</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Text style={styles.recordText}>Sets: {record.sets}</Text>
+                            <Text style={styles.recordText}>Reps: {record.reps}</Text>
+                            <Text style={styles.recordText}>Weight: {record.weights} kgs</Text>
+                        </View>
+                    </View>
+                ))}
             </View>
+
+            </ScrollView>
         <TrackerNav />
 
         </View>
@@ -144,6 +162,33 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#444', // Slightly lighter than black for a softer look
         margin: 16, // Margin around the title for spacing
+    },
+    historyTitle: {
+        fontSize: 20, // Larger font size for the title
+        fontWeight: 'bold', // Bold font weight for emphasis
+        color: '#333', // Dark color for readability
+        marginBottom: 16, // Margin at the bottom for spacing from title to records
+    },
+    historyRecord: {
+        backgroundColor: '#fff', // White background for contrast
+        width: '90%', // Slightly less than full width for padding effect
+        borderRadius: 10, // Rounded corners
+        padding: 16, // Padding inside each record
+        marginBottom: 8, // Margin at the bottom for spacing between records
+        shadowColor: "#000", // Shadow for elevation effect
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    recordText: {
+        fontSize: 17, // Font size for readability
+        fontWeight: '500',
+        color: '#555', // Dark color for readability
+        marginVertical: 4, // Vertical margin for spacing between text lines
     },
 });
 

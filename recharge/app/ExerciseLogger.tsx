@@ -178,21 +178,22 @@ const ExerciseLogger: React.FC = () => {
                 <TextInput style={styles.textInputStyle} placeholder="Weight" onChangeText={setWeight} value={weight} />
 
                 <View style={{ height: 15 }} />
-
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={handleLogExercise}
-                >
-                    <Text style={styles.buttonText}>Log Exercise</Text>
-                
-                </TouchableOpacity>
-                <View style={{ height: 20 }} />
-                <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => router.navigate('/ExerciseTracker')}
-                >
-                    <Text style={styles.buttonText}>View exercises</Text>
-                </TouchableOpacity>
+                <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={handleLogExercise}
+                    >
+                        <Text style={styles.buttonText}>Log Exercise</Text>
+                    
+                    </TouchableOpacity>
+                    <View style={{ height: 20 }} />
+                    <TouchableOpacity
+                        style={styles.button2}
+                        onPress={() => router.navigate('/ExerciseTracker')}
+                    >
+                        <Text style={styles.buttonText}>View exercises</Text>
+                    </TouchableOpacity>
+                </View>
 
                     
                     {/* Add your components and logic here */}
@@ -235,16 +236,20 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     button2: {
+        width: '37%',
         backgroundColor: 'lightblue',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
+        marginLeft: 10,
     },
     button: {
+        width: '37%',
         backgroundColor: 'white',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
+        marginRight: 10,
     },
     buttonText: {
         fontSize: 16,

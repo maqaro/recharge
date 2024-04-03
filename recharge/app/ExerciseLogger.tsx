@@ -33,6 +33,9 @@ const ExerciseLogger: React.FC = () => {
     const [items, setItems] = useState<DropdownItem[]>([]);
     const [exercise, setExercise] = useState('');
     const [selectedExerciseImage, setSelectedExerciseImage] = useState('');
+    const [selectedExerciseName, setSelectedExerciseName] = useState('');
+    const [selectedExerciseMuscleGroup, setSelectedExerciseMuscleGroup] = useState('');
+    const [selectedExerciseEquipment, setSelectedExerciseEquipment] = useState('');
 
     const handleLogExercise = async () => {
         console.log("Logging exercise: ${exercise}, Reps: ${reps}, Sets: ${set}, Weight: ${weight}, User: ${userid}");
@@ -63,7 +66,7 @@ const ExerciseLogger: React.FC = () => {
         const fetchExerciseData = async () => {
             let { data: exercise, error } = await supabase
                 .from('exercise')
-                .select('id, Exercise_Name, Exercise_Image'); 
+                .select('id, Exercise_Name, Exercise_Image, muscle_gp, Equipment'); 
             if (error) {
                 console.error('Error fetching exercise data:', error);
             } else {
@@ -72,6 +75,8 @@ const ExerciseLogger: React.FC = () => {
                         label: item.Exercise_Name, 
                         value: item.id,
                         image: item.Exercise_Image, 
+                        muscle_gp: item.muscle_gp, // Assuming your database column names
+                        Equipment: item.Equipment,
                     }));
                     setItems(formattedItems);
                 }
@@ -112,6 +117,21 @@ const ExerciseLogger: React.FC = () => {
                     ) : (
                         <Text>Select an exercise to see the image.</Text>
                     )}
+                    {selectedExerciseName ? (
+                        <Text style={styles.detail}>
+                            {selectedExerciseName}
+                        </Text>
+                    ) : null}
+                    {selectedExerciseMuscleGroup ? (
+                        <Text style={styles.detail}>
+                            Muscle Group: {selectedExerciseMuscleGroup}
+                        </Text>
+                    ) : null}
+                    {selectedExerciseEquipment ? (
+                        <Text style={styles.detail}>
+                            Equipment: {selectedExerciseEquipment}
+                        </Text>
+                    ) : null}
                 </View>
                 <View style={{ height: 15 }} />
 
@@ -135,8 +155,10 @@ const ExerciseLogger: React.FC = () => {
                 
                         // Find the selected item based on the ID
                         const selectedItem = items.find(item => item.value === selectedId);
-                        const selectedExerciseName = selectedItem?.label;
-                        console.log("Selected exercise name:", selectedExerciseName);
+                        console.log("Selected item:", selectedItem);
+                        setSelectedExerciseName(selectedItem?.label || '');
+                        setSelectedExerciseMuscleGroup(selectedItem?.muscle_gp || '');
+                        setSelectedExerciseEquipment(selectedItem?.Equipment || '');
                 
                         // Find and set the selected exercise's image URL
                         const selectedImage = selectedItem?.image; // Assuming your items include an 'image' property
@@ -184,6 +206,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    detail:{
+        color: 'white',
+        fontSize: 16,
+        marginBottom: 10,
+
     },
     exerciseImage: {
         width: 300, 

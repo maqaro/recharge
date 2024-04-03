@@ -8,6 +8,8 @@ import { supabase } from '../lib/supabase';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Alert } from 'react-native';
 import { useState } from 'react';
+import NavBar from './NavBar';
+import TrackerNav from './TrackerNav';
 
 type DropdownItem = {
     label: string;
@@ -102,7 +104,9 @@ const ExerciseLogger: React.FC = () => {
     return (
         <View style={styles.container}>
             <LinearGradient
-                colors={['#4c669f', '#3b5998', '#192f6a']}
+                colors={['#05999E', '#1E5B53']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
                 style={styles.background}
             >
                 <Text style={styles.title}>Exercise Logger</Text>
@@ -133,9 +137,10 @@ const ExerciseLogger: React.FC = () => {
                         </Text>
                     ) : null}
                 </View>
-                <View style={{ height: 15 }} />
-
+                <View style={{ height: 15}} />
+                        
                 <DropDownPicker
+                    style={styles.pickerStyle}
                     open={open}
                     onOpen={() => setOpen(true)}
                     onClose={() => setOpen(false)}
@@ -147,8 +152,6 @@ const ExerciseLogger: React.FC = () => {
                     searchable={true}
                     searchPlaceholder="Search exercises..."
                     placeholder="Select an exercise"
-                    zIndex={1000} 
-                    zIndexInverse={1000} 
                     onChangeValue={(selectedId) => {
                         console.log("Selected exercise ID:", selectedId);
                         setExercise(selectedId || '');
@@ -194,8 +197,9 @@ const ExerciseLogger: React.FC = () => {
                     
                     {/* Add your components and logic here */}
 
-
+                
             </LinearGradient>
+            <TrackerNav />
         </View>
     );
 };
@@ -204,20 +208,19 @@ const ExerciseLogger: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+
     },
     detail:{
         color: 'white',
         fontSize: 16,
-        marginBottom: 10,
-
+        fontWeight: '600',
+        marginTop: 8,
     },
     exerciseImage: {
         width: 300, 
         height: 200,
         resizeMode: 'contain',
-        borderRadius: 5,
+        borderRadius: 10, 
     },
     background: {
         flex: 1,
@@ -270,17 +273,21 @@ const styles = StyleSheet.create({
     exerciseText: {
         color: 'black',
     },
-        pickerStyle: {
+    pickerStyle: {
+        justifyContent: 'center',
         height: 50,
-        width: 150,
+        width: '80%',
         backgroundColor: '#ffffff',
         marginBottom: 20,
+        marginLeft: 43,
     },
     textInputStyle: {
+        marginRight: 20,
+        marginLeft: 20,
         height: 40,
         borderColor: 'gray',
         borderWidth: 1,
-        width: '100%',
+        width: '80%',
         textAlign: 'center',
         backgroundColor: 'white',
         padding: 10,

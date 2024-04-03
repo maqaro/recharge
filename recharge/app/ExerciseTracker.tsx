@@ -68,12 +68,20 @@ const ExerciseTracker = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Exercise Tracker</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.navigate('/ExerciseLogger')} // Using router as originally provided
-      >
-        <Text style={styles.buttonText}>Log new Exercise</Text>
-      </TouchableOpacity>
+      <View style={{flexDirection:'row', justifyContent: 'space-around'}}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.navigate('/ExerciseLogger')} // Using router as originally provided
+        >
+          <Text style={styles.buttonText}>Log new Exercise</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.navigate('/ExerciseRoutine')} // Using router as originally provided
+        >
+          <Text style={styles.buttonText}>View Routines</Text>
+        </TouchableOpacity>
+      </View>
       <ScrollView style={styles.scrollView}>
         {Object.entries(exercises).sort(([date1], [date2]) => date2.localeCompare(date1)).map(([date, exercisesForDate]) => (
           <View key={date} style={styles.dateContainer}>
@@ -119,6 +127,7 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: '#4A90E2', // Use a more vibrant color for the button
+        width: '45%', // Adjust width for better layout
         paddingVertical: 12,
         paddingHorizontal: 20,
         borderRadius: 5,

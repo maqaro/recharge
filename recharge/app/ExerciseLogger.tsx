@@ -27,7 +27,7 @@ const ExerciseLogger: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [exerciseData, setExerciseData] = useState<string[]>([]);
     const [set, setSet] = useState(""); // Default to 1 set
-    const [reps, setReps] = useState("1"); // Reps input by the user
+    const [reps, setReps] = useState(""); // Reps input by the user
     const [weight, setWeight] = useState(''); // Weight input by the user
     const [userid, setUserid] = useState<string | undefined>(); // Change initial value to undefined
     const [open, setOpen] = useState(false);
@@ -54,6 +54,7 @@ const ExerciseLogger: React.FC = () => {
     
             console.log('Added exercise log:', data);
             Alert.alert("Success", "Exercise logged successfully!");
+            router.navigate('/ExerciseLogger');
             // Handle successful insertion, e.g., updating UI or state to reflect the new exercise log
         } catch (error) {
             console.error('Error logging exercise:', error);
@@ -172,10 +173,9 @@ const ExerciseLogger: React.FC = () => {
 
 
 
-
-                <TextInput style={styles.textInputStyle} placeholder="Reps" onChangeText={setReps} value={reps} />
                 <TextInput style={styles.textInputStyle} placeholder="Sets or time" onChangeText={setSet} value={set} />
-                <TextInput style={styles.textInputStyle} placeholder="Weight" onChangeText={setWeight} value={weight} />
+                <TextInput style={styles.textInputStyle} placeholder="Reps" onChangeText={setReps} value={reps} />
+                <TextInput style={styles.textInputStyle} placeholder="Weight (kg)" onChangeText={setWeight} value={weight} />
 
                 <View style={{ height: 15 }} />
                 <View style={{flexDirection:'row', justifyContent: 'space-between'}}>

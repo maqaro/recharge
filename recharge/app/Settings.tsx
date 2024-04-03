@@ -38,6 +38,7 @@ const Settings: React.FC = () => {
         break;
       case 'About Us':
         router.navigate('/AboutUs');
+        break;
       default:
         console.log(`Pressed ${buttonText}`);
         break;

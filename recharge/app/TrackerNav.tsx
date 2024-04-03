@@ -45,6 +45,7 @@ const TrackerNav: React.FC = () => {
 const styles = StyleSheet.create({
     navContainer: {
       flexDirection: 'row',
+      alignItems: 'flex-end',
       justifyContent: 'space-around',
       paddingVertical: 10,
     },

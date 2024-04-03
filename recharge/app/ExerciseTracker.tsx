@@ -80,8 +80,9 @@ const ExerciseTracker = () => {
           <View key={date} style={styles.dateContainer}>
             <Text style={styles.dateText}>{date}</Text>
             {exercisesForDate.map(exercise => (
+              <TouchableOpacity onPress={() => router.push({ pathname: '/ExerciseHistory', params: { exerciseID: exercise.exercise_id } })}>
               <View key={exercise.id} style={styles.exerciseContainer}>
-                <Text style={styles.exerciseName}>{exercise.exercise.Exercise_Name}</Text>
+                <Text style={styles.exerciseName}>{exercise.exercise.Exercise_Name} </Text>
                 <View style={styles.exerciseDetail}>
                 <View style={styles.detailsRow}>
                   <Text style={styles.detail1}>Muscle Group: {exercise.exercise.muscle_gp}</Text>
@@ -95,6 +96,7 @@ const ExerciseTracker = () => {
                   />
                 </View>
             </View>
+            </TouchableOpacity>
             ))}
             </View>
         ))}

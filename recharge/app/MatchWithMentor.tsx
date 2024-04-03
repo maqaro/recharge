@@ -1,9 +1,8 @@
-// Homepage.tsx
-
 import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import NavBar from './NavBar';
 
 
 const MatchWithMentor = () => {
@@ -13,10 +12,14 @@ const MatchWithMentor = () => {
 
     return (
         <View style={styles.container}>
-          <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
+          <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}}>
             <View>
-                <Text style={styles.text}>Welcome {username}</Text>
-                <Text style={styles.text}>You are currently matched with {noOfMentors}</Text>
+                <Text style={styles.header}>Welcome {username}</Text>
+                <Text style={styles.intro}>This page offers a supportive environment for {'\n'}discussing mental health and personal concerns {'\n'}with dedicated mentors. 
+                  Connect with empathetic listeners to share experiences, gain insights, and find encouragement. Break the stigma and embrace a 
+                  community of support. You're not alone – let's talk.</Text>
+                <Text style={styles.subtitle}>You are currently matched with </Text>
+                <Text style={styles.subtitle}>{noOfMentors} mentors</Text>
             </View>
           <TouchableOpacity
             style={styles.square1}
@@ -37,6 +40,7 @@ const MatchWithMentor = () => {
             <Text style={styles.text}>View Chat Rooms</Text>
           </TouchableOpacity>
         </LinearGradient>
+        <NavBar/>
         </View>
       );
 };
@@ -51,63 +55,53 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
     },
     square1: {
-      width: '45%',
-      aspectRatio: 1, // Square aspect ratio
+      minHeight:100,
       margin: '2.5%', // Adjust as needed
       backgroundColor: 'lightblue',
       justifyContent: 'center',
       alignItems: 'center',
+      borderRadius:10,
     },
     
     square2: {
-      width: '45%',
-      aspectRatio: 1, // Square aspect ratio
+      minHeight:100,
       margin: '2.5%', // Adjust as needed
       backgroundColor: 'lightblue',
       justifyContent: 'center',
       alignItems: 'center',
+      borderRadius:10,
     },
 
     square3: {
-      width: '45%',
-      aspectRatio: 1, // Square aspect ratio
+      minHeight:100,
       margin: '2.5%', // Adjust as needed
       backgroundColor: 'lightblue',
       justifyContent: 'center',
       alignItems: 'center',
+      borderRadius:10,
     },
-
-    square4: {
-      width: '45%',
-      aspectRatio: 1, // Square aspect ratio
-      margin: '2.5%', // Adjust as needed
-      backgroundColor: 'lightblue',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-
-    square5: {
-      width: '45%',
-      aspectRatio: 1, // Square aspect ratio
-      margin: '2.5%', // Adjust as needed
-      backgroundColor: 'lightblue',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-
-    square6: {
-      width: '45%',
-      aspectRatio: 1, // Square aspect ratio
-      margin: '2.5%', // Adjust as needed
-      backgroundColor: 'lightblue',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-
     text: {
       fontSize: 18,
+      color:'white',
+    },
+    header: {
+      fontSize: 40,
+      fontWeight: 'bold',
+      color:'white',
+      alignSelf:'center',
+      marginTop:30,
+    },
+    subtitle:{
+      fontSize:20,
+      alignSelf:'center',
+      color:'white',
       fontWeight: 'bold',
     },
+    intro:{
+      color:'white',
+      alignSelf:'center',
+      marginBottom:10
+    }
   });
 
   export default MatchWithMentor;

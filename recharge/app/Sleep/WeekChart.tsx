@@ -8,6 +8,7 @@ interface SleepDataItem {
     sleep_start: string;
     sleep_end: string;
     user_id: string;
+    date: Date;
 }
 
 interface WeekChartProps {
@@ -24,7 +25,6 @@ interface WaterDataItem {
 
 const WeekChart: React.FC<WeekChartProps> = ({ filterStartDate, filterEndDate, sleepData, waterData }) => {
     
-    console.log('data in week chart',sleepData);
     const getDaysOfWeekLabels = (): string[] => {
         const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
         return daysOfWeek;
@@ -38,7 +38,7 @@ const WeekChart: React.FC<WeekChartProps> = ({ filterStartDate, filterEndDate, s
     if (sleepData){
 
         const filteredSleepData = sleepData.filter((data) => {
-            const sleepStartDate = new Date(data.sleep_start);
+            const sleepStartDate = new Date(data.date);
             return sleepStartDate >= filterStartDate && sleepStartDate <= filterEndDate;
         });
 
@@ -53,13 +53,13 @@ const WeekChart: React.FC<WeekChartProps> = ({ filterStartDate, filterEndDate, s
 
     if (waterData) {
         const filteredWaterData = waterData.filter(data => {
-            const date = new Date(data.date);
-            return date >= filterStartDate && date <= filterEndDate;
+            const waterStartdate = new Date(data.date);
+            return waterStartdate >= filterStartDate && waterStartdate <= filterEndDate;
         });
 
         filteredWaterData.forEach(data => {
             const date = new Date(data.date);
-            const dayOfWeekIndex = date.getDay();
+            const dayOfWeekIndex = date.getDay()-1;
             waterIntakeByDay[dayOfWeekIndex] += data.water_intake_ml;
         });
     }
@@ -99,7 +99,7 @@ const WeekChart: React.FC<WeekChartProps> = ({ filterStartDate, filterEndDate, s
                         stroke: '#ffa726',
                     },
                     propsForLabels: {
-                        fontSize: 10, // Adjust the font size here
+                        fontSize: 10,
                     },
                     barPercentage:0.8,
                     

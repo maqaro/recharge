@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import EmotionCalendar from './Emotions/EmotionCalendar';
 import YearInPixels from './YearInPixels';
 import Streak from './Emotions/Streak';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const emotions: { [key: string]: { backgroundColor: string; image: any } } = {
   Happy: { backgroundColor: '#FFFF00',  image: require('./Emotions/happy.jpg') },
@@ -71,7 +72,6 @@ const EmotionTracker: React.FC = () => {
             }
           } catch (error) {
             console.error('Error fetching emotion:', error);
-            // Alert.alert('Error', 'Failed to fetch emotion. Please try again.');
           }
         };
   
@@ -87,22 +87,21 @@ const EmotionTracker: React.FC = () => {
 
   const handlePressYearInPixels = () => {
     setModalVisible(true);
-    // router.navigate('/EmotionCalendar');
   };
 
   const handlePressYearInColours = () => {
-    // Handle navigation to year in colours page
     setModal2Visible(true);
   };
 
   return (
+    <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
     
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={false}>
 
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.navigate('/Homepage')}>
-          <Ionicons name="chevron-back-circle-outline" size={40} color="black" />
+          <Ionicons name="chevron-back-circle-outline" size={40} color="white" />
         </TouchableOpacity>
         <Text style={styles.title}>Emotion Tracker</Text>
       </View>
@@ -203,6 +202,7 @@ const EmotionTracker: React.FC = () => {
       
       </ScrollView>
     </View>
+    </LinearGradient>
     
   );
 };
@@ -219,11 +219,14 @@ const styles = StyleSheet.create({
   },
   header:{
     flexDirection:'row',
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color:'white',
+    marginLeft:30,
   },
   section: {
     alignItems: 'center',
@@ -236,6 +239,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    color:'white',
   },
   emotionContainer: {
     padding: 10,
@@ -243,6 +247,11 @@ const styles = StyleSheet.create({
   },
   emotionText: {
     fontSize: 18,
+    marginBottom:20,
+    padding:10,
+    borderColor:'black',
+    borderWidth:1,
+    color:'white',
   },
   buttonContainer: {
     flexDirection: 'column',
@@ -251,16 +260,17 @@ const styles = StyleSheet.create({
     borderBottomWidth:0.5,
   },
   button: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: 'white',
     width:'90%',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
     marginBottom:15,
     alignSelf:'center',
+    elevation:10,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
     fontSize: 16,
   },
@@ -315,8 +325,3 @@ emotionImage: {
 });
 
 export default EmotionTracker;
-
-
-{/* <TouchableOpacity style={styles.button} onPress={handlePressViewCalendar}>
-<Text style={styles.buttonText}>View Calendar</Text>
-</TouchableOpacity> */}

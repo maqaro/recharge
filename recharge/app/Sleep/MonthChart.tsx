@@ -7,6 +7,7 @@ interface SleepDataItem {
     sleep_start: string;
     sleep_end: string;
     user_id: string;
+    date: Date;
 }
 
 interface SleepChartProps {
@@ -41,15 +42,15 @@ const MonthChart: React.FC<SleepChartProps> = ({ filterStartDate, filterEndDate,
     if (sleepData) {
         // Filter sleep data based on filterStartDate and filterEndDate
         const filteredSleepData = sleepData.filter((data) => {
-            const sleepStartDate = new Date(data.sleep_start);
-            return sleepStartDate >= filterStartDate && sleepStartDate <= filterEndDate;
+            const date = new Date(data.date);
+            return date >= filterStartDate && date <= filterEndDate;
         });
 
         // Update y-values array with actual sleep durations for corresponding days
         filteredSleepData.forEach((data) => {
-            const sleepStart = new Date(data.sleep_start);
-            const dayOfMonthIndex = sleepStart.getDate() - 1; // Get index of the day in the month
-            const sleepDuration = (new Date(data.sleep_end).getTime() - sleepStart.getTime()) / (1000 * 60 * 60); // Convert milliseconds to hours
+            const date = new Date(data.date);
+            const dayOfMonthIndex = date.getDate() - 1; // Get index of the day in the month
+            const sleepDuration = (new Date(data.sleep_end).getTime() - new Date(data.sleep_start).getTime()) / (1000 * 60 * 60); // Convert milliseconds to hours
             chartData[dayOfMonthIndex] += sleepDuration;
         });
     } else if (waterData) {

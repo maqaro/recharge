@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
-import { supabase } from '../../lib/supabase'; // Import your Supabase configuration
+import { supabase } from '../../lib/supabase'; 
 import Svg, { Circle, G, Text as SvgText } from "react-native-svg";
 
 const EmotionChart = () => {
@@ -106,7 +106,7 @@ const EmotionChart = () => {
   const totalCount = emotionsData.reduce((acc, curr) => acc + curr.count, 0);
 
   return (
-    <View>
+    <View style={{backgroundColor:'white', margin:15, borderRadius:20, elevation:10}}>
       <Text style={{marginLeft:20, marginTop:10, fontWeight:'bold', fontSize:16}}>Mood Chart</Text>
       {emotionsData.length > 0 ? (
         <View style={{alignItems:'center', marginTop:20}}>
@@ -166,7 +166,7 @@ const EmotionChart = () => {
           <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10, flexWrap:'wrap', marginBottom:50 }}>
             {emotionsData.map((emotion, index) => (
               <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginRight: 20 }}>
-                <View style={{ width: 20, height: 20, backgroundColor: emotion.color, marginRight: 5, marginBottom:10 }} />
+                <View style={{ width: 15, height: 15, backgroundColor: emotion.color, marginRight: 5, marginBottom:5 }} />
                 <Text>{emotion.name}</Text>
               </View>
             ))}

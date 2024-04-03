@@ -11,19 +11,19 @@ const NavBar = () => {
   return (
       <View style={styles.navContainer}>
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Homepage')}>
-        <Ionicons name="home" size={24} color="black" />
+        <Ionicons name="home-outline" size={24} color="black" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Settings')}>
-        <Ionicons name="settings" size={24} color="black" />
+        <Ionicons name="settings-outline" size={24} color="black" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Chats')}>
-        <Ionicons name="chatbubble" size={24} color="black" />
+      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/ViewChatrooms')}>
+        <Ionicons name="chatbubble-outline" size={24} color="black" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Friends')}>
-        <Ionicons name="people" size={24} color="black" />
+        <Ionicons name="people-outline" size={24} color="black" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/LeaderBoard')}>
-        <Ionicons name="medal" size={24} color="black" />
+        <Ionicons name="trophy-outline" size={24} color="black" />
       </TouchableOpacity>
     </View>
   );

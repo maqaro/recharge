@@ -11,6 +11,7 @@ interface SleepDataItem {
     sleep_start: string;
     sleep_end: string;
     user_id: string;
+    date: Date;
 }
 
 interface SleepChartProps {
@@ -76,7 +77,7 @@ const SmallChart: React.FC = (key) => {
     });
 
     const filteredSleepData = sortedSleepData.filter((data) => {
-        const sleepStartDate = new Date(data.sleep_start);
+        const sleepStartDate = new Date(data.date);
         return sleepStartDate >= filterStartDate && sleepStartDate <= filterEndDate;
     });
 
@@ -92,17 +93,6 @@ const SmallChart: React.FC = (key) => {
     return dayOfWeek; // Return the day of the week
     };
 
-    const startDates = filteredSleepData.map((data) => {
-        const sleepStartDate = new Date(data.sleep_start);
-        return formatXAxisLabel(sleepStartDate);
-    });
-
-    const handleCloseModal = () => {
-        setModalVisible(false);
-    };
-
-
-
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     const daysOfWeekShort = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -111,7 +101,7 @@ const SmallChart: React.FC = (key) => {
     const sleepDurationsByDay = daysOfWeek.map(day => {
         // Find sleep data for the current day
         const sleepDataForDay = filteredSleepData.filter(data => {
-            const sleepStartDate = new Date(data.sleep_start);
+            const sleepStartDate = new Date(data.date);
             return formatXAxisLabel(sleepStartDate) === day;
         });
 

@@ -9,6 +9,7 @@ const WaterHistory = () => {
     const [averageWaterIntake, setAverageWaterIntake] = useState<number>(0);
     const [highestWaterIntake, setHighestWaterIntake] = useState<number>(0);
     const [rowCount, setRowCount] = useState<number>(0);
+    const [totalWaterConsumed, setTotalWaterConsumed] = useState<number>(0);
     const [loading, setLoading] = useState(true);
 
     const [startDate, setStartDate] = useState<Date>(new Date());
@@ -60,7 +61,7 @@ const WaterHistory = () => {
             } else {
                 console.log(watertracker);
                 if (watertracker) {
-                    setWaterData(watertracker); // Update state with the fetched sleep data
+                    setWaterData(watertracker); // Update state with the fetched water data
                 }
             }
         } catch (error) {
@@ -70,7 +71,7 @@ const WaterHistory = () => {
 
     const calculateStatistics = () => {
         if (waterData.length === 0) {
-            return; // No data available, return early
+            return; // No data available
         }
 
         let totalWaterIntake = 0;
@@ -91,6 +92,7 @@ const WaterHistory = () => {
         setAverageWaterIntake(average);
         setHighestWaterIntake(maxWaterIntake);
         setRowCount(count);
+        setTotalWaterConsumed(totalWaterIntake);
         
     };
 
@@ -109,12 +111,12 @@ const WaterHistory = () => {
             <View style={{flexDirection:'row'}}>
             <View style={styles.boxes}>
                 <Text style={styles.statistics}>Average Intake</Text>
-                <Text style={styles.number}>{averageWaterIntake.toFixed(0)} ml</Text>
+                <Text style={styles.number}>{(averageWaterIntake / 1000).toFixed(2)} L</Text>
             </View>
 
             <View style={styles.boxes}>
                 <Text style={styles.statistics}>Highest Intake</Text>
-                <Text style={styles.number}>{highestWaterIntake.toFixed(0)} ml</Text>
+                <Text style={styles.number}>{(highestWaterIntake / 1000).toFixed(2)} L</Text>
             </View>
 
             </View>
@@ -126,8 +128,8 @@ const WaterHistory = () => {
             </View>
 
             <View style={styles.boxes}>
-                <Text style={styles.statistics}>Add Something here</Text>
-                <Text style={styles.number}>Add Data</Text>
+                <Text style={styles.statistics}>Total Consumed</Text>
+                <Text style={styles.number}>{(totalWaterConsumed / 1000).toFixed(2)} L</Text>
             </View>
             </View>
         </View>

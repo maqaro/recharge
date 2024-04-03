@@ -25,7 +25,6 @@ const emotions: Emotion[] = [
   { name: 'Embarassed', backgroundColor: '#5e5959', image: require('./Emotions/embarassed.jpg') },
   { name: 'Disgust', backgroundColor: '#65781c', image: require('./Emotions/disgust.jpg') },
   { name: 'Bored', backgroundColor: '#592963', image: require('./Emotions/bored.jpg') },
-  // Add more emotions if needed
 ];
 
 const AddEmotion: React.FC = () => {
@@ -116,12 +115,12 @@ const AddEmotion: React.FC = () => {
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: (_, gestureState) => {
-      if (gestureState.dx > 180) {
+      if (gestureState.dx > 150) {
         // Swiped right
         if (emotionIndex > 0) {
           setEmotionIndex(emotionIndex - 1);
         }
-      } else if (gestureState.dx < -180) {
+      } else if (gestureState.dx < -150) {
         // Swiped left
         if (emotionIndex < emotions.length - 1) {
           setEmotionIndex(emotionIndex + 1);

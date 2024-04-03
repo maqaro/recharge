@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Image, ImageBackground } from 'reac
 import { supabase } from '../../lib/supabase';
 
 interface EmotionEntry {
-  date: string;
+  date: Date;
   emotion: string;
 }
 
@@ -41,7 +41,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({ day, emotion }) => {
 };
 
 interface EmotionCalendarProps {
-  selectedYear: number; // Add a prop for the selected year
+  selectedYear: number; 
 }
 
 const EmotionCalendar: React.FC<EmotionCalendarProps> = ({ selectedYear }) => {
@@ -76,13 +76,13 @@ const EmotionCalendar: React.FC<EmotionCalendarProps> = ({ selectedYear }) => {
         console.error('Error fetching data from Supabase:', error.message);
         return;
       }
-      setCalendarData(data || []);
+      setCalendarData(data.map((entry: EmotionEntry) => ({ ...entry, date: new Date(entry.date) })) || []);
     };
 
     fetchCalendarData();
   }, [userid, selectedYear]);
 
-  const months = [...Array(12).keys()]; // 0-indexed months
+  const months = [...Array(12).keys()]; 
 
   return (
     <ScrollView contentContainerStyle={styles.scrollView}>
@@ -95,8 +95,12 @@ const EmotionCalendar: React.FC<EmotionCalendarProps> = ({ selectedYear }) => {
               <View style={styles.daysRow}>
                 {[...Array(new Date(selectedYear, monthIndex + 1, 0).getDate()).keys()].map((day) => {
                   const date = new Date(selectedYear, monthIndex, day + 1);
-                  const dateString = date.toISOString().split('T')[0];
-                  const matchingEntry = calendarData.find((entry) => entry.date === dateString);
+                  const matchingEntry = calendarData.find((entry) => {
+                    const entryDate = new Date(entry.date);
+                    return entryDate.getFullYear() === date.getFullYear() && 
+                           entryDate.getMonth() === date.getMonth() && 
+                           entryDate.getDate() === date.getDate();
+                  });
                   return (
                     <CalendarDay
                       key={day}

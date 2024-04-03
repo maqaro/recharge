@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { supabase } from '../lib/supabase';
 
 interface EmotionEntry {
-  date: string;
+  date: Date;
   emotion: string;
 }
 
@@ -60,14 +60,19 @@ const YearInPixels: React.FC<YearInPixelsProps> = ({ selectedYear }) => {
         console.error('Error fetching data from Supabase:', error.message);
         return;
       }
-      setCalendarData(data || []);
+      setCalendarData(data.map((entry: EmotionEntry) => ({ ...entry, date: new Date(entry.date) })) || []);
     };
 
     fetchCalendarData();
   }, [userid, selectedYear]);
 
-  const getColorForDate = (date: string): string | undefined => {
-    const entry = calendarData.find((entry) => entry.date === date);
+  const getColorForDate = (date: Date): string | undefined => {
+    const entry = calendarData.find((entry) => {
+      const entryDate = new Date(entry.date);
+      return entryDate.getFullYear() === date.getFullYear() && 
+             entryDate.getMonth() === date.getMonth() && 
+             entryDate.getDate() === date.getDate();
+    });
     return entry ? emotions[entry.emotion] : undefined;
   };
 
@@ -87,7 +92,7 @@ const YearInPixels: React.FC<YearInPixelsProps> = ({ selectedYear }) => {
               <View key={`month-${month}`} style={styles.monthContainer}>
                 <Text style={styles.monthLabel}>{MonthLetters[month]}</Text>
                 {[...Array(getDaysInMonth(selectedYear, month + 1)).keys()].map((day) => {
-                  const date = new Date(selectedYear, month, day + 1).toISOString().split('T')[0];
+                  const date = new Date(selectedYear, month, day + 1);
                   const color = getColorForDate(date);
                   return (
                     <View key={`${month}-${day}`} style={[styles.dayContainer, { backgroundColor: color ? color : '#CCCCCC' }]} />
@@ -149,3 +154,4 @@ const styles = StyleSheet.create({
 });
 
 export default YearInPixels;
+

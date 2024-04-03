@@ -95,7 +95,7 @@ const handlePressSubmit = async () => {
 
     const currentDate = new Date();
     const insertDate = new Date(currentDate); // Copy the current date
-    insertDate.setDate(insertDate.getDate() - 1); // Subtract 1 day
+    insertDate.setDate(insertDate.getDate()); // Subtract 1 day
     const formattedInsertDate = insertDate.toISOString().split('T')[0];
 
     // Check if there's an existing row with the same date
@@ -103,7 +103,7 @@ const handlePressSubmit = async () => {
       .from('sleeptracker')
       .select('id')
       .eq('user_id', user?.id)
-      .eq('Date', formattedInsertDate);
+      .eq('date', formattedInsertDate);
 
     if (fetchError) {
       console.error('Error fetching existing sleep data:', fetchError.message);
@@ -126,7 +126,7 @@ const handlePressSubmit = async () => {
     } else {
       // If there's no existing data, insert a new row
       const { error: insertError } = await supabase.from('sleeptracker').insert([
-        { sleep_start: chosenTime1, sleep_end: chosenTime2, user_id: user?.id, Date: formattedInsertDate },
+        { sleep_start: chosenTime1, sleep_end: chosenTime2, user_id: user?.id, date: formattedInsertDate },
       ]);
 
       if (insertError) {

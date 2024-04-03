@@ -104,24 +104,23 @@ const Streak: React.FC<StreakProps> = () => {
         <View style={styles.container}>
             <Text style={styles.streakText}>Streak Count: {streakCount}</Text>
             <View style={{flexDirection: 'row', padding: 10}}>
-  <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-    <View style={styles.circleContainer}>
-      {[...Array(7)].map((_, index) => {
-        const reversedIndex = 6 - index;
-        return (
-          <View key={index} style={[styles.circle, streakCount > reversedIndex ? styles.greenCircle : styles.redCircle]}>
-            {streakCount > reversedIndex ? (
-              <Entypo style={{alignSelf:'center', marginTop:2}} name="trophy" size={35} color="black" />
-            ) : (
-              <Entypo style={{alignSelf:'center', marginTop:1}} name="circle-with-cross" size={40} color="black" />
-            )}
-          </View>
-        );
-      })}
-    </View>
-  </ScrollView>
-</View>
-            
+                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                    <View style={styles.circleContainer}>
+                    {[...Array(7)].map((_, index) => {
+                        const reversedIndex = 6 - index;
+                        return (
+                        <View key={index} style={[styles.circle, streakCount > reversedIndex ? styles.greenCircle : styles.redCircle]}>
+                            {streakCount > reversedIndex ? (
+                            <Entypo style={{alignSelf:'center', marginTop:2}} name="trophy" size={35} color="gold" />
+                            ) : (
+                            <Entypo style={{alignSelf:'center'}} name="circle-with-cross" size={40} color="red" />
+                            )}
+                        </View>
+                        );
+                    })}
+                    </View>
+                </ScrollView>
+            </View>   
         </View>
     );
 };
@@ -146,15 +145,19 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
     },
     greenCircle: {
-        backgroundColor: 'green',
+        backgroundColor:'white',
+        borderRadius:20,
     },
     redCircle: {
-        backgroundColor: 'red',
+        backgroundColor:'white',
+        borderRadius:20,
     },
     streakText: {
         fontSize: 20,
         fontWeight: 'bold',
         marginTop:15,
+        marginLeft:10,
+        color:'white',
 
     },
 });

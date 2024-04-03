@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet, Button, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, StyleSheet, Button, ScrollView, Alert } from 'react-native';
 import { supabase } from '../../lib/supabase';
 import Filter from './Filter';
 import {format} from 'date-fns';
@@ -54,23 +54,40 @@ const SleepHistory = () => {
     };
 
     const deleteSleepEntry = async (entryId: any) => {
-        try {
-            const { error } = await supabase.from('sleeptracker').delete().eq('id', entryId);
-
-            if (error) {
-                console.error('Error deleting sleep entry:', error.message);
-            } else {
-                console.log('Sleep entry deleted successfully.');
-                // Fetch sleep data again after deletion
-                fetchSleepData();
-            }
-        } catch (error) {
-            console.error('Error deleting sleep entry:', error);
-        }
+        // Show confirmation message
+        Alert.alert(
+            'Confirmation',
+            'Are you sure you want to delete this entry?',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                },
+                {
+                    text: 'OK',
+                    onPress: async () => {
+                        try {
+                            const { error } = await supabase.from('sleeptracker').delete().eq('id', entryId);
+    
+                            if (error) {
+                                console.error('Error deleting sleep entry:', error.message);
+                            } else {
+                                console.log('Sleep entry deleted successfully.');
+                                // Fetch sleep data again after deletion
+                                fetchSleepData();
+                            }
+                        } catch (error) {
+                            console.error('Error deleting sleep entry:', error);
+                        }
+                    }
+                }
+            ]
+        );
     };
 
     const formatDate = (date: Date) => {
-        return format(date, 'MM/dd/yyyy');
+        return format(date, 'MM/dd');
     };
 
     const formatTime = (time: Date) => {
@@ -98,37 +115,49 @@ const SleepHistory = () => {
         <View style={styles.container}>
             <Filter trackerData={sleepData} onDateChange={handleDateChange}/>
             {/* <WeekChart filterStartDate={startDate} filterEndDate={endDate} sleepData={sleepData} /> */}
-
+    
             
             <Text style={{color:'white', fontWeight:'bold', fontSize:16, marginLeft:10, marginBottom:10}}>Recent Records</Text>
-            {sleepData.length > 0 ? (
+            <View style={styles.header}>
+                <Text style={styles.headerText}>Date</Text>
+                <Text style={styles.headerText}>Start</Text>
+                <Text style={styles.headerText}>End</Text>
+                <Text style={styles.headerText}>Total</Text>
+                <Text style={styles.headerText}>Actions</Text>
+            </View>
             <ScrollView style={styles.sleepEntries}>
-                {sortedSleepData.map(sleepEntry => (
+                {sleepData
+            .sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateB.getTime() - dateA.getTime();
+            })
+            .slice(0, 10)
+            .map(sleepEntry => (
                     <View key={sleepEntry.id} style={styles.rowContainer}>
-                        <View style={styles.rowItem}>
-                            <Text>Start: {formatDate(new Date(sleepEntry.sleep_start))} {formatTime(new Date(sleepEntry.sleep_start))}</Text>
-                        </View>
-                        <View style={styles.rowItem}>
-                            <Text>End: {formatDate(new Date(sleepEntry.sleep_end))} {formatTime(new Date(sleepEntry.sleep_end))}</Text>
-                        </View>
-                        <View style={styles.rowItem}>
-                            <Text>Total: {calculateTotalSleep(new Date(sleepEntry.sleep_start), new Date(sleepEntry.sleep_end))}</Text>
-                        </View>
-                        <View style={styles.rowItem}>
-                            <TouchableOpacity onPress={() => deleteSleepEntry(sleepEntry.id)}>
-                                <Text style={styles.deleteButton}>Delete</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <Text style={styles.rowItem}>
+                            {formatDate(new Date(sleepEntry.date))} {/* Display date */}
+                        </Text>
+                        <Text style={styles.rowItem}>
+                            {formatTime(new Date(sleepEntry.sleep_start))}
+                        </Text>
+                        <Text style={styles.rowItem}>
+                            {formatTime(new Date(sleepEntry.sleep_end))}
+                        </Text>
+                        <Text style={styles.rowItem}>
+                            {calculateTotalSleep(new Date(sleepEntry.sleep_start), new Date(sleepEntry.sleep_end))}
+                        </Text>
+                        <TouchableOpacity onPress={() => deleteSleepEntry(sleepEntry.id)}>
+                            <Text style={[styles.rowItem, styles.deleteButton]}>Delete</Text>
+                        </TouchableOpacity>
                     </View>
                 ))}
             </ScrollView>
-            ) : (
-            <Text>No sleep data found.</Text>
-            )}
-
+            {sleepData.length === 0 && <Text>No sleep data found.</Text>}
         </View>
     );
 };
+    
 
 
 
@@ -140,36 +169,57 @@ const styles = StyleSheet.create({
         backgroundColor: '#9678B4',
     },
 
-    sleepEntries:{
-        width: '95%',
-        alignSelf: 'center',
-        overflow: 'hidden',
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+        paddingVertical:10,
+        backgroundColor:'white',
+        width:'90%',
+        alignSelf:'center',
+        borderTopRightRadius:5,
+        borderTopLeftRadius:5,
+    },
+    headerText: {
+        flex: 1,
+        fontWeight: 'bold',
+        borderRightWidth: 1,
+        borderColor: 'lightgray',
+        marginLeft:10,
+
+    },
+    sleepEntries: {
+        height: 200, 
         borderWidth: 1,
         borderColor: '#ccc',
-        borderRadius: 5,
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
         backgroundColor: 'white',
-        marginBottom: 10,
-        
+        width:'90%',
+        alignSelf:'center',
+        marginBottom:20,
     },
-
     rowContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        paddingHorizontal: 15,
+        paddingVertical: 10,
         borderBottomWidth: 1,
         borderColor: 'lightgray',
-        paddingVertical: 10,
-        paddingHorizontal: 15,
     },
-
     rowItem: {
         flex: 1,
     },
-
     deleteButton: {
         color: 'red',
+        textAlign: 'center', 
+        borderColor:'red',
+        borderWidth:1,
+        borderRadius:30,
+        padding:2,
     },
-
 });
 
 export default SleepHistory;

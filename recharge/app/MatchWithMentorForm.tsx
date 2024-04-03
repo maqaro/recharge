@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
+import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { supabase } from '../lib/supabase';
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MentorResults, { updateSpecialty } from './MentorResults';
+import { LinearGradient } from 'expo-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const MatchWithMentorForm = () => {
   const { control, handleSubmit } = useForm();
@@ -61,7 +62,7 @@ const MatchWithMentorForm = () => {
            console.error('Error fetching mentor data inner:', error);
        } else {
            if (mentor) {
-               setMentorData(mentor); // Update state with the fetched sleep data
+               setMentorData(mentor); // Update state with the fetched data
                await AsyncStorage.setItem("1", JSON.stringify(mentor));
                const userData = await AsyncStorage.getItem("1");
               }
@@ -72,8 +73,19 @@ const MatchWithMentorForm = () => {
 };
 
   return (
+    <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
     <View style={styles.container}>
-      <Text style={styles.title}>Forms</Text>
+    <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.navigate('/MatchWithMentor')}>
+          <Icon name="arrow-left" size={24} color="white" style={styles.backIcon} />
+        </TouchableOpacity>
+        <Text style={styles.title}>Form</Text>
+      </View>
+      <Text style={styles.subtitle}>Welcome to our mentor matching program! </Text>
+      <Text style={{color:'white', alignSelf:'center', marginTop:10}}>To ensure we find the perfect mentor for you, please take a moment to fill out this form. 
+        Your responses will guide us in matching you with a mentor who can provide tailored support for your wellbeing journey.Let's take this step 
+        toward a healthier, happier you together.</Text>
+        {/* Your privacy is our priority, and all information shared will be treated with utmost confidentiality */}
       <Text style={styles.input}>Select the topic you wish to discuss:</Text>
       <DropDownPicker
       dropDownDirection='TOP'
@@ -101,6 +113,7 @@ const MatchWithMentorForm = () => {
       />
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
     </View>
+    </LinearGradient>
   );
 };
 
@@ -110,26 +123,50 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    paddingTop:10,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start', // Align items to the start of the row
+    width: '100%', // Ensure the header takes up the full width
+    paddingHorizontal: 20, // Add some padding to the sides
+    marginBottom: 5,
+  },
+  backIcon: {
+    marginRight: 10,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
-    marginTop: 30,
+    marginTop: 5,
+    color:'white',
+    marginLeft:100,
   },
   input: {
-    padding: 10,
     marginBottom: 10,
-    marginTop: 30,
-    width: '70%',
+    marginTop: 40,
+    width: '100%',
+    color:'white'
   },
   textbox: {
-    marginTop: 50,
+    marginTop: 40,
     height:100,
     width: '100%',
     borderWidth: 1,
     borderColor: 'black',
+    textAlignVertical:'top',
+    backgroundColor:'white',
+    marginBottom:30,
+    padding:10
   },
+  subtitle:{
+    color:'white',
+    alignSelf:'center',
+    textAlign:'center',
+    fontSize:20,
+  }
 });
 
 export default MatchWithMentorForm;

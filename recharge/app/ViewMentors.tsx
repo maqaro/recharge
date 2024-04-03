@@ -1,11 +1,12 @@
 // Homepage.tsx
 
 import React, {useEffect, useState} from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, FlatList, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '../lib/supabase';
+import NavBar from './NavBar';
 
 const ViewMentors = () => {
     const [userid, setUserid] = useState<string | undefined>();
@@ -37,19 +38,23 @@ const ViewMentors = () => {
       };
 
     return (
-        <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
+        <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}}>
         <View>
-            <Text style={styles.details}>Below are your mentors: </Text>
+            <Text style={styles.header}>Current mentors: </Text>
         <View style={styles.item}>
             {details?.map((item: {mentor_id: any, issue_id: any, issues: {key: any, value: any}, mentors: {key: any, value: any}}) => (
-                <View>
+                <View style={styles.mentor}>
+                    <Image source={require('./images/SleepWhite.png')} style={styles.face}/>
                     <Text style={styles.title}>{Object.values(item.mentors)}</Text>
-                    <Text style={styles.details}>{Object.values(item.issues)}</Text>
-            </View>
+                    <Text style={styles.details}>Speciality: {Object.values(item.issues)}</Text>
+                    <Text style={styles.description}>"Hey, I am here to help manage your stress better"</Text>
+                    <Text style={styles.experience}>4+ years experience</Text>
+                </View>
             ))}
             
         </View>
         </View>
+        <NavBar/>
         </LinearGradient>
         
     );
@@ -64,27 +69,66 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
       },
+      header: {
+        fontSize: 35,
+        fontWeight: "bold",
+        marginBottom: 5,
+        fontStyle: "italic",
+        color: 'white',
+        alignSelf:'center',
+        textDecorationLine:'underline',
+      },
   
       item: {
-          margin: 30,
-          borderBottomWidth: 2,
-          borderBottomColor: "lightgrey",
-        },
-        title: {
-          fontSize: 20,
-          fontWeight: "bold",
-          marginBottom: 5,
-          fontStyle: "italic",
-          color: 'white',
-        },
-      
-        details: {
-          fontSize: 15,
-          fontWeight: "bold",
-          marginBottom: 5,
-          fontStyle: "italic",
-          color: 'white',
-        },
+        flexDirection:'column',
+        flexWrap:'nowrap',
+
+      },
+      mentor:{
+        marginTop:10,
+        borderColor:'black',
+        borderWidth:1,
+        width:'80%',
+        borderBottomWidth: 2,
+        borderBottomColor: "lightgrey",
+        backgroundColor:'white',
+        color:'black',
+        padding:10,
+        borderRadius:10,
+        elevation:10,
+        alignSelf:'center',
+      },
+      title: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginBottom: 5,
+        fontStyle: "italic",
+        color: 'black',
+        alignSelf:'center',
+      },
+    
+      details: {
+        fontSize: 12,
+        marginBottom: 5,
+        fontStyle: "italic",
+        color: 'black',
+        alignSelf:'center',
+      },
+      face:{
+        width:'80%',
+        height:150,
+      },
+      description:{
+        fontSize:10,
+        textAlign:'center',
+
+      },
+      experience: {
+        fontSize:8,
+        alignSelf:'center',
+        marginTop:5,
+
+      },
   });
 
   export default ViewMentors;

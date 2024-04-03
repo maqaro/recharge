@@ -5,7 +5,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { supabase } from '../lib/supabase';
 
- //jh
 
 const Login = () => {
 
@@ -28,18 +27,17 @@ const Login = () => {
     }
     setLoading(false);
   }
+
   return (
-   
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.container}>
-        <LinearGradient colors={['#1A7373', '#E37B60']} style={{height:'100%'}}>
+        <LinearGradient colors={['#1A7373', '#E37B60']} style={{ flex: 1 }}>
           <View style={styles.textContainer}>
             <Text style={styles.welcomeText}>Welcome</Text>
             <Text style={styles.backText}>Back!</Text>
           </View>
           <View style={styles.formContainer}>
             <Input
-              // label='Email'
-              // labelStyle={styles.labelStyle}
               placeholder="   Email"
               leftIcon={{ type: 'font-awesome', name: 'envelope', color: 'white' }}
               onChangeText={setEmail}
@@ -49,13 +47,11 @@ const Login = () => {
             />
 
             <Input
-              // label="Password"
-              // labelStyle={styles.labelStyle}
-              onChangeText={setPassword}
-              value={password}
               placeholder="    Password"
               secureTextEntry
-              leftIcon={{ type: 'font-awesome', name: 'lock', color:'white'}}
+              leftIcon={{ type: 'font-awesome', name: 'lock', color: 'white' }}
+              onChangeText={setPassword}
+              value={password}
               inputContainerStyle={styles.password}
               placeholderTextColor='white'
               autoCapitalize='none'
@@ -65,7 +61,7 @@ const Login = () => {
             <Button
               title="Login"
               buttonStyle={styles.LoginButton}
-              titleStyle={{color: '#b7410e', marginTop: 5, marginBottom: 5}}
+              titleStyle={{ color: '#b7410e', marginTop: 5, marginBottom: 5 }}
               onPress={signInWithEmail}
             />
 
@@ -75,28 +71,19 @@ const Login = () => {
               title="Sign up"
               onPress={() => router.navigate('/SignUp')}
               buttonStyle={styles.SignupButton}
-              titleStyle={{color: '#b7410e', marginTop: 5, marginBottom: 5}}
-           
+              titleStyle={{ color: '#b7410e', marginTop: 5, marginBottom: 5 }}
             />
           </View>
         </LinearGradient>
       </View>
-    
+    </ScrollView>
   );
 };
 
- 
-
 const styles = StyleSheet.create({
-
-  scrollView: {
-    flexGrow: 1,
-  },
-
   container: {
     flex: 1,
   },
-
   textContainer: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -104,65 +91,49 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 80,
   },
-
   welcomeText: {
     fontSize: 50,
     textAlign: 'center',
     color: 'white',
     marginTop: 40,
   },
-
   backText: {
     fontSize: 50,
     textAlign: 'center',
     color: 'white',
   },
-
   formContainer: {
     marginTop: 25,
-    color:'white',
-    // marginLeft: 20,
-    // marginRight: 20,
+    color: 'white',
   },
-
-  // labelStyle: {
-  //   color: 'black',
-  // },
-
-  email:{
+  email: {
     borderBottomColor: 'white',
     marginBottom: 20,
     borderBottomWidth: 1,
     marginLeft: 20,
     marginRight: 20,
   },
-
   password: {
     borderBottomColor: 'white',
     borderBottomWidth: 1,
     marginLeft: 20,
     marginRight: 20,
   },
-
-
   forgot: {
     textAlign: 'right',
     marginRight: 28,
-    color:'#303030',
+    color: '#303030',
     fontWeight: 'bold',
     marginTop: 1,
     fontSize: 15,
     marginBottom: 20,
   },
-
   or: {
-    color:'white',
+    color: 'white',
     marginTop: 10,
     alignSelf: 'center',
     fontSize: 15,
-
   },
-
   LoginButton: {
     width: '82%',
     marginTop: 80,
@@ -170,8 +141,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignSelf: 'center',
   },
-
-
   SignupButton: {
     width: '82%',
     marginTop: 10,
@@ -179,9 +148,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignSelf: 'center',
   },
-
 });
-
- 
 
 export default Login;

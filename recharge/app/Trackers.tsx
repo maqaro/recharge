@@ -15,20 +15,13 @@ const Trackers = () => {
       <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
         <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={true}>
 
-        <TouchableOpacity onPress={() => router.navigate('/Homepage')}>
-          <Ionicons name="chevron-back-circle-outline" size={40} color="white" />
-        </TouchableOpacity>
-        
-        
-        
-        
         {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
 
           <TouchableOpacity style={[styles.Step1]} onPress={() => router.navigate('/StepTracker')}>
-          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/StepCounter.png')}> */}
+          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/step_bg.jpg')}> 
             <Text style={styles.text}>Step Tracker</Text>
             <Image source={require('./images/StepWhite.png')} style={styles.StepPic}/>
-          {/* </ImageBackground> */}
+          </ImageBackground> 
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Exercise1]} onPress={() => router.navigate('/ExerciseTracker')}>
@@ -169,8 +162,8 @@ const styles = StyleSheet.create({
 
   Exercise: {
     width: '45%',
-    aspectRatio: 1, // Square aspect ratio
-    margin: '2.5%', // Adjust as needed
+    aspectRatio: 1, 
+    margin: '2.5%',
     backgroundColor: 'white',
     borderRadius: 20,
     justifyContent: 'center',
@@ -192,8 +185,8 @@ const styles = StyleSheet.create({
 
   Water: {
     width: '45%',
-    aspectRatio: 1, // Square aspect ratio
-    margin: '2.5%', // Adjust as needed
+    aspectRatio: 1, 
+    margin: '2.5%', 
     backgroundColor: 'white',
     borderRadius: 20,
     justifyContent: 'center',
@@ -213,8 +206,8 @@ const styles = StyleSheet.create({
 
   Sleep: {
     width: '45%',
-    aspectRatio: 1, // Square aspect ratio
-    margin: '2.5%', // Adjust as needed
+    aspectRatio: 1, 
+    margin: '2.5%', 
     backgroundColor: 'white',
     borderRadius: 20,
     justifyContent: 'center',
@@ -236,8 +229,8 @@ const styles = StyleSheet.create({
 
   Emotion: {
     width: '45%',
-    aspectRatio: 1, // Square aspect ratio
-    margin: '2.5%', // Adjust as needed
+    aspectRatio: 1, 
+    margin: '2.5%', 
     backgroundColor: 'white',
     borderRadius: 20,
     justifyContent: 'center',
@@ -257,8 +250,8 @@ const styles = StyleSheet.create({
 
   Diet: {
     width: '45%',
-    aspectRatio: 1, // Square aspect ratio
-    margin: '2.5%', // Adjust as needed
+    aspectRatio: 1,
+    margin: '2.5%', 
     backgroundColor: 'white',
     borderRadius: 20,
     justifyContent: 'center',

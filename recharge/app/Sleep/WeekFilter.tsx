@@ -24,8 +24,9 @@ const WeekFilter: React.FC<FilterProps> = ({ trackerdata, onDateChange }) => {
 
     const initialStartDate: Date = new Date(currentDate);
     initialStartDate.setDate(currentDate.getDate() - daysSinceMonday);
-    initialStartDate.setHours(0, 0, 0, 0);
+    initialStartDate.setUTCHours(0, 0, 0, 0);
     const [startDate, setStartDate] = useState<Date>(initialStartDate);
+    console.log('initial start date',initialStartDate);
     const [endDate, setEndDate] = useState<Date>(new Date(startDate.getTime() + (6 * 24 * 60 * 60 * 1000)));
 
     // Function to handle moving the displayed week back by one week
@@ -52,6 +53,7 @@ const WeekFilter: React.FC<FilterProps> = ({ trackerdata, onDateChange }) => {
         newEndDate.setHours(0, 0, 0, 0);
         setEndDate(newEndDate);
         onDateChange(startDate, newEndDate);
+        console.log('Start date',startDate);
     }, [startDate]);
 
     return (

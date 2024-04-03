@@ -1,17 +1,51 @@
 // Homepage.tsx
 
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, {useEffect} from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image, Button } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import NavBar from './NavBar';
-
+// import notifee from "@notifee/react-native";
 
 export default function Homepage() {
     const router = useRouter();
+
+    // async function onDisplayNotification() {
+
+    //   // Request permissions (required for iOS)
+    //   await notifee.requestPermission();
+  
+    //   // Create a channel (required for Android)
+    //   const channelId = await notifee.createChannel({
+    //     id: "default",
+    //     name: "Default Channel",
+    //   });
+  
+    //   // Display a notification
+    //   await notifee.displayNotification({
+    //     title: "Water Reminder",
+    //     body: "Remeber to drink water and stay hydrated!",
+    //     android: {
+    //       channelId,
+    //       // pressAction is needed if you want the notification to open the app when pressed
+    //       pressAction: {
+    //         id: "default",
+    //       },
+    //     },
+    //   });
+    // }
+
+    
+
+
     return (
         <View style={styles.container}>
           <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+
+          {/* <Button
+        title="Display Notification"
+        onPress={() => onDisplayNotification()}
+      /> */}
 
           <TouchableOpacity
             style={styles.square1}
@@ -31,7 +65,7 @@ export default function Homepage() {
 
           <TouchableOpacity
             style={styles.square3}
-            //onPress={() => .........
+            onPress={() => router.navigate('/MatchWithMentor')}
           >
             <Text style={styles.text}>Mentor Match</Text>
             <Image source={require('./images/Match.png')} style={styles.MatchPic}/>
@@ -47,7 +81,7 @@ export default function Homepage() {
 
           <TouchableOpacity
             style={styles.square5}
-            //onPress={() => h........
+            onPress={() => router.navigate('/ExerciseRoutine')}
           >
             <Text style={styles.text}>Exercise Routines</Text>
             <Image source={require('./images/Exercise.png')} style={styles.ExercisePic}/>
@@ -55,7 +89,7 @@ export default function Homepage() {
 
           <TouchableOpacity
             style={styles.square6}
-            //onPress={() => ..........
+            onPress={() => router.navigate('/OtherResources')}
           >
             <Text style={styles.text}>Other Resources</Text>
             <Image source={require('./images/Resources.png')} style={styles.ResourcesPic}/>
@@ -76,7 +110,7 @@ const styles = StyleSheet.create({
     },
     
     square1: {
-      marginTop: '25%',
+      marginTop: '20%',
       width: '45%',
       aspectRatio: 1,
       margin: '2.5%', 
@@ -95,8 +129,8 @@ const styles = StyleSheet.create({
     
     square2: {
       width: '45%',
-      aspectRatio: 1, // Square aspect ratio
-      margin: '2.5%', // Adjust as needed
+      aspectRatio: 1, 
+      margin: '2.5%',
       backgroundColor: 'white',
       borderRadius: 20,
       justifyContent: 'center',
@@ -114,8 +148,8 @@ const styles = StyleSheet.create({
 
     square3: {
       width: '45%',
-      aspectRatio: 1, // Square aspect ratio
-      margin: '2.5%', // Adjust as needed
+      aspectRatio: 1, 
+      margin: '2.5%', 
       backgroundColor: 'white',
       borderRadius: 20,
       justifyContent: 'center',
@@ -131,8 +165,8 @@ const styles = StyleSheet.create({
 
     square4: {
       width: '45%',
-      aspectRatio: 1, // Square aspect ratio
-      margin: '2.5%', // Adjust as needed
+      aspectRatio: 1, 
+      margin: '2.5%', 
       backgroundColor: 'white',
       borderRadius: 20,
       justifyContent: 'center',
@@ -150,8 +184,8 @@ const styles = StyleSheet.create({
 
     square5: {
       width: '45%',
-      aspectRatio: 1, // Square aspect ratio
-      margin: '2.5%', // Adjust as needed
+      aspectRatio: 1,
+      margin: '2.5%', 
       backgroundColor: 'white',
       borderRadius: 20,
       justifyContent: 'center',
@@ -167,8 +201,8 @@ const styles = StyleSheet.create({
 
     square6: {
       width: '45%',
-      aspectRatio: 1, // Square aspect ratio
-      margin: '2.5%', // Adjust as needed
+      aspectRatio: 1, 
+      margin: '2.5%', 
       backgroundColor: 'white',
       borderRadius: 20,
       justifyContent: 'center',

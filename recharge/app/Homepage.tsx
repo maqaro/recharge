@@ -75,7 +75,7 @@ export default function Homepage() {
             style={styles.square4}
             //onPress={() => ........
           >
-            <Text style={styles.text}>Guided Sessions</Text>
+            <Text style={styles.text}>Mental Health Care</Text>
             <Image source={require('./images/MentalCare.jpg')} style={styles.MentalCarePic}/>
           </TouchableOpacity>
 

@@ -89,7 +89,6 @@ export default function Homepage() {
 
           <TouchableOpacity
             style={styles.square6}
-            onPress={() => router.navigate('/OtherResources')}
           >
             <Text style={styles.text}>Other Resources</Text>
             <Image source={require('./images/Resources.png')} style={styles.ResourcesPic}/>

@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, ScrollView, TouchableOpacity, Text, Image, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import TrackerButton from './trackerbutton';
 import { Ionicons } from '@expo/vector-icons';
 import NavBar from './NavBar';
 
@@ -12,6 +13,7 @@ const Trackers = () => {
   return(
   
     <View style={styles.container}>
+      <TrackerButton/>
       <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
         <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={true}>
 

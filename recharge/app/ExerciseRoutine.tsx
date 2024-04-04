@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { supabase } from '../lib/supabase';
 import { router } from 'expo-router';
-import TrackerButton from './trackerbutton';
-import Back from 'react-native-vector-icons/Ionicons';
+import TrackerNav from './TrackerNav';
 
 const ExerciseRoutine: React.FC = () => {
     const [routines, setRoutines] = useState<Record<string, any[]>>({});
@@ -21,6 +20,7 @@ const ExerciseRoutine: React.FC = () => {
             if (error && !exerciseroutine) {
                 console.error('Error fetching exercise routine:', error);
             } else {
+                //console.log(exerciseroutine);
                 const groupedByRoutine = exerciseroutine?.reduce((accumulator, current) => {
                     const routineName = current.routine.name;
                     if (!accumulator[routineName]) {
@@ -40,20 +40,19 @@ const ExerciseRoutine: React.FC = () => {
     }, []);
 
     const renderRoutine = ({ item }) => (
-        <TouchableOpacity 
+        <TouchableOpacity
             onPress={() => setSelectedRoutine(item)}
             style={[styles.routineTab, selectedRoutine === item ? styles.selectedTab : null]}
         >
-            <Text style={styles.routineTabText}>{item}</Text>
+            <Text style={[styles.routineTabText, selectedRoutine === item ? styles.selectedTabText : null]}>
+            {item}
+            </Text>
         </TouchableOpacity>
     );
 
     return (
         <View style={styles.container}>
-            <View style={{flexDirection:'row', minHeight:50, marginTop:10}}>
-            <TouchableOpacity style={{marginRight:10, alignSelf:'center'}} onPress={() => router.navigate('/Homepage')}>
-                <Back name="chevron-back-circle-outline" size={30} color="black"/>
-            </TouchableOpacity>
+            <Text style={styles.title}>Exercise Tracker</Text>
 
             <FlatList 
                 horizontal
@@ -63,19 +62,12 @@ const ExerciseRoutine: React.FC = () => {
                 showsHorizontalScrollIndicator={false}
                 style={styles.flatListStyle}
             />
-            </View>
             <ScrollView style={styles.scrollView}>
             {selectedRoutine && routines[selectedRoutine].map((exercise, index) => (
               <View key={index} style={styles.exerciseCard}>
                   <View style={styles.exerciseImage}>
-                    <Image
-                        source={
-                            exercise.exercise.Exercise_Image
-                                ? { uri: exercise.exercise.Exercise_Image }
-                                : require('../assets/placeholder.jpg') // Adjust the path to where your placeholder image is located
-                        }
-                        style={styles.exerciseImage}
-                    />
+                    <Image source={exercise.exercise.Exercise_Image ? { uri: exercise.exercise.Exercise_Image } : require('../assets/placeholder.jpg')} style={styles.exerciseImage}/>
+
                   </View>
                   
                   <View style={styles.exerciseContent}>
@@ -89,80 +81,81 @@ const ExerciseRoutine: React.FC = () => {
               </View>
           ))}
             </ScrollView>
+            <TrackerNav/>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-
+    container: {
+      flex: 1,
+      backgroundColor: '#F5F5F5', // A softer shade for background
+    },
     flatListStyle: {
-      maxHeight: 50,
+      maxHeight: 60, // Keeping the FlatList contained
+      padding: 10,
+      marginVertical: 10, // Add some space above and below the FlatList
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginBottom: 16,
     },
     exerciseCard: {
-        flexDirection: 'row',
-        alignItems: 'flex-start', // Align items to the start of the flex direction
-        padding: 10,
-        marginBottom: 10,
-        backgroundColor: '#FFFFFF',
-        borderRadius: 8,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+      flexDirection: 'row',
+      alignItems: 'center', // Align items to the center of the flex direction for a neater look
+      padding: 15,
+      marginHorizontal: 10, // Give some horizontal space
+      marginBottom: 15,
+      backgroundColor: '#FFFFFF',
+      borderRadius: 12, // More pronounced rounded corners
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.1,
+      shadowRadius: 6,
+      elevation: 5, // Slightly elevated shadow for depth
     },
     exerciseImage: {
-        width: 80,
-        height: 80,
-        borderRadius: 10,
-        marginRight: 10,
+      width: 100, // Slightly larger for emphasis
+      height: 100,
+      borderRadius: 10,
+      marginRight: 15, // Increase space between the image and the text
     },
     exerciseContent: {
-        flex: 1,
-        justifyContent: 'center', // Center the content vertically
-        marginTop: -5, // Adjust if necessary to align the content with the top of the image
-    },
-
-    container: {
-        flex: 1,
-        backgroundColor: '#F5FCFF',
-    },
-    routineTabsContainer: {
-        flexDirection: 'row',
-        paddingVertical: 10,
-    },
-    routineTab: {
-        marginRight: 10,
-        paddingHorizontal: 8,
-        paddingVertical: 5,
-        borderWidth: 1,
-        borderColor: '#DDD',
-        borderRadius: 20,
-    },
-    selectedTab: {
-        backgroundColor: '#DDD',
-    },
-    routineTabText: {
-        fontSize: 16,
-        color: '#333',
-    },
-    scrollView: {
-        flex: 1,
-        marginTop:10,
+      flex: 1,
+      justifyContent: 'center',
     },
     exerciseTitle: {
-        fontSize: 18,
-        fontWeight: '600',
-        marginBottom: 5,
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginBottom: 5,
+      color: '#333', // Darker text for better readability
     },
     exerciseInfo: {
-        fontSize: 14,
-        color: '#666',
+      fontSize: 14,
+      color: '#666',
     },
-    exerciseDuration: {
-        fontSize: 14,
-        color: '#666',
+    routineTab: {
+      marginRight: 10,
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      backgroundColor: '#bfbfbf', // Softer background for tabs
+      borderRadius: 10,
+      borderWidth: 0, // Remove border to simplify
     },
-});
+    selectedTab: {
+      backgroundColor: '#000000', // A light, pleasant color for selected tabs
+    },
+    selectedTabText: {
+        color: '#FFFFFF', // White text for better contrast
+    },
+    routineTabText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+    },
+    scrollView: {
+      flex: 1, // Ensure ScrollView takes the remaining space
+    },
+  });
 
 export default ExerciseRoutine;

@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import storeEmotion from './EmotionTracker';
 import { supabase } from '../lib/supabase';
 import { Button } from 'react-native-elements';
+import NavBar from './NavBar';
 
 
 
@@ -53,6 +54,7 @@ useEffect(() => {
                 <Text>Add Meal</Text>  
             </TouchableOpacity>
   </LinearGradient>
+  <NavBar/>
         </View>
     )
 };

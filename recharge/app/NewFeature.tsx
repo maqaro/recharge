@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
   modalContent: {
     justifyContent: 'center',
     padding: 20,
+    marginTop: 100,
   },
   modalTitle: {
     fontSize: 24,

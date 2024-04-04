@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
       color:'white',
       alignSelf:'center',
       marginTop:30,
+      marginBottom: 20,
     },
     subtitle:{
       fontSize:20,
@@ -99,8 +100,8 @@ const styles = StyleSheet.create({
     },
     intro:{
       color:'white',
-      alignSelf:'center',
-      marginBottom:10
+      marginBottom: 60,
+      textAlign:'center',
     }
   });
 

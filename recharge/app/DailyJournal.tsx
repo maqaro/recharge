@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase';
 import { Button } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import NavBar from './NavBar';
 
 const months = [
   { label: 'January', value: 'January', days: 31 },

@@ -11,7 +11,7 @@ interface Resource {
   description: string;
   date: string | null;
   link: string;
-  topic: string; // Include topic in Resource interface
+  topic: string; 
   image_url: string | null;
 }
 
@@ -58,7 +58,6 @@ const Resources: React.FC = () => {
   };
 
   return (
-    // <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleBackPress}>
@@ -106,7 +105,6 @@ const Resources: React.FC = () => {
         </TouchableOpacity>
       ))}
     </ScrollView>
-    // </LinearGradient>
   );
 };
 

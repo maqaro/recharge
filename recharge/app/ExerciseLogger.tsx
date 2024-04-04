@@ -200,7 +200,7 @@ const ExerciseLogger: React.FC = () => {
 
                 
             </LinearGradient>
-            <TrackerNav />
+            <NavBar />
         </View>
     );
 };

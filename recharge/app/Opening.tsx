@@ -11,7 +11,7 @@ const Opening = () => {
     <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%'}}>
 
         <View style={styles.logoContainer}>
-            <Image source={require('./images/Logo.jpg')} style={styles.logo}/>
+            <Image source={require('./images/Logo.png')} style={styles.logo}/>
         </View>
 
         <View>

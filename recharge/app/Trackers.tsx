@@ -21,45 +21,45 @@ const Trackers = () => {
         {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
 
           <TouchableOpacity style={[styles.Step1]} onPress={() => router.navigate('/StepTracker')}>
-          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/step_bg.png')}>
+          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/step_bg.png')}> */}
             <Text style={styles.text}>Step Tracker</Text>
-            <Image source={require('./images/StepWhite.png')} style={styles.StepPic}/>
-          </ImageBackground>
+            {/* <Image source={require('./images/StepWhite.png')} style={styles.StepPic}/> */}
+          {/* </ImageBackground> */}
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Exercise1]} onPress={() => router.navigate('/ExerciseTracker')}>
-          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/exercise_bg.png')}>
+          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/exercise_bg.png')}> */}
             <Text style={styles.text}>Exercise Tracker</Text>
-            <Image source={require('./images/ExerciseTrackerWhite.png')} style={styles.ExerciseTPic}/>
-            </ImageBackground>
+            {/* <Image source={require('./images/ExerciseTrackerWhite.png')} style={styles.ExerciseTPic}/> */}
+            {/* </ImageBackground> */}
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Water1]} onPress={() => router.navigate('/WaterTracker')}>
-          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/water_bg.jpg')}>
+          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/water_bg.jpg')}> */}
             <Text style={styles.text}>Water Tracker</Text>
-            <Image source={require('./images/WaterWhite.png')} style={styles.WaterPic}/>
-            </ImageBackground>
+            {/* <Image source={require('./images/WaterWhite.png')} style={styles.WaterPic}/> */}
+            {/* </ImageBackground> */}
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Sleep1]} onPress={() => router.navigate('/SleepTracker')}>
-          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/sleep_bg.jpg')}>
+          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/sleep_bg.jpg')}> */}
             <Text style={styles.text}>Sleep Tracker</Text>
-            <Image source={require('./images/SleepWhite.png')} style={styles.SleepPic}/>
-            </ImageBackground>
+            {/* <Image source={require('./images/SleepWhite.png')} style={styles.SleepPic}/> */}
+            {/* </ImageBackground> */}
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Emotion1]} onPress={() => router.navigate('/EmotionTracker')}>
-          <ImageBackground imageStyle={{borderRadius: 20, }} source={require('./images/Emotionbg.png')}>
+          {/* <ImageBackground imageStyle={{borderRadius: 20, }} source={require('./images/Emotionbg.png')}> */}
             <Text style={styles.text}>Emotion Tracker</Text>
-            <Image source={require('./images/EmotionWhite.png')} style={styles.EmotionPic}/>
-            </ImageBackground>
+            {/* <Image source={require('./images/EmotionWhite.png')} style={styles.EmotionPic}/> */}
+            {/* </ImageBackground> */}
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Diet1]} onPress={() => router.navigate('/DietTracker')}>
-          <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/meal_bg.jpg')}>
+          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/meal_bg.jpg')}> */}
             <Text style={styles.text}>Diet Tracker</Text>
-            <Image source={require('./images/DietWhite.png')} style={styles.DietPic}/>
-            </ImageBackground>
+            {/* <Image source={require('./images/DietWhite.png')} style={styles.DietPic}/> */}
+            {/* </ImageBackground> */}
           </TouchableOpacity>
           
 
@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent:'center',
     alignItems:'center'
-  
   },
 
   imagebackground: {
@@ -125,6 +124,7 @@ const styles = StyleSheet.create({
     marginTop: '10%',
     marginLeft: '2.5%',
     marginRight:'2.5%',
+    paddingBottom: '30%',
   },
   Diet1:{
     backgroundColor: 'white',
@@ -275,8 +275,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     // color: '#e37b60',
     color: 'black',
-    textAlign: 'right',
+    textAlign: 'left',
     marginRight: 20,
+    justifyContent: 'center',
   
     fontSize: 20,
     top: 40,

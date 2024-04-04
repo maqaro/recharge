@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: '#fff',
     },
-    box:{
-        borderColor:'gray',
-        borderWidth:1,
-        margin:5,
-        minHeight:500,
-    },
+    // box:{
+    //     borderColor:'gray',
+    //     borderWidth:1,
+    //     margin:5,
+    //     minHeight:500,
+    // },
 
     item: {
         margin: 10,
@@ -103,12 +103,10 @@ const styles = StyleSheet.create({
       header: {
         fontSize: 35,
         fontWeight: "bold",
-        marginBottom: 5,
-        fontStyle: "italic",
+        marginBottom: 35,
         color: 'white',
         alignSelf:'center',
-        textDecorationLine:'underline',
-        marginTop:15,
+        marginTop: 35,
       },
 
   });

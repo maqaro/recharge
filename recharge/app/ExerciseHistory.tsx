@@ -5,6 +5,7 @@ import TrackerNav from './TrackerNav';
 import { router, useLocalSearchParams } from 'expo-router';
 import { supabase } from '../lib/supabase';
 import { BarChart } from 'react-native-chart-kit';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ExerciseHistory: React.FC = () => {
     const [exercisetracker, setExercisetracker] = React.useState<Tracker[]>([]);
@@ -71,8 +72,12 @@ const ExerciseHistory: React.FC = () => {
     // Adjusting the view to prevent date cut-off and add padding
     return (
         <View style={styles.container}>
+            <TouchableOpacity onPress={() => router.navigate('/ExerciseTracker')}>
+                <Ionicons name="chevron-back-circle-outline" size={40} color="black" />
+            </TouchableOpacity>
             <Text style={styles.title}>Exercise History</Text>
             <ScrollView>
+
             {exercisetracker.length > 0 ? (
                 <View style={styles.main}>
                     <Text style={styles.exerciseTitle}>{exercisetracker[0]?.exercise?.Exercise_Name}</Text>

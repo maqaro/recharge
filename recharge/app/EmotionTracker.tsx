@@ -94,7 +94,7 @@ const EmotionTracker: React.FC = () => {
   };
 
   return (
-    <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+    <LinearGradient colors={['#ffcba4', '#fae588']} style={{height:'100%', width:'100%'}} >
     
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={false}>
@@ -118,6 +118,8 @@ const EmotionTracker: React.FC = () => {
         )}
         </TouchableOpacity>
       </View>
+
+      <Streak/>
 
 
       <View style={styles.buttonContainer}>
@@ -197,7 +199,7 @@ const EmotionTracker: React.FC = () => {
           </View>
         </Modal>
       </View>
-      <Streak/>
+      
       <EmotionChart/>
       
       </ScrollView>
@@ -226,13 +228,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     color:'white',
-    marginLeft:30,
+    marginLeft:'15%',
   },
   section: {
     alignItems: 'center',
-    marginBottom: 20,
-    borderBottomColor: 'black',
-    borderBottomWidth:0.5,
+    marginBottom: 10,
+    // borderBottomColor: 'black',
+    // borderBottomWidth:0.5,
     
   },
   sectionTitle: {
@@ -256,13 +258,17 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'column',
     justifyContent: 'space-around',
-    width: '100%',
-    borderBottomWidth:0.5,
+    width: '90%',
+    alignSelf:'center',
+    // borderBottomWidth:0.5,
+    backgroundColor:'white',
+    paddingTop:15,
+    borderRadius:10,
   },
   button: {
-    backgroundColor: 'white',
-    width:'90%',
-    paddingVertical: 10,
+    backgroundColor: '#ffefc1',
+    width:'80%',
+    paddingVertical: 5,
     paddingHorizontal: 20,
     borderRadius: 5,
     marginBottom:15,

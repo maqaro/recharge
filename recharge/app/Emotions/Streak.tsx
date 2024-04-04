@@ -8,7 +8,8 @@ interface StreakProps {}
 const Streak: React.FC<StreakProps> = () => {
     const [userid, setUserid] = useState<string | undefined>();
     const [streakCount, setStreakCount] = useState<number>(0);
-    const [lastSevenDays, setLastSevenDays] = useState<(string | null)[]>(new Array(7).fill(null));
+    const [lastSevenDays, setLastSevenDays] = useState<boolean[]>(new Array(7).fill(false));
+
 
 
     useEffect(() => {
@@ -69,10 +70,10 @@ const Streak: React.FC<StreakProps> = () => {
         const fetchLastSevenDays = async () => {
             try {
                 if (!userid) return;
-
+        
                 let currentDate = new Date().toISOString().split('T')[0];
-                const lastSevenDaysData: (string | null)[] = [];
-
+                const lastSevenDaysData: boolean[] = [];
+        
                 for (let i = 0; i < 7; i++) {
                     const { data, error } = await supabase
                         .from('emotiontracker')
@@ -80,24 +81,29 @@ const Streak: React.FC<StreakProps> = () => {
                         .eq('user_id', userid)
                         .eq('date', currentDate)
                         .single();
-
+        
                     if (error) {
-                        throw error;
+                        lastSevenDaysData.push(false);
                     }
-
-                    lastSevenDaysData.push(data ? data.date : null);
-
+                    else{
+                        lastSevenDaysData.push(true);
+                    }
+        
+                    // lastSevenDaysData.push(!!data); // Push boolean based on whether there is data
+        
                     const prevDate = new Date(currentDate);
                     prevDate.setDate(prevDate.getDate() - 1);
                     currentDate = prevDate.toISOString().split('T')[0];
                 }
-
-                setLastSevenDays(lastSevenDaysData.reverse());
+        
+                setLastSevenDays(prevState => lastSevenDaysData.reverse());
             } catch (error) {
+                console.error('Error fetching last seven days:', error);
             }
         };
-
+        
         fetchLastSevenDays();
+        console.log(lastSevenDays);
     }, [userid]);
 
     return (
@@ -107,17 +113,17 @@ const Streak: React.FC<StreakProps> = () => {
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                     <View style={styles.circleContainer}>
                     {[...Array(7)].map((_, index) => {
-                        const reversedIndex = 6 - index;
-                        return (
-                        <View key={index} style={[styles.circle, streakCount > reversedIndex ? styles.greenCircle : styles.redCircle]}>
-                            {streakCount > reversedIndex ? (
-                            <Entypo style={{alignSelf:'center', marginTop:2}} name="trophy" size={35} color="gold" />
+                    const dayHasEntry = lastSevenDays[index];
+                    return (
+                        <View key={index} style={[styles.circle, dayHasEntry ? styles.greenCircle : styles.redCircle]}>
+                            {dayHasEntry? (
+                                <Entypo style={{alignSelf:'center', marginTop:2}} name="trophy" size={35} color="gold" />
                             ) : (
-                            <Entypo style={{alignSelf:'center'}} name="circle-with-cross" size={40} color="red" />
+                                <Entypo style={{alignSelf:'center'}} name="circle-with-cross" size={40} color="red" />
                             )}
                         </View>
-                        );
-                    })}
+                    );
+                })}
                     </View>
                 </ScrollView>
             </View>   

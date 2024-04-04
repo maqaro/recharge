@@ -105,6 +105,7 @@ export default function Homepage() {
                 <LinearGradient colors={['#65C7F7', '#1cefff']} style={styles.square1}>
           <TouchableOpacity
             style={styles.square1}
+            onPress={() => router.navigate('/Resources')}
           >
             <Text style={styles.text}>Other Resources</Text>
             <Image source={require('./images/Resources.png')} style={styles.ResourcesPic} />

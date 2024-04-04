@@ -76,7 +76,7 @@ export default function Homepage() {
             onPress={() => router.navigate('/GuidedSession')}
           >
             <Text style={styles.text}>Mental Health Care</Text>
-            <Image source={require('./images/MentalCare.jpg')} style={styles.MentalCarePic}/>
+            <Image source={require('./images/MentalCare.png')} style={styles.MentalCarePic}/>
           </TouchableOpacity>
 
           <TouchableOpacity

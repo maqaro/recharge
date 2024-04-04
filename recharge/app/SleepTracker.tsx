@@ -18,9 +18,15 @@ type DateTimePickerChangeEvent = {
   };
 };
 
+const Time1 = () => {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  return yesterday;
+};
+
 const SleepTracker = () => {
 
-    const [chosenTime1, setChosenTime1] = useState(new Date());
+    const [chosenTime1, setChosenTime1] = useState(Time1());
     const [chosenTime2, setChosenTime2] = useState(new Date());
   
     const [showTimePicker1, setShowTimePicker1] = useState(false);
@@ -40,6 +46,9 @@ const SleepTracker = () => {
         yesterday.setDate(today.getDate() - 1); // Subtract 1 day
         const chosenDateTime = new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
         setChosenTime1(chosenDateTime);
+
+        const difference = calculateDifference(chosenDateTime, chosenTime2);
+        setTimeDifference(difference);
       }
     };
   
@@ -67,12 +76,18 @@ const SleepTracker = () => {
     };
   
     const calculateDifference = (dateTime1: Date, dateTime2: Date) => {
-      const difference = dateTime2.getTime() - dateTime1.getTime();
+      let difference = dateTime2.getTime() - dateTime1.getTime();
       if (difference < 0) {
           return "ERROR, please check your entries";
       } else {
-          const hours = Math.floor(difference / (1000 * 60 * 60));
+          let hours = Math.floor(difference / (1000 * 60 * 60));
           const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+  
+          // If difference is greater than or equal to 24 hours, keep subtracting 24 hours until it's less than 24 hours
+          while (hours >= 24) {
+              hours -= 24;
+          }
+  
           return `${hours}:${minutes.toString().padStart(2, '0')}`;
       }
   };
@@ -154,6 +169,7 @@ return (
   <Pressable onPress={() => router.navigate('/Trackers')}>
       <Back name="chevron-back-circle-outline" size={30} color="white"/>
   </Pressable>
+
 
     <View style={styles.entryContainer}>
         <Text style={styles.entryTitle}>Today's Entry</Text>

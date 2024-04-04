@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Dimensions } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import SleepChart from './SleepChart';
 
@@ -78,7 +78,7 @@ const WeekChart: React.FC<WeekChartProps> = ({ filterStartDate, filterEndDate, s
                         },
                     ],
                 }}
-                width={300}
+                width={Dimensions.get("window").width - 10}
                 height={280}
                 yAxisSuffix={sleepData ? ' hrs' : ' ml'}
                 yAxisLabel=""
@@ -93,15 +93,10 @@ const WeekChart: React.FC<WeekChartProps> = ({ filterStartDate, filterEndDate, s
                     style: {
                         borderRadius: 16,
                     },
-                    propsForDots: {
-                        r: '6',
-                        strokeWidth: '2',
-                        stroke: '#ffa726',
-                    },
                     propsForLabels: {
-                        fontSize: 10,
+                        fontSize: 11,
                     },
-                    barPercentage:0.8,
+                    barPercentage:1,
                     
                 }}
                 style={{

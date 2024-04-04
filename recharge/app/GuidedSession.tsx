@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import NavBar from './NavBar';
 
 
 const GuidedSession = () => {
@@ -22,6 +23,7 @@ const GuidedSession = () => {
                 <Text style={styles.buttonText}>Yoga</Text>
             </TouchableOpacity>
         </LinearGradient>
+        <NavBar />
     </View>
   );
 };

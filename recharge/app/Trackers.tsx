@@ -12,54 +12,40 @@ const Trackers = () => {
   return(
   
     <View style={styles.container}>
-      <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+      <LinearGradient colors={['#FFFFFF, #FFFFFF']} style={{height:'100%', width:'100%'}} >
         <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={true}>
-        
-        
         
         
         {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
 
           <TouchableOpacity style={[styles.Step1]} onPress={() => router.navigate('/StepTracker')}>
-          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/step_bg.png')}> */}
             <Text style={styles.text}>Step Tracker</Text>
-            {/* <Image source={require('./images/StepWhite.png')} style={styles.StepPic}/> */}
-          {/* </ImageBackground> */}
+            <Image source={require('./images/Stairs.png')} style={styles.StepPic}/>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Exercise1]} onPress={() => router.navigate('/ExerciseTracker')}>
-          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/exercise_bg.png')}> */}
             <Text style={styles.text}>Exercise Tracker</Text>
-            {/* <Image source={require('./images/ExerciseTrackerWhite.png')} style={styles.ExerciseTPic}/> */}
-            {/* </ImageBackground> */}
+            <Image source={require('./images/Weights.png')} style={styles.ExerciseTPic}/>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Water1]} onPress={() => router.navigate('/WaterTracker')}>
-          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/water_bg.jpg')}> */}
             <Text style={styles.text}>Water Tracker</Text>
-            {/* <Image source={require('./images/WaterWhite.png')} style={styles.WaterPic}/> */}
-            {/* </ImageBackground> */}
+            <Image source={require('./images/Bottle.png')} style={styles.WaterPic}/>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Sleep1]} onPress={() => router.navigate('/SleepTracker')}>
-          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/sleep_bg.jpg')}> */}
             <Text style={styles.text}>Sleep Tracker</Text>
-            {/* <Image source={require('./images/SleepWhite.png')} style={styles.SleepPic}/> */}
-            {/* </ImageBackground> */}
+            <Image source={require('./images/Moon.png')} style={styles.SleepPic}/>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Emotion1]} onPress={() => router.navigate('/EmotionTracker')}>
-          {/* <ImageBackground imageStyle={{borderRadius: 20, }} source={require('./images/Emotionbg.png')}> */}
             <Text style={styles.text}>Emotion Tracker</Text>
-            {/* <Image source={require('./images/EmotionWhite.png')} style={styles.EmotionPic}/> */}
-            {/* </ImageBackground> */}
+            <Image source={require('./images/Faces.png')} style={styles.EmotionPic}/>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.Diet1]} onPress={() => router.navigate('/DietTracker')}>
-          {/* <ImageBackground imageStyle={{borderRadius: 20}} source={require('./images/meal_bg.jpg')}> */}
             <Text style={styles.text}>Diet Tracker</Text>
-            {/* <Image source={require('./images/DietWhite.png')} style={styles.DietPic}/> */}
-            {/* </ImageBackground> */}
+            <Image source={require('./images/Plate.png')} style={styles.DietPic}/>
           </TouchableOpacity>
           
 
@@ -90,51 +76,56 @@ const styles = StyleSheet.create({
     borderRadius:20,
   },
 
+// Changes tracker button containers
   Step1:{
-    backgroundColor: 'white',
+    backgroundColor: '#F26A8A',
     borderRadius: 20,
     marginTop: '10%',
     marginLeft: '2.5%',
-    marginRight:'2.5%'
+    marginRight:'2.5%',
+    // paddingBottom: '3%',
   },
   Exercise1:{
-    backgroundColor: 'white',
+    backgroundColor: '#f78c6b',
     borderRadius: 20,
-    marginTop: '10%',
+    marginTop: '5%',
     marginLeft: '2.5%',
-    marginRight:'2.5%'
+    marginRight:'2.5%',
+    // paddingBottom: '17%',
   },
   Water1:{
-    backgroundColor: 'white',
+    backgroundColor: '#2DBEEB',
     borderRadius: 20,
-    marginTop: '10%',
+    marginTop: '5%',
     marginLeft: '2.5%',
-    marginRight:'2.5%'
+    marginRight:'2.5%',
+    // paddingBottom: '17%',
   },
   Sleep1:{
-    backgroundColor: 'white',
+    backgroundColor: '#232E6F',
     borderRadius: 20,
-    marginTop: '10%',
+    marginTop: '5%',
     marginLeft: '2.5%',
-    marginRight:'2.5%'
+    marginRight:'2.5%',
+    // paddingBottom: '17%',
   },
   Emotion1:{
-    backgroundColor: 'white',
+    backgroundColor: '#F7C144',
     borderRadius: 20,
-    marginTop: '10%',
+    marginTop: '5%',
     marginLeft: '2.5%',
     marginRight:'2.5%',
-    paddingBottom: '30%',
+    // paddingBottom: '17%',
   },
   Diet1:{
-    backgroundColor: 'white',
+    backgroundColor: '#74CA91',
     borderRadius: 20,
-    marginTop: '10%',
+    marginTop: '5%',
     marginLeft: '2.5%',
     marginRight:'2.5%',
-    marginBottom:'30%',
+    marginBottom:'0%',
+    // paddingBottom: '17%',
   },
-
 
 
   Step: {
@@ -150,13 +141,13 @@ const styles = StyleSheet.create({
 
   StepPic: {
     width: 100,
-    height: 100,
-    marginTop: -25,
-    marginLeft: 0,
-    marginBottom: 0,
+    height: 90,
+    marginTop: -20,
+    marginLeft: 280,
+    marginBottom: 5,
     resizeMode: 'contain',
-    backgroundColor: 'black',
-    opacity: 0.75,
+    // backgroundColor: 'black',
+    // opacity: 0.75,
     borderRadius: 20,
   },
 
@@ -168,18 +159,17 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: '52%',
-    marginTop: '-48%',
   },
 
   ExerciseTPic: {
     width: 100,
     height: 100,
     marginTop: -25,
-    marginBottom: 0,
+    left: 280,
+    // marginBottom: 0,
     resizeMode: 'contain',
-    backgroundColor: 'black',
-    opacity: 0.75,
+    // backgroundColor: 'black',
+    // opacity: 0.75,
     borderRadius: 20,
   },
 
@@ -191,16 +181,18 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    
   },
 
   WaterPic: {
     width: 100,
     height: 100,
     marginTop: -25,
-    marginBottom: 0,
+    // marginBottom: 0,
+    left: 280,
     resizeMode: 'contain',
-    backgroundColor: 'black',
-    opacity: 0.75,
+    // backgroundColor: 'black',
+    // opacity: 0.75,
     borderRadius: 20,
   },
 
@@ -220,10 +212,12 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     marginTop: -25,
-    marginBottom: 0,
+    // marginBottom: 0,
+    left: 280,
+    top: 3,
     resizeMode: 'contain',
-    backgroundColor: 'black',
-    opacity: 0.75,
+    // backgroundColor: 'black',
+    // opacity: 0.75,
     borderRadius: 20,
   },
 
@@ -241,10 +235,11 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     marginTop: -25,
-    marginBottom: 0,
+    // marginBottom: 0,
+    left: 280,
     resizeMode: 'contain',
-    backgroundColor: 'black',
-    opacity: 0.75,
+    // backgroundColor: 'black',
+    // opacity: 0.75,
     borderRadius: 20,
   },
 
@@ -264,23 +259,21 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     marginTop: -25,
-    marginBottom: 0,
+    // marginBottom: 0,
+    left: 280,
     resizeMode: 'contain',
-    backgroundColor: 'black',
-    opacity: 0.75,
+    // backgroundColor: 'black',
+    // opacity: 0.75,
     borderRadius: 20,
   },
 
   text: {
     fontWeight: 'bold',
-    // color: '#e37b60',
-    color: 'black',
+    color: 'white',
     textAlign: 'left',
-    marginRight: 20,
-    justifyContent: 'center',
-  
     fontSize: 20,
     top: 40,
+    marginLeft: 40,
   },
 
 });

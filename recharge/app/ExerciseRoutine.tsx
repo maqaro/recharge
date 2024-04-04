@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, FlatList }
 import { supabase } from '../lib/supabase';
 import { router } from 'expo-router';
 import TrackerNav from './TrackerNav';
+import NavBar from './NavBar';
 
 const ExerciseRoutine: React.FC = () => {
     const [routines, setRoutines] = useState<Record<string, any[]>>({});
@@ -83,7 +84,7 @@ const ExerciseRoutine: React.FC = () => {
               </TouchableOpacity>
           ))}
             </ScrollView>
-            <TrackerNav/>
+            <NavBar/>
         </View>
     );
 };
@@ -102,6 +103,8 @@ const styles = StyleSheet.create({
       fontSize: 24,
       fontWeight: 'bold',
       marginBottom: 16,
+      textAlign: 'center',
+      marginTop: 30,
     },
     exerciseCard: {
       flexDirection: 'row',

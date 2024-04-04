@@ -47,7 +47,7 @@ export default function Homepage() {
 
 <LinearGradient colors={['#FFFFFF', '#FFFFFF']} style={{height: '85%',width: '100%' }} >
 
-<Text style={{fontSize: 25, fontWeight: 'bold', color: '#268394', margin: 16, alignContent:'center'}}>Let's Recharge, John</Text>
+<Text style={{fontSize: 25, fontWeight: 'bold', color: '#268394', margin: 16, alignContent:'center', textAlign:'center'}}>Let's Recharge, John</Text>
 
   <ScrollView>
     <View style={styles.full}>
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#444', // Slightly lighter than black for a softer look
     margin: 16, // Margin around the title for spacing
+    textAlign: 'center', // Center the title
   },
     full:{
       flex:1,
@@ -202,6 +203,8 @@ const styles = StyleSheet.create({
       fontSize: 18,
       fontWeight: 'bold',
       color: 'black',
+      textAlign: 'center',
+
     },
   });
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, Linking, ScrollView, StyleSheet } from 'react-native';
 import { supabase } from '../lib/supabase';
 import TrackerNav from './TrackerNav';
+import NavBar from './NavBar';
 
 type Resource = {
   id: string;
@@ -52,7 +53,7 @@ const Resources = () => {
         </View>
       ))}
     </ScrollView>
-    <TrackerNav />
+    <NavBar />
     </View>
   );
 };

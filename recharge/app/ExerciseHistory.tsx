@@ -6,6 +6,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { supabase } from '../lib/supabase';
 import { BarChart } from 'react-native-chart-kit';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import NavBar from './NavBar';
 
 const ExerciseHistory: React.FC = () => {
     const [exercisetracker, setExercisetracker] = React.useState<Tracker[]>([]);
@@ -123,7 +124,7 @@ const ExerciseHistory: React.FC = () => {
                 </View>
             )}
             </ScrollView>
-        <TrackerNav />
+        <NavBar />
         </View>
     );
 };

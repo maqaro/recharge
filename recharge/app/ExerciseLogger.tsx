@@ -8,6 +8,8 @@ import { supabase } from '../lib/supabase';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Alert } from 'react-native';
 import { useState } from 'react';
+import NavBar from './NavBar';
+import TrackerNav from './TrackerNav';
 
 type DropdownItem = {
     label: string;
@@ -25,7 +27,7 @@ const ExerciseLogger: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [exerciseData, setExerciseData] = useState<string[]>([]);
     const [set, setSet] = useState(""); // Default to 1 set
-    const [reps, setReps] = useState("1"); // Reps input by the user
+    const [reps, setReps] = useState(""); // Reps input by the user
     const [weight, setWeight] = useState(''); // Weight input by the user
     const [userid, setUserid] = useState<string | undefined>(); // Change initial value to undefined
     const [open, setOpen] = useState(false);
@@ -33,6 +35,9 @@ const ExerciseLogger: React.FC = () => {
     const [items, setItems] = useState<DropdownItem[]>([]);
     const [exercise, setExercise] = useState('');
     const [selectedExerciseImage, setSelectedExerciseImage] = useState('');
+    const [selectedExerciseName, setSelectedExerciseName] = useState('');
+    const [selectedExerciseMuscleGroup, setSelectedExerciseMuscleGroup] = useState('');
+    const [selectedExerciseEquipment, setSelectedExerciseEquipment] = useState('');
 
     const handleLogExercise = async () => {
         console.log("Logging exercise: ${exercise}, Reps: ${reps}, Sets: ${set}, Weight: ${weight}, User: ${userid}");
@@ -49,6 +54,7 @@ const ExerciseLogger: React.FC = () => {
     
             console.log('Added exercise log:', data);
             Alert.alert("Success", "Exercise logged successfully!");
+            router.navigate('/ExerciseLogger');
             // Handle successful insertion, e.g., updating UI or state to reflect the new exercise log
         } catch (error) {
             console.error('Error logging exercise:', error);
@@ -63,7 +69,7 @@ const ExerciseLogger: React.FC = () => {
         const fetchExerciseData = async () => {
             let { data: exercise, error } = await supabase
                 .from('exercise')
-                .select('id, Exercise_Name, Exercise_Image'); 
+                .select('id, Exercise_Name, Exercise_Image, muscle_gp, Equipment'); 
             if (error) {
                 console.error('Error fetching exercise data:', error);
             } else {
@@ -72,6 +78,8 @@ const ExerciseLogger: React.FC = () => {
                         label: item.Exercise_Name, 
                         value: item.id,
                         image: item.Exercise_Image, 
+                        muscle_gp: item.muscle_gp, // Assuming your database column names
+                        Equipment: item.Equipment,
                     }));
                     setItems(formattedItems);
                 }
@@ -97,7 +105,9 @@ const ExerciseLogger: React.FC = () => {
     return (
         <View style={styles.container}>
             <LinearGradient
-                colors={['#4c669f', '#3b5998', '#192f6a']}
+                colors={['#05999E', '#1E5B53']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
                 style={styles.background}
             >
                 <Text style={styles.title}>Exercise Logger</Text>
@@ -112,10 +122,26 @@ const ExerciseLogger: React.FC = () => {
                     ) : (
                         <Text>Select an exercise to see the image.</Text>
                     )}
+                    {selectedExerciseName ? (
+                        <Text style={styles.detail}>
+                            {selectedExerciseName}
+                        </Text>
+                    ) : null}
+                    {selectedExerciseMuscleGroup ? (
+                        <Text style={styles.detail}>
+                            Muscle Group: {selectedExerciseMuscleGroup}
+                        </Text>
+                    ) : null}
+                    {selectedExerciseEquipment ? (
+                        <Text style={styles.detail}>
+                            Equipment: {selectedExerciseEquipment}
+                        </Text>
+                    ) : null}
                 </View>
-                <View style={{ height: 15 }} />
-
+                <View style={{ height: 15}} />
+                        
                 <DropDownPicker
+                    style={styles.pickerStyle}
                     open={open}
                     onOpen={() => setOpen(true)}
                     onClose={() => setOpen(false)}
@@ -127,16 +153,16 @@ const ExerciseLogger: React.FC = () => {
                     searchable={true}
                     searchPlaceholder="Search exercises..."
                     placeholder="Select an exercise"
-                    zIndex={1000} 
-                    zIndexInverse={1000} 
                     onChangeValue={(selectedId) => {
                         console.log("Selected exercise ID:", selectedId);
                         setExercise(selectedId || '');
                 
                         // Find the selected item based on the ID
                         const selectedItem = items.find(item => item.value === selectedId);
-                        const selectedExerciseName = selectedItem?.label;
-                        console.log("Selected exercise name:", selectedExerciseName);
+                        console.log("Selected item:", selectedItem);
+                        setSelectedExerciseName(selectedItem?.label || '');
+                        setSelectedExerciseMuscleGroup(selectedItem?.muscle_gp || '');
+                        setSelectedExerciseEquipment(selectedItem?.Equipment || '');
                 
                         // Find and set the selected exercise's image URL
                         const selectedImage = selectedItem?.image; // Assuming your items include an 'image' property
@@ -147,33 +173,34 @@ const ExerciseLogger: React.FC = () => {
 
 
 
-
-                <TextInput style={styles.textInputStyle} placeholder="Reps" onChangeText={setReps} value={reps} />
                 <TextInput style={styles.textInputStyle} placeholder="Sets or time" onChangeText={setSet} value={set} />
-                <TextInput style={styles.textInputStyle} placeholder="Weight" onChangeText={setWeight} value={weight} />
+                <TextInput style={styles.textInputStyle} placeholder="Reps" onChangeText={setReps} value={reps} />
+                <TextInput style={styles.textInputStyle} placeholder="Weight (kg)" onChangeText={setWeight} value={weight} />
 
                 <View style={{ height: 15 }} />
-
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={handleLogExercise}
-                >
-                    <Text style={styles.buttonText}>Log Exercise</Text>
-                
-                </TouchableOpacity>
-                <View style={{ height: 20 }} />
-                <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => router.navigate('/ExerciseTracker')}
-                >
-                    <Text style={styles.buttonText}>View exercises</Text>
-                </TouchableOpacity>
+                <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={handleLogExercise}
+                    >
+                        <Text style={styles.buttonText}>Log Exercise</Text>
+                    
+                    </TouchableOpacity>
+                    <View style={{ height: 20 }} />
+                    <TouchableOpacity
+                        style={styles.button2}
+                        onPress={() => router.navigate('/ExerciseTracker')}
+                    >
+                        <Text style={styles.buttonText}>View exercises</Text>
+                    </TouchableOpacity>
+                </View>
 
                     
                     {/* Add your components and logic here */}
 
-
+                
             </LinearGradient>
+            <TrackerNav />
         </View>
     );
 };
@@ -182,14 +209,19 @@ const ExerciseLogger: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+
+    },
+    detail:{
+        color: 'white',
+        fontSize: 16,
+        fontWeight: '600',
+        marginTop: 8,
     },
     exerciseImage: {
         width: 300, 
         height: 200,
         resizeMode: 'contain',
-        borderRadius: 5,
+        borderRadius: 10, 
     },
     background: {
         flex: 1,
@@ -204,16 +236,20 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     button2: {
+        width: '37%',
         backgroundColor: 'lightblue',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
+        marginLeft: 10,
     },
     button: {
+        width: '37%',
         backgroundColor: 'white',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
+        marginRight: 10,
     },
     buttonText: {
         fontSize: 16,
@@ -242,17 +278,21 @@ const styles = StyleSheet.create({
     exerciseText: {
         color: 'black',
     },
-        pickerStyle: {
+    pickerStyle: {
+        justifyContent: 'center',
         height: 50,
-        width: 150,
+        width: '80%',
         backgroundColor: '#ffffff',
         marginBottom: 20,
+        marginLeft: 43,
     },
     textInputStyle: {
+        marginRight: 20,
+        marginLeft: 20,
         height: 40,
         borderColor: 'gray',
         borderWidth: 1,
-        width: '100%',
+        width: '80%',
         textAlign: 'center',
         backgroundColor: 'white',
         padding: 10,

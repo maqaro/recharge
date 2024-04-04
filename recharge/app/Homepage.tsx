@@ -11,15 +11,18 @@ export default function Homepage() {
     const router = useRouter();
     return (
       <View style={styles.container}>
+        <View ><Text style={styles.title}>Home Page</Text></View>
 
-        <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{ height: '100%', width: '100%' }} >
-        <Text style={styles.title}>Home Page</Text>
-        <Text style={{fontSize: 20, fontWeight: 'bold', color: '#268394', margin: 16, alignContent:'center'}}>Let's Recharge, John</Text>
+
+        <LinearGradient colors={['#FFFFFF', '#FFFFFF']} style={{height: '85%',width: '100%' }} >
+
+        <Text style={{fontSize: 25, fontWeight: 'bold', color: '#268394', margin: 16, alignContent:'center'}}>Let's Recharge, John</Text>
 
           <ScrollView>
             <View style={styles.full}>
               <View style={styles.row}>
-                <LinearGradient colors={['#eccbaa', '#65AAB3']} style={styles.square1} >
+                <LinearGradient colors={['#ff9966', '#ff5e62']} style={styles.square1}> 
+
                 <TouchableOpacity
                   style={styles.square1}  
                   onPress={() => router.navigate('/Trackers')}
@@ -28,51 +31,60 @@ export default function Homepage() {
                   <Image source={require('./images/Tracker.png')} style={styles.TrackerPic} />
                 </TouchableOpacity>
                 </LinearGradient>
+                <LinearGradient colors={['#f2709c', '#ff9472']} style={styles.square1} >
                 <TouchableOpacity
-                  style={styles.square2}
+                  style={styles.square1}
                   onPress={() => router.navigate('/DailyJournal')}
                 >
                   <Text style={styles.text}>Daily Journal</Text>
                   <Image source={require('./images/Journal.png')} style={styles.JournalPic} />
                 </TouchableOpacity>
+                </LinearGradient>
               </View>
               <View style={styles.row}>
+                <LinearGradient colors={['#56CCF2', '#2F80ED']} style={styles.square1}> 
                 <TouchableOpacity
-                  style={styles.square3}
+                  style={styles.square1}
                 //onPress={() => .........
                 >
                   <Text style={styles.text}>Mentor Match</Text>
                   <Image source={require('./images/Match.png')} style={styles.MatchPic} />
                 </TouchableOpacity>
-
+                </LinearGradient>
+                <LinearGradient colors={['#0cebeb', '#20e3b2']} style={styles.square1}> 
                 <TouchableOpacity
-                  style={styles.square4}
+                  style={styles.square1}
                 //onPress={() => ........
                 >
                   <Text style={styles.text}>Guided Sessions</Text>
-                  <Image source={require('./images/MentalCare.jpg')} style={styles.MentalCarePic} />
+                  <Image source={require('./images/MentalCare.png')} style={styles.MentalCarePic} />
                 </TouchableOpacity>
+                </LinearGradient>
               </View>
               <View style={styles.row}>
+              <LinearGradient colors={['#1CD8D2', '#93EDC7']} style={styles.square1}>
                 <TouchableOpacity
-                  style={styles.square5}
+                  style={styles.square1}
                   onPress={() => router.navigate('/ExerciseRoutine')}
                 >
                   <Text style={styles.text}>Exercise Routines</Text>
                   <Image source={require('./images/Exercise.png')} style={styles.ExercisePic} />
                 </TouchableOpacity>
-
+                </LinearGradient>
+                <LinearGradient colors={['#65C7F7', '#1cefff']} style={styles.square1}> 
                 <TouchableOpacity
-                  style={styles.square6}
+                  style={styles.square1}
                 >
                   <Text style={styles.text}>Other Resources</Text>
                   <Image source={require('./images/Resources.png')} style={styles.ResourcesPic} />
                 </TouchableOpacity>
+                </LinearGradient>
               </View>
             </View>
           </ScrollView>
-          <TrackerNav />
         </LinearGradient>
+        <TrackerNav />
+
 
       </View>
       );
@@ -85,13 +97,6 @@ const styles = StyleSheet.create({
     color: '#444', // Slightly lighter than black for a softer look
     margin: 16, // Margin around the title for spacing
   },
-    container: {
-      flex: 1,
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
     full:{
       flex:1,
       alignContent:'center',
@@ -103,7 +108,7 @@ const styles = StyleSheet.create({
       justifyContent:'center',
     },
     square1: {
-      width: '45%',
+      width: 200,
       aspectRatio: 1,
       borderRadius: 10,
       justifyContent: 'center',
@@ -111,94 +116,36 @@ const styles = StyleSheet.create({
       margin:7,
       shadowColor: "#111", // Adding shadow for elevation effect
     },
-
     TrackerPic: {
       width: 200,
       height: 100,
       marginTop: 10,
       resizeMode: 'contain',
     },
-    
-    square2: {
-      width: '45%',
-      aspectRatio: 1, // Square aspect ratio
-      backgroundColor: 'white',
-      borderRadius: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin:7,
-
-
-    },
-
     JournalPic: {
       width: 200,
       height: 100,
       marginTop: 5,
       resizeMode: 'contain',
     },
-
-    square3: {
-      width: '45%',
-      aspectRatio: 1,
-      backgroundColor: 'white',
-      borderRadius: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin:7,
-    },
-
     MatchPic: {
       width: 200,
       height: 97,
       marginTop: 11,
       resizeMode: 'contain',
     },
-
-    square4: {
-      width: '45%',
-      aspectRatio: 1,
-      backgroundColor: 'white',
-      borderRadius: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin:7,
-    },
-
     MentalCarePic: {
       width: 200,
       height: 100,
       marginTop: 4,
       resizeMode: 'contain',
     },
-
-    square5: {
-      width: '45%',
-      aspectRatio: 1,
-      backgroundColor: 'white',
-      borderRadius: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin:7,
-    },
-
     ExercisePic: {
       width: 200,
       height: 95,
       marginTop: 15,
       resizeMode: 'contain',
     },
-
-    square6: {
-      width: '45%',
-      aspectRatio: 1,
-      backgroundColor: 'white',
-      borderRadius: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin:7,
-    },
-
     ResourcesPic: {
       width: 200,
       height: 104,
@@ -209,7 +156,7 @@ const styles = StyleSheet.create({
     text: {
       fontSize: 18,
       fontWeight: 'bold',
-      color: '#e37b60',
+      color: 'black',
     },
   });
 

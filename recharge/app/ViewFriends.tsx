@@ -172,8 +172,6 @@ const ViewFriends = () => {
                 {requests?.map(item => (
                     <View>
                         <Text style={styles.title}>{item}</Text>
-                        <TouchableOpacity><Text>Accept</Text></TouchableOpacity>
-                        <TouchableOpacity><Text>Deny</Text></TouchableOpacity>
                 </View>
                 ))}
                 </View>

@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import WebView from 'react-native-webview';
 // import ReactPlayer from 'react-player/youtube'
-
+import NavBar from './NavBar';
 interface Resource {
   id: number;
   title: string;

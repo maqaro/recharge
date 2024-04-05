@@ -1,169 +1,229 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { router } from 'expo-router';
+import { router } from 'expo-router'; // Keeping router as it was
 import { supabase } from '../lib/supabase';
+import TrackerNav from './TrackerNav';
+import { Ionicons } from '@expo/vector-icons';
+
+type Exercise = {
+  id: string;
+  date: string;
+  sets: number;
+  reps: number;
+  weights: number;
+  exercise: {
+    Exercise_Name: string;
+    muscle_gp: string;
+    Exercise_Image: string;
+  };
+};
 
 const ExerciseTracker = () => {
-    const [userid, setUserid] = React.useState<string | undefined>();
-    const [exercises, setExercises] = React.useState<any[]>([]);
+  const [userId, setUserId] = useState<string | undefined>();
+  const [exercises, setExercises] = useState<{ [key: string]: Exercise[] }>({});
+  const [error, setError] = useState<string | undefined>();
 
-    React.useEffect(() => {        
-        const fetchExerciseData = async () => {
+  const fetchExerciseData = useCallback(async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user?.id) throw new Error('User not found');
+      
+      setUserId(user.id);
 
-            const { data: { user } } = await supabase.auth.getUser();
-            console.log("User:", user?.id);
-            setUserid(user?.id);
+      let { data: exerciseTracker, error } = await supabase
+        .from('exercisetracker')
+        .select(`
+          *, 
+          exercise:exercise_id (id, Exercise_Name, muscle_gp, Exercise_Image)
+        `)
+        .eq('user_id', user.id);
 
-            let { data: exercisetracker, error } = await supabase
-            .from('exercisetracker')
-            .select(` 
-                *, 
-                exercise:exercise_id (id, Exercise_Name,muscle_gp,Exercise_Image)
-            `)
-            .eq('user_id', user?.id);
-            console.log("User ID:", user?.id);
-        
-            if (error) {
-                console.error('Error fetching exercise data:', error);
-            } else {
-                if (exercisetracker) {
-                    console.log(exercisetracker);
-                    const groupedByDate = exercisetracker.reduce((acc, cur) => {
-                        // Assuming 'cur.date' exists and is a string representing the date
-                        const date = cur.date;
-                        if (!acc[date]) {
-                            acc[date] = [];
-                        }
-                        acc[date].push(cur);
-                        return acc;
-                    }, {});
-                
-                    setExercises(groupedByDate); // Update state with the grouped data
-                    console.log(groupedByDate); // Log the grouped data for verification
+      if (error) throw error;
 
-                }
-            }
-        };
+      const groupedByDate = (exerciseTracker || []).reduce((acc, cur) => {
+        const date = cur.date;
+        acc[date] = acc[date] ? [...acc[date], cur] : [cur];
+        return acc;
+      }, {});
 
-        fetchExerciseData();
-    }, []);
+      setExercises(groupedByDate);
+    } catch (error) {
+      console.error('Error fetching exercise data:', error);
+      setError('Failed to fetch exercise data.');
+    }
+  }, []);
 
+  useEffect(() => {
+    fetchExerciseData();
+  }, [fetchExerciseData]);
 
-
-
+  if (error) {
     return (
-        <View style={styles.container}>
-
-            <Text style={styles.title}>Exercise Tracker</Text>
-            <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => router.navigate('/ExerciseLogger')}
-                >
-                    <Text style={styles.buttonText}>Log new Exercise</Text>
-            </TouchableOpacity>
-            <ScrollView style={styles.scrollView}>
-            {Object.entries(exercises).sort(([date1], [date2]) => date2.localeCompare(date1)).map(([date, exercisesForDate]) => (
-                <View key={date} style={styles.dateContainer}>
-                    <Text style={styles.dateText}>{date}</Text>
-                    {exercisesForDate.map((exercise:any) => (
-                        <View key={exercise.id} style={styles.exerciseContainer}>
-                            <Text style={styles.exerciseName}>{exercise.exercise.Exercise_Name}</Text>
-                            <View style={styles.detailsRow}>
-                                <Text style={styles.detail1}>Muscle Group: {exercise.exercise.muscle_gp}</Text>
-                                <Text style={styles.detail}>Sets: {exercise.sets}</Text>
-                                <Text style={styles.detail}>Reps: {exercise.reps}</Text>
-                                <Text style={styles.detail}>Weight: {exercise.weights}kg</Text>
-                                <Image
-                                    source={{ uri: exercise.exercise.Exercise_Image }}
-                                    style={styles.image}
-                                />
-                            </View>
-                        </View>
-                    ))}
-                </View>
-            ))}
-        </ScrollView>          
-            {/* Add your components and logic here */}
-        </View>
-        
+      <View style={styles.container}>
+        <Text>Error: {error}</Text>
+      </View>
     );
+  }
+
+  const BackButton = () => (
+    <TouchableOpacity
+      style={styles.backButton}
+      onPress={() => router.navigate('/Trackers')}
+    >
+      <Ionicons name="chevron-back-circle-outline" size={35} color="black" />
+    </TouchableOpacity>
+  );
+
+  return (
+    <View style={styles.container}>
+      <BackButton />
+      <Text style={styles.title}>Exercise Tracker</Text>
+      <View style={{flexDirection:'row', justifyContent: 'space-around'}}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.navigate('/ExerciseLogger')} // Using router as originally provided
+        >
+          <Text style={styles.buttonText}>Log new Exercise</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.navigate('/ExerciseRoutine')} // Using router as originally provided
+        >
+          <Text style={styles.buttonText}>View Routines</Text>
+        </TouchableOpacity>
+      </View>
+      <ScrollView style={styles.scrollView}>
+        {Object.entries(exercises).sort(([date1], [date2]) => date2.localeCompare(date1)).map(([date, exercisesForDate]) => (
+          <View key={date} style={styles.dateContainer}>
+            <Text style={styles.dateText}>{date}</Text>
+            {exercisesForDate.map(exercise => (
+              <TouchableOpacity onPress={() => router.push({ pathname: '/ExerciseHistory', params: { exerciseID: exercise.exercise_id } })}>
+              <View key={exercise.id} style={styles.exerciseContainer}>
+                <Text style={styles.exerciseName}>{exercise.exercise.Exercise_Name} </Text>
+                <View style={styles.exerciseDetail}>
+                <View style={styles.detailsRow}>
+                  <Text style={styles.detail1}>Muscle Group: {exercise.exercise.muscle_gp}</Text>
+                  <Text style={styles.detail}>Sets: {exercise.sets}</Text>
+                  <Text style={styles.detail}>Reps: {exercise.reps}</Text>
+                  <Text style={styles.detail}>Weight: {exercise.weights}kg</Text>
+                </View>
+                <Image
+                    source={{ uri: exercise.exercise.Exercise_Image }}
+                    style={styles.image}
+                  />
+                </View>
+            </View>
+            </TouchableOpacity>
+            ))}
+            </View>
+        ))}
+      </ScrollView>
+      <TrackerNav />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    image: {
-        width: 300, // Adjust the width as needed
-        height: 200, // Adjust the height as needed
-        resizeMode: 'contain', // This ensures the image scales correctly within the given dimensions
+    container: {
+        flex: 1,
+        backgroundColor: '#F0F0F0', // Lighter background for better contrast
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        margin: 16,
+        textAlign: 'center', // Center title for better aesthetics
+        color: '#333', // Darker color for better readability
+    },
+    button: {
+        backgroundColor: '#4A90E2', // Use a more vibrant color for the button
+        width: '45%', // Adjust width for better layout
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+        alignSelf: 'center', // Center button horizontally
+        marginBottom: 20, // Add some margin below the button
+    },
+
+    backButton: {
+      position: 'absolute',
+      top: 14, 
+      left: 20,
+      zIndex: 10,
+    },
+
+    buttonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#FFFFFF', // White text for better contrast on the button
+        textAlign: 'center', // Ensure text is centered within the button
     },
     scrollView: {
         flex: 1,
-        backgroundColor: '#F5FCFF',
+        marginHorizontal: 10, // Add some horizontal margin
     },
+    exerciseDetail: {
+        margin: 8, // Add margin around the details for better separation
+        flexDirection: 'row', // Align details in a row for better layout
+        marginVertical: 8, // Add vertical margin for better separation
+    },  
     dateContainer: {
         marginVertical: 8,
-        paddingHorizontal: 32,
-    },
-    dateText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#4A90E2',
-        marginBottom: 8,
-    },
-    exerciseContainer: {
-        backgroundColor: '#FFFFFF',
-        padding: 16,
-        borderRadius: 8,
+        paddingHorizontal: 12, // Reduce padding for more content space
+        backgroundColor: '#FFFFFF', // Ensure background is white for each date container
+        borderRadius: 8, // Rounded corners for modern look
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 2,
         },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.1, // Lighter shadow for subtlety
         shadowRadius: 3.84,
-        elevation: 5,
-        marginBottom: 8,
+        elevation: 3, // Slight elevation for a soft shadow effect
+    },
+    dateText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#4A90E2', // Color to match the button for consistency
+        marginVertical: 8, // Add vertical margin
+    },
+    exerciseContainer: {
+        backgroundColor: '#EFEFEF', // Slightly off-white for distinction
+        padding: 16,
+        borderRadius: 8,
+        marginBottom: 10,
     },
     exerciseName: {
-        fontSize: 16,
-        fontWeight: '600',
+        fontSize: 18,
+        fontWeight: 'bold',
         color: '#333333',
         marginBottom: 4,
     },
     detailsRow: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
+        width: '70%', // Ensure details take up full width
+        flexDirection: 'column', // Change to row for a more compact display
+        justifyContent: 'space-between', // Distribute space evenly
         marginTop: 4,
+        padding: 4, // Add padding for spacing
     },
     detail: {
         fontSize: 14,
-        color: '#666',
+        color: '#666666',
+        margin: 2, // Add margin for spacing
     },
     detail1: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 'bold',
-        color: '#666',
+        color: '#666666',
+        margin: 2, // Consistent margin with detail
     },
-    container: {
-        flex: 1,
-        padding: 20,
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 16,
-    },
-    button: {
-        backgroundColor: 'black',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-    },
-    buttonText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#4c669f',
+    image: {
+        width: 100, // Adjust the width to be smaller for compact layout
+        height: 100, // Adjust the height to be smaller
+        resizeMode: 'contain',
+        borderRadius: 8, // Add rounded corners to the image
+        marginTop: 8, // Separate the image from the details
     },
 });
 

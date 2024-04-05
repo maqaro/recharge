@@ -1,7 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { Alert, View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
-import {useState} from 'react';
+import { Alert, View, StyleSheet, Image, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { useState } from 'react';
 import { Button } from 'react-native-elements';
 import { useRouter } from 'expo-router';
 import { supabase } from '../lib/supabase';
@@ -22,7 +22,7 @@ export default function EmailForm() {
     if (error) {
       Alert.alert(error.message);
     } else {
-      router.navigate('/Homepage')
+      router.navigate('/Homepage');
     }
     setLoading(false);
   }
@@ -40,38 +40,37 @@ export default function EmailForm() {
   }
 
   return (
-    <View>
-    <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%'}}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <LinearGradient colors={['#1a7373', '#e37b60']} style={{ flex: 1 }}>
 
         <View style={styles.logoContainer}>
-            <Image source={require('./images/Logo.jpg')} style={styles.logo}/>
+          <Image source={require('./images/Logo.png')} style={styles.logo} />
         </View>
 
         <View>
-            <Text style={styles.rechargeText}>RECHARGE</Text>
-            <Text style={styles.subtitle}>Recharging Your Well-Being</Text>
+          <Text style={styles.rechargeText}>RECHARGE</Text>
+          <Text style={styles.subtitle}>Recharging Your Well-Being</Text>
         </View>
-
 
         <View style={styles.buttonContainer}>
           <Button
             title="Sign in"
             buttonStyle={styles.button}
             containerStyle={styles.buttonWrapper}
-            titleStyle={styles.buttonText} 
-            onPress={() => router.navigate('/LogIn')} //NEED TO CHANGE TO LogIn!!!!!!!!!!!!!!!!!!!!!!!!
+            titleStyle={styles.buttonText}
+            onPress={() => router.navigate('/LogIn')}
           />
           <Button
             title="Sign up"
             buttonStyle={styles.button}
             containerStyle={styles.buttonWrapper}
-            titleStyle={styles.buttonText} 
-            onPress={() => router.navigate('/SignUp')}   
+            titleStyle={styles.buttonText}
+            onPress={() => router.navigate('/SignUp')}
           />
-          
+
         </View>
-    </LinearGradient>
-    </View>
+      </LinearGradient>
+    </ScrollView>
   );
 };
 
@@ -114,20 +113,21 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     marginBottom: 20,
-    borderRadius: 20, 
-    overflow: 'hidden', 
+    borderRadius: 20,
+    overflow: 'hidden',
   },
   button: {
-    borderRadius: 20, 
+    borderRadius: 20,
     backgroundColor: 'white',
     color: 'blue',
     marginBottom: 30,
   },
-  buttonText:{
-    color:'#b7410e',
+  buttonText: {
+    color: '#b7410e',
     marginTop: 5,
     marginBottom: 5,
   },
 });
+
 
 

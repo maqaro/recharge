@@ -3,7 +3,8 @@ import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, FlatList }
 import { supabase } from '../lib/supabase';
 import { router } from 'expo-router';
 import TrackerNav from './TrackerNav';
-import NavBar from './NavBar';
+// import NavBar from './NavBar';
+import { Ionicons } from '@expo/vector-icons';
 
 const ExerciseRoutine: React.FC = () => {
     const [routines, setRoutines] = useState<Record<string, any[]>>({});
@@ -51,10 +52,20 @@ const ExerciseRoutine: React.FC = () => {
         </TouchableOpacity>
     );
 
+    const BackButton = () => (
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => router.navigate('/Homepage')}
+      >
+        <Ionicons name="arrow-back" size={24} color="black" />
+      </TouchableOpacity>
+    );
+
     return (
         <View style={styles.container}>
+          <BackButton />
             <Text style={styles.title}>Exercise Routines</Text>
-
+          
             <FlatList 
                 horizontal
                 data={Object.keys(routines)}
@@ -84,7 +95,7 @@ const ExerciseRoutine: React.FC = () => {
               </TouchableOpacity>
           ))}
             </ScrollView>
-            <NavBar/>
+            {/* <NavBar/> */}
         </View>
     );
 };
@@ -105,6 +116,12 @@ const styles = StyleSheet.create({
       marginBottom: 16,
       textAlign: 'center',
       marginTop: 30,
+    },
+    backButton: {
+      position: 'absolute',
+      top: 32, 
+      left: 20,
+      zIndex: 10,
     },
     exerciseCard: {
       flexDirection: 'row',

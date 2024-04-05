@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import NavBar from './NavBar';
+import TrackerNav from './TrackerNav';
 
 
 
@@ -12,8 +13,12 @@ const Trackers = () => {
   return(
   
     <View style={styles.container}>
-      <LinearGradient colors={['#FFFFFF', '#FFFFFF']} style={{height:'100%', width:'100%'}} >
+      
+      <LinearGradient colors={['#ffffff', '#ffffff']} style={{height:'95%', width:'100%'}} >
+
         <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={true}>
+        <Text style={styles.title}>Trackers</Text>
+
 
           <TouchableOpacity style={[styles.Step1]} onPress={() => router.navigate('/StepTracker')}>
             <Text style={styles.text}>Step Tracker</Text>
@@ -24,6 +29,7 @@ const Trackers = () => {
             <Text style={styles.text}>Exercise Tracker</Text>
             <Image source={require('./images/Weights.png')} style={styles.ExerciseTPic}/>
           </TouchableOpacity>
+          
 
           <TouchableOpacity style={[styles.Water1]} onPress={() => router.navigate('/WaterTracker')}>
             <Text style={styles.text}>Water Tracker</Text>
@@ -47,9 +53,9 @@ const Trackers = () => {
           
 
         </ScrollView>
-        <Text></Text>
-        <NavBar/>
       </LinearGradient>
+      <TrackerNav/>
+
      
     </View>
   )
@@ -58,15 +64,21 @@ const Trackers = () => {
 
 const styles = StyleSheet.create({
   scrollView: {
-    flexGrow: 2
-
+    height: '110%',
+    flexGrow: 1,
+    justifyContent: 'space-around',
+    marginLeft: '2.5%',
+    marginRight: '2.5%',
+    paddingBottom: '10%',
   },
-
+  title: {
+    fontSize: 26, // Larger font size for the main title
+    fontWeight: 'bold',
+    color: '#444', // Slightly lighter than black for a softer look
+    margin: 16, // Margin around the title for spacing
+  },
   container: {
-    flex: 0,
-    height: '100%',
-    justifyContent:'center',
-    alignItems:'center'
+    flex: 1,
   },
 
   imagebackground: {
@@ -75,52 +87,81 @@ const styles = StyleSheet.create({
 
 // Changes tracker button containers
   Step1:{
-    backgroundColor: '#F26A8A',
+    backgroundColor: '#A87BCA',
+    padding: 5,
     borderRadius: 20,
-    marginTop: '10%',
-    marginLeft: '2.5%',
-    marginRight:'2.5%',
+    shadowColor: "#A87BCA",
+    shadowOffset: {
+      width: 1,
+      height: 4
+    },
+    shadowRadius: 8,
+    shadowOpacity: 0.6,
     // paddingBottom: '3%',
   },
   Exercise1:{
-    backgroundColor: '#f78c6b',
+    backgroundColor: '#FE6E0D',
+    padding: 5,
     borderRadius: 20,
-    marginTop: '5%',
-    marginLeft: '2.5%',
-    marginRight:'2.5%',
+    shadowColor: "#FE6E0D",
+    shadowOffset: {
+      width: 1,
+      height: 4
+    },
+    shadowRadius: 8,
+    shadowOpacity: 0.6,
     // paddingBottom: '17%',
   },
   Water1:{
-    backgroundColor: '#2DBEEB',
+    backgroundColor: '#1374FA',
+    padding: 5,
     borderRadius: 20,
-    marginTop: '5%',
-    marginLeft: '2.5%',
-    marginRight:'2.5%',
+    shadowColor: "#1374FA",
+    shadowOffset: {
+      width: 1,
+      height: 4
+    },
+    shadowRadius: 8,
+    shadowOpacity: 0.6,
     // paddingBottom: '17%',
   },
   Sleep1:{
     backgroundColor: '#232E6F',
+    padding: 5,
     borderRadius: 20,
-    marginTop: '5%',
-    marginLeft: '2.5%',
-    marginRight:'2.5%',
+    shadowColor: "#232E6F",
+    shadowOffset: {
+      width: 1,
+      height: 4
+    },
+    shadowRadius: 8,
+    shadowOpacity: 0.6,
     // paddingBottom: '17%',
   },
   Emotion1:{
-    backgroundColor: '#F7C144',
+    backgroundColor: '#FFD007',
     borderRadius: 20,
-    marginTop: '5%',
-    marginLeft: '2.5%',
-    marginRight:'2.5%',
+    padding: 5,
+    shadowColor: "#FFD007",
+    shadowOffset: {
+      width: 1,
+      height: 4
+    },
+    shadowRadius: 8,
+    shadowOpacity: 0.6,
     // paddingBottom: '17%',
   },
   Diet1:{
-    backgroundColor: '#74CA91',
+    backgroundColor: '#0F8F48',
     borderRadius: 20,
-    marginTop: '5%',
-    marginLeft: '2.5%',
-    marginRight:'2.5%',
-    marginBottom:'0%',
+    padding: 5,
+    shadowColor: "#0F8F48",
+    shadowOffset: {
+      width: 1,
+      height: 4
+    },
+    shadowRadius: 8,
+    shadowOpacity: 0.6,
     // paddingBottom: '17%',
   },
 

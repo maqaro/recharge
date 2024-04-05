@@ -22,65 +22,72 @@ export default function Homepage() {
   <ScrollView>
     <View style={styles.full}>
       <View style={styles.row}>
-        <LinearGradient colors={['#ff9966', '#ff5e62']} style={styles.square1}> 
 
           <TouchableOpacity
             style={styles.square1}
             onPress={() => router.navigate('/Trackers')}
           >
+            <LinearGradient colors={['#ff9966', '#ff5e62']} style={styles.square2}> 
             <Text style={styles.text}>Trackers</Text>
             <Image source={require('./images/Tracker.png')} style={styles.TrackerPic} />
+            </LinearGradient>
           </TouchableOpacity>
-          </LinearGradient>
-          <LinearGradient colors={['#f2709c', '#ff9472']} style={styles.square1} >
-                          <TouchableOpacity
+          <TouchableOpacity
             style={styles.square1}
             onPress={() => router.navigate('/DailyJournal')}
           >
+            <LinearGradient colors={['#f2709c', '#ff9472']} style={styles.square2} >
+
             <Text style={styles.text}>Daily Journal</Text>
             <Image source={require('./images/Journal.png')} style={styles.JournalPic} />
+            </LinearGradient>
           </TouchableOpacity>
-              </LinearGradient>
               </View>
               <View style={styles.row}>
-                <LinearGradient colors={['#56CCF2', '#2F80ED']} style={styles.square1}> 
           <TouchableOpacity
             style={styles.square1}
             onPress={() => router.navigate('/MatchWithMentor')}
           >
+            <LinearGradient colors={['#56CCF2', '#2F80ED']} style={styles.square2}> 
+
             <Text style={styles.text}>Mentor Match</Text>
             <Image source={require('./images/Match.png')} style={styles.MatchPic} />
-          </TouchableOpacity>
             </LinearGradient>
-                <LinearGradient colors={['#0cebeb', '#20e3b2']} style={styles.square1}>
+
+          </TouchableOpacity>
+                
           <TouchableOpacity
             style={styles.square1}
             onPress={() => router.navigate('/GuidedSession')}
           >
+            <LinearGradient colors={['#0cebeb', '#20e3b2']} style={styles.square2}>
             <Text style={styles.text}>Guided Sessions</Text>
             <Image source={require('./images/MentalCare.png')} style={styles.MentalCarePic} />
+            </LinearGradient>
           </TouchableOpacity>
-</LinearGradient>
+
               </View>
               <View style={styles.row}>
-              <LinearGradient colors={['#1CD8D2', '#93EDC7']} style={styles.square1}>
           <TouchableOpacity
             style={styles.square1}
             onPress={() => router.navigate('/ExerciseRoutine')}
           >
+            <LinearGradient colors={['#1CD8D2', '#93EDC7']} style={styles.square2}>
             <Text style={styles.text}>Exercise Routines</Text>
             <Image source={require('./images/Exercise.png')} style={styles.ExercisePic} />
+            </LinearGradient>
+
           </TouchableOpacity>
-</LinearGradient>
-                <LinearGradient colors={['#65C7F7', '#1cefff']} style={styles.square1}>
           <TouchableOpacity
             style={styles.square1}
             onPress={() => router.navigate('/Resources')}
           >
+            <LinearGradient colors={['#65C7F7', '#1cefff']} style={styles.square2}>
+
             <Text style={styles.text}>Other Resources</Text>
             <Image source={require('./images/Resources.png')} style={styles.ResourcesPic} />
+            </LinearGradient>
           </TouchableOpacity>
-          </LinearGradient>
               </View>
             </View>
           </ScrollView>
@@ -123,7 +130,16 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       margin:7,
-      shadowColor: "#111", // Adding shadow for elevation effect
+      shadowColor: "#111",
+    },
+    square2: {
+      width: '100%',
+      aspectRatio: 1,
+      borderRadius: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin:7,
+      shadowColor: "#111",
     },
 
     TrackerPic: {

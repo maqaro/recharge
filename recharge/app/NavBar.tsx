@@ -16,9 +16,9 @@ const NavBar = () => {
 
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Settings')}>
-        <Ionicons name="settings-outline" size={24} color="black" />
-        <Text>Settings</Text>
+      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Friends')}>
+        <Ionicons name="people-outline" size={24} color="black" />
+        <Text>Friends</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/ViewChatrooms')}>
@@ -26,15 +26,16 @@ const NavBar = () => {
         <Text>Chat</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Friends')}>
-        <Ionicons name="people-outline" size={24} color="black" />
-        <Text>Friends</Text>
-      </TouchableOpacity>
-
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/LeaderBoard')}>
         <Ionicons name="trophy-outline" size={24} color="black" />
-        <Text>Leaderboard</Text>
+        <Text>Lead</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Settings')}>
+        <Ionicons name="settings-outline" size={24} color="black" />
+        <Text>Settings</Text>
+      </TouchableOpacity>
+      
     </View>
   );
 };
@@ -51,8 +52,10 @@ const styles = StyleSheet.create({
         right: 0,
       },
       navButton: {
-backgroundColor: '#fff',
-        padding: 15,
+        backgroundColor: '#fff',
+        width: '20%',
+        padding
+        : 10,
         borderRadius: 0,
         alignItems: 'center',
       },

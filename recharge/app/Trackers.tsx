@@ -62,7 +62,7 @@ const Trackers = () => {
 const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 2
-    
+
   },
 
   container: {

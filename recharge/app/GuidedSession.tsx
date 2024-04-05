@@ -11,7 +11,7 @@ const GuidedSession = () => {
 
   return (
     <View style={styles.container}>
-        <LinearGradient style={styles.LinearGradient} colors={['#eccbaa', '#65AAB3']} >
+        <LinearGradient style={styles.LinearGradient} colors={['#65AAB3', '#65AAB3']} >
                 <Text style={styles.title}>Guided Sessions</Text>
             <TouchableOpacity style={styles.button} onPress={() => router.navigate('/BreathingExercises')}>
                 <Text style={styles.buttonText}>Breathing Exercises</Text>

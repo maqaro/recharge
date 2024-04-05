@@ -12,7 +12,7 @@ const MatchWithMentor = () => {
 
     return (
         <View style={styles.container}>
-          <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}}>
+          <LinearGradient colors={['#65AAB3', '#65AAB3']} style={{height:'100%', width:'100%'}}>
             <View>
                 <Text style={styles.header}>Welcome {username}</Text>
                 <Text style={styles.intro}>This page offers a supportive environment for {'\n'}discussing mental health and personal concerns {'\n'}with dedicated mentors. 

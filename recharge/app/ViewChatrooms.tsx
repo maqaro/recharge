@@ -41,7 +41,7 @@ const ViewChatRooms = () => {
         <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}}>
         <View>
             <Text style={styles.header}>ChatRooms</Text>
-        <View style={styles.box}>
+        <View>
             {chatrooms?.map((item: {id: any,mentor_id: any, issue_id: any, issues: {key: any, value: any}, mentors: {key: any, value: any}}) => (
                 <TouchableOpacity  style={styles.item} onPress={() => router.push({ pathname: '/ChatRoom', params: { chatID: item.id } })}>
                     <Text style={styles.title}>{Object.values(item.mentors)}</Text>
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 5,
-        fontStyle: "italic",
+        // fontStyle: "italic",
         color: 'black',
       },
     
@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: "bold",
         marginBottom: 5,
-        fontStyle: "italic",
-        color: 'black',
+        // fontStyle: "italic",
+        color: 'gray',
         borderColor:'gray',
         borderBottomWidth:1,
       },

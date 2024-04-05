@@ -271,7 +271,7 @@ const DailyJournal: React.FC = () => {
       style={styles.backButton}
       onPress={() => router.navigate('/Homepage')}
     >
-      <Ionicons name="chevron-back-circle-outline" size={35} color="black" />
+      <Ionicons name="arrow-back" size={24} color="black" />
     </TouchableOpacity>
   );
 
@@ -391,7 +391,7 @@ const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
     // top: 14, 
-    marginTop: 18,
+    marginTop: 23,
     left: 20,
     zIndex: 10,
   },

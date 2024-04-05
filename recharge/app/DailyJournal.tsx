@@ -256,14 +256,28 @@ const DailyJournal: React.FC = () => {
     return buttons;
   };
 
+  const BackButton = () => (
+    <TouchableOpacity
+      style={styles.backButton}
+      onPress={() => router.navigate('/Homepage')}
+    >
+      <Ionicons name="chevron-back-circle-outline" size={35} color="black" />
+    </TouchableOpacity>
+  );
+
+
+  const DropDown = () => (
+    <TouchableOpacity
+      style={styles.Dropdown}>
+      <Ionicons name="chevron-down-outline" size={25} color="black" />
+    </TouchableOpacity>
+  );
+
   return (
     <View style={{backgroundColor:'white'}}>
 
       <View style={styles.header}>
-      <TouchableOpacity onPress={() => router.navigate('/Homepage')}>
-          <Ionicons name="chevron-back-circle-outline" size={30} color="black" />
-        </TouchableOpacity>
-        {/* Picker container */}
+      <BackButton />
         <View style={styles.pickerContainer}>
           <RNPickerSelect
             onValueChange={(value) => handleMonthSelect(value)}
@@ -271,6 +285,7 @@ const DailyJournal: React.FC = () => {
             placeholder={{ label: 'Select a month', value: null }}
             value={selectedMonth}
           />
+          <DropDown/>
         </View>
 
         {/* Button container */}
@@ -308,11 +323,27 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     flex: 1,
-    marginRight: 10,
+    marginLeft: 50,
+    marginTop: 3,
+    
   },
   buttonContainer: {
     backgroundColor: 'white',
     borderRadius: 40, // Oval shape with rounded corners
+  },
+
+  backButton: {
+    position: 'absolute',
+    top: 14, 
+    left: 20,
+    zIndex: 10,
+  },
+
+  Dropdown: {
+    position: 'absolute',
+    top: -4, 
+    left: 75,
+    zIndex: 10,
   },
 
   inputContainer: {

@@ -14,7 +14,7 @@ const Trackers = () => {
   
     <View style={styles.container}>
       
-      <LinearGradient colors={['#DBDBDB', '']} style={{height:'95%', width:'100%'}} >
+      <LinearGradient colors={['#ffffff', '#ffffff']} style={{height:'95%', width:'100%'}} >
 
         <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={true}>
         <Text style={styles.title}>Trackers</Text>
@@ -87,10 +87,10 @@ const styles = StyleSheet.create({
 
 // Changes tracker button containers
   Step1:{
-    backgroundColor: '#F26A8A',
+    backgroundColor: '#A87BCA',
     padding: 5,
     borderRadius: 20,
-    shadowColor: "#F26A8A",
+    shadowColor: "#A87BCA",
     shadowOffset: {
       width: 1,
       height: 4
@@ -100,10 +100,10 @@ const styles = StyleSheet.create({
     // paddingBottom: '3%',
   },
   Exercise1:{
-    backgroundColor: '#f78c6b',
+    backgroundColor: '#FE6E0D',
     padding: 5,
     borderRadius: 20,
-    shadowColor: "#f78c6b",
+    shadowColor: "#FE6E0D",
     shadowOffset: {
       width: 1,
       height: 4
@@ -113,10 +113,10 @@ const styles = StyleSheet.create({
     // paddingBottom: '17%',
   },
   Water1:{
-    backgroundColor: '#2DBEEB',
+    backgroundColor: '#1374FA',
     padding: 5,
     borderRadius: 20,
-    shadowColor: "#2DBEEB",
+    shadowColor: "#1374FA",
     shadowOffset: {
       width: 1,
       height: 4
@@ -139,10 +139,10 @@ const styles = StyleSheet.create({
     // paddingBottom: '17%',
   },
   Emotion1:{
-    backgroundColor: '#F7C144',
+    backgroundColor: '#FFD007',
     borderRadius: 20,
     padding: 5,
-    shadowColor: "#F7C144",
+    shadowColor: "#FFD007",
     shadowOffset: {
       width: 1,
       height: 4
@@ -152,10 +152,10 @@ const styles = StyleSheet.create({
     // paddingBottom: '17%',
   },
   Diet1:{
-    backgroundColor: '#74CA91',
+    backgroundColor: '#0F8F48',
     borderRadius: 20,
     padding: 5,
-    shadowColor: "#74CA91",
+    shadowColor: "#0F8F48",
     shadowOffset: {
       width: 1,
       height: 4

@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
       headerText: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginLeft:20,
+        marginLeft:85,
       },
       buttonContainer: {
         flexDirection: 'row',

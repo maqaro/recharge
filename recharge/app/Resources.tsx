@@ -133,7 +133,10 @@ const styles = StyleSheet.create({
   topicButton: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    height: 40,
+    marginRight: 5,
     
   },
   activeButton: {

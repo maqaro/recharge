@@ -4,7 +4,6 @@ import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import NavBar from './NavBar';
-import TrackerNav from './TrackerNav';
 
 
 
@@ -54,7 +53,7 @@ const Trackers = () => {
 
         </ScrollView>
       </LinearGradient>
-      <TrackerNav/>
+      <NavBar/>
 
      
     </View>

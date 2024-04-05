@@ -1,13 +1,13 @@
 // NavBar.tsx
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
+const Tab = createBottomTabNavigator();
 
 
-const NavBar = () => {
-      
-  const router = useRouter();
+const NavBar = () => {      
   return (
       <View style={styles.navContainer}>
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Homepage')}>
@@ -15,6 +15,7 @@ const NavBar = () => {
         <Text>Home</Text>
 
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Settings')}>
         <Ionicons name="settings-outline" size={24} color="black" />
         <Text>Settings</Text>
@@ -45,19 +46,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         backgroundColor: '#fff',
-        borderRadius: 25,
         bottom: 0,
         left: 0,
         right: 0,
       },
       navButton: {
-        backgroundColor: '#fff',
+backgroundColor: '#fff',
         padding: 15,
         borderRadius: 0,
         alignItems: 'center',
       },
 });
     
-
-
 export default NavBar;

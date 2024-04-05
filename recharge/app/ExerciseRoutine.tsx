@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { supabase } from '../lib/supabase';
 import { router } from 'expo-router';
-import TrackerNav from './TrackerNav';
 import NavBar from './NavBar';
 
 const ExerciseRoutine: React.FC = () => {

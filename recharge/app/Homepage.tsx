@@ -5,7 +5,6 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, Button, ImageBackgroun
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 // import NavBar from './NavBar';
-import TrackerNav from './TrackerNav';
 import NavBar from './NavBar';
 
 export default function Homepage() {

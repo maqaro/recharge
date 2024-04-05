@@ -93,6 +93,15 @@ const EmotionTracker: React.FC = () => {
     setModal2Visible(true);
   };
 
+  const BackButton = () => (
+    <TouchableOpacity
+      style={styles.backButton}
+      onPress={() => router.navigate('/Trackers')}
+    >
+      <Ionicons name="chevron-back-circle-outline" size={35} color="black" />
+    </TouchableOpacity>
+  );
+
   return (
     <LinearGradient colors={['#ffcba4', '#fae588']} style={{height:'100%', width:'100%'}} >
     
@@ -100,9 +109,7 @@ const EmotionTracker: React.FC = () => {
       <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={false}>
 
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.navigate('/Homepage')}>
-          <Ionicons name="chevron-back-circle-outline" size={40} color="white" />
-        </TouchableOpacity>
+        <BackButton />
         <Text style={styles.title}>Emotion Tracker</Text>
       </View>
 
@@ -224,19 +231,28 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 20,
     color:'white',
-    marginLeft:'15%',
+    marginLeft:'23%',
+    marginTop: 14,
+
   },
   section: {
     alignItems: 'center',
     marginBottom: 10,
     // borderBottomColor: 'black',
     // borderBottomWidth:0.5,
-    
   },
+
+  backButton: {
+    position: 'absolute',
+    top: 14, 
+    left: 20,
+    zIndex: 10,
+  },
+
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',

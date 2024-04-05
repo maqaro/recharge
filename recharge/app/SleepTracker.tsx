@@ -11,6 +11,7 @@ import SleepStats from './Sleep/SleepStats';
 import SmallChart from './Sleep/SmallChart';
 import DateTimePicker from '@react-native-community/datetimepicker'; 
 import  DateTimePickerChangeEvent  from '@react-native-community/datetimepicker';
+import { Ionicons } from '@expo/vector-icons';
 
 type DateTimePickerChangeEvent = {
   nativeEvent: {
@@ -156,6 +157,15 @@ const handlePressSubmit = async () => {
   }
 };
 
+const BackButton = () => (
+  <TouchableOpacity
+    style={styles.backButton}
+    onPress={() => router.navigate('/Trackers')}
+  >
+    <Ionicons name="chevron-back-circle-outline" size={35} color="white" />
+  </TouchableOpacity>
+);
+
 
 
 
@@ -163,12 +173,11 @@ let today = new Date().toISOString().split('T')[0];
 const router = useRouter();
 
 return (
+  
   <ScrollView style={{backgroundColor: '#9678B4', height:'100%'}}>
   <SafeAreaView style={styles.dailybackground}>
 
-  <Pressable onPress={() => router.navigate('/Trackers')}>
-      <Back name="chevron-back-circle-outline" size={30} color="white"/>
-  </Pressable>
+  <BackButton />
 
 
     <View style={styles.entryContainer}>
@@ -239,13 +248,19 @@ return (
 
 const styles = StyleSheet.create({
 
-  backButton: {
-    position: 'absolute',
-    marginLeft: 10,
-    marginTop: 5,
-    width:20,
-    backgroundColor: '#9678B4',
+  // backButton: {
+  //   position: 'absolute',
+  //   marginLeft: 10,
+  //   marginTop: 5,
+  //   width:20,
+  //   backgroundColor: '#9678B4',
+  // },
 
+  backButton: {
+    position: 'absolute', // Position over your chat content or at the top of your screen
+    top: 14, // Adjust based on your status bar height or header
+    left: 20,
+    zIndex: 10, // Ensure it's above other content
   },
 
   dailybackground: {
@@ -256,23 +271,26 @@ const styles = StyleSheet.create({
   entryContainer: {
     alignItems: 'center',
     color:'white',
+    marginTop: 14,
   },
   entryTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 2,
+    marginBottom: 5,
     color:'white',
+    
   },
   entryDate: {
     fontSize: 14,
     color:'white',
+    paddingBottom: 20,
   },
 
   timesContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 20,
     color:'white',
   },
@@ -304,6 +322,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 10,
     marginTop: 10,
+    marginBottom: 8,
     borderRadius: 20,
 
   },

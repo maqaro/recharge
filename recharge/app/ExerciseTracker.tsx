@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router'; // Keeping router as it was
 import { supabase } from '../lib/supabase';
 import TrackerNav from './TrackerNav';
+import { Ionicons } from '@expo/vector-icons';
 
 type Exercise = {
   id: string;
@@ -65,8 +66,18 @@ const ExerciseTracker = () => {
     );
   }
 
+  const BackButton = () => (
+    <TouchableOpacity
+      style={styles.backButton}
+      onPress={() => router.navigate('/Trackers')}
+    >
+      <Ionicons name="chevron-back-circle-outline" size={35} color="black" />
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
+      <BackButton />
       <Text style={styles.title}>Exercise Tracker</Text>
       <View style={{flexDirection:'row', justifyContent: 'space-around'}}>
         <TouchableOpacity
@@ -134,6 +145,14 @@ const styles = StyleSheet.create({
         alignSelf: 'center', // Center button horizontally
         marginBottom: 20, // Add some margin below the button
     },
+
+    backButton: {
+      position: 'absolute',
+      top: 14, 
+      left: 20,
+      zIndex: 10,
+    },
+
     buttonText: {
         fontSize: 16,
         fontWeight: 'bold',

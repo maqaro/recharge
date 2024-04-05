@@ -196,9 +196,12 @@ const DailyJournal: React.FC = () => {
 
     if (FormattedDate === currentDateFormatted) {
       
+      // CURRENT DAY ENTRY
       return (
         <>
-        <View style={{height:800,backgroundColor: '#F5F5DC', padding:20}}>
+        <View style={{height: 505, backgroundColor: 'white', padding:20}}>
+        <Text style={styles.toptext}>Write Down Your Thoughts</Text>
+        <Text style={styles.helptext}>Choose a month and date to view past entries or write one for today!</Text>
           <TextInput
             style={styles.titleInput}
             placeholder="Title"
@@ -215,9 +218,12 @@ const DailyJournal: React.FC = () => {
         </View>
         </>
       );
+      // PAST ENTRIES
     } else if (title !== 'No entry currently added for this date') {
       return (
         <>
+        <Text style={styles.toptextEntry}>Write Down Your Thoughts</Text>
+        <Text style={styles.helptextPastEntry}>Choose a month and date to view past entries or write one for today!</Text>
           <Text style={styles.title}>{title}</Text>
           <Text style={{alignSelf:'center'}}>{FormattedDate}</Text>
           <ScrollView style={styles.descriptionScrollView}>
@@ -228,10 +234,14 @@ const DailyJournal: React.FC = () => {
       );
     } else {
       return(
-
-      <View style={{height:800, backgroundColor: 'white'}}>
-      <View style={{alignSelf:'center', backgroundColor: '#F0EAD6', width:'95%', height:500, borderColor:'#f0f0f0', borderWidth:5}}>
+      // NO ENTRY
+      <View>
+        <Text style={styles.toptext}>Write Down Your Thoughts</Text>
+        <View style={{height: 496, backgroundColor: '#f0f0f0', padding: 10}}>
+      <View style={{alignSelf:'center', backgroundColor: 'white', width:'100%', height: 486}}>
+      <Text style={styles.helptextNoEntry}>Choose a month and date to view past entries or write one for today!</Text>
       <Text style={{alignSelf:'center', fontSize:24}}>No entry for this date</Text>
+      </View>
       </View>
       </View>
       );
@@ -274,18 +284,19 @@ const DailyJournal: React.FC = () => {
   );
 
   return (
-    <View style={{backgroundColor:'white'}}>
-
-      <View style={styles.header}>
+    <View style={{backgroundColor:'lightblue'}}>
       <BackButton />
+      <View style={styles.header}>
+      
         <View style={styles.pickerContainer}>
+          <DropDown />
           <RNPickerSelect
             onValueChange={(value) => handleMonthSelect(value)}
             items={months}
             placeholder={{ label: 'Select a month', value: null }}
             value={selectedMonth}
           />
-          <DropDown/>
+          {/* <DropDown/> */}
         </View>
 
         {/* Button container */}
@@ -320,10 +331,55 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
+    backgroundColor: 'transparent',
+    marginTop: 150,
   },
+
+  toptext: {
+    fontSize: 24,
+    // alignSelf: 'center',
+    marginTop: -278,
+    left: 55,
+    position: 'absolute',
+    fontWeight: 'bold',
+  },
+
+  helptext: {
+    fontSize: 18,
+    alignSelf: 'center',
+    marginTop: -230,
+    // left: 55,
+    position: 'absolute',
+  },
+
+  toptextEntry: {
+    fontSize: 24,
+    marginTop: -278,
+    left: 75,
+    position: 'absolute',
+    fontWeight: 'bold',
+  },
+
+  helptextNoEntry: {
+    fontSize: 18,
+    alignSelf: 'center',
+    marginTop: -240,
+    // left: 55,
+    position: 'absolute',
+  },
+
+  helptextPastEntry: {
+    fontSize: 18,
+    // alignSelf: 'center',
+    marginTop: -230,
+    // left: 55,
+    position: 'absolute',
+    marginLeft: 50.5,
+  },
+
   pickerContainer: {
     flex: 1,
-    marginLeft: 50,
+    marginLeft: 0,
     marginTop: 3,
     
   },
@@ -334,7 +390,8 @@ const styles = StyleSheet.create({
 
   backButton: {
     position: 'absolute',
-    top: 14, 
+    // top: 14, 
+    marginTop: 18,
     left: 20,
     zIndex: 10,
   },
@@ -378,7 +435,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     borderColor: 'black',
-    backgroundColor: 'lightgray',
+    backgroundColor: 'white',
   },
   selectedDayButton: {
     backgroundColor: 'lightblue', // Color for selected day
@@ -392,11 +449,11 @@ const styles = StyleSheet.create({
 
   description: {
     padding: 20,
-    height: 600,
-    backgroundColor: '#F5F5DC', 
+    height: 550,
+    backgroundColor: 'white', 
   },
   descriptionScrollView: {
-    height: 485, // Limit the maximum height of the ScrollView
+    height: 435, // Limit the maximum height of the ScrollView
     marginVertical: 10, // Add vertical margin
     padding: 10, // Add padding inside the ScrollView
     backgroundColor: '#f0f0f0', // Background color

@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import NavBar from './NavBar';
-import TrackerNav from './TrackerNav';
+
 
 
 
@@ -54,7 +54,7 @@ const Trackers = () => {
 
         </ScrollView>
       </LinearGradient>
-      <TrackerNav/>
+      <NavBar/>
 
      
     </View>
@@ -87,10 +87,10 @@ const styles = StyleSheet.create({
 
 // Changes tracker button containers
   Step1:{
-    backgroundColor: '#A87BCA',
+    backgroundColor: '#F26A8A',
     padding: 5,
     borderRadius: 20,
-    shadowColor: "#A87BCA",
+    shadowColor: "#F26A8A",
     shadowOffset: {
       width: 1,
       height: 4
@@ -100,10 +100,10 @@ const styles = StyleSheet.create({
     // paddingBottom: '3%',
   },
   Exercise1:{
-    backgroundColor: '#FE6E0D',
+    backgroundColor: '#f78c6b',
     padding: 5,
     borderRadius: 20,
-    shadowColor: "#FE6E0D",
+    shadowColor: "#f78c6b",
     shadowOffset: {
       width: 1,
       height: 4
@@ -113,10 +113,10 @@ const styles = StyleSheet.create({
     // paddingBottom: '17%',
   },
   Water1:{
-    backgroundColor: '#1374FA',
+    backgroundColor: '#2DBEEB',
     padding: 5,
     borderRadius: 20,
-    shadowColor: "#1374FA",
+    shadowColor: "#2DBEEB",
     shadowOffset: {
       width: 1,
       height: 4
@@ -139,10 +139,10 @@ const styles = StyleSheet.create({
     // paddingBottom: '17%',
   },
   Emotion1:{
-    backgroundColor: '#FFD007',
+    backgroundColor: '#F7C144',
     borderRadius: 20,
     padding: 5,
-    shadowColor: "#FFD007",
+    shadowColor: "#F7C144",
     shadowOffset: {
       width: 1,
       height: 4

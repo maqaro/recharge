@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Modal, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Text, View, Modal, TouchableOpacity, SafeAreaView, Dimensions } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { supabase } from '../../lib/supabase';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -139,9 +139,13 @@ const SmallChart: React.FC = (key) => {
                     setModalVisible(false);
                 }}
             >
-                <TouchableOpacity style={{backgroundColor: '#9678B4', paddingTop:25, paddingLeft:10}} onPress={() => setModalVisible(false)}>
-                    <Ionicons name="chevron-back-circle-outline" size={30} color="white" />
-                </TouchableOpacity>
+                <View style={{flexDirection:'row', backgroundColor:'#9678B4', }}>
+                    <TouchableOpacity style={{backgroundColor: '#9678B4', paddingTop:25, paddingLeft:10}} onPress={() => setModalVisible(false)}>
+                        <Ionicons name="chevron-back-circle-outline" size={30} color="white" />
+                    </TouchableOpacity>
+
+                    <Text style={{color:'white', textAlignVertical:'center', marginTop:25, fontSize:20, fontWeight:'bold', marginLeft:'30%'}}>History</Text>
+                </View>
 
                 <SleepHistory/>
                 
@@ -155,15 +159,18 @@ const SmallChart: React.FC = (key) => {
                         },
                     ],
                 }}
-                width={300}
+                width={Dimensions.get("window").width - 16}
                 height={180}
                 yAxisSuffix=" hrs"
                 yAxisLabel=""
                 yAxisInterval={1}
+                // showBarTops={true}
+                // showValuesOnTopOfBars={true}
+                // withInnerLines={true}
                 fromZero
                 chartConfig={{
-                    backgroundGradientFrom: 'rgba(255, 255, 255, 0.5)', // Adjust opacity and RGB values for lilac color
-                    backgroundGradientTo: 'rgba(255, 255, 255, 0.5)', // Adjust opacity and RGB values for lilac color
+                    backgroundGradientFrom: 'rgba(255, 255, 255, 0.5)', 
+                    backgroundGradientTo: 'rgba(255, 255, 255, 0.5)', 
                     decimalPlaces: 1,
                     color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
                     labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
@@ -171,12 +178,7 @@ const SmallChart: React.FC = (key) => {
                         borderRadius: 16,
                         
                     },
-                    propsForDots: {
-                        r: '6',
-                        strokeWidth: '2',
-                        stroke: '#ffa726',
-                    },
-                    barPercentage:0.8,
+                    barPercentage:0.9,
                     
                 }}
                 style={{

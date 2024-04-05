@@ -1,12 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { supabase } from '../lib/supabase';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 const ChatRoom = () => {
   const { chatID } = useLocalSearchParams();
   const [userID, setUserID] = useState<string | null>(null);
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -105,13 +108,34 @@ const ChatRoom = () => {
     sendMessages();
   }, [userID, chatID, setMessages]);
 
+  const BackButton = () => (
+    <TouchableOpacity
+      style={styles.backButton}
+      onPress={() => router.navigate('/ViewChatrooms')}
+    >
+      <Ionicons name="arrow-back" size={24} color="black" />
+    </TouchableOpacity>
+  );
+
   return (
-    <GiftedChat
-      messages={messages}
-      onSend={(newMessages) => onSend(newMessages)}
-      user={{ _id: userID || '' }}
-    />
+    <View style={{ flex: 1 }}>
+      <BackButton />
+      <GiftedChat
+        messages={messages}
+        onSend={(newMessages) => onSend(newMessages)}
+        user={{ _id: userID || '' }}
+      />  
+    </View>  
   );
 };
+
+const styles = StyleSheet.create({
+  backButton: {
+    position: 'absolute', // Position over your chat content or at the top of your screen
+    top: 40, // Adjust based on your status bar height or header
+    left: 20,
+    zIndex: 10, // Ensure it's above other content
+  },
+});
 
 export default ChatRoom;

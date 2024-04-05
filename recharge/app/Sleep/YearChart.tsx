@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Dimensions } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 
 interface SleepDataItem {
@@ -94,7 +94,7 @@ const YearChart: React.FC<SleepChartProps> = ({ filterStartDate, filterEndDate, 
                         },
                     ],
                 }}
-                width={300}
+                width={Dimensions.get("window").width - 10}
                 height={280}
                 yAxisSuffix={sleepData ? ' hrs' : ' ml'}
                 yAxisLabel=""
@@ -109,15 +109,10 @@ const YearChart: React.FC<SleepChartProps> = ({ filterStartDate, filterEndDate, 
                     style: {
                         borderRadius: 16,
                     },
-                    propsForDots: {
-                        r: '6',
-                        strokeWidth: '2',
-                        stroke: '#ffa726',
-                    },
                     propsForLabels: {
-                        fontSize: 8, // Adjust the font size here
+                        fontSize: 10, // Adjust the font size here
                     },
-                    barPercentage:0.4,
+                    barPercentage:0.5,
                 }}
                 style={{
                     marginVertical: 8,

@@ -12,11 +12,8 @@ const Trackers = () => {
   return(
   
     <View style={styles.container}>
-      <LinearGradient colors={['#FFFFFF, #FFFFFF']} style={{height:'100%', width:'100%'}} >
+      <LinearGradient colors={['#FFFFFF', '#FFFFFF']} style={{height:'100%', width:'100%'}} >
         <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={true}>
-        
-        
-        {/* <ScrollView contentContainerStyle={styles.scrollContainer}> */}
 
           <TouchableOpacity style={[styles.Step1]} onPress={() => router.navigate('/StepTracker')}>
             <Text style={styles.text}>Step Tracker</Text>

@@ -199,7 +199,7 @@ const DailyJournal: React.FC = () => {
       // CURRENT DAY ENTRY
       return (
         <>
-        <View style={{height: 505, backgroundColor: 'white', padding:20}}>
+        <View style={styles.todaybackground}>
         <Text style={styles.toptext}>Write Down Your Thoughts</Text>
         <Text style={styles.helptext}>Choose a month and date to view past entries or write one for today!</Text>
           <TextInput
@@ -237,10 +237,10 @@ const DailyJournal: React.FC = () => {
       // NO ENTRY
       <View>
         <Text style={styles.toptext}>Write Down Your Thoughts</Text>
-        <View style={{height: 496, backgroundColor: '#f0f0f0', padding: 10}}>
-      <View style={{alignSelf:'center', backgroundColor: 'white', width:'100%', height: 486}}>
+        <View style={{height: 496, backgroundColor: 'rgba(0, 0, 0, .7)', padding: 10}}>
+      <View style={{alignSelf:'center', backgroundColor: 'white', width:'100%', height: 475}}>
       <Text style={styles.helptextNoEntry}>Choose a month and date to view past entries or write one for today!</Text>
-      <Text style={{alignSelf:'center', fontSize:24}}>No entry for this date</Text>
+      <Text style={{alignSelf:'center', fontSize:24, marginVertical: 220}}>No entry for this date</Text>
       </View>
       </View>
       </View>
@@ -288,21 +288,26 @@ const DailyJournal: React.FC = () => {
       <BackButton />
       <View style={styles.header}>
       
+      <TouchableOpacity>
         <View style={styles.pickerContainer}>
-          <DropDown />
+          {/* <DropDown /> */}
           <RNPickerSelect
             onValueChange={(value) => handleMonthSelect(value)}
             items={months}
             placeholder={{ label: 'Select a month', value: null }}
             value={selectedMonth}
+            style={{
+              inputIOS: styles.pickerText,
+              inputAndroid: styles.pickerText,
+            }}
           />
-          {/* <DropDown/> */}
         </View>
+        </TouchableOpacity>
 
-        {/* Button container */}
-        <View style={styles.buttonContainer}>
-          <Button title="Today's Date" onPress={handleTodayButtonClick} />
-        </View>
+        
+        <TouchableOpacity onPress={handleTodayButtonClick} style={styles.TodayButton}>
+          <Text style={styles.buttonText}>Today's Date</Text>
+        </TouchableOpacity>
       </View>
 
       {selectedMonth && (
@@ -335,6 +340,13 @@ const styles = StyleSheet.create({
     marginTop: 150,
   },
 
+  todaybackground: {
+    height: 505, 
+    backgroundColor: 'white', 
+    padding: 20,
+    // opacity: 0.6,
+  },
+
   toptext: {
     fontSize: 24,
     // alignSelf: 'center',
@@ -347,7 +359,7 @@ const styles = StyleSheet.create({
   helptext: {
     fontSize: 18,
     alignSelf: 'center',
-    marginTop: -230,
+    marginTop: -220,
     // left: 55,
     position: 'absolute',
   },
@@ -363,7 +375,7 @@ const styles = StyleSheet.create({
   helptextNoEntry: {
     fontSize: 18,
     alignSelf: 'center',
-    marginTop: -240,
+    marginTop: -230,
     // left: 55,
     position: 'absolute',
   },
@@ -371,7 +383,7 @@ const styles = StyleSheet.create({
   helptextPastEntry: {
     fontSize: 18,
     // alignSelf: 'center',
-    marginTop: -230,
+    marginTop: -220,
     // left: 55,
     position: 'absolute',
     marginLeft: 50.5,
@@ -380,12 +392,33 @@ const styles = StyleSheet.create({
   pickerContainer: {
     flex: 1,
     marginLeft: 0,
-    marginTop: 3,
-    
+    marginTop: 0,
+    backgroundColor: 'rgba(0, 0, 0, .7)',
+    padding: 10,
+    borderRadius: 5,
+    marginRight: 165,
   },
-  buttonContainer: {
-    backgroundColor: 'white',
-    borderRadius: 40, // Oval shape with rounded corners
+
+  pickerText: {
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+
+  // buttonContainer: {
+  //   backgroundColor: 'white',
+  //   borderRadius: 40, // Oval shape with rounded corners
+  // },
+
+  TodayButton: {
+    backgroundColor: 'rgba(0, 0, 0, .7)',
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
 
   backButton: {
@@ -411,18 +444,20 @@ const styles = StyleSheet.create({
   titleInput: {
     marginBottom: 10,
     padding: 10,
-    borderWidth: 1,
-    borderColor: 'black',
+    borderWidth: 3,
+    // borderColor: 'black',
+    borderColor: 'rgba(0, 0, 0, .7)',
     borderRadius: 5,
     width: '100%',
     backgroundColor:'white'
   },
   descriptionInput: {
     padding: 10,
-    borderWidth: 1,
-    borderColor: 'black',
+    borderWidth: 3,
+    // borderColor: 'black',
+    borderColor: 'rgba(0, 0, 0, .7)',
     borderRadius: 5,
-    height: 400,
+    height: 415,
     textAlignVertical: 'top',
     width: '100%',
     marginBottom: 5,
@@ -449,14 +484,14 @@ const styles = StyleSheet.create({
 
   description: {
     padding: 20,
-    height: 550,
+    height: 414,
     backgroundColor: 'white', 
   },
   descriptionScrollView: {
     height: 435, // Limit the maximum height of the ScrollView
     marginVertical: 10, // Add vertical margin
     padding: 10, // Add padding inside the ScrollView
-    backgroundColor: '#f0f0f0', // Background color
+    backgroundColor: 'rgba(0, 0, 0, .7)', // Background color
 },
 
 });

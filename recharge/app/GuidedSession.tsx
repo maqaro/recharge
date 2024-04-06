@@ -4,14 +4,13 @@ import { supabase } from '../lib/supabase'; // Import supabase
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import WebView from 'react-native-webview';
-// import ReactPlayer from 'react-player/youtube'
 import NavBar from './NavBar';
 interface Resource {
   id: number;
   title: string;
   link: string;
   recommendedBy: string;
+  image: string;
 }
 
 const GuidedSession: React.FC = () => {
@@ -41,7 +40,7 @@ const GuidedSession: React.FC = () => {
             tableName = 'resources';
             break;
         }
-        const { data: resourcesData, error } = await supabase.from(tableName).select('id, title, link, recommendedBy');
+        const { data: resourcesData, error } = await supabase.from(tableName).select('*');
         if (error) {
           throw error;
         }
@@ -95,14 +94,12 @@ const GuidedSession: React.FC = () => {
             <View style={styles.articleContainer}>
               <Text style={styles.title}>{resource.title}</Text>
               <Text style={styles.recommendedBy}>Recommended by: {resource.recommendedBy}</Text>
-              <WebView
-                style={styles.video}
-                javaScriptEnabled={true}
-                domStorageEnabled={true}
-                allowsInlineMediaPlayback={true}
-                source={{ uri: `https://www.youtube.com/embed/${resource.link}?Playsinline=1` }}
-              />
-              {/* <ReactPlayer url={`https://www.youtube.com/embed/${resource.link}`} /> METHOD DOESNT WORK*/}
+              {resource.image && (
+                <Image
+                  source={{ uri: resource.image }}
+                  style={styles.image}
+                />
+              )}
             </View>
           </TouchableOpacity>
           ))}
@@ -186,10 +183,6 @@ const styles = StyleSheet.create({
         color: '#555',
         marginBottom: 5,
       },
-      video: {
-        width: '100%',
-        aspectRatio: 16 / 9,
-      }
 });
 
 export default GuidedSession;

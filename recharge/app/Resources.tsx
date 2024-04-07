@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 10,
     paddingTop: 20,
-    backgroundColor: '#65AAB3'
+    backgroundColor: '#c4c4ea'
   },
   header: {
     flexDirection: 'row',
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     
   },
   activeButton: {
-    backgroundColor: 'orange',
+    backgroundColor: '#f6deda',
   },
   resourceContainer: {
     marginBottom: 20,

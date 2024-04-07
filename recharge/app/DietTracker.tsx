@@ -65,7 +65,7 @@ useEffect(() => {
                 <Text>Add Meal</Text>  
             </TouchableOpacity>
   </LinearGradient>
-  <NavBar/>
+  {/* <NavBar/> */}
         </View>
     )
 };

@@ -237,7 +237,7 @@ const DailyJournal: React.FC = () => {
       // NO ENTRY
       <View>
         <Text style={styles.toptext}>Write Down Your Thoughts</Text>
-        <View style={{height: 496, backgroundColor: 'rgba(0, 0, 0, .7)', padding: 10}}>
+        <View style={{height: 496, backgroundColor: 'rgba(0, 0, 0, .7)', padding: 10, marginBottom:9.5}}>
       <View style={{alignSelf:'center', backgroundColor: 'white', width:'100%', height: 475}}>
       <Text style={styles.helptextNoEntry}>Choose a month and date to view past entries or write one for today!</Text>
       <Text style={{alignSelf:'center', fontSize:24, marginVertical: 220}}>No entry for this date</Text>
@@ -344,13 +344,14 @@ const styles = StyleSheet.create({
     height: 505, 
     backgroundColor: 'white', 
     padding: 20,
+    borderRadius: 5,
     // opacity: 0.6,
   },
 
   toptext: {
     fontSize: 24,
     // alignSelf: 'center',
-    marginTop: -278,
+    marginTop: -276,
     left: 55,
     position: 'absolute',
     fontWeight: 'bold',
@@ -362,11 +363,12 @@ const styles = StyleSheet.create({
     marginTop: -220,
     // left: 55,
     position: 'absolute',
+    textAlign: 'center',
   },
 
   toptextEntry: {
     fontSize: 24,
-    marginTop: -278,
+    marginTop: -276,
     left: 75,
     position: 'absolute',
     fontWeight: 'bold',
@@ -378,6 +380,7 @@ const styles = StyleSheet.create({
     marginTop: -230,
     // left: 55,
     position: 'absolute',
+    textAlign: 'center',
   },
 
   helptextPastEntry: {
@@ -387,6 +390,7 @@ const styles = StyleSheet.create({
     // left: 55,
     position: 'absolute',
     marginLeft: 50.5,
+    textAlign: 'center',
   },
 
   pickerContainer: {
@@ -473,7 +477,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   selectedDayButton: {
-    backgroundColor: 'lightblue', // Color for selected day
+    backgroundColor: '#83C2D9', // Color for selected day
   },
 
   title:{

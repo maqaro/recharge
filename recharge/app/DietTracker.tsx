@@ -6,6 +6,7 @@ import storeEmotion from './EmotionTracker';
 import { supabase } from '../lib/supabase';
 import { Button } from 'react-native-elements';
 import NavBar from './NavBar';
+import { Ionicons } from '@expo/vector-icons';
 
 
 
@@ -44,9 +45,19 @@ useEffect(() => {
     handlePressSubmit();
   }, [calories]);
 
+  const BackButton = () => (
+    <TouchableOpacity
+      style={styles.backButton}
+      onPress={() => router.navigate('/Trackers')}
+    >
+      <Ionicons name="chevron-back-circle-outline" size={35} color="black" />
+    </TouchableOpacity>
+  );
+
     return (
         <View style={styles.container}>
-            <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
+            <BackButton />
+            <LinearGradient colors={['#74CA91', '#74CA91']} style={{height:'100%', width:'100%'}}>
             <TouchableOpacity style={styles.buttons} onPress={() => router.navigate('/MealSearch')}> 
                 <Text>Search Meal</Text> 
             </TouchableOpacity>
@@ -54,7 +65,7 @@ useEffect(() => {
                 <Text>Add Meal</Text>  
             </TouchableOpacity>
   </LinearGradient>
-  <NavBar/>
+  {/* <NavBar/> */}
         </View>
     )
 };
@@ -75,16 +86,22 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
 
-    buttons: {
+    buttons: { 
         height: 100,
         color: 'white',
         padding: 10,
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: 140,
         backgroundColor: 'green',
         borderRadius: 50,
-
     },
+
+    backButton: {
+        position: 'absolute',
+        top: 14, 
+        left: 20,
+        zIndex: 10,
+      },
 
     hello: {
         fontSize: 25,

@@ -160,13 +160,20 @@ const handlePressSubmit = async () => {
     setShowModal(true);
   }
 
+  const BackButton = () => (
+    <TouchableOpacity
+      style={styles.backButton}
+      onPress={() => router.navigate('/Trackers')}
+    >
+      <Ionicons name="chevron-back-circle-outline" size={35} color="black" />
+    </TouchableOpacity>
+  );
+
   return (
     <SafeAreaView style={styles.container}>
         <View style={{backgroundColor:'#89CFF0', height:'100%', width:'100%'}}>
       {/* Water Goal */}
-      <Pressable onPress={() => router.navigate('/Trackers')}>
-      <Back name="chevron-back-circle-outline" size={30} color="white"/>
-      </Pressable>
+      <BackButton />
       <View style={styles.waterGoalContainer}>
         <Text style={[styles.blueText, { fontSize: 22 }]}>Your Goal</Text>
 
@@ -269,7 +276,7 @@ const handlePressSubmit = async () => {
                 <View style={styles.modalContent}>
                 {/* Your UI components for modal content */}
                     <TouchableOpacity style={styles.closeModalButton} onPress={() => setShowModal(false)}>
-                        <Ionicons name="chevron-back-circle-outline" size={35} color="white" />
+                        <Ionicons name="chevron-back-circle-outline" size={35} color="black" />
                     </TouchableOpacity>
                     <WaterHistory/>
                 </View>
@@ -287,11 +294,20 @@ const handlePressSubmit = async () => {
 const styles = StyleSheet.create({
     viewHistoryButton: {
         position: 'absolute',
-        top: 0,
+        marginTop: 19,
         right: 0,
+        marginRight: 6,
         backgroundColor: '#fff',
         padding: 10,
     },
+    
+    backButton: {
+      position: 'absolute', // Position over your chat content or at the top of your screen
+      top: 14, // Adjust based on your status bar height or header
+      left: 20,
+      zIndex: 10, // Ensure it's above other content
+    },
+
     viewHistoryButtonText: {
         color: '#1a7373',
         fontSize: 16,
@@ -302,18 +318,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#89CFF0',
-        paddingTop:20,
+        paddingTop: 15,
     },
     modalContent: {
         padding: 20,
         borderRadius: 10,
         width: '100%',
         height:'100%',
+     
     },
     closeModalButton: {
         position: 'absolute',
-        top: 10,
+        top: 49,
         left: 10,
+        zIndex: 10,
     },
   container: {
     flex: 1,
@@ -327,6 +345,7 @@ const styles = StyleSheet.create({
     height: 300,
     justifyContent: "flex-end",
     backgroundColor:'white',
+    marginTop: 40,
     
   },
   waterButtonsContainer: {
@@ -334,7 +353,7 @@ const styles = StyleSheet.create({
     paddingVertical: 25,
     width: "95%",
     marginHorizontal: 10,
-    marginTop:10,
+    marginTop: 20,
     borderRadius: 20,
     justifyContent: "space-around",
     backgroundColor:'white',
@@ -344,12 +363,17 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
     marginHorizontal: '20%',
     borderRadius: 20,
-    marginTop: 20
+    marginTop: 90
 
   },
   blueText: {
     color: "#1ca3ec",
     fontWeight: "600",
+    textAlign: "center",
   },
-  grayText: { color: "#323033", fontWeight: "600" },
+  grayText: { 
+    color: "#323033", 
+    fontWeight: "600",
+    textAlign: "center",
+  },
 });

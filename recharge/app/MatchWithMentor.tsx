@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import NavBar from './NavBar';
+// import NavBar from './NavBar';
+import { Ionicons } from '@expo/vector-icons';
 
 
 const MatchWithMentor = () => {
@@ -10,10 +11,20 @@ const MatchWithMentor = () => {
     const [username, setUsername] = useState("");
     const [noOfMentors, setNoOfMentors] = useState(0);
 
+    const BackButton = () => (
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => router.navigate('/Homepage')}
+      >
+        <Ionicons name="arrow-back" size={24} color="black" />
+      </TouchableOpacity>
+    );
+
     return (
         <View style={styles.container}>
-          <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}}>
+          <LinearGradient colors={['#65AAB3', '#65AAB3']} style={{height:'100%', width:'100%'}}>
             <View>
+              <BackButton />
                 <Text style={styles.header}>Welcome {username}</Text>
                 <Text style={styles.intro}>This page offers a supportive environment for {'\n'}discussing mental health and personal concerns {'\n'}with dedicated mentors. 
                   Connect with empathetic listeners to share experiences, gain insights, and find encouragement. Break the stigma and embrace a 
@@ -40,7 +51,7 @@ const MatchWithMentor = () => {
             <Text style={styles.text}>View Chat Rooms</Text>
           </TouchableOpacity>
         </LinearGradient>
-        <NavBar/>
+        {/* <NavBar/> */}
         </View>
       );
 };
@@ -53,6 +64,12 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#fff',
+    },
+    backButton: {
+      position: 'absolute',
+      top: 32, 
+      left: 20,
+      zIndex: 10,
     },
     square1: {
       minHeight:100,

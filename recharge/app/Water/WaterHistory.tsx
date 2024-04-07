@@ -160,11 +160,10 @@ const styles = StyleSheet.create({
 
     boxes: {
         backgroundColor:'white',
-        margin:5,
+        margin: 5,
         width:'50%',
         height:80,
         borderRadius: 20,
-
     }
 });
 

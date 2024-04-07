@@ -60,7 +60,7 @@ const GuidedSession: React.FC = () => {
     };
   
     return (
-      <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{ height: '100%', width: '100%' }} >
+      <LinearGradient colors={['#FFC371', '#FFC371']} style={{ height: '100%', width: '100%' }} >
         <ScrollView contentContainerStyle={styles.container}>
           <View style={styles.header}>
             <TouchableOpacity onPress={handleBackPress}>
@@ -134,11 +134,11 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         backgroundColor: '#fff',
         borderRadius: 10,
-        height: 40,
+        height: 37,
         marginRight: 5,
       },
       activeButton: {
-        backgroundColor: 'orange',
+        backgroundColor: '#FF5F6D',
       },
       resourceContainer: {
         marginBottom: 20,

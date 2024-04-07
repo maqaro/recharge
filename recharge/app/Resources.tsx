@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 10,
     paddingTop: 20,
+    backgroundColor: '#c4c4ea'
   },
   header: {
     flexDirection: 'row',
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginLeft:20,
+    marginLeft: 40,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -132,10 +133,14 @@ const styles = StyleSheet.create({
   topicButton: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    backgroundColor: '#ccc',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    height: 37,
+    marginRight: 5,
+    
   },
   activeButton: {
-    backgroundColor: 'orange',
+    backgroundColor: '#f6deda',
   },
   resourceContainer: {
     marginBottom: 20,

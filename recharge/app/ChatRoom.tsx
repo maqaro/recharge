@@ -118,7 +118,7 @@ const ChatRoom = () => {
   );
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor:'#F5F5F5'}}>
       <BackButton />
       <GiftedChat
         messages={messages}

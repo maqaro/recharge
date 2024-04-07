@@ -22,7 +22,17 @@ const AddAdminPage: React.FC = () => {
     }
   };
 
+  const validateEmail = (email: string) => {
+    // Simple email validation regex
+    return /\S+@\S+\.\S+/.test(email);
+  };
+
   const addAdmin = async () => {
+      // Validate email
+      if (!validateEmail(email)) {
+        Alert.alert('Invalid email format');
+        return;
+      }
     try {
       // Check if the user is already an admin
       const admins = await checkAdminStatus(email);
@@ -45,6 +55,8 @@ const AddAdminPage: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={{fontSize:16, marginBottom:10}}>Enter users email to change status to admin.</Text>
+      <Text style={{marginBottom:10, fontSize:10, alignSelf:'center', width:'70%'}}>Note: User must already be registered in the system. Please sign up user before adding admin status</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter Email"

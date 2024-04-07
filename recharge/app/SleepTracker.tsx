@@ -35,6 +35,7 @@ const SleepTracker = () => {
   
     const [timeDifference, setTimeDifference] = useState('0:00');
     const [updateCounter, setUpdateCounter] = useState(0);
+    const[statCounter, setStatCounter] = useState(0);
   
 
   
@@ -138,6 +139,7 @@ const handlePressSubmit = async () => {
       } else {
         console.log('Sleep data updated successfully');
         setUpdateCounter(prevCounter => prevCounter + 1);
+        setStatCounter(prevCounter => prevCounter+1);
       }
     } else {
       // If there's no existing data, insert a new row
@@ -150,6 +152,7 @@ const handlePressSubmit = async () => {
       } else {
         console.log('Sleep data inserted successfully');
         setUpdateCounter(prevCounter => prevCounter + 1);
+        setStatCounter(prevCounter => prevCounter+1);
       }
     }
   } catch (error) {
@@ -239,7 +242,7 @@ return (
     </TouchableOpacity>
 
     </View>
-  <SleepStats/>
+  <SleepStats key={statCounter}/>
   <SmallChart key={updateCounter}/>
   </SafeAreaView>
   </ScrollView>

@@ -13,12 +13,12 @@ const ReportBug: React.FC = () => {
     description: string;
     stepsToRecreate: string;
     firstNoticed: string;
-    device: string | null; // Update the type to string | null
+    device: string | null; 
   }>({
     description: '',
     stepsToRecreate: '',
     firstNoticed: '',
-    device: null, // Initialize with null
+    device: null, 
   });
 
   // Function to handle input change
@@ -30,38 +30,30 @@ const ReportBug: React.FC = () => {
   };
 
   // Function to submit bug report
-  const handleSubmitBugReport = () => {
-    // Handle submitting bug report
-    console.log('Submitted bug report:', bugReport);
-    Alert.alert('Thank you for reporting!')
-    router.navigate('/Settings');
+
+  const handleSubmitBugReport = async () => {
+    try {
+      const bugReportData = {
+        Description: bugReport.description,
+        Steps: bugReport.stepsToRecreate,
+        FirstFound: bugReport.firstNoticed,
+        Device: bugReport.device,
+      };
+  
+      const { data, error } = await supabase.from('ReportBug').insert([bugReportData]);
+  
+      if (error) {
+        throw error;
+      }
+  
+      console.log('Bug report submitted successfully:', data);
+      Alert.alert('Thank you for reporting the bug!');
+      router.navigate('/Settings');
+    } catch (error) {
+      console.error('Error submitting bug report:', error);
+      Alert.alert('Failed to submit bug report. Please try again later.');
+    }
   };
-
-
-//   TO ADD TO THE SUPABASE DATABASE
-//   const handleSubmitBugReport = async () => {
-//     try {
-//       const bugReportData = {
-//         Description: bugReport.description,
-//         Steps: bugReport.stepsToRecreate,
-//         FirstFound: bugReport.firstNoticed,
-//         Device: bugReport.device,
-//       };
-  
-//       const { data, error } = await supabase.from('ReportBug').insert([bugReportData]);
-  
-//       if (error) {
-//         throw error;
-//       }
-  
-//       console.log('Bug report submitted successfully:', data);
-//       Alert.alert('Thank you for reporting the bug!');
-//       router.navigate('/Settings');
-//     } catch (error) {
-//       console.error('Error submitting bug report:', error);
-//       Alert.alert('Failed to submit bug report. Please try again later.');
-//     }
-//   };
 
   const cancel =() => {
     router.navigate('/Settings');
@@ -106,11 +98,11 @@ const ReportBug: React.FC = () => {
           style={{
             inputIOS: {
               backgroundColor: 'white',
-              color: 'black', // Text color
+              color: 'black', 
             },
             inputAndroid: {
               backgroundColor: 'white',
-              color: 'black', // Text color
+              color: 'black', 
             },
           }}
           value={bugReport.device}

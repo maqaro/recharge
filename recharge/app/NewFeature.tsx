@@ -12,30 +12,22 @@ interface FeatureRequestModalProps {
 const FeatureRequestModal: React.FC<FeatureRequestModalProps> = ({ isVisible, onClose }) => {
   const [featureRequest, setFeatureRequest] = useState('');
 
-  const handleSubmitFeatureRequest = () => {
-    console.log('Submitted feature request:', featureRequest);
-    Alert.alert('Request Submitted!')
-    onClose(); // Close the modal after submitting feature request
+  const handleSubmitFeatureRequest = async () => {
+    try {
+      const { data, error } = await supabase.from('newfeature').insert([{ feature: featureRequest }]);
+
+      if (error) {
+        throw error;
+      }
+
+      console.log('Feature request submitted successfully:', data);
+      Alert.alert('Request Submitted!');
+      onClose();
+    } catch (error) {
+      console.error('Error submitting feature request:', error);
+      Alert.alert('Failed to submit feature request. Please try again later.');
+    }
   };
-
-//   ADD TO THE SUPABASE TABLE
-//   const handleSubmitFeatureRequest = async () => {
-//     try {
-//       // Insert feature request data into the 'NewFeature' table in Supabase
-//       const { data, error } = await supabase.from('NewFeature').insert([{ Feature: featureRequest }]);
-
-//       if (error) {
-//         throw error;
-//       }
-
-//       console.log('Feature request submitted successfully:', data);
-//       Alert.alert('Request Submitted!');
-//       onClose(); // Close the modal after submitting feature request
-//     } catch (error) {
-//       console.error('Error submitting feature request:', error);
-//       Alert.alert('Failed to submit feature request. Please try again later.');
-//     }
-//   };
 
   return (
     <Modal visible={isVisible} animationType="slide">

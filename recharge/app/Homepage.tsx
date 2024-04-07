@@ -12,18 +12,18 @@ export default function Homepage() {
     const router = useRouter();
 
     return (
-        <View style={styles.container}>
-          <View ><Text style={styles.title}>Home Page</Text></View>
+      <View style={styles.container}>
+        <View ><Text style={styles.title}>Home Page</Text></View>
 
 
-<LinearGradient colors={['#FFFFFF', '#FFFFFF']} style={{height: '85%',width: '100%' }} >
+        <LinearGradient colors={['#FFFFFF', '#FFFFFF']} style={{height: '85%',width: '100%' }} >
 
-<Text style={{fontSize: 25, fontWeight: 'bold', color: '#268394', margin: 16, alignContent:'center', textAlign:'center'}}>Let's Recharge, John</Text>
+        <Text style={{fontSize: 25, fontWeight: 'bold', color: '#268394', margin: 16, alignContent:'center'}}>Let's Recharge, John</Text>
 
-  <ScrollView>
-    <View style={styles.full}>
-      <View style={styles.row}>
-        <LinearGradient colors={['#ff9966', '#ff5e62']} style={styles.square1}> 
+          <ScrollView>
+            <View style={styles.full}>
+              <View style={styles.row}>
+                <LinearGradient colors={['#ff9966', '#ff5e62']} style={styles.square1}> 
 
           <TouchableOpacity
             style={styles.square1}
@@ -84,6 +84,8 @@ export default function Homepage() {
           </LinearGradient>
               </View>
             </View>
+            <Text></Text>
+            <Text></Text>
           </ScrollView>
         </LinearGradient>
       <NavBar />
@@ -116,7 +118,6 @@ const styles = StyleSheet.create({
       marginLeft:15,
       marginRight:15
     },
-    
     square1: {
       width: '50%',
       aspectRatio: 1,
@@ -125,8 +126,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       margin:7,
       shadowColor: "#111", // Adding shadow for elevation effect
+      
     },
-
     TrackerPic: {
       width: 200,
       height: 100,

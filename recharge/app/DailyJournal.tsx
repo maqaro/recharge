@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity, Text, StyleSheet, TextInput } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Text, StyleSheet, TextInput,TouchableWithoutFeedback, Keyboard,KeyboardAvoidingView, Platform } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { supabase } from '../lib/supabase';
 import { Button } from 'react-native-elements';
@@ -47,7 +47,6 @@ const DailyJournal: React.FC = () => {
 
   useEffect(() => {
     // Fetch user ID when component mounts
-
     fetchUserId();
 
     setSelectedMonth('January');
@@ -112,7 +111,7 @@ const DailyJournal: React.FC = () => {
           setTitle(journalEntry.title);
           setDescription(journalEntry.entry);
         } else {
-          setTitle('No entry currently added for this date');
+          setTitle('');
           setDescription('');
         }
       } catch (error) {
@@ -220,7 +219,7 @@ const DailyJournal: React.FC = () => {
         </>
       );
       // PAST ENTRIES
-    } else if (title !== 'No entry currently added for this date') {
+    } else if (title) {
       return (
         <>
         <Text style={styles.toptextEntry}>Write Down Your Thoughts</Text>
@@ -285,7 +284,10 @@ const DailyJournal: React.FC = () => {
   );
 
   return (
-    <View style={{backgroundColor:'lightblue'}}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView style={{backgroundColor:'lightblue'}}>
+    
+    
       <BackButton />
       <View style={styles.header}>
       
@@ -324,12 +326,18 @@ const DailyJournal: React.FC = () => {
       <View style={styles.inputContainer}>
         {renderEntryForDate()}
       </View>
-    </View>
+    
+      </ScrollView>
+      </TouchableWithoutFeedback>
+    
   );
 };
 
 const styles = StyleSheet.create({
 
+  container: {
+    flex:1,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -373,6 +381,7 @@ const styles = StyleSheet.create({
     left: 75,
     position: 'absolute',
     fontWeight: 'bold',
+    textAlign:'center',
   },
 
   helptextNoEntry: {

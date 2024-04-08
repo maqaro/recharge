@@ -118,9 +118,11 @@ const ExerciseRoutine: React.FC = () => {
                                     <Text style={styles.exerciseInfo}>
                                         Muscle Group: {exercise.exercise.muscle_gp}
                                     </Text>
+
                                     <TouchableOpacity onPress={() => confirmDeleteExercise(exercise.exercise_id)}>
                                         <Text style={styles.deleteButton}>Delete</Text>
                                     </TouchableOpacity>
+                           
                                 </View>
                             </View>
                         ))
@@ -133,8 +135,12 @@ const ExerciseRoutine: React.FC = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 40,
         backgroundColor: '#F5F5F5',
+        marginBottom: 10,
+        borderRadius: 10,
+        marginLeft: 10,
+        marginRight: 10,
     },
     flatListStyle: {
         maxHeight: 60,
@@ -204,9 +210,18 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     deleteButton: {
-        color: 'red',
+        color: 'white',
         marginTop: 5,
+        fontWeight: 'bold',
+        backgroundColor: 'red',
+        padding: 5,
+        marginRight: 162,
+        borderRadius: 5,
+        textAlign: 'center',
     },
+    rounded:{
+        borderRadius: 10,
+    }
 });
 
 export default ExerciseRoutine;

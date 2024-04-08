@@ -31,7 +31,7 @@ const FeatureRequestModal: React.FC<FeatureRequestModalProps> = ({ isVisible, on
 
   return (
     <Modal visible={isVisible} animationType="slide">
-      <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+      <LinearGradient colors={['#fff9ed', '#eccbaa']} style={{height:'100%', width:'100%'}} >
       <ScrollView contentContainerStyle={styles.modalContent}>
         <Text style={styles.modalTitle}>Feature Request</Text>
         <Text style={styles.modalSubtitle}>Missing a feature?</Text>
@@ -69,20 +69,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
-    color:'white'
   },
   modalSubtitle: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
-    color:'white',
   },
   modalText: {
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 20,
-    color:'white'
   },
   input: {
     borderColor: 'gray',

@@ -12,7 +12,7 @@ const AboutUs: React.FC = () => {
   };
 
   return (
-    <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+    <LinearGradient colors={['#fff9ed', '#eccbaa']} style={{height:'100%', width:'100%'}} >
     <ScrollView contentContainerStyle={styles.container}>
       <TouchableOpacity onPress={handleBack} style={styles.backButton}>
         <AntDesign name="arrowleft" size={24} color="black" />

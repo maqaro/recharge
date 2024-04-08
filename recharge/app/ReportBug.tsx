@@ -60,7 +60,7 @@ const ReportBug: React.FC = () => {
   }
 
   return (
-    <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+    <LinearGradient colors={['#fff9ed', '#eccbaa']} style={{height:'100%', width:'100%'}} >
       <ScrollView contentContainerStyle={styles.modalContent}>
         <Text style={styles.modalTitle}>Report Bug</Text>
 
@@ -97,11 +97,11 @@ const ReportBug: React.FC = () => {
           ]}
           style={{
             inputIOS: {
-              backgroundColor: 'white',
+              backgroundColor: 'lightgrey',
               color: 'black', 
             },
             inputAndroid: {
-              backgroundColor: 'white',
+              backgroundColor: 'lightgrey',
               color: 'black', 
             },
           }}
@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height:100,
     textAlignVertical:'top',
+    backgroundColor:'white',
   },
   buttonContainer: {
     flexDirection: 'row',

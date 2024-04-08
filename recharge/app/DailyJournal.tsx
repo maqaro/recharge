@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity, Text, StyleSheet, TextInput } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Text, StyleSheet, TextInput,TouchableWithoutFeedback, Keyboard,KeyboardAvoidingView, Platform } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { supabase } from '../lib/supabase';
 import { Button } from 'react-native-elements';
@@ -9,7 +9,7 @@ import NavBar from './NavBar';
 
 const months = [
   { label: 'January', value: 'January', days: 31 },
-  { label: 'February', value: 'February', days: 29 }, // Assuming a non-leap year for simplicity
+  { label: 'February', value: 'February', days: 29 },
   { label: 'March', value: 'March', days: 31 },
   { label: 'April', value: 'April', days: 30 },
   { label: 'May', value: 'May', days: 31 },
@@ -47,7 +47,6 @@ const DailyJournal: React.FC = () => {
 
   useEffect(() => {
     // Fetch user ID when component mounts
-
     fetchUserId();
 
     setSelectedMonth('January');
@@ -112,7 +111,7 @@ const DailyJournal: React.FC = () => {
           setTitle(journalEntry.title);
           setDescription(journalEntry.entry);
         } else {
-          setTitle('No entry currently added for this date');
+          setTitle('');
           setDescription('');
         }
       } catch (error) {
@@ -176,6 +175,7 @@ const DailyJournal: React.FC = () => {
   };
 
   const handleMonthSelect = (month: string) => {
+    console.log(month);
     setSelectedMonth(month);
     setMonth(month);
   };
@@ -219,7 +219,7 @@ const DailyJournal: React.FC = () => {
         </>
       );
       // PAST ENTRIES
-    } else if (title !== 'No entry currently added for this date') {
+    } else if (title) {
       return (
         <>
         <Text style={styles.toptextEntry}>Write Down Your Thoughts</Text>
@@ -278,7 +278,10 @@ const DailyJournal: React.FC = () => {
 
 
   return (
-    <View style={{backgroundColor:'lightblue'}}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView style={{backgroundColor:'lightblue'}}>
+    
+    
       <BackButton />
       <View style={styles.header}>
       
@@ -317,12 +320,18 @@ const DailyJournal: React.FC = () => {
       <View style={styles.inputContainer}>
         {renderEntryForDate()}
       </View>
-    </View>
+    
+      </ScrollView>
+      </TouchableWithoutFeedback>
+    
   );
 };
 
 const styles = StyleSheet.create({
 
+  container: {
+    flex:1,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -366,6 +375,7 @@ const styles = StyleSheet.create({
     left: 75,
     position: 'absolute',
     fontWeight: 'bold',
+    textAlign:'center',
   },
 
   helptextNoEntry: {
@@ -391,7 +401,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 0,
     marginTop: 0,
-    backgroundColor: 'rgba(0, 0, 0, .7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     padding: 10,
     borderRadius: 5,
     marginRight: 165,

@@ -22,6 +22,9 @@ const AddResources: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.addtext}>Add Resources</Text>
+      <Text style={styles.selecttext}>Add to any of the existing resources below</Text>
+
       <TouchableOpacity style={styles.button} onPress={() => openModal('exercise')}>
         <Text style={styles.buttonText}>Exercise</Text>
       </TouchableOpacity>
@@ -59,8 +62,8 @@ const AddResources: React.FC = () => {
 
       <View style={styles.navContainer}>
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/AdminHomepage')}>
-        <Ionicons name="home-outline" size={24} color="black" />
-        {/* <Text>Home</Text> */}
+      <Ionicons name="home-outline" size={26} color="black" />
+        <Text style={styles.hometext}>Home</Text>
       </TouchableOpacity>
       </View>
 
@@ -73,9 +76,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'lightblue',
   },
+  addtext: {
+    fontSize: 24,
+    marginBottom: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  selecttext: {
+    fontSize: 20,
+    marginBottom: 30,
+    textAlign: 'center',
+    paddingLeft: 25,
+    paddingRight: 25,
+  },
+
   button: {
-    backgroundColor: '#3498db',
+    backgroundColor: 'rgba(0, 0, 0, .7)',
     padding: 10,
     borderRadius: 5,
     marginVertical: 5,
@@ -98,17 +116,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     position: 'absolute',
-    backgroundColor: '#fff',
+    backgroundColor: 'lightblue',
     borderRadius: 25,
     bottom: 5,
     left: 0,
     right: 0,
   },
   navButton: {
-    backgroundColor: '#fff',
-    padding: 15,
+    backgroundColor: 'lightblue',
+    padding: 2,
     borderRadius: 25,
     alignItems: 'center',
+  },
+  hometext: {
+    fontSize: 12,
+    color: 'black',
+    paddingTop: 3,
+    textAlign: 'center',
+    left: -1,
   },
 });
 

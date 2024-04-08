@@ -10,7 +10,6 @@ import { useRouter } from 'expo-router';
 const ViewFriends = () => {
     const [userid, setUserid] = useState<string | undefined>();
     const [friends, setFriends] = useState<any[]>([]);
-    const [pending, setPending] = useState<any[]>([]);
     const [requests, setRequests] = useState<any[]>([]);
     const [name, setName] = useState<any[]>([]);
 
@@ -18,7 +17,6 @@ const ViewFriends = () => {
 
     useEffect(() => {
         getFriends();
-        getPending();
         getRequests();
     }, [])
 
@@ -42,27 +40,6 @@ const ViewFriends = () => {
             console.error('Error fetching employee data:', error);
         }
   };
-
-  const getPending = async () => {
-    try {
-        const { data: { user }, } = await supabase.auth.getUser();
-        setUserid(user?.id);
-    
-        let { data: pending, error } = await supabase
-            .from('employee')
-            .select('pending')
-            .eq('employee_id', user?.id)
-        if (error) {
-            console.error('Error fetching employee data inner:', error);
-        } else {
-            if (pending) {
-                setPending(Object.values(pending[0])[0]);
-            }
-        }
-    } catch (error) {
-        console.error('Error fetching employee data:', error);
-    }
-};
 
 const getRequests = async () => {
     try {
@@ -93,23 +70,6 @@ const getRequests = async () => {
             return(
                 <View>
                 {friends?.map(item => (
-                    <View style={styles.inneritem}>
-                        <Text style={styles.title}>{item}</Text>
-                </View>
-                ))}
-                </View>
-            )
-        }
-      };
-
-      const displayPending = () =>{
-        if (pending.length == 0){
-            return <Text style={styles.title}>You currently do not have any pending requests.</Text>
-        }
-        else{
-            return(
-                <View>
-                {pending?.map(item => (
                     <View style={styles.inneritem}>
                         <Text style={styles.title}>{item}</Text>
                 </View>

@@ -7,6 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '../lib/supabase';
 import NavBar from './NavBar';
+import { Ionicons } from '@expo/vector-icons';
 
 const ViewMentors = () => {
     const [userid, setUserid] = useState<string | undefined>();
@@ -37,9 +38,21 @@ const ViewMentors = () => {
         }
       };
 
+    const router = useRouter();
+
+    const BackButton = () => (
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => router.navigate('/MatchWithMentor')}
+      >
+        <Ionicons name="arrow-back" size={24} color="black" />
+      </TouchableOpacity>
+    );
+
     return (
         <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}}>
         <View>
+          <BackButton />
             <Text style={styles.header}>Current mentors: </Text>
         <View style={styles.item}>
             {details?.map((item: {mentor_id: any, issue_id: any, issues: {key: any, value: any}, mentors: {key: any, value: any}}) => (
@@ -70,13 +83,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
       },
       header: {
-        fontSize: 35,
+        fontSize: 24,
         fontWeight: "bold",
         marginBottom: 5,
-        fontStyle: "italic",
-        color: 'white',
+        color: 'black',
         alignSelf:'center',
-        textDecorationLine:'underline',
+        marginTop: 20,
+
+      },
+
+      backButton: {
+        position: 'absolute',
+        top: 22, 
+        left: 20,
+        zIndex: 10,
       },
   
       item: {

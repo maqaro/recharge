@@ -27,6 +27,8 @@ export default function Homepage() {
 
   const [emotion, setEmotion] = useState(false);
   const [emotionValue, setEmotionValue] = useState("");
+  const emotionsSuggestingMentor = ["Sad", "Angry", "Anxious", "Frustrated"];
+
 
   const [journal, setJournal] = useState(false);
 
@@ -178,43 +180,74 @@ export default function Homepage() {
 
         <ScrollView>
           <View style={styles.full}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Today's Overview</Text>
+            <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Your Day at a Glance</Text>
             <View style={styles.row}>
-                <View style={styles.overview}>
-                    <Icon name="emoji-emotions" color="#268394" size={30} style={{alignItems: 'flex-start'}}/>
-                    <Text></Text>
-                    <Text style={styles.dataLabel}>Emotion:</Text>
-                    <Text style={styles.dataValue}>{emotion ? `Feeling ${emotionValue}` : 'Not Done'}</Text>
-                </View>
-                <View style={styles.overview}>
-                    <Icon name="fitness-center" color="#268394" size={30} style={{alignItems: 'flex-start'}} />
-                    <Text></Text>
-                    <Text style={styles.dataLabel}>Exercise:</Text>
-                    <Text style={styles.dataValue}>{exercise ? 'Done' : 'Not Done'}</Text>
-                </View>
+              <TouchableOpacity
+                style={styles.overview}
+                onPress={() => router.navigate('/EmotionTracker')}
+              >
+                <Icon name="emoji-emotions" color="#268394" size={30} style={{ alignItems: 'flex-start' }} />
+                <Text style={styles.dataLabel}>Mood:</Text>
+                <Text style={styles.dataValue}>{emotion ? `You're feeling ${emotionValue} today` : 'How are you feeling? Tap to share.'}</Text>
+                {emotion && emotionsSuggestingMentor.includes(emotionValue) && (
+                  <Text style={styles.recommendation}>
+                    Feeling {emotionValue.toLowerCase()}? It might be helpful to talk to a mentor about it.
+                  </Text>
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.overview}
+                onPress={() => router.navigate('/ExerciseTracker')}
+              >
+                <Icon name="fitness-center" color="#268394" size={30} style={{ alignItems: 'flex-start' }} />
+                <Text style={styles.dataLabel}>Exercise:</Text>
+                <Text style={styles.dataValue}>{exercise ? 'Awesome job! Tap to see your workout details.' : 'Get moving! Log your exercise here.'}</Text>
+              </TouchableOpacity>
             </View>
             <View style={styles.row}>
-                <View style={styles.overview}>
-                    <Icon name="water-drop" color="#268394" size={30} style={{alignItems: 'flex-start'}}/>
-                    <Text></Text>
-                    <Text style={styles.dataLabel}>Water:</Text>
-                    <ProgressBar progress={water ? waterDrank / waterGoal : 0} color="#268394" />
-                    <Text style={styles.dataValue}>{water ? `${waterDrank}ml / ${waterGoal}ml` : 'Not Done'}</Text>
-                </View>
-                <View style={styles.overview}>
-                    <Icon name="bedtime" color="#268394" size={30} style={{alignItems: 'flex-start'}}/>
-                    <Text></Text>
-                    <Text style={styles.dataLabel}>Sleep:</Text>
-                    <Text style={styles.dataValue}>{sleep ? sleepHour : 'Not Done'}</Text>
-                </View>
+              <TouchableOpacity
+                style={styles.overview}
+                onPress={() => router.navigate('/WaterTracker')}
+              >
+                <Icon name="water-drop" color="#268394" size={30} style={{ alignItems: 'flex-start' }} />
+                <Text style={styles.dataLabel}>Hydration:</Text>
+                <ProgressBar progress={water ? waterDrank / waterGoal : 0} color="#268394" />
+                <Text></Text>
+                <Text style={styles.dataValue}>{water ? `${waterDrank}ml down, only ${waterGoal - waterDrank}ml to go!` : 'Tap to track your water intake.'}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.overview}
+                onPress={() => router.navigate('/SleepTracker')}
+              >
+                <Icon name="bedtime" color="#268394" size={30} style={{ alignItems: 'flex-start' }} />
+                <Text style={styles.dataLabel}>Sleep:</Text>
+                <Text style={styles.dataValue}>{sleep ? `${sleepHour} hours of restful sleep` : 'How did you sleep? Log it here.'}</Text>
+                {sleep && sleepHour < 7 && (
+                <Text style={styles.recommendation}>
+                  Speak to a mentor today on improving your sleep habits.
+                </Text>)}
+              </TouchableOpacity>
             </View>
             <View style={styles.row}>
-                <View style={styles.overview}>
-                    <Icon name="book" color="#268394" size={30} style={{alignItems: 'flex-start'}}/>
-                    <Text style={styles.dataLabel}>Journal:</Text>
-                    <Text style={styles.dataValue}>{journal ? 'Done' : 'Not Done'}</Text>
-                </View>
+              <TouchableOpacity
+                style={styles.overview}
+                onPress={() => router.navigate('/DailyJournal')}
+              >
+                <Icon name="book" color="#268394" size={30} style={{ alignItems: 'flex-start' }} />
+                <Text style={styles.dataLabel}>Journal:</Text>
+                <Text style={styles.dataValue}>{journal ? 'Reflective! View your entries here.' : 'Share your thoughts. Tap to journal.'}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.overview}
+                onPress={() => router.navigate('/MatchWithMentor')}
+              >
+                <Icon name="people" color="#268394" size={30} style={{ alignItems: 'flex-start' }} />
+                <Text style={styles.dataLabel}>Mentor Match: </Text>
+                <Text style={styles.dataValue}>Talk to a mentor about anything!</Text>
+              </TouchableOpacity>
             </View>
+
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Explore More</Text>
 
             <View style={styles.row}>
 
@@ -295,6 +328,11 @@ export default function Homepage() {
 };
 
 const styles = StyleSheet.create({
+  recommendation: {
+    fontSize: 14,
+    color: '#DAA520', // Example color: golden for attention
+    marginTop: 8,
+  },
   container: {
     flex: 1,
   },
@@ -302,12 +340,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'normal',
     fontWeight: 'bold',
-
+    paddingBottom: 8,
     color: '#268394', // Teal color for consistency
     marginBottom: 4, // Spacing between label and value
   },
   dataValue: {
-    fontSize: 16,
+    fontSize: 13,
     color: '#105763', // A darker shade of teal for emphasis
   },
   overview: {

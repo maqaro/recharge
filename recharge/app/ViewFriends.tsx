@@ -1,7 +1,7 @@
 // Homepage.tsx
 
 import React, {useEffect, useState} from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { supabase } from '../lib/supabase';
 import NavBar from './NavBar';
@@ -23,116 +23,69 @@ const ViewFriends = () => {
     }, [])
 
     const getFriends = async () => {
-        let listOfFriends: React.SetStateAction<any[]> = [];
-        let counter = 0;
         try {
             const { data: { user }, } = await supabase.auth.getUser();
             setUserid(user?.id);
         
             let { data: friend, error } = await supabase
-                .from('friends')
-                .select('employee2_name')
-                .eq('status', 'friend')
-                .eq('employee1_id', user?.id);
+                .from('employee')
+                .select('friends')
+                .eq('employee_id', user?.id)
             if (error) {
                 console.error('Error fetching employee data inner:', error);
             } else {
                 if (friend) {
-                    friend.map(item=>{
-                        listOfFriends[counter] = (Object.values(friend[counter]));
-                        counter += 1;
-                    })
+                    setFriends(Object.values(friend[0])[0]);
                 }
             }
         } catch (error) {
             console.error('Error fetching employee data:', error);
         }
-      try {
+  };
+
+  const getPending = async () => {
+    try {
         const { data: { user }, } = await supabase.auth.getUser();
         setUserid(user?.id);
     
-        let { data: friend2, error } = await supabase
-            .from('friends')
-            .select('employee1_name')
-            .eq('status', 'friend')
-            .eq('employee2_id', user?.id);
+        let { data: pending, error } = await supabase
+            .from('employee')
+            .select('pending')
+            .eq('employee_id', user?.id)
         if (error) {
             console.error('Error fetching employee data inner:', error);
         } else {
-            if (friend2) {
-                let counter2 =0;
-                friend2.map(item=>{
-                    listOfFriends[counter] = (Object.values(friend2[counter2]));
-                    counter += 1;
-                    counter2 += 1;
-                })
+            if (pending) {
+                setPending(Object.values(pending[0])[0]);
             }
         }
     } catch (error) {
         console.error('Error fetching employee data:', error);
     }
+};
 
-    setFriends(listOfFriends);
-  };
-
-      const getPending = async () => {
-        let listOfPending: React.SetStateAction<any[]> = [];
-        let counter = 0;
-        try {
-            const { data: { user }, } = await supabase.auth.getUser();
-            setUserid(user?.id);
-        
-            let { data: friend, error } = await supabase
-                .from('friends')
-                .select('employee2_name')
-                .eq('status', 'pending')
-                .eq('employee1_id', user?.id);
-            if (error) {
-                console.error('Error fetching employee data inner:', error);
-            } else {
-                if (friend) {
-                    friend.map(item=>{
-                        listOfPending[counter] = (Object.values(friend[counter]));
-                        counter += 1;
-                    })
-                }
+const getRequests = async () => {
+    try {
+        const { data: { user }, } = await supabase.auth.getUser();
+        setUserid(user?.id);
+    
+        let { data: requests, error } = await supabase
+            .from('employee')
+            .select('requests')
+            .eq('employee_id', user?.id)
+        if (error) {
+            console.error('Error fetching employee data inner:', error);
+        } else {
+            if (requests) {
+                setRequests(Object.values(requests[0])[0]);
             }
-        } catch (error) {
-            console.error('Error fetching employee data:', error);
         }
+    } catch (error) {
+        console.error('Error fetching employee data:', error);
+    }
+};
 
-        setPending(listOfPending);
-      };
-
-      const getRequests = async () => {
-        let listOfRequests: React.SetStateAction<any[]> = [];
-        let counter = 0;
-        try {
-            const { data: { user }, } = await supabase.auth.getUser();
-            setUserid(user?.id);
-        
-            let { data: friend, error } = await supabase
-                .from('friends')
-                .select('employee1_name')
-                .eq('status', 'pending')
-                .eq('employee2_id', user?.id);
-            if (error) {
-                console.error('Error fetching employee data inner:', error);
-            } else {
-                if (friend) {
-                    friend.map(item=>{
-                        listOfRequests[counter] = (Object.values(friend[counter]));
-                        counter += 1;
-                    })
-                }
-            }
-        } catch (error) {
-            console.error('Error fetching employee data:', error);
-        }
-        setRequests(listOfRequests);
-      };
-
-      const displayFriends = () =>{
+     const displayFriends = () =>{
         if (friends.length == 0){
             return <Text style={styles.title}>You have no friends lol</Text>
         }
@@ -147,7 +100,7 @@ const ViewFriends = () => {
                 </View>
             )
         }
-      }
+      };
 
       const displayPending = () =>{
         if (pending.length == 0){
@@ -164,7 +117,7 @@ const ViewFriends = () => {
                 </View>
             )
         }
-      }
+      };
 
       const displayRequests = () =>{
         if (requests.length == 0){
@@ -177,13 +130,13 @@ const ViewFriends = () => {
                     <View style={styles.inneritem}>
                         <Text style={styles.title}>{item}</Text>
                         <Button title="Accept" onPress={() =>acceptRequest(item)}></Button>
-                        <Button title="Deny"></Button>
+                        <Button title="Deny" onPress={() =>denyRequest(item)}></Button>
                 </View>
                 ))}
                 </View>
             )
         }
-      }
+      };
 
       const acceptRequest = async (name: String) =>{
         try {
@@ -191,12 +144,18 @@ const ViewFriends = () => {
             setUserid(user?.id);
         
             const { error: updateError } = await supabase
-            .from('friends')
+            .from('employee')
             .update({
-              status:'friends'
+              'friends': friends.concat(name)
             })
-            .eq('employee1_name', name)
-            .eq('employee2_id', user?.id);
+            .eq('employee_id', user?.id);
+
+            const { error: deleteError } = await supabase
+            .from('employee')
+            .update({
+              'requests': requests.filter((req) => {req != name})
+            })
+            .eq('employee_id', user?.id);
     
           if (updateError) {
             console.error('Error updating friend data:', updateError.message);
@@ -206,67 +165,37 @@ const ViewFriends = () => {
         catch{
             console.log("Error logging friend data")
     }
-    try {
-        const { data: { user }, } = await supabase.auth.getUser();
-        setUserid(user?.id);
-    
-        const { error: updateError } = await supabase
-        .from('friends')
-        .update({
-          status:'friends'
-        })
-        .eq('employee2_name', name)
-        .eq('employee1_id', user?.id);
+        Alert.alert("Friend Request Accepted");
 
-      if (updateError) {
-        console.error('Error updating friend data:', updateError.message);
-        return;
-      }
-    } 
-    catch{
-        console.log("Error logging friend data")
-}
-        router.navigate('./');
+        router.navigate("./Homepage")
+        router.navigate("./ViewFriends")
       }
 
       const denyRequest = async (name: String) =>{
         try {
             const { data: { user }, } = await supabase.auth.getUser();
             setUserid(user?.id);
-        
-            const { error: updateError } = await supabase
-            .from('friends')
-            .delete()
-            .eq('employee1_name', name)
-            .eq('employee2_id', user?.id);
+
+            const { error: deleteError } = await supabase
+            .from('employee')
+            .update({
+              'requests': requests.filter((req) => {req != name})
+            })
+            .eq('employee_id', user?.id);
     
-          if (updateError) {
-            console.error('Error updating friend data:', updateError.message);
+          if (deleteError) {
+            console.error('Error updating friend data:', deleteError.message);
             return;
           }
         } 
         catch{
             console.log("Error logging friend data")
     }
-    try {
-        const { data: { user }, } = await supabase.auth.getUser();
-        setUserid(user?.id);
-    
-        const { error: updateError } = await supabase
-        .from('friends')
-        .delete()
-        .eq('employee2_name', name)
-        .eq('employee1_id', user?.id);
+        Alert.alert("Friend Request Denied");
 
-      if (updateError) {
-        console.error('Error updating friend data:', updateError.message);
-        return;
-      }
-    } 
-    catch{
-        console.log("Error logging friend data")
-}
-        router.navigate('./');
+        router.navigate("./Homepage")
+        router.navigate("./ViewFriends")
+        
       }
 
 
@@ -276,17 +205,13 @@ const ViewFriends = () => {
         <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}}>
         <ScrollView >
         <Button title="Add Friends" onPress={() => router.navigate('./Friends')}></Button>
-        <Text style={styles.header}>Friends: </Text>
-        <View style={styles.item}>
-            {displayFriends()}
-            </View>
         <Text style={styles.header}>Requests: </Text>
         <View style={styles.item}>
             {displayRequests()}
             </View>
-            <Text style={styles.header}>Pending: </Text>
+        <Text style={styles.header}>Friends: </Text>
         <View style={styles.item}>
-            {displayPending()}
+            {displayFriends()}
             </View>
         </ScrollView>
         </LinearGradient>

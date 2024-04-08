@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import MultiSelect from 'react-native-multiple-select';
 import { supabase } from '../../lib/supabase';
+
 
 interface ExerciseModalProps {
   onClose: () => void;
@@ -66,16 +67,18 @@ const ExerciseModal: React.FC<ExerciseModalProps> = ({ onClose }) => {
         };
 
   return (
-    <View>
-      <Text>Exercise Name:</Text>
+    <View style={styles.container}>
+      <Text style={styles.label}>Exercise Name:</Text>
       <TextInput
+        style={styles.input}
         value={exerciseName}
         onChangeText={setExerciseName}
         placeholder="Enter exercise name"
       />
 
-      <Text>Muscle Group:</Text>
+      <Text style={styles.label}>Muscle Group:</Text>
       <MultiSelect
+    
         items={muscleGroupOptions}
         uniqueKey="id"
         onSelectedItemsChange={setSelectedMuscleGroups}
@@ -85,16 +88,16 @@ const ExerciseModal: React.FC<ExerciseModalProps> = ({ onClose }) => {
         tagRemoveIconColor="#CCC"
         tagBorderColor="#CCC"
         tagTextColor="#CCC"
-        selectedItemTextColor="#CCC"
-        selectedItemIconColor="#CCC"
+        selectedItemTextColor="#3895B6"
+        selectedItemIconColor="#3895B6"
         itemTextColor="#000"
         displayKey="name"
         searchInputStyle={{ color: '#CCC' }}
-        submitButtonColor="#CCC"
+        submitButtonColor="#3895B6"
         submitButtonText="Submit"
       />
 
-      <Text>Equipment:</Text>
+      <Text style={styles.label}>Equipment:</Text>
       <MultiSelect
         items={equipmentOptions}
         uniqueKey="id"
@@ -105,20 +108,47 @@ const ExerciseModal: React.FC<ExerciseModalProps> = ({ onClose }) => {
         tagRemoveIconColor="#CCC"
         tagBorderColor="#CCC"
         tagTextColor="#CCC"
-        selectedItemTextColor="#CCC"
-        selectedItemIconColor="#CCC"
+        selectedItemTextColor="#3895B6"
+        selectedItemIconColor="#3895B6"
         itemTextColor="#000"
         displayKey="name"
         searchInputStyle={{ color: '#CCC' }}
-        submitButtonColor="#CCC"
+        submitButtonColor="#3895B6"
         submitButtonText="Submit"
       />
 
+      <View style={styles.buttonContainer}>
       <Button title="Save" onPress={handleSave} />
       <Button title="Cancel" onPress={onClose} />
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+    marginTop: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+});
 
 export default ExerciseModal;
 

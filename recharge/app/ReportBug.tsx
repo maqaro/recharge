@@ -109,12 +109,13 @@ const ReportBug: React.FC = () => {
           onValueChange={(value) => setBugReport((prevBugReport) => ({ ...prevBugReport, device: value }))}
         />
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleSubmitBugReport} style={[styles.button, styles.submitButton]}>
-            <Text style={styles.buttonText}>Submit Feedback</Text>
-          </TouchableOpacity>
           <TouchableOpacity onPress={cancel} style={styles.button}>
             <Text style={styles.buttonText}>Cancel</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={handleSubmitBugReport} style={[styles.button, styles.submitButton]}>
+            <Text style={styles.buttonText}>Submit Feedback</Text>
+          </TouchableOpacity>
+          
         </View>
       </ScrollView>
     </LinearGradient>

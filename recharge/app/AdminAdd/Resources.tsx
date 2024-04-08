@@ -98,10 +98,15 @@ const Resources: React.FC<ResourcesProps> = ({ activeTopic}) => {
               )}
               <Text style={styles.description}>{resource.description}</Text>
             </View>
+
             {/* Delete button */}
-            <TouchableOpacity onPress={() => confirmDeleteResource(resource.id)}>
+            {/* <TouchableOpacity onPress={() => confirmDeleteResource(resource.id)}>
               <Ionicons name="trash" size={24} color="red" />
+            </TouchableOpacity> */}
+            <TouchableOpacity onPress={() => confirmDeleteResource(resource.id)} style={styles.deleteButton}>
+              <Text style={styles.deleteButtonText}>Delete</Text>
             </TouchableOpacity>
+
           </View>
         </TouchableOpacity>
       ))}
@@ -152,6 +157,18 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     color: '#333',
+  },
+  deleteButton: {
+    backgroundColor: 'red',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    right: 148,
+    top: 10,
+  },
+  deleteButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 

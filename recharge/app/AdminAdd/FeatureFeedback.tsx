@@ -60,17 +60,20 @@ const FeatureFeedback: React.FC = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={true}>
       <Text style={styles.title}>Feature Feedback</Text>
       {features.map((feature, index) => (
         <View key={index} style={styles.featureContainer}>
-          <Text>{feature.feature}</Text>
+          <Text style={styles.text}>{feature.feature}</Text>
+          
           <TouchableOpacity onPress={() => handleDeleteFeature(feature.id, feature.feature)}>
             <Text style={styles.deleteButton}>Delete</Text>
           </TouchableOpacity>
         </View>
       ))}
     </ScrollView>
+    </View>
   );
 };
 
@@ -78,14 +81,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    marginTop: 0,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 37,
+    marginRight: 120,
   },
+  text:{
+    fontWeight: 'bold',
+    color: '#183E4C',
+  },
+
   featureContainer: {
-    marginBottom: 20,
+    marginBottom: 15,
   },
   label: {
     fontWeight: 'bold',
@@ -93,7 +103,10 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     color: 'red',
-    marginTop: 10,
+    // marginTop: 10,
+    left: 250,
+    top: -19,
+    fontWeight: 'bold',
   },
 });
 

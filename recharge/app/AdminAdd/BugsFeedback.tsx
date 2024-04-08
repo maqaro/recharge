@@ -64,44 +64,62 @@ const BugsFeedback: React.FC = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={true}>
       <Text style={styles.title}>Bugs Feedback</Text>
       {bugReports.map((bugReport, index) => (
         <View key={index} style={styles.bugReportContainer}>
-          <Text>{bugReport.Device}</Text>
-          <Text>{bugReport.Description}</Text>
-          <Text style={styles.label}>Steps:</Text>
-          <Text>{bugReport.Steps}</Text>
-          <Text style={styles.label}>First Found:</Text>
-          <Text>{bugReport.FirstFound}</Text>
-          <TouchableOpacity onPress={() => handleDeleteBugReport(bugReport.id, bugReport.Description)}>
+         
+         <TouchableOpacity onPress={() => handleDeleteBugReport(bugReport.id, bugReport.Description)}>
             <Text style={styles.deleteButton}>Delete</Text>
           </TouchableOpacity>
+
+          <Text style={styles.device}><Text style={styles.bold}>Device Type:</Text> {bugReport.Device}</Text>
+          <Text><Text style={styles.bold}>Description:</Text> {bugReport.Description}</Text>
+          <Text style={styles.label}><Text style={styles.bold}>Steps:</Text> {bugReport.Steps}</Text>
+          <Text style={styles.label}><Text style={styles.bold}>First Found:</Text> {bugReport.FirstFound}</Text>
+          
         </View>
       ))}
     </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
+    marginTop: 0,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
+    marginRight: 150,
+  },
+  bold: {
+    fontWeight: 'bold',
+    color: '#183E4C',
   },
   bugReportContainer: {
-    marginBottom: 20,
+    marginBottom: 15,
+  },
+  device:{
+    color: 'black',
+    marginBottom: 5,
+    fontWeight: 'bold',
   },
   label: {
-    fontWeight: 'bold',
-    marginBottom: 5,
+    // fontWeight: 'bold',
+    marginTop: 5,
   },
   deleteButton: {
     color: 'red',
-    marginTop: 10,
+    // marginTop: 10,
+    left: 250,
+    top: 17,
+    fontWeight: 'bold',
   },
 });
 

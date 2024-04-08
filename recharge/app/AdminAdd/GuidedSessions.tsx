@@ -92,14 +92,14 @@ const GuidedSession: React.FC<GuidedSessionProps> = ({  onClose,category }) => {
           <View key={resource.id} style={styles.resourceContainer}>
             <TouchableOpacity onPress={() => handleResourceClick(resource.link)}>
               <View style={styles.articleContainer}>
+                {resource.image && (
+                    <Image
+                      source={{ uri: resource.image }}
+                      style={styles.image}
+                    />
+                  )}
                 <Text style={styles.title}>{resource.title}</Text>
                 <Text style={styles.recommendedBy}>Recommended by: {resource.recommendedBy}</Text>
-                {resource.image && (
-                  <Image
-                    source={{ uri: resource.image }}
-                    style={styles.image}
-                  />
-                )}
                 <TouchableOpacity onPress={() => confirmDelete(resource.id)} style={styles.deleteButton}>
                   <Text style={styles.deleteButtonText}>Delete</Text>
                 </TouchableOpacity>

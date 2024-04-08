@@ -19,11 +19,39 @@ const Resources: React.FC = () => {
   const [resources, setResources] = useState<Resource[]>([]);
   const [filteredResources, setFilteredResources] = useState<Resource[]>([]);
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
+  const [isEmployee, setIsEmployee] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
+    fetchUser();
     fetchResources();
   }, []);
+
+  const fetchUser = async () => {
+    try {
+      const { data: user, error } = await supabase.auth.getUser();
+  
+      if (error) {
+        throw error;
+      }
+  
+      if (user) {
+        const { data: employeeData, error: employeeError } = await supabase
+          .from('employee')
+          .select('employee_id')
+          .eq('employee_id', user.user.id);
+  
+        if (employeeError) {
+          throw employeeError;
+        }
+  
+        const isEmployeeUser = employeeData && employeeData.length > 0;
+        setIsEmployee(isEmployeeUser);
+      }
+    } catch (error) {
+      console.error('Error fetching user or employee data:', (error as Error).message);
+    }
+  };
 
   const fetchResources = async () => {
     try {
@@ -34,7 +62,7 @@ const Resources: React.FC = () => {
       setResources(resourcesData || []);
       setFilteredResources(resourcesData || []);
     } catch (error) {
-      console.error('Error fetching resources:', error);
+      console.error('Error fetching resources:', (error as Error).message);
     }
   };
 
@@ -44,7 +72,7 @@ const Resources: React.FC = () => {
 
   const handleFilterByTopic = (topic: string) => {
     if (topic === activeTopic) {
-      setActiveTopic(null); // Toggle off the filter if the same topic is clicked again
+      setActiveTopic(null);
       setFilteredResources(resources);
     } else {
       setActiveTopic(topic);
@@ -53,22 +81,26 @@ const Resources: React.FC = () => {
     }
   };
 
+  const handleBackPress = () => {
+    router.navigate('/Homepage');
+  };
 
-  const BackButton = () => (
-    <TouchableOpacity
-      style={styles.backButton}
-      onPress={() => router.navigate('/Homepage')}
-    >
-      <Ionicons name="arrow-back" size={24} color="black" />
-    </TouchableOpacity>
-  );
+  const handleSuggestResource = () => {
+    router.navigate('/SuggestResource');
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <BackButton />
       <View style={styles.header}>
-        
+        <TouchableOpacity onPress={handleBackPress}>
+          <Ionicons name="arrow-back" size={24} color="black" />
+        </TouchableOpacity>
         <Text style={styles.headerText}>Want to discover more?</Text>
+        {!isEmployee && (
+          <TouchableOpacity onPress={handleSuggestResource}>
+            <Ionicons name="add-circle" size={24} color="black" />
+          </TouchableOpacity>
+        )}
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -118,7 +150,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 10,
     paddingTop: 20,
-    backgroundColor: '#c4c4ea'
+    backgroundColor: '#65AAB3'
   },
   header: {
     flexDirection: 'row',
@@ -127,21 +159,14 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginLeft: 68,
+    marginLeft: 40,
+    marginRight: 60,
   },
-
-  backButton: {
-    position: 'absolute',
-    top: 22, 
-    left: 20,
-    zIndex: 10,
-  },
-
   buttonContainer: {
     flexDirection: 'row',
-    alignSelf:'center',
+    alignSelf: 'center',
     flex: 1,
-    marginBottom:10,
+    marginBottom: 10,
   },
   topicButton: {
     paddingHorizontal: 20,
@@ -150,10 +175,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 37,
     marginRight: 5,
-    
   },
   activeButton: {
-    backgroundColor: '#f6deda',
+    backgroundColor: 'orange',
   },
   resourceContainer: {
     marginBottom: 20,

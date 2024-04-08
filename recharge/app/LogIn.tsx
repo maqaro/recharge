@@ -23,7 +23,21 @@ const Login = () => {
     if (error) {
       Alert.alert(error.message);
     } else {
-      router.navigate('/Homepage')
+      const { data: admins, error: adminError } = await supabase
+        .from('admins')
+        .select()
+        .eq('email', email);
+  
+      if (adminError) {
+        Alert.alert(adminError.message);
+        setLoading(false);
+      }
+  
+      if (admins && admins.length > 0) {
+        router.navigate('/AdminHomepage');
+      } else {
+        router.navigate('/Homepage');
+      }
     }
     setLoading(false);
   }

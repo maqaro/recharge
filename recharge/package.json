@@ -45,6 +45,7 @@
     "react-native-health": "^1.18.0",
     "react-native-health-connect": "^2.0.1",
     "react-native-image-picker": "^7.1.2",
+    "react-native-multiple-select": "^0.5.12",
     "react-native-paper": "^5.12.3",
     "react-native-picker-select": "^9.0.1",
     "react-native-pie": "^1.1.2",

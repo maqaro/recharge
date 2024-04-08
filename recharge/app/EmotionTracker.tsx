@@ -270,6 +270,7 @@ const styles = StyleSheet.create({
     borderColor:'black',
     borderWidth:1,
     color:'white',
+    borderRadius:20,
   },
   buttonContainer: {
     flexDirection: 'column',

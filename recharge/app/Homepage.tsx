@@ -4,10 +4,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Button, ImageBackground, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import {supabase} from '../lib/supabase';
+import { supabase } from '../lib/supabase';
 import NavBar from './NavBar';
 import WaterTracker from './WaterTracker';
 import { set } from 'date-fns';
+import { ProgressBar } from 'react-native-paper';
+import { Icon } from 'react-native-elements';
 
 export default function Homepage() {
   const router = useRouter();
@@ -19,7 +21,7 @@ export default function Homepage() {
   const [water, setWater] = useState(false);
   const [waterGoal, setWaterGoal] = useState<number | undefined>(undefined);
   const [waterDrank, setWaterDrank] = useState<number | undefined>(undefined);
-  
+
   const [sleep, setSleep] = useState(false);
   const [sleepHour, setSleepHour] = useState(0);
 
@@ -96,7 +98,7 @@ export default function Homepage() {
           `)
         .eq('user_id', user.id)
         .eq('date::date', currentDate);
-        console.log(sleepTracker);
+      console.log(sleepTracker);
       if (sleepTracker?.length !== 0) {
         console.log('Sleep Tracker is true');
         setSleep(true);
@@ -106,8 +108,8 @@ export default function Homepage() {
         const sleepHours = sleepDuration.toFixed(1);
         console.log(sleepHours);
         setSleepHour(sleepHours);
-        
-      }    
+
+      }
     }
     catch (error) {
       setError('Failed to fetch sleep data.');
@@ -115,37 +117,37 @@ export default function Homepage() {
     }
 
     try {
-      let {data: emotionTracker} = await supabase
-      .from('emotiontracker')
-      .select(`
+      let { data: emotionTracker } = await supabase
+        .from('emotiontracker')
+        .select(`
         *
-      `) 
-      .eq('user_id', user.id)
-      .eq('date::date', currentDate);
+      `)
+        .eq('user_id', user.id)
+        .eq('date::date', currentDate);
       console.log(emotionTracker);
       if (emotionTracker?.length !== 0) {
         console.log('Emotion Tracker is true', emotionTracker[0].emotion);
         setEmotion(true);
         setEmotionValue(emotionTracker[0].emotion);
       }
-    }catch (error) {
+    } catch (error) {
       setError('Failed to fetch emotion data.');
       console.error('Error fetching emotion data:', error);
     }
     try {
-      let {data: journalTracker} = await supabase
-      .from('dailyjournal')
-      .select(`
+      let { data: journalTracker } = await supabase
+        .from('dailyjournal')
+        .select(`
         *
       `)
-      .eq('user_id', user.id)
-      .eq('date::date', currentDate);
+        .eq('user_id', user.id)
+        .eq('date::date', currentDate);
       console.log(journalTracker);
-      if (journalTracker?.length !== 0) {
+      if (journalTracker?.length !== 0 && journalTracker) {
         console.log('Journal Tracker is true');
         setJournal(true);
       }
-    }catch (error) {
+    } catch (error) {
       setError('Failed to fetch journal data.');
       console.error('Error fetching journal data:', error);
     }
@@ -155,7 +157,7 @@ export default function Homepage() {
     //   .select(`
     //     *
     //   `)
-    
+
     // }
 
   }, []);
@@ -176,29 +178,42 @@ export default function Homepage() {
 
         <ScrollView>
           <View style={styles.full}>
-          <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Today's Overview</Text>
+            <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Today's Overview</Text>
             <View style={styles.row}>
-              <View style={styles.overview}>
-                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Emotion: {emotion ? `Feeling ${emotionValue}` : 'Not Done'}</Text>
-              </View>
-              <View style={styles.overview}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Exercise: {exercise ? 'Done' : 'Not Done'}</Text>
-              </View>
+                <View style={styles.overview}>
+                    <Icon name="emoji-emotions" color="#268394" size={30} style={{alignItems: 'flex-start'}}/>
+                    <Text></Text>
+                    <Text style={styles.dataLabel}>Emotion:</Text>
+                    <Text style={styles.dataValue}>{emotion ? `Feeling ${emotionValue}` : 'Not Done'}</Text>
+                </View>
+                <View style={styles.overview}>
+                    <Icon name="fitness-center" color="#268394" size={30} style={{alignItems: 'flex-start'}} />
+                    <Text></Text>
+                    <Text style={styles.dataLabel}>Exercise:</Text>
+                    <Text style={styles.dataValue}>{exercise ? 'Done' : 'Not Done'}</Text>
+                </View>
             </View>
             <View style={styles.row}>
-              <View style={styles.overview}>
-                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Water: {water ? `Drank ${waterDrank} ml out of ${waterGoal} ml` : 'Not Done'}</Text>
-              </View>
-              <View style={styles.overview}>
-                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Sleep: {sleep ? sleepHour : 'Not Done'}</Text>
-              </View>
+                <View style={styles.overview}>
+                    <Icon name="water-drop" color="#268394" size={30} style={{alignItems: 'flex-start'}}/>
+                    <Text></Text>
+                    <Text style={styles.dataLabel}>Water:</Text>
+                    <ProgressBar progress={water ? waterDrank / waterGoal : 0} color="#268394" />
+                    <Text style={styles.dataValue}>{water ? `${waterDrank}ml / ${waterGoal}ml` : 'Not Done'}</Text>
+                </View>
+                <View style={styles.overview}>
+                    <Icon name="bedtime" color="#268394" size={30} style={{alignItems: 'flex-start'}}/>
+                    <Text></Text>
+                    <Text style={styles.dataLabel}>Sleep:</Text>
+                    <Text style={styles.dataValue}>{sleep ? sleepHour : 'Not Done'}</Text>
+                </View>
             </View>
             <View style={styles.row}>
-              <View style={styles.overview}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Journal: {journal ? 'Done' : 'Not Done'}</Text>
-              </View>
-              <View style={styles.overview}>
-              </View>
+                <View style={styles.overview}>
+                    <Icon name="book" color="#268394" size={30} style={{alignItems: 'flex-start'}}/>
+                    <Text style={styles.dataLabel}>Journal:</Text>
+                    <Text style={styles.dataValue}>{journal ? 'Done' : 'Not Done'}</Text>
+                </View>
             </View>
 
             <View style={styles.row}>
@@ -283,15 +298,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  dataLabel: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    fontWeight: 'bold',
+
+    color: '#268394', // Teal color for consistency
+    marginBottom: 4, // Spacing between label and value
+  },
+  dataValue: {
+    fontSize: 16,
+    color: '#105763', // A darker shade of teal for emphasis
+  },
   overview: {
     flex: 1,
     width: '50%',
     aspectRatio: 1,
     backgroundColor: '#fff',
-    borderRadius: 10, 
+    borderRadius: 10,
     padding: 16,
     margin: 7,
-    shadowColor: "#000", 
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,

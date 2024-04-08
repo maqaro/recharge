@@ -44,12 +44,13 @@ const FeatureRequestModal: React.FC<FeatureRequestModalProps> = ({ isVisible, on
           onChangeText={setFeatureRequest}
         />
         <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleSubmitFeatureRequest} style={[styles.button, styles.submitButton]}>
-          <Text style={styles.buttonText}>Submit Feedback</Text>
-        </TouchableOpacity>
         <TouchableOpacity onPress={onClose} style={styles.button}>
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={handleSubmitFeatureRequest} style={[styles.button, styles.submitButton]}>
+          <Text style={styles.buttonText}>Submit Feedback</Text>
+        </TouchableOpacity>
+        
       </View>
       </ScrollView>
       <NavBar/>

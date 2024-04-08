@@ -110,12 +110,13 @@ const Feedback: React.FC = () => {
           onChangeText={handleAdditionalInfoChange}
         />
       <View style={styles.buttonContainer}>
+      <TouchableOpacity onPress={goback} style={styles.button}>
+          <Text style={styles.buttonText}>Cancel</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={handleSubmitFeedback} style={[styles.button, styles.submitButton]}>
           <Text style={styles.buttonText}>Submit Feedback</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={goback} style={styles.button}>
-          <Text style={styles.buttonText}>Cancel</Text>
-        </TouchableOpacity>
+        
       </View>
     </ScrollView>
     </LinearGradient>

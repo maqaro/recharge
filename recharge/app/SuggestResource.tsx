@@ -48,22 +48,22 @@ const SuggestResource: React.FC = () => {
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Suggest a Resource</Text>
             </View>
-            <Text style={styles.label}>Title</Text>
+            <Text style={styles.label}>Title:</Text>
             <TextInput style={styles.input} value={title} onChangeText={setTitle} />
 
-            <Text style={styles.label}>Description</Text>
+            <Text style={styles.label}>Description:</Text>
             <TextInput style={styles.input} value={description} onChangeText={setDescription} />
 
-            <Text style={styles.label}>Date</Text>
+            <Text style={styles.label}>Date:</Text>
             <TextInput style={styles.input} value={date} onChangeText={setDate} />
 
-            <Text style={styles.label}>Link</Text>
+            <Text style={styles.label}>Link:</Text>
             <TextInput style={styles.input} value={link} onChangeText={setLink} />
 
-            <Text style={styles.label}>Topic</Text>
+            <Text style={styles.label}>Topic:</Text>
             <TextInput style={styles.input} value={topic} onChangeText={setTopic} />
 
-            <Text style={styles.label}>Image URL</Text>
+            <Text style={styles.label}>Image URL:</Text>
             <TextInput style={styles.input} value={imageUrl} onChangeText={setImageUrl} />
 
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
@@ -79,6 +79,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingTop: 20,
         backgroundColor: '#65AAB3',
+        paddingLeft: 20,
+        paddingRight: 20,
     },
     header: {
         flexDirection: 'row',
@@ -87,12 +89,13 @@ const styles = StyleSheet.create({
     headerText: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginLeft: 50,
+        marginLeft: 70,
         marginBottom: 20,
     },
     label: {
         fontSize: 18,
         marginBottom: 5,
+        marginTop: 10,
     },
     input: {
         height: 40,
@@ -106,10 +109,12 @@ const styles = StyleSheet.create({
     button: {
         paddingHorizontal: 20,
         paddingVertical: 10,
-        backgroundColor: '#fff',
+        backgroundColor: 'orange',
         borderRadius: 10,
-        height: 37,
-        marginRight: 5,
+        height: 42,
+        marginRight: 135,
+        marginLeft: 135,
+        marginTop: 20,
     },
     buttonText: {
         color: '#000',

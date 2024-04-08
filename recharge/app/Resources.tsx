@@ -97,7 +97,7 @@ const Resources: React.FC = () => {
         </TouchableOpacity>
         <Text style={styles.headerText}>Want to discover more?</Text>
         {!isEmployee && (
-          <TouchableOpacity onPress={handleSuggestResource}>
+          <TouchableOpacity style={styles.suggest}onPress={handleSuggestResource}>
             <Ionicons name="add-circle" size={24} color="black" />
           </TouchableOpacity>
         )}
@@ -161,6 +161,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 40,
     marginRight: 60,
+  },
+  suggest:{
+    marginLeft: -18,
+    marginTop: 1,
   },
   buttonContainer: {
     flexDirection: 'row',

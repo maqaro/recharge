@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import MentorResults, { updateSpecialty } from './MentorResults';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Ionicons } from '@expo/vector-icons';
 
 const MatchWithMentorForm = () => {
   const { control, handleSubmit } = useForm();
@@ -72,13 +73,21 @@ const MatchWithMentorForm = () => {
    }
 };
 
+const BackButton = () => (
+  <TouchableOpacity
+    style={styles.backButton}
+    onPress={() => router.navigate('/MatchWithMentor')}
+  >
+    <Ionicons name="arrow-back" size={24} color="black" />
+  </TouchableOpacity>
+);
+
   return (
     <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+      <BackButton />
     <View style={styles.container}>
     <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.navigate('/MatchWithMentor')}>
-          <Icon name="arrow-left" size={24} color="white" style={styles.backIcon} />
-        </TouchableOpacity>
+        
         <Text style={styles.title}>Form</Text>
       </View>
       <Text style={styles.subtitle}>Welcome to our mentor matching program! </Text>
@@ -133,6 +142,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20, // Add some padding to the sides
     marginBottom: 5,
   },
+  backButton: {
+    position: 'absolute',
+    top: 22, 
+    left: 20,
+    zIndex: 10,
+  },
   backIcon: {
     marginRight: 10,
   },
@@ -140,9 +155,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
-    marginTop: 5,
+    marginTop: -130,
     color:'white',
-    marginLeft:100,
+    marginLeft: 100,
   },
   input: {
     marginBottom: 10,

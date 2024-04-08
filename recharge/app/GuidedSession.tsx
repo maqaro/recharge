@@ -55,17 +55,21 @@ const GuidedSession: React.FC = () => {
       Linking.openURL(link);
     };
   
-    const handleBackPress = () => {
-      router.navigate('/Homepage');
-    };
+    const BackButton = () => (
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => router.navigate('/Homepage')}
+      >
+        <Ionicons name="arrow-back" size={24} color="black" />
+      </TouchableOpacity>
+    );
   
     return (
       <LinearGradient colors={['#FFC371', '#FFC371']} style={{ height: '100%', width: '100%' }} >
+        <BackButton />
         <ScrollView contentContainerStyle={styles.container}>
+          
           <View style={styles.header}>
-            <TouchableOpacity onPress={handleBackPress}>
-              <Ionicons name="arrow-back" size={24} color="black" />
-            </TouchableOpacity>
             <Text style={styles.headerText}>Guided Sessions</Text>
           </View>
           <View style={styles.buttonContainer}>
@@ -121,7 +125,8 @@ const styles = StyleSheet.create({
       headerText: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginLeft:85,
+        marginLeft: 105,
+        textAlign: 'center',
       },
       buttonContainer: {
         flexDirection: 'row',
@@ -129,6 +134,14 @@ const styles = StyleSheet.create({
         flex: 1,
         marginBottom:10,
       },
+
+      backButton: {
+        position: 'absolute',
+        top: 22, 
+        left: 20,
+        zIndex: 10,
+      },
+
       topicButton: {
         paddingHorizontal: 20,
         paddingVertical: 10,

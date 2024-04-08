@@ -143,8 +143,8 @@ export default function Homepage() {
         *
       `)
         .eq('user_id', user.id)
-        .eq('date::date', currentDate);
-      console.log(journalTracker);
+        .eq('created_on', currentDate);
+      console.log("jounral ",journalTracker);
       if (journalTracker?.length !== 0 && journalTracker) {
         console.log('Journal Tracker is true');
         setJournal(true);
@@ -186,7 +186,7 @@ export default function Homepage() {
                 style={styles.overview}
                 onPress={() => router.navigate('/EmotionTracker')}
               >
-                <Icon name="emoji-emotions" color="#268394" size={30} style={{ alignItems: 'flex-start' }} />
+                <Icon name="emoji-emotions" color="#268394" size={30} style={{ alignItems: 'flex-start'}} />
                 <Text style={styles.dataLabel}>Mood:</Text>
                 <Text style={styles.dataValue}>{emotion ? `You're feeling ${emotionValue} today` : 'How are you feeling? Tap to share.'}</Text>
                 {emotion && emotionsSuggestingMentor.includes(emotionValue) && (

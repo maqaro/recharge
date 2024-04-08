@@ -8,6 +8,7 @@ import FriendsSearchResults from './FriendsSearchResults';
 import { supabase } from '../lib/supabase';
 import { set } from 'date-fns';
 import { router } from 'expo-router';
+import NavBar from './NavBar';
 
 //const [userName, setUserName] = useState<any>();
 
@@ -130,6 +131,7 @@ const Friends = () => {
             ))}
 
             </LinearGradient>
+            <NavBar/>
         </SafeAreaView>
       );
       };

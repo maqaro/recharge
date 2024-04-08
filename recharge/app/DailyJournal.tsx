@@ -9,7 +9,7 @@ import NavBar from './NavBar';
 
 const months = [
   { label: 'January', value: 'January', days: 31 },
-  { label: 'February', value: 'February', days: 29 }, // Assuming a non-leap year for simplicity
+  { label: 'February', value: 'February', days: 29 },
   { label: 'March', value: 'March', days: 31 },
   { label: 'April', value: 'April', days: 30 },
   { label: 'May', value: 'May', days: 31 },
@@ -176,6 +176,7 @@ const DailyJournal: React.FC = () => {
   };
 
   const handleMonthSelect = (month: string) => {
+    console.log(month);
     setSelectedMonth(month);
     setMonth(month);
   };
@@ -288,7 +289,7 @@ const DailyJournal: React.FC = () => {
       <BackButton />
       <View style={styles.header}>
       
-      <TouchableOpacity>
+      {/* <TouchableOpacity> */}
         <View style={styles.pickerContainer}>
           {/* <DropDown /> */}
           <RNPickerSelect
@@ -302,7 +303,7 @@ const DailyJournal: React.FC = () => {
             }}
           />
         </View>
-        </TouchableOpacity>
+        {/* </TouchableOpacity> */}
 
         
         <TouchableOpacity onPress={handleTodayButtonClick} style={styles.TodayButton}>
@@ -397,7 +398,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 0,
     marginTop: 0,
-    backgroundColor: 'rgba(0, 0, 0, .7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     padding: 10,
     borderRadius: 5,
     marginRight: 165,

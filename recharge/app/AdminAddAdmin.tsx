@@ -55,13 +55,14 @@ const AddAdminPage: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={{fontSize:16, marginBottom:10}}>Enter users email to change status to admin.</Text>
-      <Text style={{marginBottom:10, fontSize:10, alignSelf:'center', width:'70%'}}>Note: User must already be registered in the system. Please sign up user before adding admin status</Text>
+      <Text style={{fontSize:20, marginBottom: 25, textAlign:'center', fontWeight:'bold', paddingLeft:10, paddingRight:10}}>Enter User's Email To Change Status To Admin</Text>
+      <Text style={{marginBottom: 50, fontSize: 15, textAlign:'center', paddingLeft:20, paddingRight:20}}>Note: User must already be registered in the system. Please sign up user before adding admin status.</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter Email"
         value={email}
         onChangeText={(text) => setEmail(text)}
+        placeholderTextColor="rgba(0, 0, 0, .5)"
       />
       <TouchableOpacity style={styles.button} onPress={addAdmin}>
         <Text style={styles.buttonText}>Add Admin</Text>
@@ -69,8 +70,8 @@ const AddAdminPage: React.FC = () => {
 
       <View style={styles.navContainer}>
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/AdminHomepage')}>
-        <Ionicons name="home-outline" size={24} color="black" />
-        {/* <Text>Home</Text> */}
+        <Ionicons name="home-outline" size={26} color="black" />
+        <Text style={styles.hometext}>Home</Text>
       </TouchableOpacity>
     </View>
     </View>
@@ -82,17 +83,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'lightblue',
   },
   input: {
     height: 40,
     width: 300,
-    borderColor: 'gray',
-    borderWidth: 1,
+    borderColor: 'black',
+    borderWidth: 1.5,
     marginBottom: 20,
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: '#3498db',
+    backgroundColor: 'rgba(0, 0, 0, .7)',
     padding: 10,
     borderRadius: 5,
   },
@@ -105,18 +107,27 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     position: 'absolute',
-    backgroundColor: '#fff',
+    backgroundColor: 'lightblue',
     borderRadius: 25,
     bottom: 5,
     left: 0,
     right: 0,
   },
   navButton: {
-    backgroundColor: '#fff',
-    padding: 15,
+    backgroundColor: 'lightblue',
+    padding: 2,
     borderRadius: 25,
     alignItems: 'center',
   },
+
+  hometext: {
+    fontSize: 12,
+    color: 'black',
+    paddingTop: 3,
+    textAlign: 'center',
+    left: -1,
+  },
+
 });
 
 export default AddAdminPage;

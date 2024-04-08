@@ -11,8 +11,8 @@ const AdminNavBar = () => {
   return (
     <View style={styles.navContainer}>
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/AdminHomepage')}>
-        <Ionicons name="home-outline" size={24} color="black" />
-        {/* <Text>Home</Text> */}
+      <Ionicons name="home-outline" size={26} color="black" />
+        <Text style={styles.hometext}>Home</Text>
       </TouchableOpacity>
     </View>
 
@@ -20,23 +20,31 @@ const AdminNavBar = () => {
 };
 
 const styles = StyleSheet.create({
-      navContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        position: 'absolute',
-        backgroundColor: '#fff',
-        borderRadius: 25,
-        bottom: 5,
-        left: 0,
-        right: 0,
+  navContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      position: 'absolute',
+      backgroundColor: 'lightblue',
+      borderRadius: 25,
+      bottom: 5,
+      left: 0,
+      right: 0,
       },
-      navButton: {
-        backgroundColor: '#fff',
-        padding: 15,
-        borderRadius: 25,
-        alignItems: 'center',
-      },
+  navButton: {
+      backgroundColor: 'lightblue',
+      padding: 2,
+      borderRadius: 25,
+      alignItems: 'center',
+    },
+      
+  hometext: {
+    fontSize: 12,
+    color: 'black',
+    paddingTop: 3,
+    textAlign: 'center',
+    left: -1,
+  },
 });
     
 

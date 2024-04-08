@@ -22,6 +22,8 @@ const Admin_Homepage: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.welcometext}>Welcome Admin</Text>
+      <Text style={styles.question}>What would you like to do?</Text>
       <TouchableOpacity style={styles.button} onPress={() => router.navigate('/AdminAddAdmin')}>
         <Text style={styles.buttonText}>Add Admin</Text>
       </TouchableOpacity>
@@ -49,9 +51,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'lightblue',
   },
+
+  welcometext: {
+    fontSize: 24,
+    marginBottom: 20,
+    fontWeight: 'bold',
+  },
+
+  question: {
+    fontSize: 20,
+    marginBottom: 30,
+  },
+
   button: {
-    backgroundColor: '#3498db',
+    backgroundColor: 'rgba(0, 0, 0, .7)',
     padding: 10,
     marginVertical: 10,
     borderRadius: 5,

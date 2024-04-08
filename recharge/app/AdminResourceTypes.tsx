@@ -58,8 +58,8 @@ const ViewResources: React.FC = () => {
     </View>
     <View style={styles.navContainer}>
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/AdminHomepage')}>
-        <Ionicons name="home-outline" size={24} color="black" />
-        {/* <Text>Home</Text> */}
+      <Ionicons name="home-outline" size={26} color="black" />
+        <Text style={styles.hometext}>Home</Text>
       </TouchableOpacity>
       </View>
     </>
@@ -69,34 +69,48 @@ const ViewResources: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 20,
-    paddingBottom: 10,
+    paddingBottom: 45,
+    backgroundColor: 'lightblue',
+    flex: 1,
   },
   button: {
     paddingHorizontal: 15,
     paddingVertical: 10,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 20,
+    backgroundColor: 'rgba(0, 0, 0, .7)',
+    borderRadius: 10,
     marginHorizontal: 5,
+    marginBottom: 10,
+    height: 37,
+
   },
   buttonText: {
     fontSize: 16,
+    color: 'white',
   },
   navContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     position: 'absolute',
-    backgroundColor: '#fff',
-    borderRadius: 25,
-    bottom: 5,
+    backgroundColor: 'lightblue',
+    borderRadius: 0,
+    bottom: 40,
     left: 0,
     right: 0,
   },
   navButton: {
-    backgroundColor: '#fff',
-    padding: 15,
+    backgroundColor: 'lightblue',
+    padding: 4,
     borderRadius: 25,
     alignItems: 'center',
+  },
+  
+  hometext: {
+    fontSize: 12,
+    color: 'black',
+    paddingTop: 3,
+    textAlign: 'center',
+    left: -1,
   },
 });
 

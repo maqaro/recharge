@@ -276,12 +276,6 @@ const DailyJournal: React.FC = () => {
   );
 
 
-  const DropDown = () => (
-    <TouchableOpacity
-      style={styles.Dropdown}>
-      <Ionicons name="chevron-down-outline" size={25} color="black" />
-    </TouchableOpacity>
-  );
 
   return (
     <View style={{backgroundColor:'lightblue'}}>

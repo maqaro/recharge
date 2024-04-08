@@ -101,11 +101,15 @@ const AddMentorPage: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.addtext}>Add Mentor</Text>
+      <Text style={styles.fillintext}>Fill in the details below</Text>
+
       <TextInput
         style={styles.input}
         placeholder="Email"
         value={username}
         onChangeText={(text) => setUsername(text)}
+        placeholderTextColor="rgba(0, 0, 0, .5)"
       />
       <TextInput
         style={styles.input}
@@ -113,27 +117,36 @@ const AddMentorPage: React.FC = () => {
         secureTextEntry
         value={password}
         onChangeText={(text) => setPassword(text)}
+        placeholderTextColor="rgba(0, 0, 0, .5)"
       />
       <TextInput
         style={styles.input}
         placeholder="Name"
         value={name}
         onChangeText={(text) => setName(text)}
+        placeholderTextColor="rgba(0, 0, 0, .5)"
       />
-      <RNPickerSelect
-        items={specialties}
-        onValueChange={(value) => setSpecialty(value)}
-        value={specialty}
-        placeholder={{ label: 'Select Specialty', value: null }}
-      />
+      <View style={styles.pickerContainer}>
+        <RNPickerSelect
+          items={specialties}
+          onValueChange={(value) => setSpecialty(value)}
+          value={specialty}
+          placeholder={{ label: 'Select Specialty', value: null, color: 'black'}}
+          style={{
+            inputIOS: styles.pickerText,
+            inputAndroid: styles.pickerText,
+            placeholder: {color: 'rgba(0, 0, 0, .5)'},
+          }}
+        />
+      </View>
       <TouchableOpacity style={styles.button} onPress={signUpMentor}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
 
       <View style={styles.navContainer}>
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/AdminHomepage')}>
-        <Ionicons name="home-outline" size={24} color="black" />
-        {/* <Text>Home</Text> */}
+      <Ionicons name="home-outline" size={26} color="black" />
+        <Text style={styles.hometext}>Home</Text>
       </TouchableOpacity>
       </View>
     </View>
@@ -145,19 +158,33 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'lightblue',
   },
+  addtext: {
+    fontSize: 24,
+    marginBottom: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  fillintext: {
+    fontSize: 20,
+    marginBottom: 30,
+    textAlign: 'center',
+  },
+
   input: {
     height: 40,
     width: 300,
-    borderColor: 'gray',
-    borderWidth: 1,
+    borderColor: 'black',
+    borderWidth: 1.5,
     marginBottom: 20,
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: 'rgba(0, 0, 0, .7)',
     padding: 10,
     borderRadius: 5,
+    marginTop: 40,
   },
   buttonText: {
     color: 'white',
@@ -168,17 +195,40 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     position: 'absolute',
-    backgroundColor: '#fff',
+    backgroundColor: 'lightblue',
     borderRadius: 25,
     bottom: 5,
     left: 0,
     right: 0,
   },
   navButton: {
-    backgroundColor: '#fff',
-    padding: 15,
+    backgroundColor: 'lightblue',
+    padding: 2,
     borderRadius: 25,
     alignItems: 'center',
+  },
+
+  hometext: {
+    fontSize: 12,
+    color: 'black',
+    paddingTop: 3,
+    textAlign: 'center',
+    left: -1,
+  },
+
+  pickerContainer: {
+    marginRight: 160,
+    borderColor: 'black',
+    borderWidth: 1.5,
+    marginTop: 0,
+    padding: 10,
+    backgroundColor: 'transparent',
+    right: 0,
+  },
+  pickerText: {
+    fontSize: 16,
+    color: 'black',
+    width: 116.5,
   },
 });
 

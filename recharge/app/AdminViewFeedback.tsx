@@ -5,13 +5,15 @@ import BugsFeedback from './AdminAdd/BugsFeedback';
 import FeatureFeedback from './AdminAdd/FeatureFeedback';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import AdminNavBar from './AdminNavBar';
 
 const ViewFeedback: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('General');
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container2}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={true}>
       <View style={styles.buttonsContainer}>
 
         <TouchableOpacity
@@ -40,20 +42,22 @@ const ViewFeedback: React.FC = () => {
         {selectedCategory === 'Feature' && <FeatureFeedback/> }
       </View>
 
-      <View style={styles.navContainer}>
-      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/AdminHomepage')}>
-        <Ionicons name="home-outline" size={24} color="black" />
-        {/* <Text>Home</Text> */}
-      </TouchableOpacity>
+      </ScrollView>
+    <AdminNavBar/>
     </View>
-
-    </View>
+    
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'lightblue',
+  },
+  container2: {
+    flex: 1,
+    backgroundColor: 'lightblue',
+    paddingBottom: 40,
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -62,36 +66,22 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 10,
+    backgroundColor: 'rgba(0, 0, 0, .7)',
+    borderRadius: 5,
+    marginTop: 30,
   },
   selectedButton: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#3895B6',
     borderRadius: 5,
   },
   buttonText: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: 'white',
   },
   feedbackContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  navContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    position: 'absolute',
-    backgroundColor: '#fff',
-    borderRadius: 25,
-    bottom: 5,
-    left: 0,
-    right: 0,
-  },
-  navButton: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 25,
     alignItems: 'center',
   },
 });

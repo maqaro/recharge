@@ -95,7 +95,7 @@ const GeneralFeedback: React.FC = () => {
           <Animated.View style={[styles.bar, { width: barWidth }]} />
         </View>
         <Text style={styles.ratingNumber}>{rating}</Text>
-        <Text style={styles.ratingNumber}><FontAwesome name="star" size={20} color="gold" /></Text>
+        <Text style={styles.ratingstar}><FontAwesome name="star" size={20} color="gold" /></Text>
       </View>
     );
   };
@@ -104,7 +104,7 @@ const GeneralFeedback: React.FC = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Feedback</Text>
+      <Text style={styles.feedbacktitle}>Feedback</Text>
       {Object.keys(averageRatings).map((column) => (
         <View key={column} style={styles.row}>
           <Text style={styles.column}>{column}</Text>
@@ -112,7 +112,7 @@ const GeneralFeedback: React.FC = () => {
         </View>
       ))}
 
-        <Text style={styles.title}>Comments</Text>
+        <Text style={styles.commentstitle}>Comments</Text>
         <ScrollView contentContainerStyle={styles.commentsContainer}>
         {feedbackData.map((feedback, index) => (
             <View key={index} style={styles.commentContainer}>
@@ -130,20 +130,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    marginTop: 30,
    },
-  title: {
+  feedbacktitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginTop: 0,
+    marginBottom: 20,
   },
+
+  commentstitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 50,
+    marginBottom: 20,
+  },
+
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
   },
   column: {
-    width: 100,
+    width: 110,
     marginRight: 10,
+    top: -6,
   },
   barContainer: {
     flexDirection: 'row',
@@ -161,13 +172,18 @@ const styles = StyleSheet.create({
   },
   bar: {
     height: '100%',
-    backgroundColor: 'blue', // Change color as needed
+    backgroundColor: 'yellow', // Change color as needed
     borderRadius:20,
   },
   ratingNumber: {
     fontSize: 16,
     fontWeight: 'bold',
+    paddingRight: 15,
   },
+  ratingstar: {
+    paddingLeft: 0,
+  },
+  
   commentsContainer: {
     flexGrow: 1,
     paddingBottom: 20, // Add padding to ensure space for scrolling

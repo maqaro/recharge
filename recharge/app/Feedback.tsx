@@ -93,7 +93,7 @@ const Feedback: React.FC = () => {
     };
 
   return (
-    <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+    <LinearGradient colors={['#fff9ed', '#eccbaa']} style={{height:'100%', width:'100%'}} >
       <Text style={styles.modalTitle}>Feedback Form</Text>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {renderRatingSection('Experience with React', 'experienceWithReact')}
@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     paddingBottom:40,
+    backgroundColor:'white',
   },
   starRatingContainer: {
     flexDirection: 'row',

@@ -94,7 +94,7 @@ const GeneralFeedback: React.FC = () => {
         <View style={styles.barOutline}>
           <Animated.View style={[styles.bar, { width: barWidth }]} />
         </View>
-        <Text style={styles.ratingNumber}>{rating}</Text>
+        <Text style={styles.ratingNumber}>{rating.toFixed(1)}</Text>
         <Text style={styles.ratingstar}><FontAwesome name="star" size={20} color="gold" /></Text>
       </View>
     );

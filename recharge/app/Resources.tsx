@@ -53,16 +53,21 @@ const Resources: React.FC = () => {
     }
   };
 
-  const handleBackPress = () => {
-    router.navigate('/Homepage');
-  };
+
+  const BackButton = () => (
+    <TouchableOpacity
+      style={styles.backButton}
+      onPress={() => router.navigate('/Homepage')}
+    >
+      <Ionicons name="arrow-back" size={24} color="black" />
+    </TouchableOpacity>
+  );
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <BackButton />
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleBackPress}>
-          <Ionicons name="arrow-back" size={24} color="black" />
-        </TouchableOpacity>
+        
         <Text style={styles.headerText}>Want to discover more?</Text>
         </View>
         <View style={styles.buttonContainer}>
@@ -122,8 +127,16 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginLeft: 40,
+    marginLeft: 68,
   },
+
+  backButton: {
+    position: 'absolute',
+    top: 22, 
+    left: 20,
+    zIndex: 10,
+  },
+
   buttonContainer: {
     flexDirection: 'row',
     alignSelf:'center',

@@ -83,16 +83,15 @@ const BackButton = () => (
 );
 
   return (
-    <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+    <LinearGradient colors={['#85D4D5', '#85D4D5']} style={{height:'100%', width:'100%'}} >
       <BackButton />
     <View style={styles.container}>
     <View style={styles.header}>
-        
-        <Text style={styles.title}>Form</Text>
+        <Text style={styles.title}>Matching Form</Text>
       </View>
       <Text style={styles.subtitle}>Welcome to our mentor matching program! </Text>
-      <Text style={{color:'white', alignSelf:'center', marginTop:10}}>To ensure we find the perfect mentor for you, please take a moment to fill out this form. 
-        Your responses will guide us in matching you with a mentor who can provide tailored support for your wellbeing journey.Let's take this step 
+      <Text style={{color:'black', alignSelf:'center', marginTop:30, fontSize:14}}>To ensure we find the perfect mentor for you, please take a moment to fill out this form. 
+        Your responses will guide us in matching you with a mentor who can provide tailored support for your wellbeing journey. Let's take this step 
         toward a healthier, happier you together.</Text>
         {/* Your privacy is our priority, and all information shared will be treated with utmost confidentiality */}
       <Text style={styles.input}>Select the topic you wish to discuss:</Text>
@@ -120,7 +119,13 @@ const BackButton = () => (
         onChangeText={newText => setText(newText)}
         defaultValue={text}
       />
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+
+      {/* <Button title="Submit" onPress={handleSubmit(onSubmit)} /> */}
+
+      <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.submit}>
+      <Text style={styles.buttonText}>Submit</Text>
+    </TouchableOpacity>
+
     </View>
     </LinearGradient>
   );
@@ -131,8 +136,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-    paddingTop:10,
+    // padding: 20,
+    paddingRight: 20,
+    paddingLeft: 20,
+    // paddingTop:10,
   },
   header: {
     flexDirection: 'row',
@@ -154,16 +161,19 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    color:'black',
+    alignSelf:'center',
     marginBottom: 10,
-    marginTop: -130,
-    color:'white',
-    marginLeft: 100,
+    marginTop: -79,
+    marginLeft: 84,
+
   },
   input: {
     marginBottom: 10,
     marginTop: 40,
     width: '100%',
-    color:'white'
+    color:'white',
+    fontWeight:'bold',
   },
   textbox: {
     marginTop: 40,
@@ -177,11 +187,28 @@ const styles = StyleSheet.create({
     padding:10
   },
   subtitle:{
-    color:'white',
+    color:'black',
     alignSelf:'center',
     textAlign:'center',
-    fontSize:20,
-  }
+    fontSize: 20,
+    paddingBottom: 30,
+  },
+
+  submit:{
+    backgroundColor: '#2BC0E4',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+
+  buttonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
+   },
+
+
 });
 
 export default MatchWithMentorForm;

@@ -63,10 +63,11 @@ const Leaderboard = () => {
       };
 
     return (
-        <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}}>
-        <View>
-            <Text style={styles.header}>Current Leaderboard: </Text>
-        <ScrollView style={styles.item}>
+        <LinearGradient colors={['lightblue', 'lightblue']} style={{height:'100%', width:'100%'}}>
+        <View style={styles.item}>
+        <ScrollView style={styles.item} showsVerticalScrollIndicator={true}>
+          
+        <Text style={styles.header}>Current Leaderboard: </Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.topicButton && styles.activeButton]}
@@ -108,17 +109,16 @@ const styles = StyleSheet.create({
         fontSize: 35,
         fontWeight: "bold",
         marginBottom: 5,
-        fontStyle: "italic",
         color: 'white',
         alignSelf:'center',
-        textDecorationLine:'underline',
+        marginTop: 20,
       },
   
       item: {
         flexDirection:'column',
         flexWrap:'nowrap',
         marginBottom: 10,
-
+        paddingBottom: 40,
       },
       mentor:{
         marginTop:10,
@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 5,
-        fontStyle: "italic",
         color: 'black',
         alignSelf:'center',
       },

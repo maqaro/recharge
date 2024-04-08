@@ -237,8 +237,8 @@ const DailyJournal: React.FC = () => {
       // NO ENTRY
       <View>
         <Text style={styles.toptext}>Write Down Your Thoughts</Text>
-        <View style={{height: 496, backgroundColor: 'rgba(0, 0, 0, .7)', padding: 10, marginBottom:9.5}}>
-      <View style={{alignSelf:'center', backgroundColor: 'white', width:'100%', height: 475}}>
+        <View style={{height: 479, backgroundColor: 'rgba(0, 0, 0, .7)', padding: 10, marginBottom:9.5}}>
+      <View style={{alignSelf:'center', backgroundColor: 'white', width:'100%', height: 455}}>
       <Text style={styles.helptextNoEntry}>Choose a month and date to view past entries or write one for today!</Text>
       <Text style={{alignSelf:'center', fontSize:24, marginVertical: 220}}>No entry for this date</Text>
       </View>
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
   toptext: {
     fontSize: 24,
     // alignSelf: 'center',
-    marginTop: -276,
+    marginTop: -293,
     left: 55,
     position: 'absolute',
     fontWeight: 'bold',
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
   helptext: {
     fontSize: 18,
     alignSelf: 'center',
-    marginTop: -220,
+    marginTop: -240,
     // left: 55,
     position: 'absolute',
     textAlign: 'center',
@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
 
   toptextEntry: {
     fontSize: 24,
-    marginTop: -276,
+    marginTop: -293,
     left: 75,
     position: 'absolute',
     fontWeight: 'bold',
@@ -381,7 +381,7 @@ const styles = StyleSheet.create({
   helptextNoEntry: {
     fontSize: 18,
     alignSelf: 'center',
-    marginTop: -230,
+    marginTop: -250,
     // left: 55,
     position: 'absolute',
     textAlign: 'center',
@@ -390,7 +390,7 @@ const styles = StyleSheet.create({
   helptextPastEntry: {
     fontSize: 18,
     // alignSelf: 'center',
-    marginTop: -220,
+    marginTop: -240,
     // left: 55,
     position: 'absolute',
     marginLeft: 50.5,
@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 0,
     marginTop: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     padding: 10,
     borderRadius: 5,
     marginRight: 165,

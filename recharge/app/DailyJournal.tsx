@@ -288,7 +288,7 @@ const DailyJournal: React.FC = () => {
       <BackButton />
       <View style={styles.header}>
       
-      <TouchableOpacity>
+      {/* <TouchableOpacity> */}
         <View style={styles.pickerContainer}>
           {/* <DropDown /> */}
           <RNPickerSelect
@@ -302,7 +302,7 @@ const DailyJournal: React.FC = () => {
             }}
           />
         </View>
-        </TouchableOpacity>
+        {/* </TouchableOpacity> */}
 
         
         <TouchableOpacity onPress={handleTodayButtonClick} style={styles.TodayButton}>

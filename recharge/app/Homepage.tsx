@@ -1,14 +1,169 @@
 // Homepage.tsx
 
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Button, ImageBackground, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-// import NavBar from './NavBar';
+import {supabase} from '../lib/supabase';
 import NavBar from './NavBar';
+import WaterTracker from './WaterTracker';
+import { set } from 'date-fns';
 
 export default function Homepage() {
   const router = useRouter();
+  const [userId, setUserId] = useState<string | undefined>();
+  const now = new Date();
+  const currentDate = now.toISOString().split('T')[0];
+  const [exercise, setExercise] = useState(0);
+
+  const [water, setWater] = useState(false);
+  const [waterGoal, setWaterGoal] = useState<number | undefined>(undefined);
+  const [waterDrank, setWaterDrank] = useState<number | undefined>(undefined);
+  
+  const [sleep, setSleep] = useState(false);
+  const [sleepHour, setSleepHour] = useState(0);
+
+  const [emotion, setEmotion] = useState(false);
+  const [emotionValue, setEmotionValue] = useState("");
+
+  const [journal, setJournal] = useState(false);
+
+  const [error, setError] = useState<string | undefined>();
+
+
+
+
+
+  const fetchTrackerData = useCallback(async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user?.id) throw new Error('User not found');
+
+    setUserId(user.id);
+    try {
+
+      let { data: exerciseTracker } = await supabase
+        .from('exercisetracker')
+        .select(`
+        *
+      `)
+        .eq('user_id', user.id)
+        .eq('date::date', currentDate);
+
+      if (error) throw error;
+
+      console.log(exerciseTracker);
+      if (exerciseTracker?.length !== 0) {
+        console.log('Exercise Tracker is true');
+        setExercise(1);
+        console.log(exerciseTracker);
+      }
+      else {
+        console.log('Exercise Tracker is false');
+        setExercise(0);
+      }
+    } catch (error) {
+      console.error('Error fetching exercise data:', error);
+      setError('Failed to fetch exercise data.');
+    }
+
+    try {
+      let { data: waterTracker } = await supabase
+        .from('watertracker')
+        .select(`
+            *
+          `)
+        .eq('user_id', user.id)
+        .eq('date::date', currentDate);
+      console.log(waterTracker);
+      if (waterTracker?.length !== 0) {
+        console.log('Water Tracker ', waterTracker);
+        setWaterDrank(waterTracker[0]?.water_intake_ml);
+        setWaterGoal(waterTracker[0]?.water_intake_goal);
+        setWater(true);
+        console.log('Water Tracker is true');
+      }
+
+    } catch (error) {
+      setError('Failed to fetch water data.');
+      console.error('Error fetching water data:', error);
+    }
+
+    try {
+      let { data: sleepTracker } = await supabase
+        .from('sleeptracker')
+        .select(`
+            *
+          `)
+        .eq('user_id', user.id)
+        .eq('date::date', currentDate);
+        console.log(sleepTracker);
+      if (sleepTracker?.length !== 0) {
+        console.log('Sleep Tracker is true');
+        setSleep(true);
+        const sleepStart = new Date(sleepTracker[0].sleep_start);
+        const sleepEnd = new Date(sleepTracker[0].sleep_end);
+        const sleepDuration = (sleepEnd.getTime() - sleepStart.getTime()) / (1000 * 60 * 60);
+        const sleepHours = sleepDuration.toFixed(1);
+        console.log(sleepHours);
+        setSleepHour(sleepHours);
+        
+      }    
+    }
+    catch (error) {
+      setError('Failed to fetch sleep data.');
+      console.error('Error fetching sleep data:', error);
+    }
+
+    try {
+      let {data: emotionTracker} = await supabase
+      .from('emotiontracker')
+      .select(`
+        *
+      `) 
+      .eq('user_id', user.id)
+      .eq('date::date', currentDate);
+      console.log(emotionTracker);
+      if (emotionTracker?.length !== 0) {
+        console.log('Emotion Tracker is true', emotionTracker[0].emotion);
+        setEmotion(true);
+        setEmotionValue(emotionTracker[0].emotion);
+      }
+    }catch (error) {
+      setError('Failed to fetch emotion data.');
+      console.error('Error fetching emotion data:', error);
+    }
+    try {
+      let {data: journalTracker} = await supabase
+      .from('dailyjournal')
+      .select(`
+        *
+      `)
+      .eq('user_id', user.id)
+      .eq('date::date', currentDate);
+      console.log(journalTracker);
+      if (journalTracker?.length !== 0) {
+        console.log('Journal Tracker is true');
+        setJournal(true);
+      }
+    }catch (error) {
+      setError('Failed to fetch journal data.');
+      console.error('Error fetching journal data:', error);
+    }
+    // try {
+    //   let {data: article} = await supabase
+    //   .from('resources')
+    //   .select(`
+    //     *
+    //   `)
+    
+    // }
+
+  }, []);
+
+  useEffect(() => {
+    fetchTrackerData();
+  }, [fetchTrackerData]);
+
 
   return (
     <View style={styles.container}>
@@ -21,9 +176,31 @@ export default function Homepage() {
 
         <ScrollView>
           <View style={styles.full}>
-            <View style={styles.overview}>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Overview</Text>
+          <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Today's Overview</Text>
+            <View style={styles.row}>
+              <View style={styles.overview}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Emotion: {emotion ? `Feeling ${emotionValue}` : 'Not Done'}</Text>
+              </View>
+              <View style={styles.overview}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Exercise: {exercise ? 'Done' : 'Not Done'}</Text>
+              </View>
             </View>
+            <View style={styles.row}>
+              <View style={styles.overview}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Water: {water ? `Drank ${waterDrank} ml out of ${waterGoal} ml` : 'Not Done'}</Text>
+              </View>
+              <View style={styles.overview}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Sleep: {sleep ? sleepHour : 'Not Done'}</Text>
+              </View>
+            </View>
+            <View style={styles.row}>
+              <View style={styles.overview}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Journal: {journal ? 'Done' : 'Not Done'}</Text>
+              </View>
+              <View style={styles.overview}>
+              </View>
+            </View>
+
             <View style={styles.row}>
 
               <TouchableOpacity
@@ -108,10 +285,12 @@ const styles = StyleSheet.create({
   },
   overview: {
     flex: 1,
+    width: '50%',
+    aspectRatio: 1,
     backgroundColor: '#fff',
     borderRadius: 10, 
     padding: 16,
-    margin: 8,
+    margin: 7,
     shadowColor: "#000", 
     shadowOffset: {
       width: 0,

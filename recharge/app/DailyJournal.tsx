@@ -225,7 +225,7 @@ const DailyJournal: React.FC = () => {
         <Text style={styles.toptextEntry}>Write Down Your Thoughts</Text>
         <Text style={styles.helptextPastEntry}>Choose a month and date to view past entries or write one for today!</Text>
           <Text style={styles.title}>{title}</Text>
-          <Text style={{alignSelf:'center'}}>{FormattedDate}</Text>
+          {/* <Text style={{alignSelf:'center'}}>{FormattedDate}</Text> */}
           <ScrollView style={styles.descriptionScrollView}>
           <Text style={styles.description}>{description}</Text>
           </ScrollView>

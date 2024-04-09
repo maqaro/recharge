@@ -26,9 +26,9 @@ const Login = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <LinearGradient
-        start={{x: 0, y: 0}} // Start at the top left
-        end={{x: 1, y: 1}} // End at the bottom right
-        colors={['#13547a', '#80d0c7']}
+        start={{ x: 0, y: 0 }} // Start at the top left
+        end={{ x: 1, y: 1 }} // End at the bottom right
+        colors={['#6a11cb', '#2575fc']} // Updated gradient colors for a vibrant look
         style={styles.gradient}
       >
         <Text style={styles.welcomeText}>Welcome Back!</Text>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   forgot: {
     textAlign: 'right',
     marginRight: 28,
-    color: '#e6e6e6',
+    color: '#e6e66',
     marginTop: 15,
     fontSize: 15,
   },
@@ -129,17 +129,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   LoginButton: {
-    backgroundColor: '#004385',
+    backgroundColor: '#2575fc', // Harmonized button color for consistency
     marginTop: 30,
-    borderRadius: 15,
+    borderRadius: 30, // Rounded for a modern look
     width: '85%',
     alignSelf: 'center',
     paddingVertical: 15,
   },
   SignupButton: {
-    backgroundColor: '#086788',
+    backgroundColor: '#12c2e9', // A complementary, distinct button color
     marginTop: 10,
-    borderRadius: 15,
+    borderRadius: 30, // Consistent rounded look
     width: '85%',
     alignSelf: 'center',
     paddingVertical: 15,

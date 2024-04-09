@@ -106,12 +106,12 @@ const styles = StyleSheet.create({
     width: '100%', // Full width for better control
   },
   signInButton: {
-    backgroundColor: '#2575fc', // Vibrant color for distinction
+    backgroundColor: '#004385', // Vibrant color for distinction
     paddingVertical: 15,
     marginBottom: 10, // Space between buttons
   },
   signUpButton: {
-    backgroundColor: '#12c2e9', // Another vibrant color for distinction
+    backgroundColor: '#031a6b', // Another vibrant color for distinction
     paddingVertical: 15,
   },
   buttonText: {

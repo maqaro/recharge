@@ -48,11 +48,16 @@ const DailyJournal: React.FC = () => {
   useEffect(() => {
     // Fetch user ID when component mounts
     fetchUserId();
+    const { currentMonth, currentDay } = getCurrentDate();
 
-    setSelectedMonth('January');
-    setSelectedDay(1);
-    setMonth('January');
-    setDay(1);
+    setSelectedMonth(currentMonth);
+    setSelectedDay(currentDay);
+    setMonth(currentMonth);
+    setDay(currentDay);
+    // setSelectedMonth('January');
+    // setSelectedDay(1);
+    // setMonth('January');
+    // setDay(1);
 
   }, []);
 
@@ -238,9 +243,9 @@ const DailyJournal: React.FC = () => {
       <View>
         <Text style={styles.toptext}>Write Down Your Thoughts</Text>
         <View style={{height: 479, backgroundColor: 'rgba(0, 0, 0, .7)', padding: 10, marginBottom:9.5}}>
-      <View style={{alignSelf:'center', backgroundColor: 'white', width:'100%', height: 455}}>
+      <View style={{alignSelf:'center', backgroundColor: 'white', width:'100%', height: 459}}>
       <Text style={styles.helptextNoEntry}>Choose a month and date to view past entries or write one for today!</Text>
-      <Text style={{alignSelf:'center', fontSize:24, marginVertical: 220}}>No entry for this date</Text>
+      <Text style={{alignSelf:'center', fontSize:24, marginVertical: 214}}>No entry for this date</Text>
       </View>
       </View>
       </View>
@@ -285,7 +290,7 @@ const DailyJournal: React.FC = () => {
       <BackButton />
       <View style={styles.header}>
       
-      {/* <TouchableOpacity> */}
+      <TouchableOpacity>
         <View style={styles.pickerContainer}>
           {/* <DropDown /> */}
           <RNPickerSelect
@@ -299,7 +304,7 @@ const DailyJournal: React.FC = () => {
             }}
           />
         </View>
-        {/* </TouchableOpacity> */}
+        </TouchableOpacity>
 
         
         <TouchableOpacity onPress={handleTodayButtonClick} style={styles.TodayButton}>
@@ -344,7 +349,7 @@ const styles = StyleSheet.create({
   },
 
   todaybackground: {
-    height: 505, 
+    height: 490, 
     backgroundColor: 'white', 
     padding: 20,
     borderRadius: 5,
@@ -465,7 +470,7 @@ const styles = StyleSheet.create({
     // borderColor: 'black',
     borderColor: 'rgba(0, 0, 0, .7)',
     borderRadius: 5,
-    height: 415,
+    height: 400,
     textAlignVertical: 'top',
     width: '100%',
     marginBottom: 5,

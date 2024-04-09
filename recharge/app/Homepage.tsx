@@ -6,6 +6,8 @@ import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { supabase } from '../lib/supabase';
 import NavBar from './NavBar';
+import { overlay } from 'react-native-paper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 export default function Homepage() {
@@ -21,15 +23,30 @@ export default function Homepage() {
 
         <ScrollView>
           <View style={styles.full}>
+            <TouchableOpacity
+              style={styles.overview}
+              onPress={() => router.navigate('/DashBoard')}
+              >
+                <LinearGradient
+                  start={{x: 0, y: 0}} // Start at the top left
+                  end={{x: 1, y: 1}} // End at the bottom right
+                  colors={['#08AEEA', '#2AF598']}
+                  style={styles.overview1}
+                >
+                    <Ionicons name="calendar" size={30} color="black" style={{paddingBottom:10}}/>
+                    <Text style={styles.text}>Daily Snapshot</Text>
+                </LinearGradient>
+
+              </TouchableOpacity>
 
 
-            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Explore More</Text>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#268394', margin: 8}}>Explore</Text>
 
             <View style={styles.row}>
 
               <TouchableOpacity
                 style={styles.square1}
-                onPress={() => router.navigate('/DashBoard')}
+                onPress={() => router.navigate('/Trackers')}
               >
                 <LinearGradient colors={['#ff9966', '#ff5e62']} style={styles.square2}>
                   <Text style={styles.text}>Trackers</Text>
@@ -128,7 +145,27 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15
   },
-
+  overview: {
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 7,
+    shadowColor: "#111",
+    shadowOffset: {
+      width: 1,
+      height: 4
+    },
+    shadowRadius: 3,
+    shadowOpacity: 0.4,
+  },
+  overview1: {
+    width: '100%',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 25,
+    
+  },
   square1: {
     width: '50%',
     aspectRatio: 1,

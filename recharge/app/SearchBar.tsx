@@ -18,7 +18,7 @@ const SearchBar = ({clicked, searchPhrase, setPhrase, setClicked} : any) => {
           name="search"
           size={20}
           color="black"
-          style={{ marginLeft: 1 }}
+          style={{ marginLeft: 15 }}
         />
         {/* Input field */}
         <TextInput
@@ -26,13 +26,14 @@ const SearchBar = ({clicked, searchPhrase, setPhrase, setClicked} : any) => {
           placeholder="Search"
           //value={searchPhrase}
           onChangeText={searchPhrase => setPhrase(searchPhrase)}
+          //onChangeText={(text) => setPhrase(text)}
           onFocus={() => {
             setClicked(true);
           }}
         />
         {/* cross Icon, depending on whether the search bar is clicked or not */}
         {clicked && (
-          <Entypo name="cross" size={20} color="black" style={{ padding: 1 }} onPress={() => {
+          <Entypo name="cross" size={20} color="black" style={{ padding: 1, right: 13 }} onPress={() => {
               setPhrase("")
           }}/>
         )}
@@ -57,33 +58,38 @@ export default SearchBar;
 // styles
 const styles = StyleSheet.create({
   container: {
-    margin: 15,
+    marginTop: 35,
+    marginRight: 15,
     justifyContent: "flex-start",
     alignItems: "center",
     flexDirection: "row",
-    width: "90%",
-
+    width: "80%",
+    marginLeft: 40,
+    marginBottom: 30,
   },
+
   searchBar__unclicked: {
     padding: 10,
     flexDirection: "row",
-    width: "95%",
-    backgroundColor: "#d9dbda",
+    width: "100%",
+    backgroundColor: "white",
     borderRadius: 15,
     alignItems: "center",
   },
+
   searchBar__clicked: {
     padding: 10,
     flexDirection: "row",
     width: "80%",
-    backgroundColor: "#d9dbda",
+    backgroundColor: "white",
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "space-evenly",
   },
+
   input: {
     fontSize: 20,
-    marginLeft: 10,
+    marginLeft: 25,
     width: "90%",
   },
 });

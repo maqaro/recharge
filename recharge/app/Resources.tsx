@@ -13,6 +13,7 @@ interface Resource {
   link: string;
   topic: string; 
   image_url: string | null;
+  recommendedBy: string | null;
 }
 
 const Resources: React.FC = () => {
@@ -128,6 +129,9 @@ const Resources: React.FC = () => {
           <View style={styles.articleContainer}>
             {resource.image_url && (
               <Image source={{ uri: resource.image_url }} style={styles.image} />
+            )}
+            {resource.recommendedBy && (
+              <Text>Recommended By: {resource.recommendedBy}</Text>
             )}
             <View style={styles.textContent}>
               <Text style={styles.title}>{resource.title}</Text>

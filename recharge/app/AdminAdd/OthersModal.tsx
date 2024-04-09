@@ -12,6 +12,8 @@ const OthersModal: React.FC<OthersModalProps> = ({ topic, onClose }) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [link, setLink] = useState('');
+  const [recommendedBy, setRecommendedBy] = useState('');
+  const [image, setImage] = useState('');
 
   const handleSave = async () => {
      // Check if the date is in YYYY-MM-DD format
@@ -28,6 +30,8 @@ const OthersModal: React.FC<OthersModalProps> = ({ topic, onClose }) => {
           date: formattedDate,
           link: link,
           topic: topic, // Set the topic dynamically
+          recommendedBy: recommendedBy,
+          image_url: image,
         }
       ]);
 
@@ -78,7 +82,23 @@ const OthersModal: React.FC<OthersModalProps> = ({ topic, onClose }) => {
         style={styles.input}
         value={link}
         onChangeText={setLink}
-        placeholder="Enter link"
+        placeholder="Enter link (https://www.google.com)"
+      />
+
+      <Text style={styles.label}>Recommended By:</Text>
+        <TextInput
+          style={styles.input}
+          value={recommendedBy}
+          onChangeText={setRecommendedBy}
+          placeholder="Add any mentors who have recommended this"
+      />
+
+      <Text style={styles.label}>Image URL:</Text>
+      <TextInput
+        style={styles.input}
+        value={image}
+        onChangeText={setImage}
+        placeholder="Want to add an image?"
       />
 
       <View style={styles.buttonContainer}>

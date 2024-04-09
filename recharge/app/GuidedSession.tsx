@@ -97,7 +97,9 @@ const GuidedSession: React.FC = () => {
             style={styles.resourceContainer}>
             <View style={styles.articleContainer}>
               <Text style={styles.title}>{resource.title}</Text>
+              {resource.recommendedBy && (
               <Text style={styles.recommendedBy}>Recommended by: {resource.recommendedBy}</Text>
+              )}
               {resource.image && (
                 <Image
                   source={{ uri: resource.image }}

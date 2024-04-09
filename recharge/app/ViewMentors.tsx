@@ -66,10 +66,12 @@ const ViewMentors = () => {
                     <Text style={styles.description}>"Hey, I am here to help manage your stress better."</Text>
                     <Text style={styles.experience}>4+ years experience</Text>
                 </View>
+                
             ))}
-            
+          
         </View>
         </ScrollView>
+        <Text style={styles.gap}></Text> 
         </LinearGradient>
         <NavBar/>
         </View>
@@ -87,6 +89,10 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
         // alignItems: 'center',
         // backgroundColor: '#fff',
+      },
+
+      gap:{
+        marginBottom: 100,
       },
 
       scrollview: {

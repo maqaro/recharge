@@ -1,7 +1,7 @@
 // Homepage.tsx
 
 import React, {useEffect, useState} from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, FlatList, ScrollView } from 'react-native';
 import { router, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -38,8 +38,9 @@ const ViewChatRooms = () => {
       };
 
     return (
-        <LinearGradient colors={['#F5F5F5', '#F5F5F5']} style={{height:'100%', width:'100%'}}>
         <View>
+        <LinearGradient colors={['#F5F5F5', '#F5F5F5']} style={{height:'100%', width:'100%'}}>
+        <ScrollView style={styles.scrollview} showsVerticalScrollIndicator={true}>
             <Text style={styles.header}>Chats</Text>
         <View>
             {chatrooms?.map((item: {id: any,mentor_id: any, issue_id: any, issues: {key: any, value: any}, mentors: {key: any, value: any}}) => (
@@ -50,9 +51,13 @@ const ViewChatRooms = () => {
             ))}
             
         </View>
-        </View>
+        </ScrollView>
+        <Text style={styles.gap}></Text> 
         <NavBar/>
+        
         </LinearGradient>
+        
+        </View>
         
     );
 };
@@ -72,6 +77,14 @@ const styles = StyleSheet.create({
     //     margin:5,
     //     minHeight:500,
     // },
+    scrollview: {
+        height: '110%',
+        flexGrow: 1,
+        paddingBottom: '10%',
+    },
+    gap:{
+        marginBottom: 100,
+    },
 
     item: {
         margin: 10,

@@ -32,6 +32,7 @@ const Login = () => {
         style={styles.gradient}
       >
         <Text style={styles.welcomeText}>Welcome Back!</Text>
+        <Image source={require('./images/Logo.png')} style={styles.logo} />
 
         <View style={styles.formContainer}>
           <Input
@@ -90,6 +91,11 @@ const Login = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    resizeMode: 'contain',
   },
   gradient: {
     flex: 1,

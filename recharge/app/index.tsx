@@ -34,7 +34,7 @@ export default function EmailForm() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <LinearGradient colors={['#6a11cb', '#2575fc']} style={styles.gradient}>
+      <LinearGradient colors={['#2F80ED', '#007991']} style={styles.gradient}>
 
         <View style={styles.logoContainer}>
           <Image source={require('./images/fdm.png')} style={styles.logo1} />

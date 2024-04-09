@@ -12,6 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const MatchWithMentorForm = () => {
   const { control, handleSubmit } = useForm();
+
   
   type DropdownItem = {
     label: string;
@@ -82,6 +83,9 @@ const BackButton = () => (
   </TouchableOpacity>
 );
 
+
+
+
   return (
     <LinearGradient colors={['#85D4D5', '#85D4D5']} style={{height:'100%', width:'100%'}} >
       <BackButton />
@@ -122,7 +126,8 @@ const BackButton = () => (
 
       {/* <Button title="Submit" onPress={handleSubmit(onSubmit)} /> */}
 
-      <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.submit}>
+      <TouchableOpacity onPress={handleSubmit(onSubmit)} style={[styles.submit, !text || valueTopic === 'General' || valueSeverity === '0' ? styles.submitDisabled : null]} 
+      disabled={!text || valueTopic === 'General' || valueSeverity === '0'}>
       <Text style={styles.buttonText}>Submit</Text>
     </TouchableOpacity>
 
@@ -200,6 +205,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 10,
+  },
+
+  submitDisabled: {
+    backgroundColor: 'grey',
   },
 
   buttonText: {

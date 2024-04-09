@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '../lib/supabase';
 import { Alert } from 'react-native';
 import { set } from 'date-fns';
+import { Ionicons } from '@expo/vector-icons';
 
 let specialtyValue = "";
 
@@ -75,10 +76,20 @@ const MentorResults = () =>{
     router.navigate('./ViewMentors')
   }
 
+  const BackButton = () => (
+    <TouchableOpacity
+      style={styles.backButton}
+      onPress={() => router.navigate('/MatchWithMentorForm')}
+    >
+      <Ionicons name="arrow-back" size={24} color="black" />
+    </TouchableOpacity>
+  );
+
     return (
-      <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
+      <LinearGradient colors={['#85D4D5', '#85D4D5']} style={{height:'100%', width:'100%'}}>
+        <BackButton />
       <View>
-          <Text style={styles.details}>Please select one of the mentors below: </Text>
+          <Text style={styles.details}>Please Select One Of The Mentors Below: </Text>
       <View style={styles.item}>
           {mentorDetails?.map((item: {id: any, name: any, issues: {key: any, value: any}, specialty_id: any}) => (
               <TouchableOpacity onPress={() => mentorSelected(item.id)}>
@@ -103,8 +114,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 
+  backButton: {
+    position: 'absolute',
+    top: 22, 
+    left: 20,
+    zIndex: 10,
+  },
+
   item: {
-      margin: 30,
+      
       borderBottomWidth: 2,
       borderBottomColor: "lightgrey",
     },
@@ -112,16 +130,19 @@ const styles = StyleSheet.create({
       fontSize: 20,
       fontWeight: "bold",
       marginBottom: 5,
-      fontStyle: "italic",
-      color: 'white',
+      color: 'black',
+      paddingLeft: 20,
     },
   
     details: {
-      fontSize: 15,
+      fontSize: 20,
       fontWeight: "bold",
-      marginBottom: 5,
-      fontStyle: "italic",
-      color: 'white',
+      marginBottom: 25,
+      color: 'black',
+      textAlign: 'center',
+      marginTop: 30,
+      paddingLeft: 10,
+      paddingRight: 20,
     },
 
 

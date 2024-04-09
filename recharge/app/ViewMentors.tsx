@@ -56,7 +56,7 @@ const ViewMentors = () => {
         <ScrollView style={styles.scrollview} showsVerticalScrollIndicator={true}>
 
           <BackButton />
-            <Text style={styles.header}>Current mentors:</Text>
+            <Text style={styles.header}>Current Mentors:</Text>
         <View style={styles.item}>
             {details?.map((item: {mentor_id: any, issue_id: any, issues: {key: any, value: any}, mentors: {key: any, value: any}}) => (
                 <View style={styles.mentor}>

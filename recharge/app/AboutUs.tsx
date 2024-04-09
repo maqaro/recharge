@@ -12,7 +12,7 @@ const AboutUs: React.FC = () => {
   };
 
   return (
-    <LinearGradient colors={['#fff9ed', '#eccbaa']} style={{height:'100%', width:'100%'}} >
+    <LinearGradient colors={['#f5f5f5', '#f5f5f5']} style={{height:'100%', width:'100%'}} >
     <ScrollView contentContainerStyle={styles.container}>
       <TouchableOpacity onPress={handleBack} style={styles.backButton}>
         <AntDesign name="arrowleft" size={24} color="black" />
@@ -57,17 +57,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 20,
     lineHeight: 24,
+    color: '#183E4C',
   },
   credits: {
     fontSize: 14,
     marginBottom: 20,
     textAlign: 'center',
-    color: 'white',
+    color: 'black',
     marginTop: 30,
   },
   backButton: {
     position: 'absolute',
-    top: 20,
+    top: 45,
     left: 20,
     zIndex: 1,
   },

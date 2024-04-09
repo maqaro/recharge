@@ -93,14 +93,15 @@ const Feedback: React.FC = () => {
     };
 
   return (
-    <LinearGradient colors={['#fff9ed', '#eccbaa']} style={{height:'100%', width:'100%'}} >
+    <LinearGradient colors={['#F5F5f5', '#F5F5f5']} style={{height:'100%', width:'100%'}} >
       <Text style={styles.modalTitle}>Feedback Form</Text>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        {renderRatingSection('Experience with React', 'experienceWithReact')}
-        {renderRatingSection('Ease of Use', 'easeOfUse')}
-        {renderRatingSection('Has the features you want', 'hasDesiredFeatures')}
-        {renderRatingSection('Feels fast and responsive', 'speedAndResponsiveness')}
-        {renderRatingSection('Is reliable', 'reliability')}
+        <Text style={styles.gap}></Text>
+        {renderRatingSection('Experience With React', 'experienceWithReact')}
+        {renderRatingSection('Ease Of Use', 'easeOfUse')}
+        {renderRatingSection('Has Features You Want', 'hasDesiredFeatures')}
+        {renderRatingSection('Fast and Responsive', 'speedAndResponsiveness')}
+        {renderRatingSection('Is Reliable', 'reliability')}
         <Text style={styles.additionalInfoLabel}>Additional Information:</Text>
         <TextInput
           style={styles.additionalInfoInput}
@@ -134,41 +135,51 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 30,
+    marginBottom: 20,
     marginTop: 25,
+  },
+
+  gap:{
+    marginBottom: 30,
   },
   modalSectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 15,
+    marginLeft: 9,
   },
   ratingSection: {
-    marginBottom: 20,
+    marginBottom: 25,
   },
   additionalInfoLabel: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 15,
+    marginLeft: 9,
   },
   additionalInfoInput: {
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
+    marginLeft: 9,
+    marginRight: 11,
     marginBottom: 20,
-    paddingBottom:40,
+    paddingBottom: 50,
     backgroundColor:'white',
   },
   starRatingContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    // justifyContent: 'center',
+    marginLeft: 230,
+    top: -45,
   },
   starIconFilled: {
-    fontSize: 50,
+    fontSize: 30,
     color: '#FFD700', // Gold color for filled stars
   },
   starIconOutline: {
-    fontSize: 50,
+    fontSize: 30,
     color: 'gray', 
   },
   buttonContainer: {
@@ -179,13 +190,14 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     borderRadius: 50, // Make oval buttons
-    backgroundColor: 'red',
+    backgroundColor: '#F53649',
     paddingVertical: 15,
     alignItems: 'center',
     marginHorizontal: 5,
+    top: 10,
   },
   submitButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#44BA67',
   },
   buttonText: {
     fontSize: 16,

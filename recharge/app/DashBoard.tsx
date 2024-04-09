@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, PermissionsAndroid } from 'react-native';
 import { supabase } from '../lib/supabase';
 import WaterTracker from './WaterTracker';
 import { ProgressBar } from 'react-native-paper';
@@ -160,12 +160,13 @@ export default function DashBoard() {
 
     return (
         <View style={styles.full}>
-            <TouchableOpacity style= {{padding: 20}}onPress={() => router.navigate('/Homepage')}>
+            <TouchableOpacity style={{paddingLeft:30, width:100}}onPress={() => router.navigate('/Homepage')}>
 
-                <Ionicons name="chevron-back-circle-outline" size={30} color="black" />
+                <Ionicons name="chevron-back-circle-outline" size={30}  color="black" />
                 <Text>Back</Text>
             </TouchableOpacity>
             <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Your Day at a Glance</Text>
+            
                 <View style={styles.row}>
                     <TouchableOpacity
                         style={styles.overview}
@@ -262,11 +263,9 @@ const styles = StyleSheet.create({
     full: {
         flex: 1,
         alignContent: 'center',
-        justifyContent: 'space-evenly',
     },
     row: {
-        flex: 1,
-        flexDirection: 'row',
+         flexDirection: 'row',
         justifyContent: 'center',
         marginLeft: 15,
         marginRight: 15

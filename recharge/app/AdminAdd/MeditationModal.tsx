@@ -68,6 +68,11 @@ const MeditationModal: React.FC<MeditationModalProps> = ({ onClose }) => {
         onChangeText={setImage}
         placeholder="Want to add an image?"
       />
+
+      <View style={styles.buttonContainer}>
+        <Button title="Save" onPress={handleSave} />
+        <Button title="Cancel" onPress={onClose} />
+      </View>
       
     </View>
   );

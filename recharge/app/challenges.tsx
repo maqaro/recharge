@@ -36,11 +36,15 @@ const Challenges = () => {
         try {
             let { data: challenges, error } = await supabase
                 .from('challenges')
-                .select('*')
+                .select(`
+                    *,
+                    employee:sender (username)
+                `) // Assuming 'sender' is a foreign key in 'challenges' pointing to 'employee'
                 .eq('receiver', id);
-
+            console.log("Challenges:", challenges);
             if (error) throw error;
             setReceivedChallenges(challenges);
+            console.log("Received challenges:", challenges);
         } catch (error) {
             console.error("Error fetching received challenges:", error.message);
         }
@@ -210,9 +214,14 @@ const Challenges = () => {
                     data={receivedChallenges}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <View style={styles.challengeItem}>
-                            <Text style={styles.challengeText}>{item.title}</Text>
-                        </View>
+                    <View style={[styles.challengeItem, item.done ? styles.challengeDoneBackground : styles.challengePendingBackground]}>
+                        <Text style={styles.challengeTitle}>{item.title.trim()}</Text>
+                        <Text style={styles.challengeDetail}>Detail: {item.detail}</Text>
+                        <Text style={styles.challengePoints}>Points: {item.points}</Text>
+                        <Text style={styles.challengeEnd}>Due by: {item.end}</Text>
+                        <Text style={styles.challengeStatus}>Status: {item.done ? 'Completed' : 'Pending'}</Text>
+                        <Text style={styles.challengeSender}>From: {item.employee.username}</Text>
+                    </View>
                     )}
                 />
             </View>
@@ -221,28 +230,66 @@ const Challenges = () => {
 };
 
 const styles = StyleSheet.create({
+    
     container: {
         flex: 1,
         padding: 20,
+        backgroundColor: '#F7F7F7', // Light gray background for the entire screen
     },
     header: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
+        fontSize: 22,
+        fontWeight: '600',
+        color: '#333',
+        marginBottom: 16,
     },
     challengeItem: {
-        backgroundColor: '#f9f9f9',
-        padding: 10,
-        borderRadius: 5,
-        marginBottom: 10,
+        padding: 20,
+        borderRadius: 10,
+        marginBottom: 12,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 3,
         },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+        shadowOpacity: 0.1,
+        shadowRadius: 4.65,
+        elevation: 7,
+    },
+    challengeDoneBackground: {
+        backgroundColor: '#E8F5E9', // Soft green for completed challenges
+    },
+    challengePendingBackground: {
+        backgroundColor: '#FFF3E0', // Soft orange for pending challenges
+    },
+    challengeTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#424242',
+        marginBottom: 8,
+    },
+    challengeDetail: {
+        fontSize: 16,
+        color: '#616161',
+        marginBottom: 4,
+    },
+    challengePoints: {
+        fontSize: 16,
+        color: '#616161',
+        marginBottom: 4,
+    },
+    challengeEnd: {
+        fontSize: 16,
+        color: '#616161',
+        marginBottom: 4,
+    },
+    challengeStatus: {
+        fontSize: 16,
+        fontWeight: '500',
+        color: '#424242',
+    },
+    challengeDone: {
+        fontSize: 14,
+        fontWeight: '500',
     },
     challengeText: {
         fontSize: 16,

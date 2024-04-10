@@ -177,22 +177,34 @@ const getRequests = async () => {
 
 
     return (
-        <View style={styles.container}>
-        <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}}>
+      <View style={styles.container}>
+        <LinearGradient colors={['lightblue', 'lightblue']} style={{height:'100%', width:'100%'}}>
         <ScrollView >
-        <Button title="Add Friends" onPress={() => router.navigate('./Friends')}></Button>
-        <Text style={styles.header}>Requests: </Text>
+      
+        {/* <View style={styles.addbutton}>
+          <Button title="Add Friends" onPress={() => router.navigate('./Friends')}></Button>
+        </View> */}
+
+        <TouchableOpacity
+              style={[styles.topicButton && styles.activeButtonf]}
+              onPress={() => router.navigate('./Friends')}>
+              <Text style={styles.friends}>Add Friends</Text>
+          </TouchableOpacity>
+
+        <Text style={styles.header}>Requests:</Text>
         <View style={styles.item}>
             {displayRequests()}
             </View>
-        <Text style={styles.header}>Friends: </Text>
+
+        <Text style={styles.header}>Friends:</Text>
         <View style={styles.item}>
             {displayFriends()}
             </View>
-        </ScrollView>
-        </LinearGradient>
-        <NavBar/>
-        </View>
+            
+      </ScrollView>
+      </LinearGradient>
+      <NavBar/>
+      </View>
     );
 };
 

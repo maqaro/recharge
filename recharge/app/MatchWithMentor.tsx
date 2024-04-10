@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     },
 
     gap:{
-      marginBottom: 50,
+      marginBottom: 60,
     }
   });
 

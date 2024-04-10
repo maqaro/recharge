@@ -6,6 +6,7 @@ import FeatureRequestModal from './NewFeature'; // Importing FeatureRequestModal
 import NavBar from './NavBar';
 import { Icon } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 
 const Settings: React.FC = () => {
   const router = useRouter();
@@ -60,52 +61,81 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <LinearGradient colors={['#fff9ed', '#eccbaa']} style={{height:'100%', width:'100%'}} >
-      <Text style={{fontWeight:'bold', fontSize:28, alignSelf:'center', marginTop:20}}> Settings</Text>
+    <LinearGradient colors={['#F5F5f5', '#f5f5f5']} style={{height:'100%', width:'100%'}} >
+      <Text style={{fontWeight:'bold', fontSize:28, alignSelf:'center', marginTop:20, marginBottom: 30}}> Settings</Text>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.buttonContainer}>
 
-        <TouchableOpacity onPress={() => handleButtonPress('Log Out')} style={styles.button}>
-          <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
-            <Icon name="log-out" type="feather" color="#007AFF"/>
-          </Text>
-          <Text style={styles.text}>Log Out</Text>
-        </TouchableOpacity>
 
         <TouchableOpacity onPress={() => handleButtonPress('Feedback')} style={styles.button}>
-          <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
-            <Icon name="message-square" type="feather" color="#007AFF" />
+          <Text style={{padding: 0, backgroundColor:'#f5f5f5', top: 3, borderRadius:20}}>
+            <Icon name="message-square" type="feather" color="black" />
           </Text>
+          
           <Text style={styles.text}>Feedback</Text>
+
+          <Text style={{padding: 0, backgroundColor:'#f5f5f5', top: -1, left: 170, borderRadius:20}}>
+            <Ionicons name="chevron-forward-outline" size={26} color="black" />
+          </Text>
         </TouchableOpacity>
+
 
         <TouchableOpacity onPress={() => handleButtonPress('Report Bug')} style={styles.button}>
-          <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
-            <Icon name="alert-circle" type="feather" color="#007AFF" />
+          <Text style={{padding: 0, backgroundColor:'#f5f5f5', top: 3, borderRadius:20}}>
+            <Icon name="alert-circle" type="feather" color="black" />
           </Text>
+
           <Text style={styles.text}>Report Bug</Text>
+          
+          <Text style={{padding: 0, backgroundColor:'#f5f5f5', top: -1, left: 157, borderRadius:20}}>
+            <Ionicons name="chevron-forward-outline" size={26} color="black" />
+          </Text>
         </TouchableOpacity>
+
 
         <TouchableOpacity onPress={() => handleButtonPress('Request New Feature')} style={styles.button}>
-          <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
-            <Icon name="plus-circle" type="feather" color="#007AFF" />
+          <Text style={{padding: 0, backgroundColor:'#f5f5f5', top: 3, borderRadius:20}}>
+            <Icon name="plus-circle" type="feather" color="black" />
           </Text>
           <Text style={styles.text}>Request New Feature</Text>
+          
+          <Text style={{padding: 0, backgroundColor:'#f5f5f5', top: -1, left: 70, borderRadius:20}}>
+            <Ionicons name="chevron-forward-outline" size={26} color="black" />
+          </Text>
         </TouchableOpacity>
+
 
         <TouchableOpacity onPress={() => handleButtonPress('Notifications')} style={styles.button}>
-          <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
-            <Icon name="bell" type="feather" color="#007AFF" />
+          <Text style={{padding: 0, backgroundColor:'#f5f5f5', top: 3, borderRadius:20}}>
+            <Icon name="bell" type="feather" color="black" />
           </Text>
           <Text style={styles.text}>Notifications</Text>
+          
+          <Text style={{padding: 0, backgroundColor:'#f5f5f5', top: -1, left: 143, borderRadius:20}}>
+            <Ionicons name="chevron-forward-outline" size={26} color="black" />
+          </Text>
         </TouchableOpacity>
 
+
         <TouchableOpacity onPress={() => handleButtonPress('About Us')} style={styles.button}>
-          <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
-            <Icon name="info" type="feather" color="#007AFF" />
+          <Text style={{padding: 0, backgroundColor:'#f5f5f5', top: 3, borderRadius:20}}>
+            <Icon name="info" type="feather" color="black" />
           </Text>
           <Text style={styles.text}>About Us</Text>
+          
+          <Text style={{padding: 0, backgroundColor:'#f5f5f5', top: -1, left: 173, borderRadius:20}}>
+            <Ionicons name="chevron-forward-outline" size={26} color="black" />
+          </Text>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleButtonPress('Log Out')} style={styles.button}>
+          <Text style={{padding: 0, backgroundColor:'#f5f5f5', top: 3, borderRadius:20}}>
+            <Icon name="log-out" type="feather" color="red"/>
+          </Text>
+          <Text style={styles.logouttext}>Log Out</Text>
+        </TouchableOpacity>
+
+
 
         </View>
       </ScrollView>
@@ -124,7 +154,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   buttonContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
     borderRadius: 10,
     paddingVertical: 10,
     paddingLeft:2,
@@ -146,7 +176,16 @@ const styles = StyleSheet.create({
     fontSize:18,
     fontWeight:'bold',
     marginLeft: 20,
+    color: 'black',
+  },
+
+  logouttext: {
+    fontSize:18,
+    fontWeight:'bold',
+    marginLeft: 20,
+    color: 'red',
   }
+
 });
 
 export default Settings;

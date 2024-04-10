@@ -122,9 +122,11 @@ const BackButton = () => (
 
       {/* <Button title="Submit" onPress={handleSubmit(onSubmit)} /> */}
 
-      <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.submit}>
+      <TouchableOpacity onPress={handleSubmit(onSubmit)} style={[styles.submit, !text || valueTopic === 'General' || valueSeverity === '0' ? styles.submitDisabled : null]} 
+      disabled={!text || valueTopic === 'General' || valueSeverity === '0'}>
       <Text style={styles.buttonText}>Submit</Text>
     </TouchableOpacity>
+
 
     </View>
     </LinearGradient>
@@ -200,6 +202,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 10,
+  },
+
+  submitDisabled: {
+    backgroundColor: 'grey',
   },
 
   buttonText: {

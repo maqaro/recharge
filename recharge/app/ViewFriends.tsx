@@ -162,14 +162,14 @@ const getRequests = async () => {
 
     return (
         <View style={styles.container}>
-        <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}}>
+        <LinearGradient colors={['lightblue', 'lightblue']} style={{height:'100%', width:'100%'}}>
         <ScrollView >
         <Button title="Add Friends" onPress={() => router.navigate('./Friends')}></Button>
-        <Text style={styles.header}>Requests: </Text>
+        <Text style={styles.header}>Requests:</Text>
         <View style={styles.item}>
             {displayRequests()}
             </View>
-        <Text style={styles.header}>Friends: </Text>
+        <Text style={styles.header}>Friends:</Text>
         <View style={styles.item}>
             {displayFriends()}
             </View>
@@ -212,7 +212,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 5,
-        fontStyle: "italic",
         color: 'black',
       },
     
@@ -220,16 +219,15 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: "bold",
         marginBottom: 5,
-        fontStyle: "italic",
         color: 'black',
         borderColor:'gray',
         borderBottomWidth:1,
       },
       header: {
-        fontSize: 35,
+        fontSize: 28,
         fontWeight: "bold",
         marginBottom: 35,
-        color: 'white',
+        color: 'black',
         alignSelf:'center',
         marginTop: 35,
       },

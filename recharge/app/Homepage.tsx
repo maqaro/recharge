@@ -79,7 +79,7 @@ export default function Homepage() {
               </TouchableOpacity>
 
 
-            <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#268394', margin: 8}}>Explore</Text>
+            <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#268394', margin: 10}}>Explore</Text>
 
             <View style={styles.row}>
 

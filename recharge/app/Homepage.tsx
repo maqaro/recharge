@@ -16,6 +16,8 @@ export default function Homepage() {
   const [quote, setQuote] = useState('');
   const [author, setAuthor] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [username, setUsername] =  useState<string | null>(null);
+
 
   const fetchQuote = async () => {
     setIsLoading(true);
@@ -34,7 +36,27 @@ export default function Homepage() {
     }
   };
 
+  const fetchUser = async () => {
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+    if (userError) {
+      console.error('Error fetching user:', userError);
+      return;
+    }
+    let userId = (userData?.user?.id ?? null);
+
+    const{data, error} = await supabase
+    .from('employee')
+    .select('username')
+    .eq('employee_id', userId);
+
+    if (data){
+        setUsername(Object.values(data[0])[0])
+    }
+
+  };
+
   useEffect(() => {
+    fetchUser();
     fetchQuote(); // Fetch a quote when the component mounts
   }, []);
   return (
@@ -44,7 +66,7 @@ export default function Homepage() {
 
       <LinearGradient colors={['#FFFFFF', '#FFFFFF']} style={{ height: '85%', width: '100%' }} >
 
-        <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#268394', margin: 16, alignContent: 'center', textAlign: 'center' }}>Let's Recharge, John</Text>
+        <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#268394', margin: 16, alignContent: 'center', textAlign: 'center' }}>Let's Recharge, {username}</Text>
 
 
         <ScrollView>

@@ -63,7 +63,7 @@ const ViewMentors = () => {
                 <Image source={require('./images/Match.png')} style={styles.face}/>
                 <Text style={styles.title}>{Object.values(item.mentors)}</Text>
                 <Text style={styles.details}>Speciality: {Object.values(item.issues)}</Text>
-                <Text style={styles.description}>"Hey, I am here to help manage your stress better"</Text>
+                <Text style={styles.description}>"I'm here to support you with {Object.values(item.issues)}. Together, we will overcome it."</Text>
                 <Text style={styles.experience}>4+ years experience</Text>
               </TouchableOpacity>
             ))}

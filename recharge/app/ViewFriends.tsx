@@ -63,7 +63,7 @@ const getRequests = async () => {
 };
 
      const displayFriends = () =>{
-        if (friends.length == 0){
+        if (friends == null){
             return <Text style={styles.title}>You have no friends lol</Text>
         }
         else{
@@ -80,7 +80,7 @@ const getRequests = async () => {
       };
 
       const displayRequests = () =>{
-        if (requests.length == 0){
+        if (requests == null){
             return <Text style={styles.title}>You currently do not have any requests.</Text>
         }
         else{

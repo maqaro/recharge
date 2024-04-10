@@ -164,7 +164,17 @@ const getRequests = async () => {
         <View style={styles.container}>
         <LinearGradient colors={['lightblue', 'lightblue']} style={{height:'100%', width:'100%'}}>
         <ScrollView >
-        <Button title="Add Friends" onPress={() => router.navigate('./Friends')}></Button>
+        
+        {/* <View style={styles.addbutton}>
+          <Button title="Add Friends" onPress={() => router.navigate('./Friends')}></Button>
+        </View> */}
+
+        <TouchableOpacity
+              style={[styles.topicButton && styles.activeButtonf]}
+              onPress={() => router.navigate('./Friends')}>
+              <Text style={styles.friends}>Add Friends</Text>
+          </TouchableOpacity>
+
         <Text style={styles.header}>Requests:</Text>
         <View style={styles.item}>
             {displayRequests()}
@@ -215,14 +225,14 @@ const styles = StyleSheet.create({
         color: 'black',
       },
     
-      details: {
-        fontSize: 15,
-        fontWeight: "bold",
-        marginBottom: 5,
-        color: 'black',
-        borderColor:'gray',
-        borderBottomWidth:1,
-      },
+      // details: {
+      //   fontSize: 15,
+      //   fontWeight: "bold",
+      //   marginBottom: 5,
+      //   color: 'black',
+      //   borderColor:'transparent',
+      //   borderBottomWidth:1,
+      // },
       header: {
         fontSize: 28,
         fontWeight: "bold",
@@ -230,6 +240,44 @@ const styles = StyleSheet.create({
         color: 'black',
         alignSelf:'center',
         marginTop: 35,
+      },
+
+      addbutton:{
+        marginTop: 20,
+        top: 0,
+        textAlign: 'center',
+      },
+      topicButton: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        height: 37,
+        marginRight: 5,
+      },
+
+      activeButtonf: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        marginRight: 295,
+        textAlign: 'center',
+        left: 147,
+        top: 10,
+        marginBottom: 10,
+
+        shadowColor: 'white',
+        shadowOpacity: 0.5,
+        shadowOffset: { width: 0, height: 4 },
+        shadowRadius: 5,
+      },
+
+      friends:{
+        fontSize: 18,
+        fontWeight: "bold",
+        color: 'black',
+        marginTop: 5,
+        marginBottom: 5,
+        textAlign: 'center',
       },
     
   

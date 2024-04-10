@@ -9,6 +9,7 @@ interface MeditationModalProps {
 const MeditationModal: React.FC<MeditationModalProps> = ({ onClose }) => {
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
+  const [image, setImage] = useState('');
 
   const handleSave = async () => {
     try {
@@ -48,10 +49,19 @@ const MeditationModal: React.FC<MeditationModalProps> = ({ onClose }) => {
         placeholder="Enter link"
       />
 
+      <Text style={styles.label}>Image URL:</Text>
+      <TextInput
+        style={styles.input}
+        value={image}
+        onChangeText={setImage}
+        placeholder="Want to add an image?"
+      />
+
       <View style={styles.buttonContainer}>
         <Button title="Save" onPress={handleSave} />
         <Button title="Cancel" onPress={onClose} />
       </View>
+      
     </View>
   );
 };

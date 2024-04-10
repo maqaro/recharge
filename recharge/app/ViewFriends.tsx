@@ -92,8 +92,24 @@ const getRequests = async () => {
                 {requests?.map(item => (
                     <View style={styles.inneritem}>
                         <Text style={styles.title}>{item}</Text>
-                        <Button title="Accept" onPress={() =>acceptRequest(item)}></Button>
-                        <Button title="Deny" onPress={() =>denyRequest(item)}></Button>
+
+                        {/* <Button title="Accept" onPress={() =>acceptRequest(item)}></Button> */}
+
+                        <TouchableOpacity
+                            style={[styles.accept]}
+                            onPress={() => acceptRequest(item)}>
+                            <Text style={styles.friends}>Accept</Text>
+                        </TouchableOpacity>
+
+                        {/* <Button title="Deny" onPress={() =>denyRequest(item)}></Button> */}
+
+                        <TouchableOpacity
+                            style={[styles.deny]}
+                            onPress={() => denyRequest(item)}>
+                            <Text style={styles.friends}>Decline</Text>
+                        </TouchableOpacity>
+
+                        
                 </View>
                 ))}
                 </View>
@@ -234,6 +250,7 @@ const styles = StyleSheet.create({
       inneritem: {
         display: 'flex',
         flexDirection: 'row',
+        marginTop: 5,
       },
 
       title: {
@@ -258,6 +275,7 @@ const styles = StyleSheet.create({
         color: 'black',
         alignSelf:'center',
         marginTop: 35,
+       
       },
 
       addbutton:{
@@ -297,6 +315,22 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         textAlign: 'center',
       },
+
+      accept:{
+        backgroundColor: '#78D378',
+        marginRight: 20,
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderRadius: 10,
+        marginLeft: 100,
+      },
+
+      deny:{
+        backgroundColor: 'red',
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderRadius: 11,
+      }
     
   
   });

@@ -133,9 +133,10 @@ const styles = StyleSheet.create({
     marginTop: 60,
   },
   logo: {
-    width: 120,
-    height: 120,
+    width: 180,
+    height: 180,
     resizeMode: 'contain',
+    marginTop: -60,
   },
   title: {
     color: 'white',
@@ -150,10 +151,10 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     marginTop: 15,
-    marginBottom: 30,
+    marginBottom: 40,
   },
   formContainer: {
-    marginTop: 20,
+    marginTop: 0,
   },
   inputText: {
     color: 'white',
@@ -163,32 +164,33 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderBottomColor: 'white',
   },
-  button1: {
+  button1: { //Sign up button
     backgroundColor: '#fff', // Updated button color for better contrast
-    width: '90%',
-    borderRadius: 30,
+    width: '100%',
+    borderRadius: 25,
     alignSelf: 'center',
     marginTop: 10,
-    paddingVertical: 10, // Adjusted for better touch area
+    paddingVertical: 15, // Adjusted for better touch area
   },
-  button: {
+  button: { // login button
     backgroundColor: '#fff', // Secondary button color
-    width: '90%',
-    borderRadius: 30,
+    width: '100%',
+    borderRadius: 25,
     alignSelf: 'center',
-    marginTop: 10,
-    paddingVertical: 10,
+    marginTop: 2,
+    paddingVertical: 15,
   },
   buttonTitleStyle: {
     color: '#e37b60', // Text color updated for better readability
     fontWeight: 'bold', // Make text bold
   },
   oldaccount: {
-    color: 'white',
+    color: '#303030',
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 10,
     marginBottom: 10,
+
   }
 });
 

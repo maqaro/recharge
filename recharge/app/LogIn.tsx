@@ -121,9 +121,10 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   logo: {
-    width: 120,
-    height: 120,
+    width: 200,
+    height: 200,
     resizeMode: 'contain',
+    marginTop: -70,
   },
   gradient: {
     flex: 1,
@@ -132,18 +133,20 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   welcomeText: {
-    fontSize: 36,
+    fontSize: 40,
     color: '#fff',
     fontWeight: 'bold',
     textAlign: 'center',
   },
   formContainer: {
     width: '100%',
+    marginTop: -50,
+    marginBottom: 0,
   },
   input: {
     borderBottomColor: 'white',
     borderBottomWidth: 1,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
   },
   inputStyle: {
     color: 'white',
@@ -151,30 +154,32 @@ const styles = StyleSheet.create({
   },
   forgot: {
     textAlign: 'right',
-    marginRight: 28,
-    color: '#e6e66',
-    marginTop: 15,
+    marginRight: 19,
+    color: '#303030',
+    marginTop: -1,
     fontSize: 15,
+    marginBottom: 60,
+    fontWeight: 'bold',
   },
   or: {
     color: 'white',
-    marginTop: 20,
+    marginTop: 10,
     fontSize: 18,
     alignSelf: 'center',
   },
   LoginButton: {
     backgroundColor: '#fff', // Harmonized button color for consistency
-    marginTop: 30,
-    borderRadius: 30, // Rounded for a modern look
-    width: '85%',
+    marginTop: 0,
+    borderRadius: 25, // Rounded for a modern look
+    width: '100%',
     alignSelf: 'center',
     paddingVertical: 15,
   },
   SignupButton: {
     backgroundColor: '#fff', // A complementary, distinct button color
     marginTop: 10,
-    borderRadius: 30, // Consistent rounded look
-    width: '85%',
+    borderRadius: 25, // Consistent rounded look
+    width: '100%',
     alignSelf: 'center',
     paddingVertical: 15,
   },

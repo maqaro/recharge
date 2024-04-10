@@ -37,7 +37,7 @@ export default function EmailForm() {
       <LinearGradient colors={['#1a7373', '#e37b60']} style={styles.gradient}>
 
         <View style={styles.logoContainer}>
-          <Image source={require('./images/fdm.png')} style={styles.logo1} />
+          {/* <Image source={require('./images/fdm.png')} style={styles.logo1} /> */}
           <Image source={require('./images/Logo.png')} style={styles.logo} />
         </View>
 
@@ -75,46 +75,55 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   logoContainer: {
-    marginTop: 30,
+    // marginTop: 30,
+    alignItems: 'center',
   },
-  logo1: {
-    width: 200,
-    height: 100,
-    resizeMode: 'contain',
-    borderRadius: 20,
-  },
+  // logo1: {
+  //   width: 200,
+  //   height: 100,
+  //   resizeMode: 'contain',
+  //   borderRadius: 20,
+  // },
   logo: {
     width: 200,
     height: 200,
     resizeMode: 'contain',
+    marginTop: 0,
     borderRadius: 20,
   },
   rechargeText: {
     fontSize: 45, // Slightly larger font size
-    fontWeight: 'bold', // More emphasis
+    // fontWeight: 'bold', // More emphasis
     color: '#fff',
+    textAlign: 'center',
+    marginTop: -80,
   },
   subtitle: {
-    fontSize: 18, // Adjusted for readability
+    fontSize: 20, // Adjusted for readability
     color: '#e6e6e6', // Lighter tone for contrast
-    marginTop: 10,
+    marginTop: -30,
     marginBottom: 50, // Reduced to tighten layout
-    paddingHorizontal: 20, // Added to control width
+    // paddingHorizontal: 20, // Added to control width
     textAlign: 'center',
   },
   buttonContainer: {
     width: '100%', // Full width for better control
+    alignContent: 'center',
+    marginTop: -50, 
   },
   signInButton: {
     backgroundColor: '#ffffff', // Vibrant color for distinction
     paddingVertical: 15,
-    marginBottom: 10, // Space between buttons
+    marginBottom: 45, // Space between buttons
+    borderRadius: 25, 
   },
   signUpButton: {
     backgroundColor: '#ffffff', // Another vibrant color for distinction
     paddingVertical: 15,
+    borderRadius: 25,
   },
   buttonText: {
     color: '#e37b60', // White color for contrast
+    fontWeight: 'bold',
   },
 });

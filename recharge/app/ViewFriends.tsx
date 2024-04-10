@@ -63,8 +63,11 @@ const getRequests = async () => {
 };
 
      const displayFriends = () =>{
-        if (friends == null){
-            return <Text style={styles.title}>You have no friends lol</Text>
+      if (friends == null){
+        return <Text style={styles.title}>You have no friends</Text>
+      }
+        if (friends.length == 0){
+            return <Text style={styles.title}>You have no friends</Text>
         }
         else{
             return(
@@ -80,8 +83,8 @@ const getRequests = async () => {
       };
 
       const displayRequests = () =>{
-        if (requests == null){
-            return <Text style={styles.title}>You currently do not have any requests.</Text>
+        if (requests.length==0){
+            return <Text style={styles.title}>You currently do not have any requests</Text>
         }
         else{
             return(
@@ -102,20 +105,33 @@ const getRequests = async () => {
         try {
             const { data: { user }, } = await supabase.auth.getUser();
             setUserid(user?.id);
+            console.log(userid)
+
+            if (friends == null){
+              setFriends([])
+            }
+
+            console.log(name);
+            console.log(friends);
+            console.log(friends.concat(name));
         
             const { error: updateError } = await supabase
             .from('employee')
             .update({
               'friends': friends.concat(name)
             })
-            .eq('employee_id', user?.id);
+            .eq('employee_id', userid);
+
+            console.log("Requests updated");
 
             const { error: deleteError } = await supabase
             .from('employee')
             .update({
               'requests': requests.filter((req) => {req != name})
             })
-            .eq('employee_id', user?.id);
+            .eq('employee_id', userid);
+
+            console.log("Friends updated");
     
           if (updateError) {
             console.error('Error updating friend data:', updateError.message);
@@ -162,24 +178,14 @@ const getRequests = async () => {
 
     return (
         <View style={styles.container}>
-        <LinearGradient colors={['lightblue', 'lightblue']} style={{height:'100%', width:'100%'}}>
+        <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}}>
         <ScrollView >
-        
-        {/* <View style={styles.addbutton}>
-          <Button title="Add Friends" onPress={() => router.navigate('./Friends')}></Button>
-        </View> */}
-
-        <TouchableOpacity
-              style={[styles.topicButton && styles.activeButtonf]}
-              onPress={() => router.navigate('./Friends')}>
-              <Text style={styles.friends}>Add Friends</Text>
-          </TouchableOpacity>
-
-        <Text style={styles.header}>Requests:</Text>
+        <Button title="Add Friends" onPress={() => router.navigate('./Friends')}></Button>
+        <Text style={styles.header}>Requests: </Text>
         <View style={styles.item}>
             {displayRequests()}
             </View>
-        <Text style={styles.header}>Friends:</Text>
+        <Text style={styles.header}>Friends: </Text>
         <View style={styles.item}>
             {displayFriends()}
             </View>

@@ -82,19 +82,17 @@ const styles = StyleSheet.create({
   item: {
     margin: 30,
     borderBottomWidth: 2,
-    borderBottomColor: "lightgrey",
+    borderBottomColor: "white",
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
-    fontStyle: "italic",
   },
 
   details: {
     fontSize: 15,
     fontWeight: "bold",
     marginBottom: 5,
-    fontStyle: "italic",
   },
 });

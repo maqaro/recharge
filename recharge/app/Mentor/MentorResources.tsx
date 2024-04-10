@@ -174,7 +174,13 @@ const MentorResources: React.FC = () => {
                 </View>
               )}
               <Text style={styles.description}>{resource.description}</Text>
-              <Button title="Recommend Resource" onPress={() => {recommedResource(resource.title)}}></Button>
+              {/* <Button title="Recommend Resource" onPress={() => {recommedResource(resource.title)}}></Button> */}
+              
+              <TouchableOpacity onPress={() => {recommedResource(resource.title)}}>
+                  <Text style={styles.recommend}>Recommend Resource</Text>
+              </TouchableOpacity>
+
+
             </View>
           </View>
         </TouchableOpacity>
@@ -260,6 +266,13 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     color: '#333',
+  },
+  recommend:{
+    color: 'black',
+    fontSize: 17,
+    fontWeight: 'bold',
+    marginTop: 15,
+    textAlign: 'center',
   },
 });
 

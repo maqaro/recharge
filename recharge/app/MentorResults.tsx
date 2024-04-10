@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '../lib/supabase';
 import { Alert } from 'react-native';
 import { set } from 'date-fns';
+import { Ionicons } from '@expo/vector-icons';
 
 let specialtyValue = "";
 
@@ -75,15 +76,26 @@ const MentorResults = () =>{
     router.navigate('./ViewMentors')
   }
 
+  const BackButton = () => (
+    <TouchableOpacity
+      style={styles.backButton}
+      onPress={() => router.navigate('/MatchWithMentorForm')}
+    >
+      <Ionicons name="arrow-back" size={24} color="black" />
+    </TouchableOpacity>
+  );
+
+
     return (
-      <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
+      <LinearGradient colors={['#85D4D5', '#85D4D5']} style={{height:'100%', width:'100%'}}>
+      <BackButton />
       <View>
-          <Text style={styles.details}>Please select one of the mentors below: </Text>
-      <View style={styles.item}>
+          <Text style={styles.details}>Please Select One Of The Mentors Below: </Text>
+      <View>
           {mentorDetails?.map((item: {id: any, name: any, issues: {key: any, value: any}, specialty_id: any}) => (
               <TouchableOpacity onPress={() => mentorSelected(item.id)}>
                   <Text style={styles.title}>{item.name}</Text>
-                  <Text style={styles.details}>{Object.values(item.issues)}</Text>
+                  <Text style={styles.issue}>{Object.values(item.issues)}</Text>
           </TouchableOpacity>
           ))}
           
@@ -102,27 +114,51 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
   },
+  
+  backButton: {
+    position: 'absolute',
+    top: 22, 
+    left: 20,
+    zIndex: 10,
+  },
 
   item: {
-      margin: 30,
       borderBottomWidth: 2,
-      borderBottomColor: "lightgrey",
-    },
-    title: {
+      borderBottomColor: "white",
+  },
+  
+  title: {
       fontSize: 20,
       fontWeight: "bold",
       marginBottom: 5,
-      fontStyle: "italic",
-      color: 'white',
-    },
+      color: '#02017D',
+      paddingLeft: 20,
+  },
   
-    details: {
-      fontSize: 15,
-      fontWeight: "bold",
-      marginBottom: 5,
-      fontStyle: "italic",
-      color: 'white',
-    },
+  details: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 25,
+    color: 'black',
+    textAlign: 'center',
+    marginLeft: 50,
+    marginTop: 21,
+    paddingLeft: 18,
+    paddingRight: 20,
+  },
+
+  issue:{
+    fontSize: 15,
+    fontWeight: "bold",
+    marginBottom: 25,
+    color: 'black',
+
+   
+    // marginLeft: 50,
+    // marginTop: 21,
+    paddingLeft: 20,
+    // paddingRight: 20,
+  }
 
 
   });

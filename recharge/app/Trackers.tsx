@@ -7,7 +7,6 @@ import NavBar from './NavBar';
 
 
 
-
 const Trackers = () => {
   const router = useRouter();
   return(

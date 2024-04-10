@@ -63,8 +63,11 @@ const getRequests = async () => {
 };
 
      const displayFriends = () =>{
+      if (friends == null){
+        return <Text style={styles.title}>You have no friends</Text>
+      }
         if (friends.length == 0){
-            return <Text style={styles.title}>You have no friends lol</Text>
+            return <Text style={styles.title}>You have no friends</Text>
         }
         else{
             return(
@@ -80,8 +83,8 @@ const getRequests = async () => {
       };
 
       const displayRequests = () =>{
-        if (requests.length == 0){
-            return <Text style={styles.title}>You currently do not have any requests.</Text>
+        if (requests.length==0){
+            return <Text style={styles.title}>You currently do not have any requests</Text>
         }
         else{
             return(
@@ -89,8 +92,24 @@ const getRequests = async () => {
                 {requests?.map(item => (
                     <View style={styles.inneritem}>
                         <Text style={styles.title}>{item}</Text>
-                        <Button title="Accept" onPress={() =>acceptRequest(item)}></Button>
-                        <Button title="Deny" onPress={() =>denyRequest(item)}></Button>
+
+                        {/* <Button title="Accept" onPress={() =>acceptRequest(item)}></Button> */}
+
+                        <TouchableOpacity
+                            style={[styles.accept]}
+                            onPress={() => acceptRequest(item)}>
+                            <Text style={styles.aanddtext}>Accept</Text>
+                        </TouchableOpacity>
+
+                        {/* <Button title="Deny" onPress={() =>denyRequest(item)}></Button> */}
+
+                        <TouchableOpacity
+                            style={[styles.deny]}
+                            onPress={() => denyRequest(item)}>
+                            <Text style={styles.aanddtext}>Decline</Text>
+                        </TouchableOpacity>
+
+                        
                 </View>
                 ))}
                 </View>
@@ -102,20 +121,58 @@ const getRequests = async () => {
         try {
             const { data: { user }, } = await supabase.auth.getUser();
             setUserid(user?.id);
+            console.log(userid)
+
+            const { data: data2, error: error2 } = await supabase
+            .from('employee')
+            .select('username')
+            .eq('employee_id', userid);
+
+            let myUsername = "";
+
+            if (data2){            
+              myUsername = Object.values(data2[0])[0];
+            }
+
+            if (friends == null){
+              setFriends([])
+            }
+
+            console.log(name);
+            console.log(friends);
+            console.log(friends.concat(name));
         
             const { error: updateError } = await supabase
             .from('employee')
             .update({
               'friends': friends.concat(name)
             })
-            .eq('employee_id', user?.id);
+            .eq('employee_id', userid);
+
+            const { error: updateError2 } = await supabase
+            .from('employee')
+            .update({
+              'friends': friends.concat(myUsername)
+            })
+            .eq('username', name);
+
+            const { error: update2Error } = await supabase
+            .from('employee')
+            .update({
+              'friends': friends.concat(name)
+            })
+            .eq('employee_id', userid);
+
+            console.log("Requests updated");
 
             const { error: deleteError } = await supabase
             .from('employee')
             .update({
               'requests': requests.filter((req) => {req != name})
             })
-            .eq('employee_id', user?.id);
+            .eq('employee_id', userid);
+
+            console.log("Friends updated");
     
           if (updateError) {
             console.error('Error updating friend data:', updateError.message);
@@ -161,22 +218,34 @@ const getRequests = async () => {
 
 
     return (
-        <View style={styles.container}>
-        <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}}>
+      <View style={styles.container}>
+        <LinearGradient colors={['lightblue', 'lightblue']} style={{height:'100%', width:'100%'}}>
         <ScrollView >
-        <Button title="Add Friends" onPress={() => router.navigate('./Friends')}></Button>
-        <Text style={styles.header}>Requests: </Text>
+      
+        {/* <View style={styles.addbutton}>
+          <Button title="Add Friends" onPress={() => router.navigate('./Friends')}></Button>
+        </View> */}
+
+        <TouchableOpacity
+              style={[styles.topicButton && styles.activeButtonf]}
+              onPress={() => router.navigate('./Friends')}>
+              <Text style={styles.friends}>Add Friends</Text>
+          </TouchableOpacity>
+
+        <Text style={styles.header}>Requests:</Text>
         <View style={styles.item}>
             {displayRequests()}
             </View>
-        <Text style={styles.header}>Friends: </Text>
+
+        <Text style={styles.header}>Friends:</Text>
         <View style={styles.item}>
             {displayFriends()}
             </View>
-        </ScrollView>
-        </LinearGradient>
-        <NavBar/>
-        </View>
+            
+      </ScrollView>
+      </LinearGradient>
+      <NavBar/>
+      </View>
     );
 };
 
@@ -206,33 +275,96 @@ const styles = StyleSheet.create({
       inneritem: {
         display: 'flex',
         flexDirection: 'row',
+        marginTop: 5,
       },
 
       title: {
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 5,
-        fontStyle: "italic",
         color: 'black',
       },
     
-      details: {
-        fontSize: 15,
-        fontWeight: "bold",
-        marginBottom: 5,
-        fontStyle: "italic",
-        color: 'black',
-        borderColor:'gray',
-        borderBottomWidth:1,
-      },
+      // details: {
+      //   fontSize: 15,
+      //   fontWeight: "bold",
+      //   marginBottom: 5,
+      //   color: 'black',
+      //   borderColor:'transparent',
+      //   borderBottomWidth:1,
+      // },
       header: {
-        fontSize: 35,
+        fontSize: 28,
         fontWeight: "bold",
         marginBottom: 35,
-        color: 'white',
+        color: 'black',
         alignSelf:'center',
         marginTop: 35,
+       
       },
+
+      addbutton:{
+        marginTop: 20,
+        top: 0,
+        textAlign: 'center',
+      },
+      topicButton: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        height: 37,
+        marginRight: 5,
+      },
+
+      activeButtonf: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        marginRight: 295,
+        textAlign: 'center',
+        left: 147,
+        top: 10,
+        marginBottom: 10,
+
+        shadowColor: 'white',
+        shadowOpacity: 0.5,
+        shadowOffset: { width: 0, height: 4 },
+        shadowRadius: 5,
+      },
+
+      friends:{
+        fontSize: 18,
+        fontWeight: "bold",
+        color: 'black',
+        marginTop: 5,
+        marginBottom: 5,
+        textAlign: 'center',
+      },
+
+      accept:{
+        backgroundColor: '#44BA67',
+        marginRight: 20,
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderRadius: 10,
+        marginLeft: 120,
+      },
+
+      deny:{
+        backgroundColor: '#F53649',
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderRadius: 11,
+      },
+
+      aanddtext:{
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: 5,
+        marginBottom: 5,
+      }
+
     
   
   });

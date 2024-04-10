@@ -31,34 +31,9 @@ const AddMentorPage: React.FC = () => {
     { label: 'General', value: 10 },
   ];
 
-
-  const addMentor = async () => {
-    const router = useRouter();
-    const { data, error } = await supabase.from('mentors').insert([
-      {
-        id: userid,
-        specialty_id: specialty,
-        name: name,
-        available: true,
-      },
-    ]);
-
-    if (error) {
-      Alert.alert('User ID not found');
-    }
-    Alert.alert('Mentor added successfully');
-    router.navigate('/AdminHomepage')
-
+  const handleSubmit = async() =>{
+    signUpMentor();
   }
-
-  useEffect(() =>{
-    if (!userid) {
-      return;
-    }
-    else{
-      addMentor();
-    }
-  }, [userid]);
 
   const signUpMentor = async () => {
     if (!username || !password || !name) {
@@ -71,7 +46,7 @@ const AddMentorPage: React.FC = () => {
       return;
     }
 
-    try {
+
         const { data, error } = await supabase.auth.signUp({
             email: username,
             password: password,
@@ -80,18 +55,28 @@ const AddMentorPage: React.FC = () => {
       if (error) {
         throw error;
       }
-
-      try {
         const { data: { user }, } = await supabase.auth.getUser();
          console.log("User:", user?.id);
-         setUserid(user?.id);
-      }catch (error) {
-        Alert.alert('Error Adding mentor')
-    }
+         let userId = user?.id;
+    
 
-    } catch (error) {
-      Alert.alert('Failed to add mentor', JSON.stringify(error));
+
+    console.log(userId)
+    console.log(specialty)
+    console.log(name)
+    console.log(username)
+    
+
+    const { error: insertError } = await supabase.from('mentors').insert([
+      { id: userId, specialty_id: specialty, name: name, available: true, email: username},
+    ]);
+
+    if (insertError) {
+      Alert.alert('User ID not found');
     }
+    Alert.alert('Mentor added successfully');
+    router.navigate('/AdminHomepage')
+  
   };
 
   const validateEmail = (email: string) => {
@@ -139,7 +124,7 @@ const AddMentorPage: React.FC = () => {
           }}
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={signUpMentor}>
+      <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
 

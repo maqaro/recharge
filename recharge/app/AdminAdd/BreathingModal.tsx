@@ -9,6 +9,7 @@ interface BreathingModalProps {
 const BreathingModal: React.FC<BreathingModalProps> = ({ onClose }) => {
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
+  const [image, setImage] = useState('');
 
   const handleSave = async () => {
     try {
@@ -16,6 +17,7 @@ const BreathingModal: React.FC<BreathingModalProps> = ({ onClose }) => {
         {
           title: title,
           link: link,
+          image: image,
         }
       ]);
 
@@ -46,6 +48,14 @@ const BreathingModal: React.FC<BreathingModalProps> = ({ onClose }) => {
         value={link}
         onChangeText={setLink}
         placeholder="Enter link"
+      />
+
+      <Text style={styles.label}>Image URL:</Text>
+      <TextInput
+        style={styles.input}
+        value={image}
+        onChangeText={setImage}
+        placeholder="Want to add an image?"
       />
 
       <View style={styles.buttonContainer}>

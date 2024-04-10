@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, Text,Alert, ScrollView } from 'react-native';
+import { View, StyleSheet, Image, Text, Alert, ScrollView, ActivityIndicator } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { supabase } from '../lib/supabase';
 
-
 const Login = () => {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -15,10 +13,7 @@ const Login = () => {
 
   async function signInWithEmail() {
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
       Alert.alert(error.message);
@@ -52,130 +47,146 @@ const Login = () => {
         router.navigate('/Homepage');
       }
     }
-
     }
     setLoading(false);
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <View style={styles.container}>
-        <LinearGradient colors={['#1A7373', '#E37B60']} style={{ flex: 1 }}>
-          <View style={styles.textContainer}>
-            <Text style={styles.welcomeText}>Welcome</Text>
-            <Text style={styles.backText}>Back!</Text>
-          </View>
-          <View style={styles.formContainer}>
-            <Input
-              placeholder="   Email"
-              leftIcon={{ type: 'font-awesome', name: 'envelope', color: 'white' }}
-              onChangeText={setEmail}
-              value={email}
-              inputContainerStyle={styles.email}
-              placeholderTextColor='white'
-            />
+    <ScrollView contentContainerStyle={styles.container}>
+      <LinearGradient
+        start={{ x: 0, y: 0 }} // Start at the top left
+        end={{ x: 1, y: 1 }} // End at the bottom right
+        colors={['#1a7373', '#e37b60']} // Updated gradient colors for a vibrant look
+        style={styles.gradient}
+      >
+        <Text style={styles.welcomeText}>Welcome Back!</Text>
+        <Image source={require('./images/Logo.png')} style={styles.logo} />
 
-            <Input
-              placeholder="    Password"
-              secureTextEntry
-              leftIcon={{ type: 'font-awesome', name: 'lock', color: 'white' }}
-              onChangeText={setPassword}
-              value={password}
-              inputContainerStyle={styles.password}
-              placeholderTextColor='white'
-              autoCapitalize='none'
-            />
+        <View style={styles.formContainer}>
+          <Input
+            placeholder="Email"
+            leftIcon={{ type: 'font-awesome', name: 'envelope', color: 'white' }}
+            onChangeText={setEmail}
+            value={email}
+            inputContainerStyle={styles.input}
+            inputStyle={styles.inputStyle}
+            placeholderTextColor='white'
+            autoCapitalize='none'
+          />
 
-            <Text style={styles.forgot}>Forgot Password?</Text>
-            <Button
-              title="Login"
-              buttonStyle={styles.LoginButton}
-              titleStyle={{ color: '#b7410e', marginTop: 5, marginBottom: 5 }}
-              onPress={signInWithEmail}
-            />
+          <Input
+            placeholder="Password"
+            secureTextEntry
+            leftIcon={{ type: 'font-awesome', name: 'lock', color: 'white' }}
+            onChangeText={setPassword}
+            value={password}
+            inputContainerStyle={styles.input}
+            inputStyle={styles.inputStyle}
+            placeholderTextColor='white'
+            autoCapitalize='none'
+            autoCompleteType="password"
+          />
 
-            <Text style={styles.or}> or </Text>
+          <Text style={styles.forgot}>Forgot Password?</Text>
 
-            <Button
-              title="Sign up"
-              onPress={() => router.navigate('/SignUp')}
-              buttonStyle={styles.SignupButton}
-              titleStyle={{ color: '#b7410e', marginTop: 5, marginBottom: 5 }}
-            />
-          </View>
-        </LinearGradient>
-      </View>
+          {loading ? (
+            <ActivityIndicator size="large" color="#2575fc" />
+          ) : (
+            <>
+              <Button
+                title="Login"
+                buttonStyle={styles.LoginButton}
+                titleStyle={styles.buttonText}
+                onPress={signInWithEmail}
+              />
+
+              <Text style={styles.or}>or</Text>
+
+              <Button
+                title="Sign up"
+                onPress={() => router.navigate('/SignUp')}
+                buttonStyle={styles.SignupButton}
+                titleStyle={styles.buttonText}
+              />
+            </>
+          )}
+        </View>
+      </LinearGradient>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
   },
-  textContainer: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    marginTop: 20,
-    marginLeft: 10,
-    marginBottom: 80,
+  logo: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+    marginTop: -70,
+  },
+  gradient: {
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    padding: 20,
   },
   welcomeText: {
-    fontSize: 50,
+    fontSize: 40,
+    color: '#fff',
+    fontWeight: 'bold',
     textAlign: 'center',
-    color: 'white',
-    marginTop: 40,
-  },
-  backText: {
-    fontSize: 50,
-    textAlign: 'center',
-    color: 'white',
   },
   formContainer: {
-    marginTop: 25,
+    width: '100%',
+    marginTop: -50,
+    marginBottom: 0,
+  },
+  input: {
+    borderBottomColor: 'white',
+    borderBottomWidth: 1,
+    marginHorizontal: 10,
+  },
+  inputStyle: {
     color: 'white',
-  },
-  email: {
-    borderBottomColor: 'white',
-    marginBottom: 20,
-    borderBottomWidth: 1,
-    marginLeft: 20,
-    marginRight: 20,
-  },
-  password: {
-    borderBottomColor: 'white',
-    borderBottomWidth: 1,
-    marginLeft: 20,
-    marginRight: 20,
+    paddingLeft: 10,
   },
   forgot: {
     textAlign: 'right',
-    marginRight: 28,
+    marginRight: 19,
     color: '#303030',
-    fontWeight: 'bold',
-    marginTop: 1,
+    marginTop: -1,
     fontSize: 15,
-    marginBottom: 20,
+    marginBottom: 60,
+    fontWeight: 'bold',
   },
   or: {
     color: 'white',
     marginTop: 10,
+    fontSize: 18,
     alignSelf: 'center',
-    fontSize: 15,
   },
   LoginButton: {
-    width: '82%',
-    marginTop: 80,
-    borderRadius: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#fff', // Harmonized button color for consistency
+    marginTop: 0,
+    borderRadius: 25, // Rounded for a modern look
+    width: '100%',
     alignSelf: 'center',
+    paddingVertical: 15,
   },
   SignupButton: {
-    width: '82%',
+    backgroundColor: '#fff', // A complementary, distinct button color
     marginTop: 10,
-    borderRadius: 20,
-    backgroundColor: 'white',
+    borderRadius: 25, // Consistent rounded look
+    width: '100%',
     alignSelf: 'center',
+    paddingVertical: 15,
+  },
+  buttonText: {
+    color: '#e37b60',
+    fontWeight: 'bold', // Make text bold
+
   },
 });
 

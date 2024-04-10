@@ -72,18 +72,29 @@ const MealView = () =>{
 
 
 
-
+    
     return (
-      <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
+      <LinearGradient colors={['#74CA91', '#74CA91']} style={{height:'100%', width:'100%'}}>
       <View>
-          <Text style={styles.details}>Meal Details: </Text>
+          <Text style={styles.meal}>Meal Details: </Text>
       <View style={styles.item}>
         <Text style={styles.title}>{description}</Text>
         <Text style={styles.details}>{brandName}</Text>
         <Text style={styles.details}>Calories: {calories} kcal</Text>
         <Text style={styles.details}>{ingredients}</Text>
-        <Button title="Add Meal" onPress={() => {addMeal()}}></Button>
-        <Button title="Back to Search" onPress={() => {router.navigate('./MealSearch')}}></Button>
+
+        {/* <Button title="Add Meal" onPress={() => {addMeal()}}></Button> */}
+
+        <TouchableOpacity onPress={() => {addMeal()}}>
+               <Text style={styles.addmealb}>Add Meal</Text>
+          </TouchableOpacity>
+
+        {/* <Button title="Back to Search" onPress={() => {router.navigate('./MealSearch')}}></Button> */}
+
+        <TouchableOpacity onPress={() => {router.navigate('./MealSearch')}}>
+               <Text style={styles.searchb}>Back To Search</Text>
+          </TouchableOpacity>
+
       </View>
       </View>
       </LinearGradient>
@@ -102,25 +113,47 @@ const styles = StyleSheet.create({
 
   item: {
       margin: 30,
-      borderBottomWidth: 2,
-      borderBottomColor: "lightgrey",
+
     },
     title: {
       fontSize: 20,
       fontWeight: "bold",
       marginBottom: 5,
-      fontStyle: "italic",
-      color: 'white',
+      color: '#183E4C',
     },
+
+    meal:{
+      fontSize: 28,
+      fontWeight: "bold",
+      marginBottom: 10,
+      color: 'white',
+      marginTop: 20,
+      textAlign: 'center',
+    },
+    
   
     details: {
       fontSize: 15,
-      fontWeight: "bold",
+
       marginBottom: 5,
-      fontStyle: "italic",
-      color: 'white',
+      color: '#183E4C',
     },
 
+    addmealb:{
+      color: 'black',
+        fontSize: 17,
+        fontWeight: 'bold',
+        marginTop: 25,
+        textAlign: 'center',
+    },
+
+    searchb:{
+      color: 'black',
+        fontSize: 17,
+        fontWeight: 'bold',
+        marginTop: 25,
+        textAlign: 'center',
+    },
 
   });
 

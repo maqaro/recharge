@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert } fr
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router'; // Keeping router as it was
 import { supabase } from '../lib/supabase';
-// import TrackerNav from './TrackerNav';
 import { Ionicons } from '@expo/vector-icons';
+import NavBar from './NavBar';
 
 type Exercise = {
   id: string;
@@ -147,7 +147,8 @@ const ExerciseTracker = () => {
             </View>
         ))}
       </ScrollView>
-      {/* <TrackerNav /> */}
+
+      <NavBar />
     </View>
   );
 };

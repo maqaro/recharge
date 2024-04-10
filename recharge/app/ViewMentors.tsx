@@ -52,18 +52,18 @@ const ViewMentors = () => {
     return (
         
         <View style={styles.container}>
-          <LinearGradient colors={['#85D4D5', '#85D4D5']} style={{height:'100%', width:'100%'}}>
+          <LinearGradient colors={['#F5F5F5', '#F5F5F5']} style={{height:'100%', width:'100%'}}>
         <ScrollView style={styles.scrollview} showsVerticalScrollIndicator={true}>
 
           <BackButton />
-            <Text style={styles.header}>Current mentors:</Text>
+            <Text style={styles.header}>Chats</Text>
         <View style={styles.item}>
             {details?.map((item: {id:any, mentor_id: any, issue_id: any, issues: {key: any, value: any}, mentors: {key: any, value: any}}) => (
               <TouchableOpacity style={styles.mentor} onPress={() => router.push({pathname: '/ChatRoom', params: {chatID: item.id}})}>
                 <Image source={require('./images/Match.png')} style={styles.face}/>
                 <Text style={styles.title}>{Object.values(item.mentors)}</Text>
                 <Text style={styles.details}>Speciality: {Object.values(item.issues)}</Text>
-                <Text style={styles.description}>"Hey, I am here to help manage your stress better"</Text>
+                <Text style={styles.description}>"I'm here to support you with {Object.values(item.issues)}. Together, we will overcome it."</Text>
                 <Text style={styles.experience}>4+ years experience</Text>
               </TouchableOpacity>
             ))}
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
       },
 
       header: {
-        fontSize: 24,
+        fontSize: 28,
         fontWeight: "bold",
         marginBottom: 15,
         color: 'black',
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: "bold",
         marginBottom: 5,
-        color: '#2BC0E4',
+        color: '#02017D',
         alignSelf:'center',
       },
     

@@ -10,7 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 
 
-const EmotionTracker = () => {
+const DietTracker = () => {
     const [userid, setUserid] = useState<string | undefined>();
     const [calories, setCalories] = useState(0);
     const [isdataStored, setisDataStored] = useState(false);
@@ -102,12 +102,14 @@ useEffect(() => {
         <View style={styles.container}>
             <BackButton />
             <LinearGradient colors={['#74CA91', '#74CA91']} style={{height:'100%', width:'100%'}}>
-              <Text style={styles.hello}>So far you have consumed: {totalCalories} calories</Text>
+              <Text style={styles.diet}>Diet Tracker</Text>
+              <Text style={styles.info}>Track your diet easily: search or add meals and keep an eye on your total calorie intake!</Text>
+              <Text style={styles.hello}>So far you have consumed:{"\n"} {totalCalories} calories</Text>
             <TouchableOpacity style={styles.buttons} onPress={() => router.navigate('/MealSearch')}> 
-                <Text>Search Meal</Text> 
+                <Text style={styles.buttontext}>Search Meal</Text> 
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttons} onPress={() => router.navigate('/AddMeal')}>
-                <Text>Add Meal</Text>  
+                <Text style={styles.buttontext}>Add Meal</Text>  
             </TouchableOpacity>
   </LinearGradient>
   {/* <NavBar/> */}
@@ -131,13 +133,31 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
 
+    diet:{
+      color: 'black',
+      fontSize: 28,
+      textAlign: 'center',
+      fontWeight: 'bold',
+      marginTop: 15,
+    },
+
+    info:{
+      color: 'black',
+      fontSize: 18,
+      textAlign: 'center',
+      marginTop: 40,
+      paddingLeft: 40,
+      paddingRight: 40,
+    },
+
     buttons: { 
         height: 100,
-        color: 'white',
         padding: 10,
         alignItems: 'center',
-        marginTop: 140,
-        backgroundColor: 'green',
+        marginTop: 40,
+        marginRight: 50,
+        marginLeft: 50,
+        backgroundColor: 'white',
         borderRadius: 50,
     },
 
@@ -153,75 +173,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         color: 'white',
-        marginTop: 30,
+        marginTop: 130,
     },
 
-    question: {
+    buttontext:{
         fontSize: 20,
         fontWeight: 'bold',
-        textAlign: 'center',
-        color: 'white',
-        marginBottom: 50,
-        marginTop: 20,
-    },
+        color: 'black',
+        marginTop: 25,
+    }
 
-    selectText: {
-        fontSize: 17,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        right: 90,
-        color: 'white',
-        marginTop: 0,
-    },
 
-    imageContainer: {
-        marginTop: 20,
-        marginLeft: 10,
-    },
-
-    image: {
-        width: 100,
-        height: 150,
-        resizeMode: 'contain',
-    },
-
-    terrible: {
-        color: '#E48389',
-        fontWeight: 'bold',
-        marginLeft: 23,
-        fontSize: 15,
-    },
-
-    sad: {
-        color: '#E29B70',
-        fontWeight: 'bold',
-        marginLeft: 36,
-        fontSize: 15,
-    },
-
-    okay: {
-        color: '#DDB654',
-        fontWeight: 'bold',
-        marginLeft: 32,
-        fontSize: 15,
-    },
-
-    happy: {
-        color: '#92AC62',
-        fontWeight: 'bold',
-        marginLeft: 26,
-        fontSize: 15,
-    },
-
-    great: {
-        color: '#56A273',
-        fontWeight: 'bold',
-        marginLeft: 30,
-        fontSize: 15,
-    },
 
 });
 
 
 
-export default EmotionTracker;
+export default DietTracker;

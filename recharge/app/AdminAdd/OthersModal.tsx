@@ -12,6 +12,7 @@ const OthersModal: React.FC<OthersModalProps> = ({ topic, onClose }) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [link, setLink] = useState('');
+  const [image, setImage] = useState('');
 
   const handleSave = async () => {
      // Check if the date is in YYYY-MM-DD format
@@ -27,6 +28,7 @@ const OthersModal: React.FC<OthersModalProps> = ({ topic, onClose }) => {
           description: description,
           date: formattedDate,
           link: link,
+          image_url: image,
           topic: topic, // Set the topic dynamically
         }
       ]);
@@ -57,6 +59,14 @@ const OthersModal: React.FC<OthersModalProps> = ({ topic, onClose }) => {
         placeholder="Enter title"
       />
 
+      <Text style={styles.label}>Link:</Text>
+      <TextInput
+        style={styles.input}
+        value={link}
+        onChangeText={setLink}
+        placeholder="Enter link"
+      />
+
       <Text style={styles.label}>Description:</Text>
       <TextInput
         style={[styles.input,styles.descriptionInput]}
@@ -73,12 +83,12 @@ const OthersModal: React.FC<OthersModalProps> = ({ topic, onClose }) => {
         placeholder="Enter date (YYYY-MM-DD)"
       />
 
-      <Text style={styles.label}>Link:</Text>
+      <Text style={styles.label}>Image URL:</Text>
       <TextInput
         style={styles.input}
-        value={link}
-        onChangeText={setLink}
-        placeholder="Enter link"
+        value={image}
+        onChangeText={setImage}
+        placeholder="Want to add an image?"
       />
 
       <View style={styles.buttonContainer}>

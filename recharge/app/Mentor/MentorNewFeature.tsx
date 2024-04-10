@@ -31,7 +31,7 @@ const FeatureRequestModal: React.FC<FeatureRequestModalProps> = ({ isVisible, on
 
   return (
     <Modal visible={isVisible} animationType="slide">
-      <LinearGradient colors={['#fff9ed', '#eccbaa']} style={{height:'100%', width:'100%'}} >
+      <LinearGradient colors={['#f5f5f5', '#f5f5f5']} style={{height:'100%', width:'100%'}} >
       <ScrollView contentContainerStyle={styles.modalContent}>
         <Text style={styles.modalTitle}>Feature Request</Text>
         <Text style={styles.modalSubtitle}>Missing a feature?</Text>
@@ -53,7 +53,6 @@ const FeatureRequestModal: React.FC<FeatureRequestModalProps> = ({ isVisible, on
         
       </View>
       </ScrollView>
-      <MentorNavBar/>
       </LinearGradient>
     </Modal>
   );
@@ -70,42 +69,45 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
+    marginTop: 105,
   },
   modalSubtitle: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 18,
   },
   modalText: {
     fontSize: 16,
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   input: {
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
-    paddingBottom:150,
+    paddingBottom:160,
     textAlignVertical:'top',
     backgroundColor:'white',
+    borderRadius: 5,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 20,
+    marginTop: 12,
   },
   button: {
     flex: 1,
     borderRadius: 50, // Make oval buttons
-    backgroundColor: 'red',
+    backgroundColor: '#F53649',
     paddingVertical: 15,
     alignItems: 'center',
     marginHorizontal: 5,
   },
   submitButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#44BA67',
   },
   buttonText: {
     fontSize: 16,

@@ -133,13 +133,19 @@ const MentorGuidedSession: React.FC = () => {
             style={styles.resourceContainer}>
             <View style={styles.articleContainer}>
               <Text style={styles.title}>{resource.title}</Text>
-              <Button title="Reccomend Resource" onPress={(() => {recommedResource(resource.title)})}></Button>
+              {/* <Button title="Reccomend Resource" onPress={(() => {recommedResource(resource.title)})}></Button> */}
+              
               {resource.image && (
                 <Image
                   source={{ uri: resource.image }}
                   style={styles.image}
                 />
               )}
+
+              <TouchableOpacity onPress={() => {recommedResource(resource.title)}}>
+                  <Text style={styles.recommend}>Recommend Resource</Text>
+              </TouchableOpacity>
+
             </View>
           </TouchableOpacity>
           ))}
@@ -233,6 +239,13 @@ const styles = StyleSheet.create({
         color: '#555',
         marginBottom: 5,
       },
+
+      recommend:{
+        color: 'black',
+        fontSize: 17,
+        fontWeight: 'bold',
+        marginTop: 5,
+      }
 });
 
 export default MentorGuidedSession;

@@ -128,7 +128,13 @@ const MentorExerciseRoutine: React.FC = () => {
                       <Text style={styles.exerciseInfo}>
                           Muscle Group: {exercise.exercise.muscle_gp}
                       </Text>
-                      <Button title="Recommend Resource" onPress={() => {recommedResource(exercise.exercise.Exercise_Name)}}></Button>
+                      {/* <Button title="Recommend Resource" onPress={() => {recommedResource(exercise.exercise.Exercise_Name)}}></Button> */}
+
+                      <TouchableOpacity onPress={() => {recommedResource(exercise.exercise.Exercise_Name)}}>
+                        <Text style={styles.recommend}>Recommend Resource</Text>
+                      </TouchableOpacity>
+
+
                   </View>
               </View>
               </TouchableOpacity>
@@ -217,6 +223,12 @@ const styles = StyleSheet.create({
     scrollView: {
       flex: 1, // Ensure ScrollView takes the remaining space
     },
+    recommend:{
+      color: 'blue',
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginTop: 5,
+    }
   });
 
 export default MentorExerciseRoutine;

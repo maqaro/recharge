@@ -60,11 +60,11 @@ const ReportBug: React.FC = () => {
   }
 
   return (
-    <LinearGradient colors={['#fff9ed', '#eccbaa']} style={{height:'100%', width:'100%'}} >
+    <LinearGradient colors={['#f5f5f5', '#f5f5f5']} style={{height:'100%', width:'100%'}} >
       <ScrollView contentContainerStyle={styles.modalContent}>
         <Text style={styles.modalTitle}>Report Bug</Text>
-
-        <Text>Brief Description of the Issue</Text>
+        <Text style={styles.gap}></Text>
+        <Text style={styles.headings}>Brief Description of the Issue</Text>
         <TextInput
           style={styles.input}
           multiline
@@ -72,7 +72,7 @@ const ReportBug: React.FC = () => {
           onChangeText={(text) => handleInputChange('description', text)}
         />
 
-        <Text>Steps to Recreate the Issue</Text>
+        <Text style={styles.headings}>Steps to Recreate the Issue</Text>
         <TextInput
           style={styles.input}
           multiline
@@ -80,7 +80,7 @@ const ReportBug: React.FC = () => {
           onChangeText={(text) => handleInputChange('stepsToRecreate', text)}
         />
 
-        <Text>When was the Bug First Noticed?</Text>
+        <Text style={styles.headings}>When was the Bug First Noticed?</Text>
         <TextInput
           style={styles.input}
           multiline
@@ -88,7 +88,7 @@ const ReportBug: React.FC = () => {
           onChangeText={(text) => handleInputChange('firstNoticed', text)}
         />
         
-        <Text>What device was used?</Text>
+        <Text style={styles.headings}>What device was used?</Text>
         <RNPickerSelect
           placeholder={{ label: 'Select Device', value: null }}
           items={[
@@ -96,13 +96,31 @@ const ReportBug: React.FC = () => {
             { label: 'Android', value: 'Android' },
           ]}
           style={{
+            placeholder:{
+              color: 'grey',
+            },
+
             inputIOS: {
-              backgroundColor: 'lightgrey',
+              backgroundColor: 'white',
+              paddingVertical: 15,
+              marginLeft: 9,
+              marginRight: 265,
+              textAlign: 'center',
               color: 'black', 
+              borderRadius: 5,
+              borderColor: 'grey',
+              borderWidth: 1,
             },
             inputAndroid: {
-              backgroundColor: 'lightgrey',
+              backgroundColor: 'white',
+              paddingVertical: 15,
+              marginLeft: 9,
+              marginRight: 265,
+              textAlign: 'center',
               color: 'black', 
+              borderRadius: 5,
+              borderColor: 'grey',
+              borderWidth: 1,
             },
           }}
           value={bugReport.device}
@@ -139,10 +157,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
+    marginLeft: 9,
+    marginRight: 11,
     height:100,
     textAlignVertical:'top',
     backgroundColor:'white',
+    borderRadius: 5,
   },
+  gap:{
+    marginBottom: 30,
+  },
+  headings: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    marginLeft: 9,
+    marginTop: 3,
+  },
+
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -152,13 +184,14 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     borderRadius: 50, // Make oval buttons
-    backgroundColor: 'red',
+    backgroundColor: '#F53649',
     paddingVertical: 15,
     alignItems: 'center',
     marginHorizontal: 5,
+    top: 40,
   },
   submitButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#44BA67',
   },
   buttonText: {
     fontSize: 16,

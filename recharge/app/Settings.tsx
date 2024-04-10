@@ -66,6 +66,7 @@ const Settings: React.FC = () => {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.buttonContainer}>
 
+      
 
         <TouchableOpacity onPress={() => handleButtonPress('Feedback')} style={styles.button}>
           <Text style={{padding: 0, backgroundColor:'#f5f5f5', top: 3, borderRadius:20}}>

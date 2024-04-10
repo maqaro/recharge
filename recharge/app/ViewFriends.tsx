@@ -98,7 +98,7 @@ const getRequests = async () => {
                         <TouchableOpacity
                             style={[styles.accept]}
                             onPress={() => acceptRequest(item)}>
-                            <Text style={styles.friends}>Accept</Text>
+                            <Text style={styles.aanddtext}>Accept</Text>
                         </TouchableOpacity>
 
                         {/* <Button title="Deny" onPress={() =>denyRequest(item)}></Button> */}
@@ -106,7 +106,7 @@ const getRequests = async () => {
                         <TouchableOpacity
                             style={[styles.deny]}
                             onPress={() => denyRequest(item)}>
-                            <Text style={styles.friends}>Decline</Text>
+                            <Text style={styles.aanddtext}>Decline</Text>
                         </TouchableOpacity>
 
                         
@@ -317,20 +317,29 @@ const styles = StyleSheet.create({
       },
 
       accept:{
-        backgroundColor: '#78D378',
+        backgroundColor: '#44BA67',
         marginRight: 20,
         paddingLeft: 10,
         paddingRight: 10,
         borderRadius: 10,
-        marginLeft: 100,
+        marginLeft: 120,
       },
 
       deny:{
-        backgroundColor: 'red',
+        backgroundColor: '#F53649',
         paddingLeft: 10,
         paddingRight: 10,
         borderRadius: 11,
+      },
+
+      aanddtext:{
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: 5,
+        marginBottom: 5,
       }
+
     
   
   });

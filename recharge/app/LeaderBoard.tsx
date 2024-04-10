@@ -6,7 +6,6 @@ import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { supabase } from '../lib/supabase';
 import NavBar from './NavBar';
-import { Circle } from 'react-native-svg';
 
 const Leaderboard = () => {
     const [userid, setUserid] = useState<string | undefined>();
@@ -63,14 +62,6 @@ const Leaderboard = () => {
         }
       };
 
-    const getMentorColor = (index: number) => {
-        const colors = ['#FFDC51', '#E5E6DA', '#F4AA6B'];
-        if (index < colors.length) {
-            return colors[index];
-        }
-        return 'white';
-    };
-
     return (
         <LinearGradient colors={['lightblue', 'lightblue']} style={{height:'100%', width:'100%'}}>
         <View style={styles.item}>
@@ -79,36 +70,20 @@ const Leaderboard = () => {
         <Text style={styles.header}>Current Leaderboard: </Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              style={[styles.topicButton && styles.activeButtona]}
+              style={[styles.topicButton && styles.activeButton]}
               onPress={() => getAll()}>
-              <Text style={styles.all}>All </Text>
+              <Text>All</Text>
             </TouchableOpacity>
-            
             <TouchableOpacity
-              style={[styles.topicButton && styles.activeButtonf]}
+              style={[styles.topicButton && styles.activeButton]}
               onPress={() => getFriends()}>
-              <Text style={styles.friends}>Friends</Text>
+              <Text>Friends</Text>
             </TouchableOpacity>
           </View>
-            {details?.map((item: {username: string, points: number}, index:number) => (
-                <View key={index} style={[styles.mentor, { backgroundColor: getMentorColor(index) }]}>
-
-                    <Text style={styles.name}>{Object.values(item.username)}</Text>
-                    <Text style={styles.points}>{item.points}</Text>
-
-                    {/* <View style={styles.circle}>
-                      {index >= 3 && <Text style={styles.badge}>{index + 1}</Text>}
-                    </View> */}
-                    {index === 0 && <Image source={require('./images/Trophy1.png')} style={styles.trophy} />}
-                    {index === 1 && <Image source={require('./images/Trophy2.png')} style={styles.trophy} />}
-                    {index === 2 && <Image source={require('./images/Trophy3.png')} style={styles.trophy} />}
-
-                    {index >= 3 && (
-                      <View style={styles.circle}>
-                          <Text style={styles.badge}>{index + 1}</Text>
-                      </View>
-                    )}
-
+            {details?.map((item: {username: string, points: number}) => (
+                <View style={styles.mentor}>
+                    <Text style={styles.title}>{Object.values(item.username)}</Text>
+                    <Text style={styles.details}>Points: {item.points}</Text>
                 </View>
             ))}
         </ScrollView>
@@ -131,10 +106,10 @@ const styles = StyleSheet.create({
         height: 100,
       },
       header: {
-        fontSize: 28,
+        fontSize: 35,
         fontWeight: "bold",
-        marginBottom: 15,
-        color: 'black',
+        marginBottom: 5,
+        color: 'white',
         alignSelf:'center',
         marginTop: 20,
       },
@@ -146,69 +121,33 @@ const styles = StyleSheet.create({
         paddingBottom: 40,
       },
       mentor:{
-        marginTop: 15,
+        marginTop:10,
+        borderColor:'black',
+        borderWidth:1,
         width:'80%',
+        borderBottomWidth: 2,
+        borderBottomColor: "lightgrey",
         backgroundColor:'white',
-        // color:'black',
-        padding: 5,
-        borderRadius: 20,
+        color:'black',
+        padding:10,
+        borderRadius:10,
         elevation:10,
         alignSelf:'center',
-
-        shadowColor: 'white',
-        shadowOpacity: 0.5,
-        shadowOffset: { width: 0, height: 4 },
-        shadowRadius: 5,
-      
       },
-
-      name: {
+      title: {
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 5,
         color: 'black',
-        marginTop: 10,
-        marginLeft: 50,
+        alignSelf:'center',
       },
     
-      points: {
-        fontSize: 20,
+      details: {
+        fontSize: 12,
         marginBottom: 5,
-        fontWeight: "bold",
+        fontStyle: "italic",
         color: 'black',
-        marginLeft: 267,
-        marginTop: -25,
-        top: -3.2,
-        
-      },
-
-      trophy:{
-        width: 50,
-        height: 50,
-        resizeMode: 'contain',
-        position: 'absolute',
-        top: 3,
-        left: 2,
-      },
-
-      badge:{
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-      },
-
-      circle:{
-        width: 30,
-        height: 30,
-        borderRadius: 15,
-        borderColor: 'red',
-        backgroundColor: '#F4821F',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
-        top: 12,
-        left: 12,
+        alignSelf:'center',
       },
 
       buttonContainer: {
@@ -216,7 +155,6 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         flex: 1,
         marginBottom:10,
-       
       },
 
       backButton: {
@@ -234,48 +172,8 @@ const styles = StyleSheet.create({
         height: 37,
         marginRight: 5,
       },
-      
-      activeButtona: {
-        backgroundColor: 'white',
-        right: 35,
-        paddingLeft: 10,
-        paddingRight: 10,
-        borderRadius: 10,
-
-        shadowColor: 'white',
-        shadowOpacity: 0.5,
-        shadowOffset: { width: 0, height: 4 },
-        shadowRadius: 5,
-      },
-      activeButtonf: {
-        backgroundColor: 'white',
-        left: 35,
-        paddingLeft: 10,
-        paddingRight: 10,
-        borderRadius: 10,
-
-        shadowColor: 'white',
-        shadowOpacity: 0.5,
-        shadowOffset: { width: 0, height: 4 },
-        shadowRadius: 5,
-      },
-
-      all:{
-        fontSize: 18,
-        fontWeight: "bold",
-        color: 'black',
-        marginTop: 5,
-        marginBottom: 5,
-        textAlign: 'center',
-      },
-
-      friends:{
-        fontSize: 18,
-        fontWeight: "bold",
-        color: 'black',
-        marginTop: 5,
-        marginBottom: 5,
-        textAlign: 'center',
+      activeButton: {
+        backgroundColor: '#FF5F6D',
       },
 
   });

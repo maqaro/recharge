@@ -10,6 +10,7 @@ import { Alert } from 'react-native';
 import { useState } from 'react';
 import NavBar from './NavBar';
 import TrackerNav from './TrackerNav';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 type DropdownItem = {
     label: string;
@@ -110,6 +111,9 @@ const ExerciseLogger: React.FC = () => {
                 end={{ x: 1, y: 1 }}
                 style={styles.background}
             >
+            <TouchableOpacity onPress={() => router.navigate('/ExerciseTracker')}>
+                <Ionicons name="chevron-back-circle-outline" size={40} color="black" />
+            </TouchableOpacity>
                 <Text style={styles.title}>Exercise Logger</Text>
                 <View style={{ height: 15 }} />
                 <View>

@@ -8,7 +8,7 @@ const AboutUs: React.FC = () => {
   const router = useRouter();
 
   const handleBack = () => {
-    router.navigate('/Settings'); // Assuming '/Settings' is the route for the Settings page
+    router.navigate('/Mentor/MentorSettings'); // Assuming '/Settings' is the route for the Settings page
   };
 
   return (

@@ -4,12 +4,10 @@ import React, {useEffect, useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Button, ImageBackground, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-// import NavBar from './NavBar';
-import TrackerNav from './TrackerNav';
-import NavBar from './NavBar';
-import { supabase } from '../lib/supabase';
+import { supabase } from '../../lib/supabase';
+import MentorNavBar from './MentorNavBar';
 
-export default function Homepage() {
+export default function MentorHomepage() {
     const router = useRouter();
     const [username, setUsername] =  useState<string | null>(null);
 
@@ -38,53 +36,34 @@ export default function Homepage() {
 
     return (
       <View style={styles.container}>
-        <View ><Text style={styles.title}>Home Page</Text></View>
+        <View ><Text style={styles.title}>Mentor Home Page</Text></View>
 
 
         <LinearGradient colors={['#FFFFFF', '#FFFFFF']} style={{height: '85%',width: '100%' }} >
 
-        <Text style={{fontSize: 25, fontWeight: 'bold', color: '#268394', margin: 16, alignContent:'center'}}>Let's Recharge, {username}</Text>
+        <Text style={{fontSize: 25, fontWeight: 'bold', color: '#268394', margin: 16, alignContent:'center'}}>Let's Help Recharge, {username}</Text>
 
           <ScrollView>
             <View style={styles.full}>
               <View style={styles.row}>
-                <LinearGradient colors={['#ff9966', '#ff5e62']} style={styles.square1}> 
-
-          <TouchableOpacity
-            style={styles.square1}
-            onPress={() => router.navigate('/Trackers')}
-          >
-            <Text style={styles.text}>Trackers</Text>
-            <Image source={require('./images/Tracker.png')} style={styles.TrackerPic} />
-          </TouchableOpacity>
-          </LinearGradient>
-          <LinearGradient colors={['#f2709c', '#ff9472']} style={styles.square1} >
-                          <TouchableOpacity
-            style={styles.square1}
-            onPress={() => router.navigate('/DailyJournal')}
-          >
-            <Text style={styles.text}>Daily Journal</Text>
-            <Image source={require('./images/Journal.png')} style={styles.JournalPic} />
-          </TouchableOpacity>
-              </LinearGradient>
               </View>
               <View style={styles.row}>
                 <LinearGradient colors={['#56CCF2', '#2F80ED']} style={styles.square1}> 
           <TouchableOpacity
             style={styles.square1}
-            onPress={() => router.navigate('/MatchWithMentor')}
+            onPress={() => router.navigate('/Mentor/MentorViewChatrooms')}
           >
-            <Text style={styles.text}>Mentor Match</Text>
-            <Image source={require('./images/Match.png')} style={styles.MatchPic} />
+            <Text style={styles.text}>EmployeeMatch</Text>
+            <Image source={require('../images/Match.png')} style={styles.MatchPic} />
           </TouchableOpacity>
             </LinearGradient>
                 <LinearGradient colors={['#0cebeb', '#20e3b2']} style={styles.square1}>
           <TouchableOpacity
             style={styles.square1}
-            onPress={() => router.navigate('/GuidedSession')}
+            onPress={() => router.navigate('/Mentor/MentorGuidedSession')}
           >
             <Text style={styles.text}>Guided Sessions</Text>
-            <Image source={require('./images/MentalCare.png')} style={styles.MentalCarePic} />
+            <Image source={require('../images/MentalCare.png')} style={styles.MentalCarePic} />
           </TouchableOpacity>
 </LinearGradient>
               </View>
@@ -92,19 +71,19 @@ export default function Homepage() {
               <LinearGradient colors={['#1CD8D2', '#93EDC7']} style={styles.square1}>
           <TouchableOpacity
             style={styles.square1}
-            onPress={() => router.navigate('/ExerciseRoutine')}
+            onPress={() => router.navigate('/Mentor/MentorExerciseRoutine')}
           >
             <Text style={styles.text}>Exercise Routines</Text>
-            <Image source={require('./images/Exercise.png')} style={styles.ExercisePic} />
+            <Image source={require('../images/Exercise.png')} style={styles.ExercisePic} />
           </TouchableOpacity>
 </LinearGradient>
                 <LinearGradient colors={['#65C7F7', '#1cefff']} style={styles.square1}>
           <TouchableOpacity
             style={styles.square1}
-            onPress={() => router.navigate('/Resources')}
+            onPress={() => router.navigate('/Mentor/MentorResources')}
           >
             <Text style={styles.text}>Other Resources</Text>
-            <Image source={require('./images/Resources.png')} style={styles.ResourcesPic} />
+            <Image source={require('../images/Resources.png')} style={styles.ResourcesPic} />
           </TouchableOpacity>
           </LinearGradient>
               </View>
@@ -113,9 +92,7 @@ export default function Homepage() {
             <Text></Text>
           </ScrollView>
         </LinearGradient>
-      <NavBar />
-
-
+        <MentorNavBar/>
         </View>
       );
 };

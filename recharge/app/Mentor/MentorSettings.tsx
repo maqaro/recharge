@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button, ScrollView, StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import { supabase } from '../lib/supabase';
+import { supabase } from '../../lib/supabase';
 import { useRouter } from 'expo-router';
-import FeatureRequestModal from './NewFeature'; // Importing FeatureRequestModal
-import NavBar from './NavBar';
+import FeatureRequestModal from '../NewFeature'; // Importing FeatureRequestModal
+import MentorNavBar from './MentorNavBar';
 import { Icon } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -26,18 +26,18 @@ const Settings: React.FC = () => {
         break;
       case 'Feedback':
         // Navigate to the Feedback route
-        router.navigate('/Feedback');
+        router.navigate('/Mentor/MentorFeedback');
         break;
       case 'Report Bug':
         // Navigate to the ReportBug route
-        router.navigate('/ReportBug');
+        router.navigate('/Mentor/MentorReportBug');
         break;
       case 'Request New Feature':
         // Open the feature request modal directly
         openFeatureRequestModal();
         break;
       case 'About Us':
-        router.navigate('/AboutUs');
+        router.navigate('/Mentor/MentorAboutUs');
         break;
       default:
         console.log(`Pressed ${buttonText}`);
@@ -93,13 +93,6 @@ const Settings: React.FC = () => {
           <Text style={styles.text}>Request New Feature</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => handleButtonPress('Notifications')} style={styles.button}>
-          <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
-            <Icon name="bell" type="feather" color="#007AFF" />
-          </Text>
-          <Text style={styles.text}>Notifications</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity onPress={() => handleButtonPress('About Us')} style={styles.button}>
           <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
             <Icon name="info" type="feather" color="#007AFF" />
@@ -110,7 +103,7 @@ const Settings: React.FC = () => {
         </View>
       </ScrollView>
       <FeatureRequestModal isVisible={isFeatureRequestModalVisible} onClose={closeFeatureRequestModal} />
-      <NavBar/>
+      <MentorNavBar/>
       </LinearGradient>
 
   );

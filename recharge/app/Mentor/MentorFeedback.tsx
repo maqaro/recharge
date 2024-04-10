@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, ScrollView, StyleSheet, Text, TextInput, View , Alert, TouchableOpacity} from 'react-native';
 import { useRouter } from 'expo-router';
-import { supabase } from '../lib/supabase';
+import { supabase } from '../../lib/supabase';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
@@ -88,7 +88,7 @@ const Feedback: React.FC = () => {
   );
 
   const goback =() => {
-    router.navigate('/Settings');
+    router.navigate('/Mentor/MentorSettings');
 
     };
 

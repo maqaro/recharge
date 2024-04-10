@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import { supabase } from '../lib/supabase';
+import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, FlatList, Button, Alert } from 'react-native';
+import { supabase } from '../../lib/supabase';
 import { router } from 'expo-router';
-import TrackerNav from './TrackerNav';
-// import NavBar from './NavBar';
+import TrackerNav from '../TrackerNav';
+import MentorNavBar from './MentorNavBar';
 import { Ionicons } from '@expo/vector-icons';
 
-const ExerciseRoutine: React.FC = () => {
+const MentorExerciseRoutine: React.FC = () => {
     const [routines, setRoutines] = useState<Record<string, any[]>>({});
     const [selectedRoutine, setSelectedRoutine] = useState<string | null>(null);
+    const [username, setUsername] = useState<any>();
+
 
     useEffect(() => {
         const fetchExerciseRoutine = async () => {
@@ -41,6 +43,43 @@ const ExerciseRoutine: React.FC = () => {
         fetchExerciseRoutine();
     }, []);
 
+    
+    const recommedResource = async (title: string) => {
+      try {
+        console.log(title);
+        const { data: userData, error: userError } = await supabase.auth.getUser();
+        if (userError) {
+          console.error('Error fetching user:', userError);
+          return;
+        }
+        let userId = (userData?.user?.id ?? null);
+        console.log(userId)
+
+      const{data: usernameData, error: errorData} = await supabase
+      .from('mentors')
+      .select('name')
+      .eq('id', userId);
+
+      if (usernameData){
+        console.log(Object.values(usernameData[0])[0])
+        setUsername(Object.values(usernameData[0])[0])
+      }
+      else{
+        console.log(errorData)
+      }
+
+      const { data: resourcesData, error } = await supabase
+      .from('exercise')
+      .update({ 'recommendedBy': username})
+      .eq('Exercise_Name', title);
+
+      Alert.alert("Resource Recommended");
+    }
+    catch{
+      console.log("Error recommending resource");
+    }
+  }
+
     const renderRoutine = ({ item }: any) => (
         <TouchableOpacity
             onPress={() => setSelectedRoutine(item)}
@@ -55,7 +94,7 @@ const ExerciseRoutine: React.FC = () => {
     const BackButton = () => (
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => router.navigate('/Homepage')}
+        onPress={() => router.navigate('/Mentor/MentorHomepage')}
       >
         <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
@@ -79,7 +118,7 @@ const ExerciseRoutine: React.FC = () => {
               <TouchableOpacity onPress={() => router.push({ pathname: '/ExerciseHistory', params: { exerciseID: exercise.exercise_id } })}>
               <View key={index} style={styles.exerciseCard}>
                   <View style={styles.exerciseImage}>
-                    <Image source={exercise.exercise.Exercise_Image ? { uri: exercise.exercise.Exercise_Image } : require('../assets/placeholder.jpg')} style={styles.exerciseImage}/>
+                    <Image source={exercise.exercise.Exercise_Image ? { uri: exercise.exercise.Exercise_Image } : require('../../assets/placeholder.jpg')} style={styles.exerciseImage}/>
 
                   </View>
                   
@@ -90,12 +129,13 @@ const ExerciseRoutine: React.FC = () => {
                       <Text style={styles.exerciseInfo}>
                           Muscle Group: {exercise.exercise.muscle_gp}
                       </Text>
+                      <Button title="Recommend Resource" onPress={() => {recommedResource(exercise.exercise.Exercise_Name)}}></Button>
                   </View>
               </View>
               </TouchableOpacity>
           ))}
             </ScrollView>
-            {/* <NavBar/> */}
+            <MentorNavBar/> 
         </View>
     );
 };
@@ -180,4 +220,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default ExerciseRoutine;
+export default MentorExerciseRoutine;

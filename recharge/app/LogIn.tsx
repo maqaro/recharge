@@ -36,8 +36,23 @@ const Login = () => {
       if (admins && admins.length > 0) {
         router.navigate('/AdminHomepage');
       } else {
+      const { data: mentors, error: mentorError } = await supabase
+        .from('mentors')
+        .select()
+        .eq('email', email);
+  
+      if (mentorError) {
+        Alert.alert(mentorError.message);
+        setLoading(false);
+      }
+  
+      if (mentors && mentors.length > 0) {
+        router.navigate('/Mentor/MentorHomepage');
+      } else {
         router.navigate('/Homepage');
       }
+    }
+
     }
     setLoading(false);
   }

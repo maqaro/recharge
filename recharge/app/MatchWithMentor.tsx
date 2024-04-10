@@ -50,12 +50,6 @@ const MatchWithMentor = () => {
           >
             <Text style={styles.text}>View Existing Mentor</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.square3}
-            onPress={() => router.navigate('./ViewChatrooms')}
-          >
-            <Text style={styles.text}>View Chat Rooms</Text>
-          </TouchableOpacity>
         </LinearGradient>
         {/* <NavBar/> */}
         </View>

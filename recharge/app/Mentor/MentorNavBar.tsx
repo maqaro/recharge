@@ -11,27 +11,17 @@ const NavBar = () => {
   return (
       <View style={styles.navContainer}>
       
-      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Homepage')}>
+      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Mentor/MentorHomepage')}>
         <Ionicons name="home-outline" size={24} color="black" />
         <Text>Home</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/ViewFriends')}>
-        <Ionicons name="people-outline" size={24} color="black" />
-        <Text>Friends</Text>
-      </TouchableOpacity>
       
-      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/ViewMentors')}>
+      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Mentor/MentorViewChatrooms')}>
         <Ionicons name="chatbubble-outline" size={24} color="black" />
         <Text>Chat</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/LeaderBoard')}>
-        <Ionicons name="trophy-outline" size={24} color="black" />
-        <Text>Lead</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Settings')}>
+      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Mentor/MentorSettings')}>
         <Ionicons name="settings-outline" size={24} color="black" />
         <Text>Settings</Text>
       </TouchableOpacity>

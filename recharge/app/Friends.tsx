@@ -1,10 +1,9 @@
 // Homepage.tsx
 
 import React, {useState, useEffect, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ActivityIndicator, FlatList, Alert, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ActivityIndicator, FlatList, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import SearchBar from './SearchBar';
-// import FriendsSearchResults from './FriendsSearchResults';
 import { supabase } from '../lib/supabase';
 import { set } from 'date-fns';
 import { router } from 'expo-router';
@@ -118,27 +117,21 @@ const Friends = () => {
   }
 
     return (
-      <LinearGradient colors={['lightblue', 'lightblue']} style={{height:'100%', width:'100%'}}>
-        <View style={styles.container}>
-          <ScrollView style={styles.container} showsVerticalScrollIndicator={true}>
-             {!clicked && <Text style={styles.title}>Friends List</Text>}
-            
+        <SafeAreaView style={styles.container}>
+             {!clicked && <Text style={styles.title}>Friend Search</Text>}
+            <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
             <SearchBar clicked={clicked} searchPhrase={searchPhrase} setPhrase={setPhrase} setClicked={setClicked} />
             {data?.map((item: {username: string}) => (
                 <View style={styles.mentor}>
                   <TouchableOpacity>
-                    <Text style={styles.username} onPress={() => {sendRequest(item.username)}}>{Object.values(item.username)}</Text>
+                    <Text style={styles.title} onPress={() => {sendRequest(item.username)}}>{Object.values(item.username)}</Text>
                   </TouchableOpacity>
-
                 </View>
             ))}
 
-           <Text style={styles.gap}></Text>
-            </ScrollView>
+            </LinearGradient>
             <NavBar/>
-            
-        </View>
-        </LinearGradient>
+        </SafeAreaView>
       );
       };
 
@@ -148,61 +141,48 @@ export default Friends;
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      flexDirection:'column',
-        flexWrap:'nowrap',
-        marginBottom: 0,
-        paddingBottom: 40,
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+    },
+
+    searchBar: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        minWidth: 200,
+
     },
 
     item: {
       flexDirection:'column',
       flexWrap:'nowrap',
       marginBottom: 10,
-    },
-    
-    mentor:{
-      marginTop: 0,
-      borderWidth: 1,
-      paddingVertical: 10,
-      borderColor: 'transparent',
-      borderTopColor: 'lightgrey',
-      borderTopWidth: 1,
-      borderBottomWidth: 0,
-      borderBottomColor: 'lightgrey',
-      borderLeftColor: 'transparent',
-      borderRightColor: 'transparent',
 
-      width:'99%',
+    },
+    mentor:{
+      marginTop:10,
+      borderColor:'black',
+      borderWidth:1,
+      width:'80%',
+      borderBottomWidth: 2,
+      borderBottomColor: "lightgrey",
       backgroundColor:'white',
       color:'black',
-      padding: 5,
-      borderRadius: 0,
+      padding:10,
+      borderRadius:10,
       elevation:10,
       alignSelf:'center',
-
-      // shadowColor: 'white',
-      // shadowOpacity: 0.5,
-      // shadowOffset: { width: 0, height: 4 },
-      // shadowRadius: 5,
     },
-
-
     title: {
-      fontSize: 28,
-      fontWeight: "bold",
-      marginBottom: 15,
-      color: 'black',
-      alignSelf:'center',
-      marginTop: 20,
-    },
-
-    username: {
       fontSize: 20,
       fontWeight: "bold",
       marginBottom: 5,
+      fontStyle: "italic",
       color: 'black',
-      marginTop: 10,
-      marginLeft: 30,
+      alignSelf:'center',
     },
   
     details: {
@@ -238,10 +218,6 @@ const styles = StyleSheet.create({
     activeButton: {
       backgroundColor: '#FF5F6D',
     },
-
-    gap:{
-      marginBottom: 50,
-    }
 
 
   });

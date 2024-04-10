@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select'; 
 import { useRouter } from 'expo-router';
-import { supabase } from '../lib/supabase';
+import { supabase } from '../../lib/supabase';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
@@ -56,7 +56,7 @@ const ReportBug: React.FC = () => {
   };
 
   const cancel =() => {
-    router.navigate('/Settings');
+    router.navigate('/Mentor/MentorSettings');
   }
 
   return (

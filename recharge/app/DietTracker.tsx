@@ -14,7 +14,7 @@ const EmotionTracker = () => {
     const [userid, setUserid] = useState<string | undefined>();
     const [calories, setCalories] = useState(0);
     const [isdataStored, setisDataStored] = useState(false);
-
+    const [totalCalories, setTotalCalories] = useState(0);
     const router = useRouter();
 
 
@@ -41,8 +41,52 @@ const handlePressSubmit = async () => {
   }
 };
 
+const getTotalCalories = async() =>{
+  try{
+    const { data: {user}, error } = await supabase.auth.getUser(); // Get the authenticated user
+
+    if (error) {
+      console.error('Error fetching user data:', error.message);
+      return;
+    }
+    let today = new Date().toISOString().split('T')[0]; 
+
+    const { data, error: insertError } = await supabase
+    .from('dietCalories')
+    .select('calories')
+    .eq('user_id', user?.id)
+    .eq('date', today);
+
+    if (insertError) {
+      console.error('Error inserting diet data:', insertError.message);
+    } 
+
+    let total = 0;
+    if (data){
+      data.map(item => (
+        total += Object.values(item)[0]
+      ))
+      setTotalCalories(total);
+
+      const { data: updateData, error: updateError } = await supabase
+      .from('diettracker')
+      .upsert([
+        { total_calories: total, user_id: user?.id, date: today },
+      ], { onConflict: 'date' });
+   
+    if (updateError){
+      console.log("Error inserting")
+    }
+
+ }
+  } catch (error) {
+    console.error('Error inserting diet data:', error);
+  }
+}
+
 useEffect(() => {
     handlePressSubmit();
+    getTotalCalories();
   }, [calories]);
 
   const BackButton = () => (
@@ -58,6 +102,7 @@ useEffect(() => {
         <View style={styles.container}>
             <BackButton />
             <LinearGradient colors={['#74CA91', '#74CA91']} style={{height:'100%', width:'100%'}}>
+              <Text style={styles.hello}>So far you have consumed: {totalCalories} calories</Text>
             <TouchableOpacity style={styles.buttons} onPress={() => router.navigate('/MealSearch')}> 
                 <Text>Search Meal</Text> 
             </TouchableOpacity>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Linking, Image } from 'react-native';
-import { supabase } from '../lib/supabase'; // Import supabase
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Linking, Image, Button, Alert } from 'react-native';
+import { supabase } from '../../lib/supabase'; // Import supabase
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import NavBar from './NavBar';
+import MentorNavBar from './MentorNavBar';
 interface Resource {
   id: number;
   title: string;
@@ -13,9 +13,10 @@ interface Resource {
   image: string;
 }
 
-const GuidedSession: React.FC = () => {
+const MentorGuidedSession: React.FC = () => {
     const [resources, setResources] = useState<Resource[]>([]);
     const [activeCategory, setActiveCategory] = useState<string>('yoga');
+    const [username, setUsername] =  useState<string | null>(null);
     const router = useRouter();
   
     useEffect(() => {
@@ -58,11 +59,46 @@ const GuidedSession: React.FC = () => {
     const BackButton = () => (
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => router.navigate('/Homepage')}
+        onPress={() => router.navigate('/Mentor/MentorHomepage')}
       >
         <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
     );
+
+    const recommedResource = async (title: string) => {
+      try {
+        const { data: userData, error: userError } = await supabase.auth.getUser();
+        if (userError) {
+          console.error('Error fetching user:', userError);
+          return;
+        }
+        let userId = (userData?.user?.id ?? null);
+        console.log(userId)
+
+      const{data: usernameData, error: errorData} = await supabase
+      .from('mentors')
+      .select('name')
+      .eq('id', userId);
+
+      if (usernameData){
+        console.log(usernameData)
+        setUsername(Object.values(usernameData[0])[0])
+      }
+      else{
+        console.log(errorData)
+      }
+
+      const { data: resourcesData, error } = await supabase
+      .from(activeCategory)
+      .update({ 'recommendedBy': username})
+      .eq('title', title);
+
+      Alert.alert("Resource Recommended");
+    }
+    catch{
+      console.log("Error recommending resource");
+    }
+  }
   
     return (
       <LinearGradient colors={['#FFC371', '#FFC371']} style={{ height: '100%', width: '100%' }} >
@@ -97,7 +133,7 @@ const GuidedSession: React.FC = () => {
             style={styles.resourceContainer}>
             <View style={styles.articleContainer}>
               <Text style={styles.title}>{resource.title}</Text>
-              <Text style={styles.recommendedBy}>Recommended by: {resource.recommendedBy}</Text>
+              <Button title="Reccomend Resource" onPress={(() => {recommedResource(resource.title)})}></Button>
               {resource.image && (
                 <Image
                   source={{ uri: resource.image }}
@@ -108,6 +144,7 @@ const GuidedSession: React.FC = () => {
           </TouchableOpacity>
           ))}
         </ScrollView>
+        <MentorNavBar/> 
       </LinearGradient>
     );
   };
@@ -198,4 +235,4 @@ const styles = StyleSheet.create({
       },
 });
 
-export default GuidedSession;
+export default MentorGuidedSession;

@@ -24,7 +24,7 @@ const ViewMentors = () => {
         
             let { data: detail, error } = await supabase
                 .from('chats')
-                .select('mentor_id, issue_id, issues(name), mentors(name)')
+                .select('id, mentor_id, issue_id, issues(name), mentors(name)')
                 .eq('employee_id', user?.id);
             if (error) {
                 console.error('Error fetching chat room data inner:', error);
@@ -56,22 +56,20 @@ const ViewMentors = () => {
         <ScrollView style={styles.scrollview} showsVerticalScrollIndicator={true}>
 
           <BackButton />
-            <Text style={styles.header}>Current Mentors:</Text>
+            <Text style={styles.header}>Current mentors:</Text>
         <View style={styles.item}>
-            {details?.map((item: {mentor_id: any, issue_id: any, issues: {key: any, value: any}, mentors: {key: any, value: any}}) => (
-                <View style={styles.mentor}>
-                    <Image source={require('./images/Match.png')} style={styles.face}/>
-                    <Text style={styles.title}>{Object.values(item.mentors)}</Text>
-                    <Text style={styles.details}>Speciality: {Object.values(item.issues)}</Text>
-                    <Text style={styles.description}>"Hey, I am here to help manage your stress better."</Text>
-                    <Text style={styles.experience}>4+ years experience</Text>
-                </View>
-                
+            {details?.map((item: {id:any, mentor_id: any, issue_id: any, issues: {key: any, value: any}, mentors: {key: any, value: any}}) => (
+              <TouchableOpacity style={styles.mentor} onPress={() => router.push({pathname: '/ChatRoom', params: {chatID: item.id}})}>
+                <Image source={require('./images/Match.png')} style={styles.face}/>
+                <Text style={styles.title}>{Object.values(item.mentors)}</Text>
+                <Text style={styles.details}>Speciality: {Object.values(item.issues)}</Text>
+                <Text style={styles.description}>"Hey, I am here to help manage your stress better"</Text>
+                <Text style={styles.experience}>4+ years experience</Text>
+              </TouchableOpacity>
             ))}
-          
+            
         </View>
         </ScrollView>
-        <Text style={styles.gap}></Text> 
         </LinearGradient>
         <NavBar/>
         </View>
@@ -91,17 +89,14 @@ const styles = StyleSheet.create({
         // backgroundColor: '#fff',
       },
 
-      gap:{
-        marginBottom: 100,
-      },
-
       scrollview: {
-        height: '110%',
+        height: '200%',
         flexGrow: 1,
         
         marginLeft: '2.5%',
         marginRight: '2.5%',
-        paddingBottom: '10%',
+        marginBottom: 80,
+        paddingBottom: '50%',
       },
 
       header: {
@@ -124,7 +119,6 @@ const styles = StyleSheet.create({
       item: {
         flexDirection:'column',
         flexWrap:'nowrap',
-
       },
       mentor:{
         marginTop:10,

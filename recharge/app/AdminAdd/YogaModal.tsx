@@ -9,8 +9,6 @@ interface YogaModalProps {
 const YogaModal: React.FC<YogaModalProps> = ({ onClose }) => {
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
-  const [recommendedBy, setRecommendedBy] = useState('');
-  const [image, setImage] = useState('');
 
   const handleSave = async () => {
     try {
@@ -18,8 +16,6 @@ const YogaModal: React.FC<YogaModalProps> = ({ onClose }) => {
         {
           title: title,
           link: link,
-          recommendedBy: recommendedBy,
-          image: image,
         }
       ]);
 
@@ -36,15 +32,6 @@ const YogaModal: React.FC<YogaModalProps> = ({ onClose }) => {
 
   return (
     <View style={styles.container}>
-      
-      <Text style={styles.label}>Link:</Text>
-      <TextInput
-        style={styles.input}
-        value={link}
-        onChangeText={setLink}
-        placeholder="Enter Link"
-      />
-
       <Text style={styles.label}>Title:</Text>
       <TextInput
         style={styles.input}
@@ -53,20 +40,12 @@ const YogaModal: React.FC<YogaModalProps> = ({ onClose }) => {
         placeholder="Enter title"
       />
 
-      <Text style={styles.label}>Recommended By:</Text>
+      <Text style={styles.label}>Link:</Text>
       <TextInput
         style={styles.input}
-        value={recommendedBy}
-        onChangeText={setRecommendedBy}
-        placeholder="Add any mentors who have recommended this"
-      />
-
-      <Text style={styles.label}>Image URL:</Text>
-      <TextInput
-        style={styles.input}
-        value={image}
-        onChangeText={setImage}
-        placeholder="Want to add an image?"
+        value={link}
+        onChangeText={setLink}
+        placeholder="Enter link"
       />
 
       <View style={styles.buttonContainer}>

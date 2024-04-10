@@ -223,12 +223,18 @@ const getRequests = async () => {
         {/* <View style={styles.addbutton}>
           <Button title="Add Friends" onPress={() => router.navigate('./Friends')}></Button>
         </View> */}
-
+        <View style={{flexDirection:'row', justifyContent: "center", marginTop:30}}>
         <TouchableOpacity
               style={[styles.topicButton && styles.activeButtonf]}
               onPress={() => router.navigate('./Friends')}>
               <Text style={styles.friends}>Add Friends</Text>
-          </TouchableOpacity>
+        </TouchableOpacity>
+        <TouchableOpacity
+            style={[styles.topicButton && styles.activeButtonf]}
+            onPress={() => router.navigate('challenges')}>
+            <Text style={styles.friends}>Challenge Friends</Text>
+        </TouchableOpacity>
+        </View>
 
         <Text style={styles.header}>Requests:</Text>
         <View style={styles.item}>
@@ -318,9 +324,8 @@ const styles = StyleSheet.create({
       activeButtonf: {
         backgroundColor: 'white',
         borderRadius: 10,
-        marginRight: 295,
+        marginRight: 10,
         textAlign: 'center',
-        left: 147,
         top: 10,
         marginBottom: 10,
 
@@ -332,6 +337,7 @@ const styles = StyleSheet.create({
 
       friends:{
         fontSize: 18,
+        padding: 5,
         fontWeight: "bold",
         color: 'black',
         marginTop: 5,

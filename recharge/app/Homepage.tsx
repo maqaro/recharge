@@ -8,10 +8,34 @@ import { supabase } from '../lib/supabase';
 import NavBar from './NavBar';
 import { overlay } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import axios from 'axios';
 
 export default function Homepage() {
   const router = useRouter();
+  const [quote, setQuote] = useState('');
+  const [author, setAuthor] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchQuote = async () => {
+    setIsLoading(true);
+    try {
+      const url = `https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json`;
+      const response = await axios.get(url);
+      console.log('Quote response:', response.data);
+
+      setQuote(response.data.quoteText);
+      setAuthor(response.data.quoteAuthor || 'Unknown');
+    } catch (error) {
+      console.error('Error fetching quote:', error);
+      // Handle the error appropriately
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuote(); // Fetch a quote when the component mounts
+  }, []);
   return (
     <View style={styles.container}>
       <View ><Text style={styles.title}>Home Page</Text></View>
@@ -21,8 +45,21 @@ export default function Homepage() {
 
         <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#268394', margin: 16, alignContent: 'center', textAlign: 'center' }}>Let's Recharge, John</Text>
 
+
         <ScrollView>
           <View style={styles.full}>
+            <TouchableOpacity style={styles.overview} onPress={fetchQuote}>
+              <LinearGradient
+                start={{x: 0, y: 0}} // Start at the top left
+                end={{x: 1, y: 1}} // End at the bottom right
+                colors={['#cad0ff', '#e3e3e3']}
+                style={styles.overview1}
+              >
+                <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: 'bold' }}>Thought of the Minute</Text>
+                <Text style={{ fontSize: 16, fontStyle: 'italic', marginBottom: 10 }}>“{quote}”</Text>
+                <Text style={{ marginBottom: 20, fontSize: 16 }}>— {author}</Text>
+              </LinearGradient>
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.overview}
               onPress={() => router.navigate('/DashBoard')}
@@ -163,7 +200,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 25,
+    padding: 20,
     
   },
   square1: {

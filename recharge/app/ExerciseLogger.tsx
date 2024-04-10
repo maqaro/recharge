@@ -9,8 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Alert } from 'react-native';
 import { useState } from 'react';
 import NavBar from './NavBar';
-import TrackerNav from './TrackerNav';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 type DropdownItem = {
     label: string;

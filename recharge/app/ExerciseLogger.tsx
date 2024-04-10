@@ -101,6 +101,14 @@ const ExerciseLogger: React.FC = () => {
         return user?.id;
     };
 
+    const BackButton = () => (
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.navigate('/ExerciseTracker')}
+        >
+          <Ionicons name="arrow-back" size={24} color="black" />
+        </TouchableOpacity>
+      );
 
 
     return (
@@ -111,9 +119,12 @@ const ExerciseLogger: React.FC = () => {
                 end={{ x: 1, y: 1 }}
                 style={styles.background}
             >
-            <TouchableOpacity onPress={() => router.navigate('/ExerciseTracker')}>
-                <Ionicons name="chevron-back-circle-outline" size={40} color="black" />
-            </TouchableOpacity>
+
+            <BackButton />
+
+          
+
+
                 <Text style={styles.title}>Exercise Logger</Text>
                 <View style={{ height: 15 }} />
                 <View>
@@ -124,7 +135,7 @@ const ExerciseLogger: React.FC = () => {
                             style={styles.exerciseImage}
                         />
                     ) : (
-                        <Text>Select an exercise to see the image.</Text>
+                        <Text style={styles.selecttext}>Select an exercise to see the image.</Text>
                     )}
                     {selectedExerciseName ? (
                         <Text style={styles.detail}>
@@ -187,7 +198,7 @@ const ExerciseLogger: React.FC = () => {
                         style={styles.button}
                         onPress={handleLogExercise}
                     >
-                        <Text style={styles.buttonText}>Log Exercise</Text>
+                        <Text style={styles.buttonlogText}>Log Exercise</Text>
                     
                     </TouchableOpacity>
                     <View style={{ height: 20 }} />
@@ -249,7 +260,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: '37%',
-        backgroundColor: 'white',
+        backgroundColor: 'lightblue',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
@@ -259,6 +270,19 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#4c669f',
+        textAlign: 'center',
+    },
+    buttonlogText:{
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#4c669f',
+        textAlign: 'center',
+        marginTop: 9,
+    },
+    selecttext:{
+        color: 'white',
+        fontSize: 16,
+        fontWeight: '600',
     },
     // Existing styles...
     searchInput: {
@@ -302,6 +326,12 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         marginBottom: 10,
+    },
+     backButton: {
+      position: 'absolute',
+      top: 32, 
+      left: 20,
+      zIndex: 10,
     },
 });
 

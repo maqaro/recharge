@@ -1,21 +1,19 @@
-// Homepage.tsx
-
-import React, {useEffect, useState} from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { supabase } from '../lib/supabase';
 import NavBar from './NavBar';
 import { useRouter } from 'expo-router';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const ViewFriends = () => {
-    const [userid, setUserid] = useState<string | undefined>();
-    const [friends, setFriends] = useState<any[]>([]);
-    const [requests, setRequests] = useState<any[]>([]);
-    const [name, setName] = useState<any[]>([]);
-
+    const [userId, setUserId] = useState<string | undefined>();
+    const [friends, setFriends] = useState<string[]>([]);
+    const [requests, setRequests] = useState<string[]>([]);
     const router = useRouter();
 
     useEffect(() => {
+
         getFriends();
         getRequests();
     }, [])
@@ -181,41 +179,12 @@ const getRequests = async () => {
         } 
         catch{
             console.log("Error logging friend data")
-    }
-        Alert.alert("Friend Request Accepted");
+        fetchUserData();
+    }, []);
 
-        router.navigate("./Homepage")
-        router.navigate("./ViewFriends")
-      }
-
-      const denyRequest = async (name: String) =>{
-        try {
-            const { data: { user }, } = await supabase.auth.getUser();
-            setUserid(user?.id);
-
-            const { error: deleteError } = await supabase
-            .from('employee')
-            .update({
-              'requests': requests.filter((req) => {req != name})
-            })
-            .eq('employee_id', user?.id);
-    
-          if (deleteError) {
-            console.error('Error updating friend data:', deleteError.message);
-            return;
-          }
-        } 
-        catch{
-            console.log("Error logging friend data")
-    }
-        Alert.alert("Friend Request Denied");
-
-        router.navigate("./Homepage")
-        router.navigate("./ViewFriends")
-        
-      }
-
-
+    const fetchUserData = async () => {
+        await Promise.all([getFriends(), getRequests()]);
+    };
 
     return (
       <View style={styles.container}>
@@ -252,29 +221,51 @@ const getRequests = async () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
+    },
+    gradient: {
+        flex: 1,
+    },
+    scrollView: {
+        padding: 20,
+    },
+    addButtonContainer: {
+        marginBottom: 20,
         alignItems: 'center',
-        backgroundColor: '#fff',
-        height: '100%',
-      },
-    item: {
-        margin: 10,
-        borderBottomWidth: 2,
-        borderBottomColor: "lightgrey",
-        backgroundColor:'white',
-        color:'black',
-        padding:10,
-        borderRadius:10,
-        elevation:10,
-        display: 'flex',
-        marginBottom: 50,
-      },
-
-      inneritem: {
-        display: 'flex',
+    },
+    addButton: {
         flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#007bff',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 30,
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOpacity: 0.3,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 4,
+    },
+    addButtonText: {
+        color: '#FFFFFF',
+        marginLeft: 10,
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    section: {
+        marginBottom: 30,
+    },
+    sectionTitle: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        color: '#333',
+    },
+    listItem: {
+        backgroundColor: '#FFFFFF',
+        padding: 15,
+        borderRadius: 15,
+        flexDirection: 'row',
+
         marginTop: 5,
       },
 
@@ -368,5 +359,3 @@ const styles = StyleSheet.create({
     
   
   });
-
-  export default ViewFriends;

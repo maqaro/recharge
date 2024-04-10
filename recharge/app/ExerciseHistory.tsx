@@ -10,6 +10,7 @@ import NavBar from './NavBar';
 const ExerciseHistory: React.FC = () => {
     const [exercisetracker, setExercisetracker] = React.useState<Tracker[]>([]);
 
+
     const { exerciseID } = useLocalSearchParams();
     useEffect(() => {
         const fetchData = async () => {
@@ -69,12 +70,20 @@ const ExerciseHistory: React.FC = () => {
         ],
     };
 
+    const BackButton = () => (
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.navigate('/Homepage')}
+        >
+          <Ionicons name="arrow-back" size={24} color="black" />
+        </TouchableOpacity>
+      );
+
     // Adjusting the view to prevent date cut-off and add padding
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={() => router.navigate('/ExerciseTracker')}>
-                <Ionicons name="chevron-back-circle-outline" size={40} color="black" />
-            </TouchableOpacity>
+            <BackButton />
+            
             <Text style={styles.title}>Exercise History</Text>
             <ScrollView>
 
@@ -203,7 +212,10 @@ const styles = StyleSheet.create({
         fontSize: 26, // Larger font size for the main title
         fontWeight: 'bold',
         color: '#444', // Slightly lighter than black for a softer look
-        margin: 16, // Margin around the title for spacing
+        // margin: 16, // Margin around the title for spacing
+        marginLeft: 110,
+        marginTop: 30,
+        marginBottom: 20, 
     },
     historyTitle: {
         fontSize: 20, // Larger font size for the title
@@ -232,6 +244,12 @@ const styles = StyleSheet.create({
         color: '#555', // Dark color for readability
         marginVertical: 4, // Vertical margin for spacing between text lines
     },
+    backButton: {
+        position: 'absolute',
+        top: 32, 
+        left: 20,
+        zIndex: 10,
+      },
 });
 
 export default ExerciseHistory;

@@ -121,6 +121,8 @@ const Friends = () => {
           console.error('Error fetching employee data:', error);
           return;
         }
+
+        console.log(reqs.concat(username));
   
         if(data){
           console.log(data);

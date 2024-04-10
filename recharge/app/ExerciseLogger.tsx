@@ -135,7 +135,7 @@ const ExerciseLogger: React.FC = () => {
                             style={styles.exerciseImage}
                         />
                     ) : (
-                        <Text>Select an exercise to see the image.</Text>
+                        <Text style={styles.selecttext}>Select an exercise to see the image.</Text>
                     )}
                     {selectedExerciseName ? (
                         <Text style={styles.detail}>
@@ -198,7 +198,7 @@ const ExerciseLogger: React.FC = () => {
                         style={styles.button}
                         onPress={handleLogExercise}
                     >
-                        <Text style={styles.buttonText}>Log Exercise</Text>
+                        <Text style={styles.buttonlogText}>Log Exercise</Text>
                     
                     </TouchableOpacity>
                     <View style={{ height: 20 }} />
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: '37%',
-        backgroundColor: 'white',
+        backgroundColor: 'lightblue',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
@@ -270,6 +270,19 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#4c669f',
+        textAlign: 'center',
+    },
+    buttonlogText:{
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#4c669f',
+        textAlign: 'center',
+        marginTop: 9,
+    },
+    selecttext:{
+        color: 'white',
+        fontSize: 16,
+        fontWeight: '600',
     },
     // Existing styles...
     searchInput: {

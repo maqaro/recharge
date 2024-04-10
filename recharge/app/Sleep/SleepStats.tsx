@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { supabase } from '../../lib/supabase'; // Assuming supabase is properly configured
 
-const SleepStats: React.FC = () => {
+const SleepStats: React.FC = (key) => {
     const [userid, setUserid] = useState<string | undefined>();
     const [sleepData, setSleepData] = useState<any[]>([]);
     const [averageSleep, setAverageSleep] = useState<string>('');
@@ -47,11 +47,11 @@ const SleepStats: React.FC = () => {
       const averageSleepTime = totalSleepTime / sleepData.length;
   
       // Convert milliseconds to hours and minutes for average sleep time
-      const averageHours = Math.floor(averageSleepTime / (1000 * 60 * 60));
-      const averageMinutes = Math.floor((averageSleepTime % (1000 * 60 * 60)) / (1000 * 60));
+      let averageHours = Math.floor(averageSleepTime / (1000 * 60 * 60));
+      let averageMinutes = Math.floor((averageSleepTime % (1000 * 60 * 60)) / (1000 * 60));
   
       // Find longest and shortest sleep duration
-      let longestSleep = -1;
+      let longestSleep = 0;
       let shortestSleep = Number.MAX_SAFE_INTEGER;
       sleepData.forEach(entry => {
         const sleepStart = new Date(entry.sleep_start).getTime();
@@ -62,13 +62,16 @@ const SleepStats: React.FC = () => {
       });
   
       // Convert milliseconds to hours and minutes for longest and shortest sleep
-      const longestHours = Math.floor(longestSleep / (1000 * 60 * 60));
-      const longestMinutes = Math.floor((longestSleep % (1000 * 60 * 60)) / (1000 * 60));
-      const shortestHours = Math.floor(shortestSleep / (1000 * 60 * 60));
-      const shortestMinutes = Math.floor((shortestSleep % (1000 * 60 * 60)) / (1000 * 60));
+      let longestHours = Math.floor(longestSleep / (1000 * 60 * 60));
+      let longestMinutes = Math.floor((longestSleep % (1000 * 60 * 60)) / (1000 * 60));
+      let shortestHours = Math.floor(shortestSleep / (1000 * 60 * 60));
+      let shortestMinutes = Math.floor((shortestSleep % (1000 * 60 * 60)) / (1000 * 60));
   
       // Total number of entries
       const totalEntries = sleepData.length;
+
+      if (shortestSleep === Number.MAX_SAFE_INTEGER) shortestHours = 0; shortestMinutes=0;
+      if (Number.isNaN(averageHours)) averageHours = 0; averageMinutes =0; 
   
       setAverageSleep(`${averageHours} hrs ${averageMinutes} min`);
       setLongestSlept(`${longestHours} hrs ${longestMinutes} min`);

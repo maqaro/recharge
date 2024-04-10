@@ -93,7 +93,7 @@ const Feedback: React.FC = () => {
     };
 
   return (
-    <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+    <LinearGradient colors={['#fff9ed', '#eccbaa']} style={{height:'100%', width:'100%'}} >
       <Text style={styles.modalTitle}>Feedback Form</Text>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {renderRatingSection('Experience with React', 'experienceWithReact')}
@@ -110,12 +110,13 @@ const Feedback: React.FC = () => {
           onChangeText={handleAdditionalInfoChange}
         />
       <View style={styles.buttonContainer}>
+      <TouchableOpacity onPress={goback} style={styles.button}>
+          <Text style={styles.buttonText}>Cancel</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={handleSubmitFeedback} style={[styles.button, styles.submitButton]}>
           <Text style={styles.buttonText}>Submit Feedback</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={goback} style={styles.button}>
-          <Text style={styles.buttonText}>Cancel</Text>
-        </TouchableOpacity>
+        
       </View>
     </ScrollView>
     </LinearGradient>
@@ -156,6 +157,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     paddingBottom:40,
+    backgroundColor:'white',
   },
   starRatingContainer: {
     flexDirection: 'row',

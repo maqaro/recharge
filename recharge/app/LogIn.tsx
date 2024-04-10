@@ -18,7 +18,35 @@ const Login = () => {
     if (error) {
       Alert.alert(error.message);
     } else {
-      router.navigate('/Homepage');
+      const { data: admins, error: adminError } = await supabase
+        .from('admins')
+        .select()
+        .eq('email', email);
+  
+      if (adminError) {
+        Alert.alert(adminError.message);
+        setLoading(false);
+      }
+  
+      if (admins && admins.length > 0) {
+        router.navigate('/AdminHomepage');
+      } else {
+      const { data: mentors, error: mentorError } = await supabase
+        .from('mentors')
+        .select()
+        .eq('email', email);
+  
+      if (mentorError) {
+        Alert.alert(mentorError.message);
+        setLoading(false);
+      }
+  
+      if (mentors && mentors.length > 0) {
+        router.navigate('/Mentor/MentorHomepage');
+      } else {
+        router.navigate('/Homepage');
+      }
+    }
     }
     setLoading(false);
   }

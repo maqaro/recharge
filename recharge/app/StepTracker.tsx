@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import useHealthData from '../hooks/useHealthData';
 import { AntDesign } from '@expo/vector-icons';
 import { RotateInDownLeft } from 'react-native-reanimated';
+import { supabase } from '../lib/supabase';
 
 
 const STEPS_GOAL = 10000;
@@ -20,6 +21,34 @@ export default function StepTracker() {
 		currentDate.setDate(currentDate.getDate() + numDays);
 		setDate(currentDate);
 	};
+
+	useEffect(() => {
+		const updatePoints = async () => {
+		  let pointNo = 0;
+		  try {
+			const { data: { user } } = await supabase.auth.getUser();
+			let usersid = user?.id;
+			const { data: points, error: pointsError } = await supabase
+			.from('employee')
+			.select('points')
+			.eq('employee_id', usersid)
+  
+			if (points){
+			  console.log(Object.values(points[0])[0])
+			  pointNo = Object.values(points[0])[0]
+			}
+  
+			const { data: points2, error: updateError } = await supabase
+			.from('employee')
+			.update({'points': pointNo+10})
+			.eq('employee_id', usersid)
+  
+		  } catch (error) {
+			console.error('Error fetching user data:', error);
+		  }
+		};
+		updatePoints();
+	  }, []);
 
   return (
     <View style={styles.container}>

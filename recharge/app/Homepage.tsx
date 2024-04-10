@@ -1,6 +1,7 @@
 // Homepage.tsx
 
-import React, { useCallback, useEffect, useState } from 'react';
+
+import React, { useCallback, useEffect, useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Button, ImageBackground, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -58,6 +59,7 @@ export default function Homepage() {
                 <Text style={{ marginBottom: 10, fontSize: 18, fontWeight: 'bold' }}>Thought of the Minute</Text>
                 <Text style={{ fontSize: 16, fontStyle: 'italic', marginBottom: 10 }}>“{quote}”</Text>
                 <Text style={{ marginBottom: 20, fontSize: 16 }}>— {author}</Text>
+
               </LinearGradient>
             </TouchableOpacity>
             <TouchableOpacity
@@ -150,6 +152,7 @@ export default function Homepage() {
           </View>
         </ScrollView>
       </LinearGradient>
+
       <NavBar />
 
 
@@ -235,6 +238,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     resizeMode: 'contain',
   },
+
 
   JournalPic: {
     width: 200,

@@ -7,22 +7,61 @@ import { supabase } from '../lib/supabase';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   async function signUpWithEmail() {
     setLoading(true);
+
+    // Check if the email format is valid
+    if (!email || !email.includes('@') || !email.includes('.')) {
+      Alert.alert('Invalid email format. Please enter a valid email address.');
+      setLoading(false);
+      return;
+    }
+
+    const { data: existingUser, error: existingUserError } = await supabase
+    .from('employee')
+    .select('username')
+    .eq('username', username)
+    .single();
+
+    if (existingUser) {
+      Alert.alert('Username already exists. Please choose a different username.');
+      setLoading(false);
+      return;
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
     });
 
-    if (error) Alert.alert(error.message);
-    if (!data.session) Alert.alert('Please check your inbox for email verification!');
-    setLoading(false);
+    if (error) {
+      Alert.alert(error.message);
+    } else {
+      addUsername();
+      setLoading(false);
+      Alert.alert('Account Created. Please log in')
+      router.navigate('/LogIn');
+
+    }
+    // if (!data.session) Alert.alert('Please check your inbox for email verification!');
+    
+
   }
 
+
+  async function addUsername(){
+    const { data: { user }, error } = await supabase.auth.getUser();
+    const uid = user?.id;
+
+    const { data: employeeData, error: employeeError } = await supabase
+    .from('employee')
+    .insert([{ employee_id: uid, username: username, points: 0 }]);
+  }
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <LinearGradient colors={['#6a11cb', '#2575fc']} style={{ flex: 1 }}>
@@ -36,6 +75,8 @@ const SignUp = () => {
             <Input
               placeholder="Username"
               leftIcon={{ type: 'font-awesome', name: 'user', color: 'white' }}
+              onChangeText={setUsername}
+              value={username}
               inputStyle={styles.inputText}
               inputContainerStyle={styles.inputContainer}
               placeholderTextColor="white"

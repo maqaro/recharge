@@ -60,39 +60,58 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+    <LinearGradient colors={['#fff9ed', '#eccbaa']} style={{height:'100%', width:'100%'}} >
       <Text style={{fontWeight:'bold', fontSize:28, alignSelf:'center', marginTop:20}}> Settings</Text>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.buttonContainer}>
+
         <TouchableOpacity onPress={() => handleButtonPress('Log Out')} style={styles.button}>
-          <Icon name="log-out" type="feather" color="#007AFF" />
+          <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
+            <Icon name="log-out" type="feather" color="#007AFF"/>
+          </Text>
           <Text style={styles.text}>Log Out</Text>
         </TouchableOpacity>
+
         <TouchableOpacity onPress={() => handleButtonPress('Feedback')} style={styles.button}>
-          <Icon name="message-square" type="feather" color="#007AFF" />
+          <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
+            <Icon name="message-square" type="feather" color="#007AFF" />
+          </Text>
           <Text style={styles.text}>Feedback</Text>
         </TouchableOpacity>
+
         <TouchableOpacity onPress={() => handleButtonPress('Report Bug')} style={styles.button}>
-          <Icon name="alert-circle" type="feather" color="#007AFF" />
+          <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
+            <Icon name="alert-circle" type="feather" color="#007AFF" />
+          </Text>
           <Text style={styles.text}>Report Bug</Text>
         </TouchableOpacity>
+
         <TouchableOpacity onPress={() => handleButtonPress('Request New Feature')} style={styles.button}>
-          <Icon name="plus-circle" type="feather" color="#007AFF" />
+          <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
+            <Icon name="plus-circle" type="feather" color="#007AFF" />
+          </Text>
           <Text style={styles.text}>Request New Feature</Text>
         </TouchableOpacity>
+
         <TouchableOpacity onPress={() => handleButtonPress('Notifications')} style={styles.button}>
-          <Icon name="bell" type="feather" color="#007AFF" />
+          <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
+            <Icon name="bell" type="feather" color="#007AFF" />
+          </Text>
           <Text style={styles.text}>Notifications</Text>
         </TouchableOpacity>
+
         <TouchableOpacity onPress={() => handleButtonPress('About Us')} style={styles.button}>
-          <Icon name="info" type="feather" color="#007AFF" />
+          <Text style={{padding:5,backgroundColor:'lightblue', borderRadius:20}}>
+            <Icon name="info" type="feather" color="#007AFF" />
+          </Text>
           <Text style={styles.text}>About Us</Text>
         </TouchableOpacity>
+
         </View>
       </ScrollView>
       <FeatureRequestModal isVisible={isFeatureRequestModalVisible} onClose={closeFeatureRequestModal} />
       <NavBar/>
-    </LinearGradient>
+      </LinearGradient>
 
   );
 };
@@ -121,6 +140,7 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     flexGrow: 1,
+    marginHorizontal:20,
   },
   text: {
     fontSize:18,

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button, Modal, ScrollView, StyleSheet, Text, TextInput, View, Alert, TouchableOpacity } from 'react-native';
 import { supabase } from '../lib/supabase';
 import { LinearGradient } from 'expo-linear-gradient';
-import NavBar from './NavBar';
 
 interface FeatureRequestModalProps {
   isVisible: boolean;
@@ -12,34 +11,26 @@ interface FeatureRequestModalProps {
 const FeatureRequestModal: React.FC<FeatureRequestModalProps> = ({ isVisible, onClose }) => {
   const [featureRequest, setFeatureRequest] = useState('');
 
-  const handleSubmitFeatureRequest = () => {
-    console.log('Submitted feature request:', featureRequest);
-    Alert.alert('Request Submitted!')
-    onClose(); // Close the modal after submitting feature request
+  const handleSubmitFeatureRequest = async () => {
+    try {
+      const { data, error } = await supabase.from('newfeature').insert([{ feature: featureRequest }]);
+
+      if (error) {
+        throw error;
+      }
+
+      console.log('Feature request submitted successfully:', data);
+      Alert.alert('Request Submitted!');
+      onClose();
+    } catch (error) {
+      console.error('Error submitting feature request:', error);
+      Alert.alert('Failed to submit feature request. Please try again later.');
+    }
   };
-
-//   ADD TO THE SUPABASE TABLE
-//   const handleSubmitFeatureRequest = async () => {
-//     try {
-//       // Insert feature request data into the 'NewFeature' table in Supabase
-//       const { data, error } = await supabase.from('NewFeature').insert([{ Feature: featureRequest }]);
-
-//       if (error) {
-//         throw error;
-//       }
-
-//       console.log('Feature request submitted successfully:', data);
-//       Alert.alert('Request Submitted!');
-//       onClose(); // Close the modal after submitting feature request
-//     } catch (error) {
-//       console.error('Error submitting feature request:', error);
-//       Alert.alert('Failed to submit feature request. Please try again later.');
-//     }
-//   };
 
   return (
     <Modal visible={isVisible} animationType="slide">
-      <LinearGradient colors={['#eccbaa', '#65AAB3']} style={{height:'100%', width:'100%'}} >
+      <LinearGradient colors={['#fff9ed', '#eccbaa']} style={{height:'100%', width:'100%'}} >
       <ScrollView contentContainerStyle={styles.modalContent}>
         <Text style={styles.modalTitle}>Feature Request</Text>
         <Text style={styles.modalSubtitle}>Missing a feature?</Text>
@@ -52,15 +43,15 @@ const FeatureRequestModal: React.FC<FeatureRequestModalProps> = ({ isVisible, on
           onChangeText={setFeatureRequest}
         />
         <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleSubmitFeatureRequest} style={[styles.button, styles.submitButton]}>
-          <Text style={styles.buttonText}>Submit Feedback</Text>
-        </TouchableOpacity>
         <TouchableOpacity onPress={onClose} style={styles.button}>
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={handleSubmitFeatureRequest} style={[styles.button, styles.submitButton]}>
+          <Text style={styles.buttonText}>Submit Feedback</Text>
+        </TouchableOpacity>
+        
       </View>
       </ScrollView>
-      <NavBar/>
       </LinearGradient>
     </Modal>
   );
@@ -77,20 +68,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
-    color:'white'
   },
   modalSubtitle: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
-    color:'white',
   },
   modalText: {
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 20,
-    color:'white'
   },
   input: {
     borderColor: 'gray',

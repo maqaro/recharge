@@ -10,18 +10,19 @@ const Tab = createBottomTabNavigator();
 const NavBar = () => {      
   return (
       <View style={styles.navContainer}>
+      
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Homepage')}>
         <Ionicons name="home-outline" size={24} color="black" />
         <Text>Home</Text>
 
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Friends')}>
+      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/ViewFriends')}>
         <Ionicons name="people-outline" size={24} color="black" />
         <Text>Friends</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/ViewChatrooms')}>
+      
+      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/ViewMentors')}>
         <Ionicons name="chatbubble-outline" size={24} color="black" />
         <Text>Chat</Text>
       </TouchableOpacity>
@@ -35,7 +36,6 @@ const NavBar = () => {
         <Ionicons name="settings-outline" size={24} color="black" />
         <Text>Settings</Text>
       </TouchableOpacity>
-      
     </View>
   );
 };
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         backgroundColor: '#fff',
+        // borderRadius: 25,
         bottom: 0,
         left: 0,
         right: 0,

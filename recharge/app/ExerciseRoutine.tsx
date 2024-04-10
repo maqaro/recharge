@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 import { router } from 'expo-router';
 import NavBar from './NavBar';
 
+
 const ExerciseRoutine: React.FC = () => {
     const [routines, setRoutines] = useState<Record<string, any[]>>({});
     const [selectedRoutine, setSelectedRoutine] = useState<string | null>(null);
@@ -39,7 +40,7 @@ const ExerciseRoutine: React.FC = () => {
         fetchExerciseRoutine();
     }, []);
 
-    const renderRoutine = ({ item }) => (
+    const renderRoutine = ({ item }: any) => (
         <TouchableOpacity
             onPress={() => setSelectedRoutine(item)}
             style={[styles.routineTab, selectedRoutine === item ? styles.selectedTab : null]}
@@ -50,10 +51,20 @@ const ExerciseRoutine: React.FC = () => {
         </TouchableOpacity>
     );
 
+    const BackButton = () => (
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => router.navigate('/Homepage')}
+      >
+        <Ionicons name="arrow-back" size={24} color="black" />
+      </TouchableOpacity>
+    );
+
     return (
         <View style={styles.container}>
+          <BackButton />
             <Text style={styles.title}>Exercise Routines</Text>
-
+          
             <FlatList 
                 horizontal
                 data={Object.keys(routines)}
@@ -83,7 +94,7 @@ const ExerciseRoutine: React.FC = () => {
               </TouchableOpacity>
           ))}
             </ScrollView>
-            <NavBar/>
+            {/* <NavBar/> */}
         </View>
     );
 };
@@ -104,6 +115,12 @@ const styles = StyleSheet.create({
       marginBottom: 16,
       textAlign: 'center',
       marginTop: 30,
+    },
+    backButton: {
+      position: 'absolute',
+      top: 32, 
+      left: 20,
+      zIndex: 10,
     },
     exerciseCard: {
       flexDirection: 'row',

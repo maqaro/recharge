@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity, Text, StyleSheet, TextInput } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Text, StyleSheet, TextInput,TouchableWithoutFeedback, Keyboard,KeyboardAvoidingView, Platform } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { supabase } from '../lib/supabase';
 import { Button } from 'react-native-elements';
@@ -9,7 +9,7 @@ import NavBar from './NavBar';
 
 const months = [
   { label: 'January', value: 'January', days: 31 },
-  { label: 'February', value: 'February', days: 29 }, // Assuming a non-leap year for simplicity
+  { label: 'February', value: 'February', days: 29 },
   { label: 'March', value: 'March', days: 31 },
   { label: 'April', value: 'April', days: 30 },
   { label: 'May', value: 'May', days: 31 },
@@ -47,7 +47,6 @@ const DailyJournal: React.FC = () => {
 
   useEffect(() => {
     // Fetch user ID when component mounts
-
     fetchUserId();
 
     setSelectedMonth('January');
@@ -112,7 +111,7 @@ const DailyJournal: React.FC = () => {
           setTitle(journalEntry.title);
           setDescription(journalEntry.entry);
         } else {
-          setTitle('No entry currently added for this date');
+          setTitle('');
           setDescription('');
         }
       } catch (error) {
@@ -176,6 +175,7 @@ const DailyJournal: React.FC = () => {
   };
 
   const handleMonthSelect = (month: string) => {
+    console.log(month);
     setSelectedMonth(month);
     setMonth(month);
   };
@@ -196,9 +196,12 @@ const DailyJournal: React.FC = () => {
 
     if (FormattedDate === currentDateFormatted) {
       
+      // CURRENT DAY ENTRY
       return (
         <>
-        <View style={{height:800,backgroundColor: '#F5F5DC', padding:20}}>
+        <View style={styles.todaybackground}>
+        <Text style={styles.toptext}>Write Down Your Thoughts</Text>
+        <Text style={styles.helptext}>Choose a month and date to view past entries or write one for today!</Text>
           <TextInput
             style={styles.titleInput}
             placeholder="Title"
@@ -215,11 +218,14 @@ const DailyJournal: React.FC = () => {
         </View>
         </>
       );
-    } else if (title !== 'No entry currently added for this date') {
+      // PAST ENTRIES
+    } else if (title) {
       return (
         <>
+        <Text style={styles.toptextEntry}>Write Down Your Thoughts</Text>
+        <Text style={styles.helptextPastEntry}>Choose a month and date to view past entries or write one for today!</Text>
           <Text style={styles.title}>{title}</Text>
-          <Text style={{alignSelf:'center'}}>{FormattedDate}</Text>
+{/*           <Text style={{alignSelf:'center'}}>{FormattedDate}</Text> */}
           <ScrollView style={styles.descriptionScrollView}>
           <Text style={styles.description}>{description}</Text>
           </ScrollView>
@@ -228,10 +234,14 @@ const DailyJournal: React.FC = () => {
       );
     } else {
       return(
-
-      <View style={{height:800, backgroundColor: 'white'}}>
-      <View style={{alignSelf:'center', backgroundColor: '#F0EAD6', width:'95%', height:500, borderColor:'#f0f0f0', borderWidth:5}}>
-      <Text style={{alignSelf:'center', fontSize:24}}>No entry for this date</Text>
+      // NO ENTRY
+      <View>
+        <Text style={styles.toptext}>Write Down Your Thoughts</Text>
+        <View style={{height: 479, backgroundColor: 'rgba(0, 0, 0, .7)', padding: 10, marginBottom:9.5}}>
+      <View style={{alignSelf:'center', backgroundColor: 'white', width:'100%', height: 455}}>
+      <Text style={styles.helptextNoEntry}>Choose a month and date to view past entries or write one for today!</Text>
+      <Text style={{alignSelf:'center', fontSize:24, marginVertical: 220}}>No entry for this date</Text>
+      </View>
       </View>
       </View>
       );
@@ -256,27 +266,45 @@ const DailyJournal: React.FC = () => {
     return buttons;
   };
 
-  return (
-    <View style={{backgroundColor:'white'}}>
+  const BackButton = () => (
+    <TouchableOpacity
+      style={styles.backButton}
+      onPress={() => router.navigate('/Homepage')}
+    >
+      <Ionicons name="arrow-back" size={24} color="black" />
+    </TouchableOpacity>
+  );
 
+
+
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView style={{backgroundColor:'lightblue'}}>
+    
+    
+      <BackButton />
       <View style={styles.header}>
-      <TouchableOpacity onPress={() => router.navigate('/Homepage')}>
-          <Ionicons name="chevron-back-circle-outline" size={30} color="black" />
-        </TouchableOpacity>
-        {/* Picker container */}
+      
+      {/* <TouchableOpacity> */}
         <View style={styles.pickerContainer}>
+          {/* <DropDown /> */}
           <RNPickerSelect
             onValueChange={(value) => handleMonthSelect(value)}
             items={months}
             placeholder={{ label: 'Select a month', value: null }}
             value={selectedMonth}
+            style={{
+              inputIOS: styles.pickerText,
+              inputAndroid: styles.pickerText,
+            }}
           />
         </View>
+        {/* </TouchableOpacity> */}
 
-        {/* Button container */}
-        <View style={styles.buttonContainer}>
-          <Button title="Today's Date" onPress={handleTodayButtonClick} />
-        </View>
+        
+        <TouchableOpacity onPress={handleTodayButtonClick} style={styles.TodayButton}>
+          <Text style={styles.buttonText}>Today's Date</Text>
+        </TouchableOpacity>
       </View>
 
       {selectedMonth && (
@@ -292,12 +320,18 @@ const DailyJournal: React.FC = () => {
       <View style={styles.inputContainer}>
         {renderEntryForDate()}
       </View>
-    </View>
+    
+      </ScrollView>
+      </TouchableWithoutFeedback>
+    
   );
 };
 
 const styles = StyleSheet.create({
 
+  container: {
+    flex:1,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -305,14 +339,109 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
+    backgroundColor: 'transparent',
+    marginTop: 150,
   },
+
+  todaybackground: {
+    height: 505, 
+    backgroundColor: 'white', 
+    padding: 20,
+    borderRadius: 5,
+    // opacity: 0.6,
+  },
+
+  toptext: {
+    fontSize: 24,
+    // alignSelf: 'center',
+    marginTop: -293,
+    left: 55,
+    position: 'absolute',
+    fontWeight: 'bold',
+  },
+
+  helptext: {
+    fontSize: 18,
+    alignSelf: 'center',
+    marginTop: -240,
+    // left: 55,
+    position: 'absolute',
+    textAlign: 'center',
+  },
+
+  toptextEntry: {
+    fontSize: 24,
+    marginTop: -293,
+    left: 75,
+    position: 'absolute',
+    fontWeight: 'bold',
+    textAlign:'center',
+  },
+
+  helptextNoEntry: {
+    fontSize: 18,
+    alignSelf: 'center',
+    marginTop: -250,
+    // left: 55,
+    position: 'absolute',
+    textAlign: 'center',
+  },
+
+  helptextPastEntry: {
+    fontSize: 18,
+    // alignSelf: 'center',
+    marginTop: -240,
+    // left: 55,
+    position: 'absolute',
+    marginLeft: 50.5,
+    textAlign: 'center',
+  },
+
   pickerContainer: {
     flex: 1,
-    marginRight: 10,
+    marginLeft: 0,
+    marginTop: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    padding: 10,
+    borderRadius: 5,
+    marginRight: 165,
   },
-  buttonContainer: {
-    backgroundColor: 'white',
-    borderRadius: 40, // Oval shape with rounded corners
+
+  pickerText: {
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+
+  // buttonContainer: {
+  //   backgroundColor: 'white',
+  //   borderRadius: 40, // Oval shape with rounded corners
+  // },
+
+  TodayButton: {
+    backgroundColor: 'rgba(0, 0, 0, .7)',
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+
+  backButton: {
+    position: 'absolute',
+    // top: 14, 
+    marginTop: 23,
+    left: 20,
+    zIndex: 10,
+  },
+
+  Dropdown: {
+    position: 'absolute',
+    top: -4, 
+    left: 75,
+    zIndex: 10,
   },
 
   inputContainer: {
@@ -323,18 +452,20 @@ const styles = StyleSheet.create({
   titleInput: {
     marginBottom: 10,
     padding: 10,
-    borderWidth: 1,
-    borderColor: 'black',
+    borderWidth: 3,
+    // borderColor: 'black',
+    borderColor: 'rgba(0, 0, 0, .7)',
     borderRadius: 5,
     width: '100%',
     backgroundColor:'white'
   },
   descriptionInput: {
     padding: 10,
-    borderWidth: 1,
-    borderColor: 'black',
+    borderWidth: 3,
+    // borderColor: 'black',
+    borderColor: 'rgba(0, 0, 0, .7)',
     borderRadius: 5,
-    height: 400,
+    height: 415,
     textAlignVertical: 'top',
     width: '100%',
     marginBottom: 5,
@@ -347,10 +478,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     borderColor: 'black',
-    backgroundColor: 'lightgray',
+    backgroundColor: 'white',
   },
   selectedDayButton: {
-    backgroundColor: 'lightblue', // Color for selected day
+    backgroundColor: '#83C2D9', // Color for selected day
   },
 
   title:{
@@ -361,14 +492,14 @@ const styles = StyleSheet.create({
 
   description: {
     padding: 20,
-    height: 600,
-    backgroundColor: '#F5F5DC', 
+    height: 414,
+    backgroundColor: 'white', 
   },
   descriptionScrollView: {
-    height: 485, // Limit the maximum height of the ScrollView
+    height: 435, // Limit the maximum height of the ScrollView
     marginVertical: 10, // Add vertical margin
     padding: 10, // Add padding inside the ScrollView
-    backgroundColor: '#f0f0f0', // Background color
+    backgroundColor: 'rgba(0, 0, 0, .7)', // Background color
 },
 
 });

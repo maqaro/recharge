@@ -101,6 +101,14 @@ const ExerciseLogger: React.FC = () => {
         return user?.id;
     };
 
+    const BackButton = () => (
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.navigate('/ExerciseTracker')}
+        >
+          <Ionicons name="arrow-back" size={24} color="black" />
+        </TouchableOpacity>
+      );
 
 
     return (
@@ -111,9 +119,12 @@ const ExerciseLogger: React.FC = () => {
                 end={{ x: 1, y: 1 }}
                 style={styles.background}
             >
-            <TouchableOpacity onPress={() => router.navigate('/ExerciseTracker')}>
-                <Ionicons name="chevron-back-circle-outline" size={40} color="black" />
-            </TouchableOpacity>
+
+            <BackButton />
+
+          
+
+
                 <Text style={styles.title}>Exercise Logger</Text>
                 <View style={{ height: 15 }} />
                 <View>
@@ -302,6 +313,12 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         marginBottom: 10,
+    },
+     backButton: {
+      position: 'absolute',
+      top: 32, 
+      left: 20,
+      zIndex: 10,
     },
 });
 

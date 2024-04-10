@@ -1,14 +1,14 @@
 // Homepage.tsx
 
 import React, {useState, useEffect, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ActivityIndicator, FlatList, Alert, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ActivityIndicator, FlatList, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import SearchBar from './SearchBar';
 import { supabase } from '../lib/supabase';
 import { set } from 'date-fns';
 import { router } from 'expo-router';
 import NavBar from './NavBar';
-import { Ionicons } from '@expo/vector-icons';
+import { ScrollView } from 'react-native-gesture-handler';
 
 //const [userName, setUserName] = useState<any>();
 
@@ -18,7 +18,7 @@ const Friends = () => {
     const [clicked, setClicked] = useState(false);
     const [data, setData] = useState<any[]>([]);
     const [userID, setUserID] = useState<string | null>(null);
-    const [userName, setUserName] = useState<any[]>([]);
+    const [userName, setUserName] = useState("");
     const [requests, setRequests] = useState<any[]>([]);
 
 
@@ -64,6 +64,8 @@ const Friends = () => {
   }
 
   const sendRequest = async (username: string) =>{
+
+    console.log("Target username:", username)
     const { data: data1, error: error1 } = await supabase
     .from('employee')
     .select('requests')
@@ -80,7 +82,8 @@ const Friends = () => {
     setRequests(Object.values(data1[0])[0]);
   }
 
-    
+  let reqs = Object.values(data1[0])[0];
+
     const { data: data2, error: error2 } = await supabase
     .from('employee')
     .select('username')
@@ -96,11 +99,20 @@ const Friends = () => {
     setUserName(Object.values(data2[0])[0]);
   }
 
+  let name = Object.values(data2[0])[0];
+  console.log(name)
+
+  if (requests.length ==0){
+    setRequests(requests.concat(name))
+  }
+  else{
+    setRequests(requests.concat(name));
+  }
 
     const { data, error } = await supabase
           .from('employee')
           .update({
-            'requests': requests.concat(userName)
+            'requests': reqs.concat(name)
   })
           .eq('username', username);
   
@@ -108,6 +120,8 @@ const Friends = () => {
           console.error('Error fetching employee data:', error);
           return;
         }
+
+        console.log(reqs.concat(username));
   
         if(data){
           console.log(data);
@@ -116,37 +130,29 @@ const Friends = () => {
         Alert.alert("Friend Request Sent");
         router.navigate("./ViewFriends")
   }
-  const BackButton = () => (
-    <TouchableOpacity
-      style={styles.backButton}
-      onPress={() => router.navigate('/ViewFriends')}
-    >
-      <Ionicons name="arrow-back" size={24} color="black" />
-    </TouchableOpacity>
-  );
 
     return (
-      <LinearGradient colors={['lightblue', 'lightblue']} style={{height:'100%', width:'100%'}}>
-        <View style={styles.container}>
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={true}>
-        <BackButton />
+    
+        <SafeAreaView style={styles.container}>
+          
              {!clicked && <Text style={styles.title}>Friend Search</Text>}
-            
+             
+            <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
             <SearchBar clicked={clicked} searchPhrase={searchPhrase} setPhrase={setPhrase} setClicked={setClicked} />
+            
             {data?.map((item: {username: string}) => (
                 <View style={styles.mentor}>
                   <TouchableOpacity>
-                    <Text style={styles.username} onPress={() => {sendRequest(item.username)}}>{Object.values(item.username)}</Text>
+                    <Text style={styles.title} onPress={() => {sendRequest(item.username)}}>{Object.values(item.username)}</Text>
                   </TouchableOpacity>
                 </View>
             ))}
-
-            <Text style={styles.gap}></Text>
-
-        </ScrollView>
-        <NavBar/>
-        </View>
-        </LinearGradient>
+          
+            </LinearGradient>
+            
+            <NavBar/>
+        </SafeAreaView>
+         
       );
       };
 

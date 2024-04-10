@@ -37,6 +37,33 @@ const SleepTracker = () => {
     const [updateCounter, setUpdateCounter] = useState(0);
     const[statCounter, setStatCounter] = useState(0);
   
+    useEffect(() => {
+      const updatePoints = async () => {
+        let pointNo = 0;
+        try {
+          const { data: { user } } = await supabase.auth.getUser();
+          let usersid = user?.id;
+          const { data: points, error: pointsError } = await supabase
+          .from('employee')
+          .select('points')
+          .eq('employee_id', usersid)
+
+          if (points){
+            console.log(Object.values(points[0])[0])
+            pointNo = Object.values(points[0])[0]
+          }
+
+          const { data: points2, error: updateError } = await supabase
+          .from('employee')
+          .update({'points': pointNo+10})
+          .eq('employee_id', usersid)
+
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+      updatePoints();
+    }, []);
 
   
     const onTimeChange1 = (event: DateTimePickerChangeEvent, selectedTime?: Date) => {

@@ -34,9 +34,6 @@ const Item = ({description, brandName, ingredients, foodNutrients}: any) => (
 
 // the filter
 const List = ({ searchPhrase, setClicked, data, setInformation } : any) => {
-
-
-  
   const renderItem : any = ({ item }:any) => {
     // when no input, show all
     if (searchPhrase === "") {

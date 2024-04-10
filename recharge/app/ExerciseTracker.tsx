@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert } fr
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router'; // Keeping router as it was
 import { supabase } from '../lib/supabase';
-// import TrackerNav from './TrackerNav';
 import { Ionicons } from '@expo/vector-icons';
+import NavBar from './NavBar';
 
 type Exercise = {
   id: string;
@@ -23,6 +23,34 @@ const ExerciseTracker = () => {
   const [userId, setUserId] = useState<string | undefined>();
   const [exercises, setExercises] = useState<{ [key: string]: Exercise[] }>({});
   const [error, setError] = useState<string | undefined>();
+
+  useEffect(() => {
+    const updatePoints = async () => {
+      let pointNo = 0;
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        let usersid = user?.id;
+        const { data: points, error: pointsError } = await supabase
+        .from('employee')
+        .select('points')
+        .eq('employee_id', usersid)
+
+        if (points){
+          console.log(Object.values(points[0])[0])
+          pointNo = Object.values(points[0])[0]
+        }
+
+        const { data: points2, error: updateError } = await supabase
+        .from('employee')
+        .update({'points': pointNo+10})
+        .eq('employee_id', usersid)
+
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    updatePoints();
+  }, []);
 
   const fetchExerciseData = useCallback(async () => {
     try {
@@ -119,7 +147,8 @@ const ExerciseTracker = () => {
             </View>
         ))}
       </ScrollView>
-      {/* <TrackerNav /> */}
+
+      <NavBar />
     </View>
   );
 };

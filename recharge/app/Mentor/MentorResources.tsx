@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Linking, Image } from 'react-native';
-import { supabase } from '../lib/supabase'; // Import supabase
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Linking, Image, Button, Alert } from 'react-native';
+import { supabase } from '../../lib/supabase'; // Import supabase
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import MentorNavBar from './MentorNavBar';
 
 interface Resource {
   id: number;
@@ -15,11 +16,13 @@ interface Resource {
   image_url: string | null;
 }
 
-const Resources: React.FC = () => {
+const MentorResources: React.FC = () => {
   const [resources, setResources] = useState<Resource[]>([]);
   const [filteredResources, setFilteredResources] = useState<Resource[]>([]);
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
   const [isEmployee, setIsEmployee] = useState<boolean>(false);
+  const [recommendedBy, setRecommendedBy] = useState<any>();
+  const [username, setUsername] =  useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -82,14 +85,48 @@ const Resources: React.FC = () => {
   };
 
   const handleBackPress = () => {
-    router.navigate('/Homepage');
+    router.navigate('/Mentor/MentorHomepage');
   };
 
   const handleSuggestResource = () => {
     router.navigate('/SuggestResource');
   };
 
+  const recommedResource = async (title: string) => {
+    try {
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      if (userError) {
+        console.error('Error fetching user:', userError);
+        return;
+      }
+      let userId = (userData?.user?.id ?? null);
+
+    const{data: usernameData, error: errorData} = await supabase
+    .from('mentors')
+    .select('name')
+    .eq('id', userId);
+
+    if (usernameData){
+      setUsername(Object.values(usernameData[0])[0])
+    }
+    else{
+      console.log(errorData)
+    }
+
+    const { data: resourcesData, error } = await supabase
+    .from('resources')
+    .update({ 'recommendedBy': username})
+    .eq('title', title);
+
+    Alert.alert("Resource Recommended");
+  }
+  catch{
+    console.log("Error recommending resource");
+  }
+}
+
   return (
+    <View>
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleBackPress}>
@@ -137,11 +174,14 @@ const Resources: React.FC = () => {
                 </View>
               )}
               <Text style={styles.description}>{resource.description}</Text>
+              <Button title="Recommend Resource" onPress={() => {recommedResource(resource.title)}}></Button>
             </View>
           </View>
         </TouchableOpacity>
       ))}
     </ScrollView>
+    <MentorNavBar/>
+    </View>
   );
 };
 
@@ -223,4 +263,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Resources;
+export default MentorResources;

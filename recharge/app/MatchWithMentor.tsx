@@ -1,15 +1,46 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 // import NavBar from './NavBar';
 import { Ionicons } from '@expo/vector-icons';
+import { supabase } from '../lib/supabase';
 
 
 const MatchWithMentor = () => {
     const router = useRouter();
     const [username, setUsername] = useState("");
     const [noOfMentors, setNoOfMentors] = useState(0);
+    const [userid, setUserid] = useState<string | undefined>();
+
+    useEffect(() => {
+      const getNoOfMentors = async() =>{
+        try {
+          const { data: { user }, } = await supabase.auth.getUser();
+          setUserid(user?.id);
+      
+          let { data: requests, error } = await supabase
+              .from('chats')
+              .select('*')
+              .eq('employee_id', user?.id)
+          if (error) {
+              console.error('Error fetching employee data inner:', error);
+          } else {
+              if (requests) {
+                  if (requests == null){
+                    setNoOfMentors(0)
+                  }
+                  else{
+                    setNoOfMentors(requests.length)
+                  }
+              }
+          }
+      } catch (error) {
+          console.error('Error fetching employee data:', error);
+      }
+      };
+      getNoOfMentors();
+  }, [])
 
     const BackButton = () => (
       <TouchableOpacity
@@ -49,12 +80,6 @@ const MatchWithMentor = () => {
             onPress={() => router.navigate('./ViewMentors')}
           >
             <Text style={styles.text}>View Existing Mentor</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.square3}
-            onPress={() => router.navigate('./ViewChatrooms')}
-          >
-            <Text style={styles.text}>View Chat Rooms</Text>
           </TouchableOpacity>
         </LinearGradient>
         {/* <NavBar/> */}

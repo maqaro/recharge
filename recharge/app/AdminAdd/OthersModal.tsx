@@ -12,7 +12,6 @@ const OthersModal: React.FC<OthersModalProps> = ({ topic, onClose }) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [link, setLink] = useState('');
-  const [recommendedBy, setRecommendedBy] = useState('');
   const [image, setImage] = useState('');
 
   const handleSave = async () => {
@@ -29,9 +28,8 @@ const OthersModal: React.FC<OthersModalProps> = ({ topic, onClose }) => {
           description: description,
           date: formattedDate,
           link: link,
-          topic: topic, // Set the topic dynamically
-          recommendedBy: recommendedBy,
           image_url: image,
+          topic: topic, // Set the topic dynamically
         }
       ]);
 
@@ -61,6 +59,14 @@ const OthersModal: React.FC<OthersModalProps> = ({ topic, onClose }) => {
         placeholder="Enter title"
       />
 
+      <Text style={styles.label}>Link:</Text>
+      <TextInput
+        style={styles.input}
+        value={link}
+        onChangeText={setLink}
+        placeholder="Enter link"
+      />
+
       <Text style={styles.label}>Description:</Text>
       <TextInput
         style={[styles.input,styles.descriptionInput]}
@@ -75,22 +81,6 @@ const OthersModal: React.FC<OthersModalProps> = ({ topic, onClose }) => {
         value={date}
         onChangeText={setDate}
         placeholder="Enter date (YYYY-MM-DD)"
-      />
-
-      <Text style={styles.label}>Link:</Text>
-      <TextInput
-        style={styles.input}
-        value={link}
-        onChangeText={setLink}
-        placeholder="Enter link (https://www.google.com)"
-      />
-
-      <Text style={styles.label}>Recommended By:</Text>
-        <TextInput
-          style={styles.input}
-          value={recommendedBy}
-          onChangeText={setRecommendedBy}
-          placeholder="Add any mentors who have recommended this"
       />
 
       <Text style={styles.label}>Image URL:</Text>

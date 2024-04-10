@@ -2,13 +2,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { supabase } from '../lib/supabase';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const ChatRoom = () => {
   const { chatID } = useLocalSearchParams();
   const [userID, setUserID] = useState<string | null>(null);
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [path, setPath] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -19,9 +20,42 @@ const ChatRoom = () => {
         return;
       }
       setUserID(userData?.user?.id ?? null);
+      console.log(userID);
     };
 
     fetchUser();
+  }, []);
+
+  useEffect(()=> {
+    const getPath = async () =>{
+
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      if (userError) {
+        console.error('Error fetching user:', userError);
+        return;
+      }
+      let userId = (userData?.user?.id ?? null);
+
+      const { data: mentors, error: mentorError } = await supabase
+        .from('mentors')
+        .select('id')
+        .eq('id', userId);
+  
+      if (mentorError) {
+        Alert.alert(mentorError.message);
+      }
+
+      if (mentors){
+        console.log(mentors);
+      }
+  
+      if (mentors && mentors.length > 0) {
+        setPath('/Mentor/MentorViewChatrooms');
+      } else {
+        setPath('/ViewMentors');
+      }
+    };
+    getPath();
   }, []);
 
   useEffect(() => {
@@ -108,10 +142,11 @@ const ChatRoom = () => {
     sendMessages();
   }, [userID, chatID, setMessages]);
 
+
   const BackButton = () => (
     <TouchableOpacity
       style={styles.backButton}
-      onPress={() => router.navigate('/ViewChatrooms')}
+      onPress={() => router.navigate(path)}
     >
       <Ionicons name="arrow-back" size={24} color="black" />
     </TouchableOpacity>

@@ -1,27 +1,28 @@
 // NavBar.tsx
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
+const Tab = createBottomTabNavigator();
 
 
-const NavBar = () => {
-      
-  const router = useRouter();
+const NavBar = () => {      
   return (
       <View style={styles.navContainer}>
       
       <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Homepage')}>
         <Ionicons name="home-outline" size={24} color="black" />
         <Text>Home</Text>
+
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/Friends')}>
+      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/ViewFriends')}>
         <Ionicons name="people-outline" size={24} color="black" />
         <Text>Friends</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/ViewChatrooms')}>
+      <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/ViewMentors')}>
         <Ionicons name="chatbubble-outline" size={24} color="black" />
         <Text>Chat</Text>
       </TouchableOpacity>
@@ -35,7 +36,6 @@ const NavBar = () => {
         <Ionicons name="settings-outline" size={24} color="black" />
         <Text>Settings</Text>
       </TouchableOpacity>
-
     </View>
   );
 };
@@ -54,12 +54,12 @@ const styles = StyleSheet.create({
       },
       navButton: {
         backgroundColor: '#fff',
-        padding: 15,
+        width: '20%',
+        padding
+        : 10,
         borderRadius: 0,
         alignItems: 'center',
       },
 });
     
-
-
 export default NavBar;

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Modal, ScrollView, StyleSheet, Text, TextInput, View, Alert, TouchableOpacity } from 'react-native';
-import { supabase } from '../lib/supabase';
+import { supabase } from '../../lib/supabase';
 import { LinearGradient } from 'expo-linear-gradient';
+import MentorNavBar from './MentorNavBar';
 
 interface FeatureRequestModalProps {
   isVisible: boolean;
@@ -52,6 +53,7 @@ const FeatureRequestModal: React.FC<FeatureRequestModalProps> = ({ isVisible, on
         
       </View>
       </ScrollView>
+      <MentorNavBar/>
       </LinearGradient>
     </Modal>
   );

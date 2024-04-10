@@ -43,11 +43,23 @@ const Leaderboard = () => {
         try {
             const { data: { user }, } = await supabase.auth.getUser();
             setUserid(user?.id);
+
+            const { data: data2, error: error2 } = await supabase
+            .from('employee')
+            .select('username')
+            .eq('employee_id', userid);
+
+            let myUsername = "";
+
+            if (data2){            
+              myUsername = Object.values(data2[0])[0];
+            }
+
         
             let { data: detail, error } = await supabase
                 .from('employee')
                 .select('username, points')
-                .contains('friends', [user?.id])
+                .contains('friends', [myUsername])
                 .order('points', { ascending: false });
             if (error) {
                 console.error('Error fetching  employee data inner:', error);

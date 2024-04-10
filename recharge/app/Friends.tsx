@@ -37,12 +37,17 @@ const Friends = () => {
     }, []);
   
     useEffect(() => {
-      const fetchEmployees = async () => {
+      fetchEmployees();
+    }, []);
+
+    const fetchEmployees = async () => {
+
+      let query = '%'.concat(searchPhrase).concat('%')
   
         const { data, error } = await supabase
           .from('employee')
           .select('username')
-          //.like('username', '%'.concat(searchPhrase))
+          .ilike('username', query)
           .order('username', { ascending: true });
   
         if (error) {
@@ -54,14 +59,12 @@ const Friends = () => {
           console.log(data);
           setData(data);
         }
-      };
-
-      fetchEmployees();
-    }, []);
+    };
 
   const setPhrase = (value: any) =>{
     //console.log(data);
     setSearchPhrase(value);
+    fetchEmployees();
   }
 
   const sendRequest = async (username: string) =>{
@@ -79,7 +82,6 @@ const Friends = () => {
   }
 
   if(data1){
-    console.log('Requests ', Object.values(data1[0])[0])
     setRequests(Object.values(data1[0])[0]);
   }
 
@@ -96,12 +98,10 @@ const Friends = () => {
   }
 
   if(data2){
-    console.log('UserName: ',Object.values(data2[0])[0]);
     setUserName(Object.values(data2[0])[0]);
   }
 
   let name = Object.values(data2[0])[0];
-  console.log(name)
 
   if (requests.length ==0){
     setRequests(requests.concat(name))

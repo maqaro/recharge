@@ -67,14 +67,14 @@ const BackButton = () => (
       <Text style={styles.nametext}>Name:</Text>
       <TextInput
         style={styles.textbox}
-        placeholder="Enter a brief explanation of what you wish to discuss"
+        placeholder="Enter the name of the meal"
         onChangeText={newText => setName(newText)}
         defaultValue={name}
       />
         <Text style={styles.caloriestext}>Calories:</Text>
       <TextInput
         style={styles.textbox}
-        placeholder="Enter a brief explanation of what you wish to discuss"
+        placeholder="Enter the calories contained in the meal"
         onChangeText={newText => setCalories(newText)}
         defaultValue={calories}
       />

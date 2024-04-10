@@ -34,7 +34,7 @@ export default function EmailForm() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <LinearGradient colors={['#2F80ED', '#007991']} style={styles.gradient}>
+      <LinearGradient colors={['#1a7373', '#e37b60']} style={styles.gradient}>
 
         <View style={styles.logoContainer}>
           <Image source={require('./images/fdm.png')} style={styles.logo1} />
@@ -106,15 +106,15 @@ const styles = StyleSheet.create({
     width: '100%', // Full width for better control
   },
   signInButton: {
-    backgroundColor: '#004385', // Vibrant color for distinction
+    backgroundColor: '#ffffff', // Vibrant color for distinction
     paddingVertical: 15,
     marginBottom: 10, // Space between buttons
   },
   signUpButton: {
-    backgroundColor: '#031a6b', // Another vibrant color for distinction
+    backgroundColor: '#ffffff', // Another vibrant color for distinction
     paddingVertical: 15,
   },
   buttonText: {
-    color: '#fff', // White color for contrast
+    color: '#e37b60', // White color for contrast
   },
 });

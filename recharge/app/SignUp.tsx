@@ -64,7 +64,7 @@ const SignUp = () => {
   }
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <LinearGradient colors={['#6a11cb', '#2575fc']} style={{ flex: 1 }}>
+      <LinearGradient colors={['#1a7373', '#e37b60']} style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.logoContainer}>
             <Image source={require('./images/Logo.png')} style={styles.logo} />
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'white',
   },
   button1: {
-    backgroundColor: '#2575fc', // Updated button color for better contrast
+    backgroundColor: '#fff', // Updated button color for better contrast
     width: '90%',
     borderRadius: 30,
     alignSelf: 'center',
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10, // Adjusted for better touch area
   },
   button: {
-    backgroundColor: '#12c2e9', // Secondary button color
+    backgroundColor: '#fff', // Secondary button color
     width: '90%',
     borderRadius: 30,
     alignSelf: 'center',
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   buttonTitleStyle: {
-    color: 'white', // Text color updated for better readability
+    color: '#e37b60', // Text color updated for better readability
     fontWeight: 'bold', // Make text bold
   },
   oldaccount: {

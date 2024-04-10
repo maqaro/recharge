@@ -56,7 +56,7 @@ const Login = () => {
       <LinearGradient
         start={{ x: 0, y: 0 }} // Start at the top left
         end={{ x: 1, y: 1 }} // End at the bottom right
-        colors={['#6a11cb', '#2575fc']} // Updated gradient colors for a vibrant look
+        colors={['#1a7373', '#e37b60']} // Updated gradient colors for a vibrant look
         style={styles.gradient}
       >
         <Text style={styles.welcomeText}>Welcome Back!</Text>
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   LoginButton: {
-    backgroundColor: '#2575fc', // Harmonized button color for consistency
+    backgroundColor: '#fff', // Harmonized button color for consistency
     marginTop: 30,
     borderRadius: 30, // Rounded for a modern look
     width: '85%',
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   SignupButton: {
-    backgroundColor: '#12c2e9', // A complementary, distinct button color
+    backgroundColor: '#fff', // A complementary, distinct button color
     marginTop: 10,
     borderRadius: 30, // Consistent rounded look
     width: '85%',
@@ -179,7 +179,9 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   buttonText: {
-    color: '#fff',
+    color: '#e37b60',
+    fontWeight: 'bold', // Make text bold
+
   },
 });
 

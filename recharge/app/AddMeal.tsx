@@ -56,20 +56,21 @@ const BackButton = () => (
 );
 
   return (
-    <LinearGradient colors={['#85D4D5', '#85D4D5']} style={{height:'100%', width:'100%'}} >
+    <LinearGradient colors={['#74CA91', '#85D4D5']} style={{height:'100%', width:'100%'}} >
       <BackButton />
     <View style={styles.container}>
-    <View style={styles.header}>
+  
         <Text style={styles.title}>Add Meal</Text>
-      </View>
-      <Text>Name: </Text>
+        <Text style={styles.info}>Add in the name and the number of calories for a meal</Text>
+     
+      <Text style={styles.nametext}>Name:</Text>
       <TextInput
         style={styles.textbox}
         placeholder="Enter a brief explanation of what you wish to discuss"
         onChangeText={newText => setName(newText)}
         defaultValue={name}
       />
-        <Text>Calories: </Text>
+        <Text style={styles.caloriestext}>Calories:</Text>
       <TextInput
         style={styles.textbox}
         placeholder="Enter a brief explanation of what you wish to discuss"
@@ -98,14 +99,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     // paddingTop:10,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start', // Align items to the start of the row
-    width: '100%', // Ensure the header takes up the full width
-    paddingHorizontal: 20, // Add some padding to the sides
-    marginBottom: 5,
-  },
+
   backButton: {
     position: 'absolute',
     top: 22, 
@@ -119,12 +113,38 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color:'black',
-    alignSelf:'center',
-    marginBottom: 10,
-    marginTop: -79,
-    marginLeft: 84,
-
+    
+    marginTop: -155,
+    
+    textAlign: 'center',
   },
+
+  info:{
+    color: 'black',
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+
+  nametext: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color:'black',
+    marginTop: 100,
+    paddingBottom: 0,
+    textAlign: 'center',
+  },
+  caloriestext: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color:'black',
+    marginTop: 0,
+    paddingBottom: 0,
+    textAlign: 'center',
+  },
+
   input: {
     marginBottom: 10,
     marginTop: 40,
@@ -133,7 +153,7 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
   },
   textbox: {
-    marginTop: 40,
+    marginTop: 30,
     height:100,
     width: '100%',
     borderWidth: 1,

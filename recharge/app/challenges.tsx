@@ -67,7 +67,7 @@ const Challenges = () => {
                 .from('employee')
                 .select('username') // Assuming 'username' holds the friend's name
                 .not('id', 'eq', user.id); // Assuming you don't want to fetch the current user
-            
+
             if (error) {
                 console.error('Error fetching employee data:', error);
                 return;
@@ -86,6 +86,52 @@ const Challenges = () => {
         setIsPickerVisible(false);
         setSearchQuery('');
         Keyboard.dismiss();
+    };
+
+    const markAsDone = async (challengeId, points) => {
+        try {
+            // Step 1: Update the challenge's done status
+            let { data: updatedChallenge, error: updateError } = await supabase
+                .from('challenges')
+                .update({ done: true })
+                .match({ id: challengeId })
+                .select('points, receiver') // Assuming you need the points and receiver's ID
+                .single(); // Assuming only one record will match
+
+            if (updateError) throw updateError;
+            if (!updatedChallenge) throw new Error('Challenge not found.');
+
+            // Step 2: Fetch the challenge points and receiver's ID
+            console.log("Updated challenge:", updatedChallenge);
+            console.log("Points:", points);
+            // Step 3: Update the employee's points
+            let { data: employee, error: employeeError } = await supabase
+                .from('employee')
+                .select('points')
+                .eq('employee_id', userid) // Use the correct column name to match the receiver's ID
+                .single();
+
+            if (employeeError) throw employeeError;
+            if (!employee) throw new Error('Employee not found.');
+
+            // Calculate the new points total
+            const newPoints = employee.points + points;
+
+            // Finally, update the employee's points
+            let { error: updateError2 } = await supabase
+                .from('employee')
+                .update({ points: newPoints })
+                .eq('employee_id', userid);
+
+            if (updateError2) throw updateError2;
+
+            // Refresh the list to reflect the change
+            fetchReceivedChallenges(userid);
+            alert("Challenge marked as done and points updated.");
+        } catch (error) {
+            console.error("Error updating challenge status and points:", error.message);
+            alert("Could not update the challenge or points. Please try again.");
+        }
     };
 
     const resetForm = () => {
@@ -214,14 +260,24 @@ const Challenges = () => {
                     data={receivedChallenges}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                    <View style={[styles.challengeItem, item.done ? styles.challengeDoneBackground : styles.challengePendingBackground]}>
-                        <Text style={styles.challengeTitle}>{item.title.trim()}</Text>
-                        <Text style={styles.challengeDetail}>Detail: {item.detail}</Text>
-                        <Text style={styles.challengePoints}>Points: {item.points}</Text>
-                        <Text style={styles.challengeEnd}>Due by: {item.end}</Text>
-                        <Text style={styles.challengeStatus}>Status: {item.done ? 'Completed' : 'Pending'}</Text>
-                        <Text style={styles.challengeSender}>From: {item.employee.username}</Text>
-                    </View>
+                        <View style={[styles.challengeItem, item.done ? styles.challengeDoneBackground : styles.challengePendingBackground]}>
+                            <Text style={styles.challengeTitle}>{item.title.trim()}</Text>
+                            <Text style={styles.challengeDetail}>Detail: {item.detail}</Text>
+
+                            <Text style={styles.challengeStatus}>From: {item.employee.username}</Text>
+                            <Text style={styles.challengeStatus}>Status: {item.done ? 'Completed' : 'Pending'}</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: "space-between", paddingTop: 10 }}>
+                                <Text style={styles.challengePoints}>Points: {item.points}</Text>
+                                <Text style={styles.challengeEnd}>Due by: {item.end}</Text>
+                            </View>
+                            <View style={{ justifyContent: 'center' }}>
+                                {!item.done && (
+                                    <TouchableOpacity style={styles.doneButton} onPress={() => markAsDone(item.id, item.points)}>
+                                        <Text style={styles.doneButtonText}>Mark as Done</Text>
+                                    </TouchableOpacity>
+                                )}
+                            </View>
+                        </View>
                     )}
                 />
             </View>
@@ -230,7 +286,18 @@ const Challenges = () => {
 };
 
 const styles = StyleSheet.create({
-    
+    doneButton: {
+        marginTop: 10,
+        backgroundColor: '#4CAF50', // Green background
+        padding: 10,
+        borderRadius: 5,
+        alignSelf: 'flex-start', // Align to the start of the item
+    },
+    doneButtonText: {
+        color: '#FFFFFF', // White text
+        fontSize: 16,
+    },
+
     container: {
         flex: 1,
         padding: 20,
@@ -273,12 +340,12 @@ const styles = StyleSheet.create({
         marginBottom: 4,
     },
     challengePoints: {
-        fontSize: 16,
+        fontSize: 18,
         color: '#616161',
         marginBottom: 4,
     },
     challengeEnd: {
-        fontSize: 16,
+        fontSize: 18,
         color: '#616161',
         marginBottom: 4,
     },

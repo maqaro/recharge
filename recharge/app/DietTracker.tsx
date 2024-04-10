@@ -103,7 +103,7 @@ useEffect(() => {
             <BackButton />
             <LinearGradient colors={['#74CA91', '#74CA91']} style={{height:'100%', width:'100%'}}>
               <Text style={styles.diet}>Diet Tracker</Text>
-              <Text style={styles.info}>Welcome to your diet tracker. Search or add a meal you've consumed today to see the total number of calories you consumed today!</Text>
+              <Text style={styles.info}>Track your diet easily: search or add meals and keep an eye on your total calorie intake!</Text>
               <Text style={styles.hello}>So far you have consumed:{"\n"} {totalCalories} calories</Text>
             <TouchableOpacity style={styles.buttons} onPress={() => router.navigate('/MealSearch')}> 
                 <Text style={styles.buttontext}>Search Meal</Text> 
@@ -146,8 +146,8 @@ const styles = StyleSheet.create({
       fontSize: 18,
       textAlign: 'center',
       marginTop: 40,
-      paddingLeft: 20,
-      paddingRight: 20,
+      paddingLeft: 40,
+      paddingRight: 40,
     },
 
     buttons: { 

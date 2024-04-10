@@ -8,6 +8,7 @@ import MealSearchResults from './MealSearchResults';
 import { useReducedMotion } from 'react-native-reanimated';
 import { useRouter } from 'expo-router';
 import { updateValues } from './MealView';
+import { Ionicons } from '@expo/vector-icons';
 
 
 const MealSearch = () => {
@@ -70,12 +71,24 @@ const MealSearch = () => {
       }
     }
   };
+
+  const BackButton = () => (
+    <TouchableOpacity
+      style={styles.backButton}
+      onPress={() => router.navigate('/DietTracker')}
+    >
+      <Ionicons name="arrow-back" size={24} color="black" />
+    </TouchableOpacity>
+  );
   
 
     return (
-        <SafeAreaView style={styles.container}>
-             {!clicked && <Text style={styles.title}>Food Search</Text>}
-            <LinearGradient colors={['#1a7373', '#e37b60']} style={{height:'100%', width:'100%'}}>
+      <LinearGradient colors={['#74CA91', '#74CA91']} style={{height:'100%', width:'100%'}}>
+        <View style={styles.container}>
+        <BackButton />
+          <Text style={styles.foodtitle}>Food Search</Text>
+             {!clicked && <Text style={styles.title}></Text>}
+            
             <SearchBar clicked={clicked} searchPhrase={searchPhrase} setPhrase={setSearchPhrase} setClicked={setClicked} />
             <SafeAreaView style={styles.list__container}>
       <View
@@ -90,9 +103,11 @@ const MealSearch = () => {
           renderItem={renderItem}
         />
       </View>
-    </SafeAreaView>
-            </LinearGradient>
-        </SafeAreaView>
+      </SafeAreaView>
+           
+        </View>
+        <Text style={styles.gap}></Text>
+      </LinearGradient>
       );
 };
 
@@ -106,7 +121,14 @@ const styles = StyleSheet.create({
       flexWrap: 'wrap',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#fff',
+    },
+
+    foodtitle:{
+      fontSize: 30,
+      fontWeight: "bold",
+      marginBottom: 10,
+      color: 'black',
+      marginTop: 20,
     },
 
     list__container: {
@@ -117,20 +139,19 @@ const styles = StyleSheet.create({
     item: {
       margin: 30,
       borderBottomWidth: 2,
-      borderBottomColor: "lightgrey",
+      borderBottomColor: "white",
     },
     title: {
-      fontSize: 20,
+      fontSize: 18,
       fontWeight: "bold",
       marginBottom: 5,
-      fontStyle: "italic",
     },
   
     details: {
       fontSize: 15,
       fontWeight: "bold",
       marginBottom: 5,
-      fontStyle: "italic",
+
     },
 
     searchBar: {
@@ -138,7 +159,18 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         minWidth: 200,
+    },
 
+    gap:{
+      marginBottom: 90,
+    },
+
+    backButton: {
+      position: 'absolute',
+      top: 22, 
+      
+      left: 20,
+      zIndex: 10,
     },
 
   });

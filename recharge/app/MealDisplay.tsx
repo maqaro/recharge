@@ -48,16 +48,14 @@ const styles = StyleSheet.create({
       borderBottomColor: "lightgrey",
     },
     title: {
-      fontSize: 20,
+      fontSize: 18,
       fontWeight: "bold",
       marginBottom: 5,
-      fontStyle: "italic",
     },
   
     details: {
       fontSize: 15,
       fontWeight: "bold",
       marginBottom: 5,
-      fontStyle: "italic",
     },
   });

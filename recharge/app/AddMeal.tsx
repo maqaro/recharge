@@ -54,9 +54,10 @@ const BackButton = () => (
     <Ionicons name="arrow-back" size={24} color="black" />
   </TouchableOpacity>
 );
+//85D4D5
 
   return (
-    <LinearGradient colors={['#74CA91', '#85D4D5']} style={{height:'100%', width:'100%'}} >
+    <LinearGradient colors={['#74CA91', '#74CA91']} style={{height:'100%', width:'100%'}} >
       <BackButton />
     <View style={styles.container}>
   
@@ -161,6 +162,7 @@ const styles = StyleSheet.create({
     textAlignVertical:'top',
     backgroundColor:'white',
     marginBottom:30,
+    borderRadius: 10,
     padding:10
   },
   subtitle:{
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
   },
 
   submit:{
-    backgroundColor: '#2BC0E4',
+    backgroundColor: 'rgba(0,0,0,0.7)',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',

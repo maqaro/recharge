@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { supabase } from '../lib/supabase';
 import { router } from 'expo-router';
-import NavBar from './NavBar';
+import { Ionicons } from '@expo/vector-icons';
 
 
 const ExerciseRoutine: React.FC = () => {

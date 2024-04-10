@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, FlatList, Button, Alert } from 'react-native';
 import { supabase } from '../../lib/supabase';
 import { router } from 'expo-router';
-import TrackerNav from '../TrackerNav';
 import MentorNavBar from './MentorNavBar';
 import { Ionicons } from '@expo/vector-icons';
 

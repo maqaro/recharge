@@ -148,7 +148,7 @@ const ExerciseTracker = () => {
         ))}
       </ScrollView>
 
-      <TrackerNav />
+      <NavBar />
     </View>
   );
 };

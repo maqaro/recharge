@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, PermissionsAndroid } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, PermissionsAndroid, FlatList } from 'react-native';
 import { supabase } from '../lib/supabase';
 import WaterTracker from './WaterTracker';
 import { ProgressBar } from 'react-native-paper';
@@ -29,11 +29,16 @@ export default function DashBoard() {
     const [emotionValue, setEmotionValue] = useState("");
     const emotionsSuggestingMentor = ["Sad", "Angry", "Anxious", "Frustrated"];
 
+    const [receivedChallenges, setReceivedChallenges] = useState<any[]>([]);
+
+
 
     const [journal, setJournal] = useState(false);
 
     const [error, setError] = useState<string | undefined>();
 
+   
+    
 
 
 
@@ -166,6 +171,7 @@ export default function DashBoard() {
                 <Text>Back</Text>
             </TouchableOpacity>
             <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Your Day at a Glance</Text>
+        
             
                 <View style={styles.row}>
                     <TouchableOpacity
@@ -259,6 +265,71 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+    },
+    doneButton: {
+        marginTop: 10,
+        backgroundColor: '#4CAF50', // Green background
+        padding: 10,
+        borderRadius: 5,
+        alignSelf: 'flex-start', // Align to the start of the item
+    },
+    doneButtonText: {
+        color: '#FFFFFF', // White text
+        fontSize: 16,
+    },
+    challengeItem: {
+        margin: 30,
+        padding: 10,
+        borderRadius: 10,
+        marginBottom: 12,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 4.65,
+        elevation: 7,
+    },
+    challengeDoneBackground: {
+        backgroundColor: '#E8F5E9', // Soft green for completed challenges
+    },
+    challengePendingBackground: {
+        backgroundColor: '#FFF3E0', // Soft orange for pending challenges
+    },
+    challengeTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#424242',
+        marginBottom: 8,
+    },
+    
+    challengeDetail: {
+        fontSize: 16,
+        color: '#616161',
+        marginBottom: 4,
+    },
+    challengePoints: {
+        fontSize: 18,
+        color: '#616161',
+        marginBottom: 4,
+    },
+    challengeEnd: {
+        fontSize: 18,
+        color: '#616161',
+        marginBottom: 4,
+    },
+    challengeStatus: {
+        fontSize: 16,
+        fontWeight: '500',
+        color: '#424242',
+    },
+    challengeDone: {
+        fontSize: 14,
+        fontWeight: '500',
+    },
+    challengeText: {
+        fontSize: 16,
     },
     full: {
         flex: 1,

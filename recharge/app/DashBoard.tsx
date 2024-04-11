@@ -37,76 +37,8 @@ export default function DashBoard() {
 
     const [error, setError] = useState<string | undefined>();
 
-    useEffect(() => {
-        fetchReceivedChallenges(userId);
-    }, [userId]);
-
-    const fetchReceivedChallenges = async (id: string | undefined) => {
-        if (!id) return;
-
-        try {
-            let { data: challenges, error } = await supabase
-                .from('challenges')
-                .select(`
-                    *,
-                    employee:sender (username)
-                `) // Assuming 'sender' is a foreign key in 'challenges' pointing to 'employee'
-                .eq('receiver', id);
-            console.log("Challenges:", challenges);
-            if (error) throw error;
-            setReceivedChallenges(challenges);
-            console.log("Received challenges:", challenges);
-        } catch (error) {
-            console.error("Error fetching received challenges:", error.message);
-        }
-    };
-
+   
     
-    const markAsDone = async (challengeId, points) => {
-        try {
-            // Step 1: Update the challenge's done status
-            let { data: updatedChallenge, error: updateError } = await supabase
-                .from('challenges')
-                .update({ done: true })
-                .match({ id: challengeId })
-                .select('points, receiver') // Assuming you need the points and receiver's ID
-                .single(); // Assuming only one record will match
-
-            if (updateError) throw updateError;
-            if (!updatedChallenge) throw new Error('Challenge not found.');
-
-            // Step 2: Fetch the challenge points and receiver's ID
-            console.log("Updated challenge:", updatedChallenge);
-            console.log("Points:", points);
-            // Step 3: Update the employee's points
-            let { data: employee, error: employeeError } = await supabase
-                .from('employee')
-                .select('points')
-                .eq('employee_id', userid) // Use the correct column name to match the receiver's ID
-                .single();
-
-            if (employeeError) throw employeeError;
-            if (!employee) throw new Error('Employee not found.');
-
-            // Calculate the new points total
-            const newPoints = employee.points + points;
-
-            // Finally, update the employee's points
-            let { error: updateError2 } = await supabase
-                .from('employee')
-                .update({ points: newPoints })
-                .eq('employee_id', userid);
-
-            if (updateError2) throw updateError2;
-
-            // Refresh the list to reflect the change
-            fetchReceivedChallenges(userid);
-            alert("Challenge marked as done and points updated.");
-        } catch (error) {
-            console.error("Error updating challenge status and points:", error.message);
-            alert("Could not update the challenge or points. Please try again.");
-        }
-    };
 
 
 
@@ -239,30 +171,7 @@ export default function DashBoard() {
                 <Text>Back</Text>
             </TouchableOpacity>
             <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#268394', margin: 8, textAlign: 'center' }}>Your Day at a Glance</Text>
-            <FlatList
-                    data={receivedChallenges}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => (
-                        <View style={[styles.challengeItem, item.done ? styles.challengeDoneBackground : styles.challengePendingBackground]}>
-                            <Text style={styles.challengeTitle}>{item.title.trim()}</Text>
-                            <Text style={styles.challengeDetail}>Detail: {item.detail}</Text>
-
-                            <Text style={styles.challengeStatus}>From: {item.employee.username}</Text>
-                            <Text style={styles.challengeStatus}>Status: {item.done ? 'Completed' : 'Pending'}</Text>
-                            <View style={{ flexDirection: 'row', justifyContent: "space-between", paddingTop: 10 }}>
-                                <Text style={styles.challengePoints}>Points: {item.points}</Text>
-                                <Text style={styles.challengeEnd}>Due by: {item.end}</Text>
-                            </View>
-                            <View style={{ justifyContent: 'center' }}>
-                                {!item.done && (
-                                    <TouchableOpacity style={styles.doneButton} onPress={() => markAsDone(item.id, item.points)}>
-                                        <Text style={styles.doneButtonText}>Mark as Done</Text>
-                                    </TouchableOpacity>
-                                )}
-                            </View>
-                        </View>
-                    )}
-                />
+        
             
                 <View style={styles.row}>
                     <TouchableOpacity
@@ -369,7 +278,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     challengeItem: {
-        padding: 20,
+        margin: 30,
+        padding: 10,
         borderRadius: 10,
         marginBottom: 12,
         shadowColor: "#000",

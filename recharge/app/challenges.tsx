@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, FlatList, Keyboard } from 'react-native';
 import { supabase } from '../lib/supabase';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { router } from 'expo-router';
 
 const Challenges = () => {
     const [userid, setUserid] = useState<string | undefined>();
@@ -197,6 +199,10 @@ const Challenges = () => {
 
     return (
         <View style={styles.container}>
+                <TouchableOpacity style={{flexDirection:'row',paddingLeft:5, width:100, paddingBottom:10}}onPress={() => router.navigate('/ViewFriends')}>
+                    <Ionicons name="chevron-back-circle-outline" size={30}  color="black" />
+                    <Text style={{fontSize:22, paddingTop: 2}}>Back</Text>
+                </TouchableOpacity>
 
 
             <Text style={styles.header}>Challenge a Friend</Text>

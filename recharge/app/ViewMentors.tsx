@@ -54,10 +54,11 @@ const ViewMentors = () => {
         <View style={styles.container}>
           <LinearGradient colors={['#F5F5F5', '#F5F5F5']} style={{height:'100%', width:'100%'}}>
           <BackButton />
+          <Text style={styles.header}>Chats</Text>
+
 
         <ScrollView style={styles.scrollview} showsVerticalScrollIndicator={true}>
 
-            <Text style={styles.header}>Chats</Text>
         <View style={styles.item}>
             {details?.map((item: {id:any, mentor_id: any, issue_id: any, issues: {key: any, value: any}, mentors: {key: any, value: any}}) => (
               <TouchableOpacity style={styles.mentor} onPress={() => router.push({pathname: '/ChatRoom', params: {chatID: item.id}})}>
@@ -93,9 +94,11 @@ const styles = StyleSheet.create({
       flexGrow: 1,
       paddingHorizontal: '5%',
       paddingTop: 20,
-      paddingBottom: 100, // Adjust based on your Footer/NavBar height
+      paddingBottom: 200, // Adjust based on your Footer/NavBar height
+      marginBottom: 65,
     },
     header: {
+      padding: 20,
       fontSize: 24,
       fontWeight: "600",
       color: 'black',
